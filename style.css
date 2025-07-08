@@ -126,6 +126,9 @@ nav ul li a:hover {
     padding: 2rem;
     border-radius: 10px;
     transition: transform 0.3s ease;
+    text-decoration: none;
+    color: var(--text-color);
+    display: block;
 }
 
 .service-card:hover {
@@ -139,6 +142,10 @@ nav ul li a:hover {
 
 #tools .service-card h3, #learn .service-card h3 {
     color: var(--secondary-color);
+}
+
+.service-card h3, .service-card p {
+    text-decoration: none;
 }
 
 .service-card h3 {
