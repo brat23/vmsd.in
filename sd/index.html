@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retail Design Learning Modules</title>
+    <style>
+        :root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ff88;
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --card-color: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>') repeat;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 80px 0;
+        }
+
+        .module-card {
+            background: var(--card-color);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 40px rgba(255, 0, 85, 0.3);
+        }
+
+        .module-header {
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .module-number {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .module-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .module-description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .module-content {
+            padding: 30px;
+        }
+
+        .topic-list {
+            list-style: none;
+        }
+
+        .topic-item {
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: slideInLeft 0.6s ease-out forwards;
+        }
+
+        .topic-item:nth-child(1) { animation-delay: 0.1s; }
+        .topic-item:nth-child(2) { animation-delay: 0.2s; }
+        .topic-item:nth-child(3) { animation-delay: 0.3s; }
+        .topic-item:nth-child(4) { animation-delay: 0.4s; }
+        .topic-item:nth-child(5) { animation-delay: 0.5s; }
+        .topic-item:nth-child(6) { animation-delay: 0.6s; }
+        .topic-item:nth-child(7) { animation-delay: 0.7s; }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .topic-link {
+            display: block;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .topic-link:hover::before {
+            left: 100%;
+        }
+
+        .topic-link:hover {
+            transform: translateX(10px);
+            background: linear-gradient(135deg, rgba(255, 0, 85, 0.2), rgba(0, 255, 136, 0.2));
+            border-color: var(--secondary-color);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        .topic-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            position: relative;
+            vertical-align: middle;
+        }
+
+        .topic-icon::after {
+            content: '▶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            color: white;
+        }
+
+        .case-study-indicator {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+            display: inline-block;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(0, 255, 136, 0.5); }
+            to { box-shadow: 0 0 20px rgba(0, 255, 136, 0.8); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer {
+            background: var(--card-color);
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transition: left 0.3s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 0, 85, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 40px 0;
+            }
+            
+            .module-card {
+                margin: 0 10px;
+            }
+            
+            .module-header {
+                padding: 20px;
+            }
+            
+            .module-content {
+                padding: 20px;
+            }
+            
+            .topic-link {
+                padding: 12px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .module-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements" id="floatingElements"></div>
+    <div class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Retail Design Mastery</h1>
+                <p>Comprehensive Learning Modules for Modern Retail Excellence</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="modules-grid">
+            <!-- Module 1: Introduction -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">01</div>
+                    <h2 class="module-title">Introduction</h2>
+                    <p class="module-description">Foundation principles and overview of retail design fundamentals</p>
+                </div>
+                <div class="module-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="article-1.1.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Fundamentals of Retail Design
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-1.2.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Historical Evolution of Retail Spaces
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-1.3.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Modern Retail Design Principles
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-1.4.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Consumer Psychology in Retail
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 2: Branding and Identity -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">02</div>
+                    <h2 class="module-title">Branding & Identity</h2>
+                    <p class="module-description">Creating powerful brand experiences through strategic design</p>
+                </div>
+                <div class="module-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="article-2.1.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                What is Branding
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-2.2.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Developing a Brand
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-2.3.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Selling the Brand
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-2.4.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Case Study
+                                <span class="case-study-indicator">CASE STUDY</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 3: Retail Sector -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">03</div>
+                    <h2 class="module-title">Retail Sector</h2>
+                    <p class="module-description">Exploring diverse retail categories and their unique design requirements</p>
+                </div>
+                <div class="module-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="article-3.1.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Food Retail Design
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-3.2.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Fashion Retail Spaces
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-3.3.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Home & Lifestyle Stores
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-3.4.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Leisure & Entertainment
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-3.5.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Sector Analysis Case Study
+                                <span class="case-study-indicator">CASE STUDY</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 4: Retail Sites -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">04</div>
+                    <h2 class="module-title">Retail Sites</h2>
+                    <p class="module-description">Strategic location planning and site-specific design considerations</p>
+                </div>
+                <div class="module-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="article-4.1.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Department Stores
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-4.2.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                High Street Retail
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-4.3.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Shopping Centers
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-4.4.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Out of Town Shopping
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-4.5.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                The Concourse
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-4.6.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Alternative Venues
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-4.7.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Location Strategy Case Study
+                                <span class="case-study-indicator">CASE STUDY</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 5: The Retail Environment -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">05</div>
+                    <h2 class="module-title">The Retail Environment</h2>
+                    <p class="module-description">Creating immersive and sustainable retail atmospheres</p>
+                </div>
+                <div class="module-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="article-5.1.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Retail & Sustainability
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-5.2.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Materials & Finishes
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-5.3.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Lighting Design
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-5.4.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Climate & Sound
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-5.5.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Environmental Design Case Study
+                                <span class="case-study-indicator">CASE STUDY</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 6: Methods and Organizing Space -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">06</div>
+                    <h2 class="module-title">Methods & Organizing Space</h2>
+                    <p class="module-description">Strategic space planning and merchandising excellence</p>
+                </div>
+                <div class="module-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="article-6.1.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Principles of Retail Organization
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-6.2.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Merchandising Strategies
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-6.3.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Service & Ancillary Space
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-6.4.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Space Planning Case Study
+                                <span class="case-study-indicator">CASE STUDY</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 7: Design Detail -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">07</div>
+                    <h2 class="module-title">Design Detail</h2>
+                    <p class="module-description">Perfecting the finer elements of retail design execution</p>
+                </div>
+                <div class="module-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="article-7.1.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                The Shop Facade
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-7.2.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Interior Architecture
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-7.3.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Fixtures & Fittings
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="article-7.4.html" class="topic-link">
+                                <span class="topic-icon"></span>
+                                Design Excellence Case Study
+                                <span class="case-study-indicator">CASE STUDY</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <h3>Ready to Master Retail Design?</h3>
+                <p>Transform your understanding of retail spaces with our comprehensive learning modules. Each module builds upon the previous, creating a complete foundation for retail design excellence.</p>
+                <a href="#" class="cta-button">Start Your Journey</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling and enhanced interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Staggered animation for module cards
+            const moduleCards = document.querySelectorAll('.module-card');
+            moduleCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+
+            // Enhanced hover effects for topic links
+            const topicLinks = document.querySelectorAll('.topic-link');
+            topicLinks.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(15px) scale(1.02)';
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0) scale(1)';
+                });
+            });
+
+            // Parallax effect for hero section
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const hero = document.querySelector('.hero');
+                if (hero) {
+                    hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                }
+            });
+
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            moduleCards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // Click handlers for topic links
+            topicLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Add a ripple effect
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    ripple.style.left = `${e.clientX - this.offsetLeft}px`;
+                    ripple.style.top = `${e.clientY - this.offsetTop}px`;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 200);
+                });
+            });
+
+            // Add CSS for ripple effect
+            const style = document.createElement('style');
+            style.textContent = `
+                .ripple {
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.3);
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                    width: 100px;
+                    height: 100px;
+                    margin-left: -50px;
+                    margin-top: -50px;
+                }
+                
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
