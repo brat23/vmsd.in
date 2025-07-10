@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Design Deep Mastery Curriculum</title>
+    <style>
+        :root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ff88;
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --card-color: #1e1e1e;
+            --accent-color: #8b5cf6;
+            --warning-color: #fbbf24;
+            --gradient-1: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            --gradient-2: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            --gradient-3: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        .background-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+        }
+
+        /* Header */
+        .header {
+            background: var(--gradient-1);
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
+            margin-bottom: 1rem;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 0, 85, 0.5); }
+            to { text-shadow: 0 0 30px rgba(255, 0, 85, 0.8), 0 0 40px rgba(255, 0, 85, 0.3); }
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .nav {
+            position: sticky;
+            top: 0;
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-3);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-links a:hover::before {
+            left: 0;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 85, 0.3);
+        }
+
+        .progress-bar {
+            height: 3px;
+            background: var(--gradient-3);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Module Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .module-card {
+            background: var(--card-color);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .module-card h3 a {
+            display: block;
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .module-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 0, 85, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .module-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .module-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+
+        .module-topics {
+            list-style: none;
+            margin-bottom: 1.5rem;
+            /* Ensure all topics are visible by removing fixed height or overflow hidden */
+            overflow: visible; 
+        }
+
+        .module-topics li {
+            /* Remove padding and positioning from li, move to a */
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .module-topics li a {
+            display: block; /* Make the entire link area clickable */
+            padding: 0.5rem 0; /* Padding for clickable area */
+            position: relative;
+            padding-left: 1.5rem; /* Space for the play icon */
+            color: var(--text-color); /* Default link color */
+            text-decoration: none; /* Remove underline */
+            transition: all 0.3s ease;
+        }
+
+        .module-topics li a::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .module-topics li:hover {
+            opacity: 1; /* Keep opacity change on li hover */
+        }
+
+        .module-topics li a:hover {
+            transform: translateX(5px); /* Apply transform to the link */
+            color: var(--secondary-color); /* Apply hover color to the link text */
+        }
+
+        .module-difficulty {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-beginner {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--secondary-color);
+            border: 1px solid var(--secondary-color);
+        }
+
+        .difficulty-intermediate {
+            background: rgba(251, 191, 36, 0.2);
+            color: var(--warning-color);
+            border: 1px solid var(--warning-color);
+        }
+
+        .difficulty-advanced {
+            background: rgba(255, 0, 85, 0.2);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        /* Interactive Elements */
+        .interactive-demo {
+            background: var(--card-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-circle {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-3);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .demo-circle:hover {
+            transform: scale(1.1) rotate(180deg);
+            box-shadow: 0 0 30px rgba(255, 0, 85, 0.5);
+        }
+
+        .demo-circle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--text-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--card-color);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-1);
+            opacity: 0.1;
+            transform: skewY(-5deg);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--secondary-color);
+            display: block;
+            animation: countUp 2s ease-out;
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .module-card {
+                padding: 1.5rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loading animation */
+        .loading-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--card-color);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: var(--gradient-3);
+            border-radius: 2px;
+            width: 0%;
+            animation: loadProgress 3s ease-in-out infinite;
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        /* Floating action button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255, 0, 85, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(255, 0, 85, 0.6);
+        }
+
+        .fab::after {
+            content: '↑';
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div class="background-particles"></div>
+    
+    <header class="header">
+        <h1>Graphic Design Deep Mastery</h1>
+        <p>Master the art and science of visual communication through comprehensive, hands-on learning</p>
+    </header>
+
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="#fundamentals">Fundamentals</a>
+                <a href="#design-theory">Theory</a>
+                <a href="#typography">Typography</a>
+                <a href="#branding">Branding</a>
+                <a href="#software">Software</a>
+                <a href="#portfolio">Portfolio</a>
+            </div>
+        </div>
+        <div class="progress-bar"></div>
+    </nav>
+
+    <div class="container">
+        <div class="stats">
+            <div class="stat-card fade-in">
+                <span class="stat-number">11</span>
+                <span class="stat-label">Core Modules</span>
+            </div>
+            <div class="stat-card fade-in">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Learning Topics</span>
+            </div>
+            <div class="stat-card fade-in">
+                <span class="stat-number">∞</span>
+                <span class="stat-label">Creative Potential</span>
+            </div>
+        </div>
+
+        <div class="interactive-demo fade-in">
+            <h2>Interactive Design Principles Demo</h2>
+            <div class="demo-circle" onclick="animateDemo()"></div>
+            <p>Click the circle to see design principles in action!</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+
+        <div class="modules-grid">
+            <div class="module-card fade-in">
+                <div class="module-number">01</div>
+                <h3><a href="articles/module1-intro.html">Introduction to Graphic Design</a></h3>
+                <ul class="module-topics">
+                    <li><a href="articles/module1-topic1.html">History of Graphic Design</a></li>
+                    <li><a href="articles/module1-topic2.html">Influential Movements (Bauhaus, Swiss, Psychedelic)</a></li>
+                    <li><a href="articles/module1-topic3.html">What is Graphic Design Today?</a></li>
+                </ul>
+                <span class="module-difficulty difficulty-beginner">Beginner</span>
+            </div>
+
+            <div class="module-card fade-in">
+                <div class="module-number">02</div>
+                <h3><a href="articles/module2-intro.html">Design Principles and Theory</a></h3>
+                <ul class="module-topics">
+                    <li><a href="articles/module2-topic1.html">Balance, Contrast, Hierarchy</a></li>
+                    <li><a href="articles/module2-topic2.html">Alignment, Proximity, Repetition</a></li>
+                    <li><a href="articles/module2-topic3.html">Color Theory</a></li>
+                    <li><a href="articles/module2-topic4.html">Typography Theory</a></li>
+                    <li><a href="articles/module2-topic5.html">Visual Perception (Gestalt Principles)</a></li>
+                </ul>
+                <span class="module-difficulty difficulty-beginner">Beginner</span>
+            </div>
+
+            <div class="module-card fade-in">
+                <div class="module-number">03</div>
+                <h3><a href="articles/module3-intro.html">Typography</a></h3>
+                <ul class="module-topics">
+                    <li><a href="articles/module3-topic1.html">Anatomy of Type</a></li>
+                    <li><a href="articles/module3-topic2.html">Type Classification (Serif, Sans Serif, Display)</a></li>
+                    <li><a href="articles/module3-topic3.html">Type Pairing & Hierarchy</a></li>
+                    <li><a href="articles/module3-topic4.html">Readability & Legibility</a></li>
+                    <li><a href="articles/module3-topic5.html">Grid Systems</a></li>
+                </ul>
+                <span class="module-difficulty difficulty-intermediate">Intermediate</span>
+            </div>
+
+            <div class="module-card fade-in">
+                <div class="module-number">04</div>
+                <h3><a href="articles/module4-intro.html">Layout and Composition</a></h3>
+                <ul class="module-topics">
+                    <li><a href="articles/module4-topic1.html">Grids and Guides</a></li>
+                    <li><a href="articles/module4-topic2.html">White Space</a></li>
+                    <li><a href="articles/module4-topic3.html">Golden Ratio and Rule of Thirds</a></li>
+                    <li><a href="articles/module4-topic4.html">Modular Layouts</a></li>
+                </ul>
+                <span class="module-difficulty difficulty-intermediate">Intermediate</span>
+            </div>
+
+            <div class="module-card fade-in">
+                <div class="module-number">05</div>
+                <h3><a href="articles/module5-intro.html">Branding and Identity Design</a></h3>
+                <ul class="module-topics">
+                    <li><a href="articles/module5-topic1.html">Logo Design</a></li>
+                    <li><a href="articles/module5-topic2.html">Brand Systems (Color, Type, Imagery)</a></li>
+                    <li><a href="articles/module5-topic3.html">Brand Guidelines</a></li>
+                    <li><a href="articles/module5-topic4.html">Case Studies (Nike, Apple, Google)</a></li>
+                </ul>
+                <span class="module-difficulty difficulty-intermediate">Intermediate</span>
+            </div>
+
+            <div class="module-card fade-in">
+                <div class="module-number">06</div>
+                <h3><a href="articles/module6-intro.html">Software Mastery</a></h3>
+                <ul class="module-topics">
+                    <li><a href="articles/module6-topic1.html">Adobe Photoshop (Raster)</a></li>
+                    <li><a href="articles/module6-topic2.html">Adobe Illustrator (Vector)</a></li>
+                    <li><a href="articles/module6-topic3.html">Adobe InDesign (Layout)</a></li>
+                    <li><a href="articles/module6-topic4.html">Figma or XD (UI/UX)</a></li>
+                    <li><a href="articles/module6-topic5.html">Affinity Suite (Optional)</a></li>
+                </ul>
+                <span class="module-difficulty difficulty-advanced">Advanced</span>
+            </div>
+
+            <div class="module-card fade-in">
+                <div class="module-number">07</div>
+                <h3><a href="articles/module7-intro.html">Image Making & Illustration</a></h3>
+                <ul class="module-topics">
+                    <li><a href="articles/module7-topic1.html">Hand-drawn vs Digital</a></li>
+                    <li><a href="articles/module7-topic2.html">Vector Illustration</a></li>
+                    <li><a href="articles/module7-topic3.html">Photomanipulation</a></li>
+                    <li><a href="articles/module7-topic4.html">Collage & Mixed Media</a></li>
+                </ul>
+                <span class="module-difficulty difficulty-advanced">Advanced</span>
+            </div>
+
+            <div class="module-card fade-in">
+                <div class="module-number">08</div>
+                <h3><a href="articles/module8-intro.html">UI/UX Design</a></h3>
+                <ul class="module-topics">
+                    <li><a href="articles/module8-topic1.html">Human-Centered Design</a></li>
+                    <li><a href="articles/module8-topic2.html">Wireframing</a></li>
+                    <li><a href="articles/module8-topic3.html">Prototyping</a></li>
+                    <li><a href="articles/module8-topic4.html">Design Systems</a></li>
+                </ul>
+                <span class="module-difficulty difficulty-advanced">Advanced</span>
+            </div>
+
+            <div class="module-card fade-in">
+                <div class="module-number">09</div>
+                <h3><a href="articles/module9-intro.html">Packaging & Print Design</a></h3>
+                <ul class="module-topics">
+                    <li><a href="articles/module9-topic1.html">Die Lines</a></li>
+                    <li><a href="articles/module9-topic2.html">CMYK vs RGB</a></li>
+                    <li><a href="articles/module9-topic3.html">Finishing Techniques</a></li>
+                    <li><a href="articles/module9-topic4.html">Eco-friendly Packaging</a></li>
+                </ul>
+                <span class="module-difficulty difficulty-intermediate">Intermediate</span>
+            </div>
+
+            <div class="module-card fade-in">
+                <div class="module-number">10</div>
+                <h3><a href="articles/module10-intro.html">Motion Graphics</a></h3>
+                <ul class="module-topics">
+                    <li><a href="articles/module10-topic1.html">Intro to After Effects</a></li>
+                    <li><a href="articles/module10-topic2.html">Kinetic Typography</a></li>
+                    <li><a href="articles/module10-topic3.html">Logo Animation</a></li>
+                </ul>
+                <span class="module-difficulty difficulty-advanced">Advanced</span>
+            </div>
+
+            <div class="module-card fade-in">
+                <div class="module-number">11</div>
+                <h3><a href="articles/module11-intro.html">Portfolio & Real-world Application</a></h3>
+                <ul class="module-topics">
+                    <li><a href="articles/module11-topic1.html">Portfolio Building</a></li>
+                    <li><a href="articles/module11-topic2.html">Freelancing & Agencies</a></li>
+                    <li><a href="articles/module11-topic3.html">Client Communication</a></li>
+                    <li><a href="articles/module11-topic4.html">Contracts & Pricing</a></li>
+                </ul>
+                <span class="module-difficulty difficulty-advanced">Advanced</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="fab" onclick="scrollToTop()"></div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.querySelector('.background-particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Scroll animations
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.fade-in');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Progress bar
+        function updateProgressBar() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.progress-bar').style.width = scrolled + '%';
+        }
+
+        
+
+        // Interactive demo
+        function animateDemo() {
+            const circle = document.querySelector('.demo-circle');
+            const colors = ['var(--gradient-1)', 'var(--gradient-2)', 'var(--gradient-3)'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            circle.style.background = randomColor;
+            circle.style.transform = 'scale(1.2) rotate(360deg)';
+            circle.style.boxShadow = '0 0 40px rgba(255, 0, 85, 0.8)';
+            
+            setTimeout(() => {
+                circle.style.transform = '';
+                circle.style.boxShadow = '';
+            }, 500);
+
+            // Trigger confetti
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+        // Scroll to top
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            handleScrollAnimations();
+
+            // Add click event listener to module cards
+            document.querySelectorAll('.module-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // only navigate if the click is not on a link within the card
+                    if (e.target.tagName !== 'A') {
+                        const link = card.querySelector('h3 a');
+                        if (link) {
+                            window.location.href = link.href;
+                        }
+                    }
+                });
+            });
+            
+            // Add scroll event listeners
+            window.addEventListener('scroll', () => {
+                handleScrollAnimations();
+                updateProgressBar();
+            });
+            
+            // Add mouse movement effect
+            document.addEventListener('mousemove', (e) => {
+                const particles = document.querySelectorAll('.particle');
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                particles.forEach((particle, index) => {
+                    const speed = (index % 5 + 1) * 0.5;
+                    const xOffset = (x - 0.5) * speed;
+                    const yOffset = (y - 0.5) * speed;
+                    
+                    particle.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+                });
+            });
+            
+            // Add random animation to module numbers
+            setInterval(() => {
+                const numbers = document.querySelectorAll('.module-number');
+                const randomNumber = numbers[Math.floor(Math.random() * numbers.length)];
+                randomNumber.style.animation = 'none';
+                setTimeout(() => {
+                    randomNumber.style.animation = 'bounce 2s infinite';
+                }, 100);
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
