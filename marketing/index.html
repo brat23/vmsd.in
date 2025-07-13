@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Deep Mastery Curriculum</title>
+    <style>
+:root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ff88;
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --card-color: #1e1e1e;
+            --gradient-primary: linear-gradient(135deg, #ff0055, #ff3377);
+            --gradient-secondary: linear-gradient(135deg, #00ff88, #44ffaa);
+            --shadow-glow: 0 0 20px rgba(255, 0, 85, 0.3);
+            --shadow-glow-secondary: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 0, 85, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 0, 85, 0.05) 0%, transparent 50%);
+            animation: backgroundPulse 8s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+            animation: headerGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes headerGlow {
+            0% { box-shadow: 0 0 5px var(--primary-color); }
+            100% { box-shadow: 0 0 20px var(--primary-color); }
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: titleSlide 1s ease-out;
+        }
+
+        @keyframes titleSlide {
+            0% { 
+                opacity: 0; 
+                transform: translateY(-30px); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            animation: subtitleFade 1s ease-out 0.3s both;
+        }
+
+        @keyframes subtitleFade {
+            0% { opacity: 0; }
+            100% { opacity: 0.8; }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-secondary);
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: progressShimmer 2s infinite;
+        }
+
+        @keyframes progressShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .curriculum-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .module-card {
+            background: var(--card-color);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            border: 2px solid transparent;
+            animation: cardEntry 0.8s ease-out both;
+        }
+
+        .module-card:nth-child(even) {
+            animation-delay: 0.1s;
+        }
+
+        .module-card:nth-child(3n) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes cardEntry {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .module-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-glow);
+            border-color: var(--primary-color);
+        }
+
+        .module-card.completed {
+            border-color: var(--secondary-color);
+            background: linear-gradient(135deg, var(--card-color), rgba(0, 255, 136, 0.1));
+        }
+
+        .module-card.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 30px;
+            height: 30px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--background-color);
+            animation: checkmarkPop 0.5s ease-out;
+        }
+
+        @keyframes checkmarkPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .module-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            animation: numberGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes numberGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .module-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .module-title a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .module-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-secondary);
+            transition: width 0.3s ease;
+        }
+
+        .module-card:hover .module-title::after {
+            width: 100%;
+        }
+
+        .module-topics {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .module-topics li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 20px;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .module-topics li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .module-topics a {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 0.2rem 0;
+            border-radius: 4px;
+        }
+
+        .module-topics a:hover {
+            color: var(--secondary-color);
+            background: rgba(0, 255, 136, 0.1);
+            padding-left: 0.5rem;
+        }
+
+        .module-card:hover .module-topics li::before {
+            transform: translateX(5px);
+        }
+
+        .module-card:hover .module-topics li {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .module-duration {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .module-duration::before {
+            content: '⏱';
+            animation: clockTick 1s ease-in-out infinite;
+        }
+
+        @keyframes clockTick {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        .stats-section {
+            background: var(--card-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            animation: statPulse 4s ease-in-out infinite;
+        }
+
+        .stat-item:nth-child(2) { animation-delay: 0.5s; }
+        .stat-item:nth-child(3) { animation-delay: 1s; }
+        .stat-item:nth-child(4) { animation-delay: 1.5s; }
+
+        @keyframes statPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            counter-reset: number;
+            animation: countUp 2s ease-out;
+        }
+
+        @keyframes countUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: float 15s linear infinite;
+        }
+
+        .floating-element:nth-child(2n) {
+            background: var(--secondary-color);
+            animation-duration: 20s;
+        }
+
+        .floating-element:nth-child(3n) {
+            width: 2px;
+            height: 2px;
+            animation-duration: 25s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .curriculum-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .module-card {
+                padding: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .module-number {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="main-title">MARKETING</h1>
+            <p class="subtitle">Deep Mastery Curriculum</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </header>
+
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalModules">12</div>
+                    <div class="stat-label">Total Modules</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="completedModules">0</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalHours">150</div>
+                    <div class="stat-label">Total Hours</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="progressPercent">0%</div>
+                    <div class="stat-label">Progress</div>
+                </div>
+            </div>
+        </section>
+
+        <main class="curriculum-grid">
+            <div class="module-card" data-module="1">
+                <div class="module-number">01</div>
+                <h2 class="module-title"><a href="foundation/">Foundations of Marketing</a></h2>
+                <ul class="module-topics">
+                    <li><a href="foundation/what-is-marketing.html">What is Marketing?</a></li>
+                    <li><a href="foundation/history-of-marketing.html">History of Marketing</a></li>
+                    <li><a href="foundation/traditional-vs-digital.html">Traditional vs Digital Marketing</a></li>
+                </ul>
+                <div class="module-duration">8 hours</div>
+            </div>
+
+            <div class="module-card" data-module="2">
+                <div class="module-number">02</div>
+                <h2 class="module-title"><a href="consumer-psychology/">Consumer Psychology</a></h2>
+                <ul class="module-topics">
+                    <li><a href="consumer-psychology/understanding-consumer-behavior.html">Understanding Consumer Behavior</a></li>
+                    <li><a href="consumer-psychology/decision-making-models.html">Decision-making Models</a></li>
+                    <li><a href="consumer-psychology/emotion-in-marketing.html">Emotion in Marketing</a></li>
+                </ul>
+                <div class="module-duration">12 hours</div>
+            </div>
+
+            <div class="module-card" data-module="3">
+                <div class="module-number">03</div>
+                <h2 class="module-title"><a href="branding-and-positioning/">Branding and Positioning</a></h2>
+                <ul class="module-topics">
+                    <li><a href="branding-and-positioning/brand-strategy.html">Brand Strategy</a></li>
+                    <li><a href="branding-and-positioning/positioning-maps.html">Positioning Maps</a></li>
+                    <li><a href="branding-and-positioning/value-proposition.html">Value Proposition</a></li>
+                    <li><a href="branding-and-positioning/case-studies.html">Case Studies (Tesla, Apple, Nike)</a></li>
+                </ul>
+                <div class="module-duration">15 hours</div>
+            </div>
+
+            <div class="module-card" data-module="4">
+                <div class="module-number">04</div>
+                <h2 class="module-title"><a href="market-research-and-segmentation/">Market Research and Segmentation</a></h2>
+                <ul class="module-topics">
+                    <li><a href="market-research-and-segmentation/primary-and-secondary-segmentation.html">Primary & Secondary Research</a></li>
+                    <li><a href="market-research-and-segmentation/buyer-personas.html">Buyer Personas</a></li>
+                    <li><a href="market-research-and-segmentation/segmentation-targeting-positioning.html">Segmentation, Targeting, Positioning (STP)</a></li>
+                </ul>
+                <div class="module-duration">10 hours</div>
+            </div>
+
+            <div class="module-card" data-module="5">
+                <div class="module-number">05</div>
+                <h2 class="module-title"><a href="marketing-channels/">Marketing Channels</a></h2>
+                <ul class="module-topics">
+                    <li><a href="marketing-channels/offline.html">Offline: Print, TV, Events</a></li>
+                    <li><a href="marketing-channels/online.html">Online: Social, SEO, Email, Content, Influencer</a></li>
+                </ul>
+                <div class="module-duration">14 hours</div>
+            </div>
+
+            <div class="module-card" data-module="6">
+                <div class="module-number">06</div>
+                <h2 class="module-title"><a href="digital-marketing-strategy/">Digital Marketing Strategy</a></h2>
+                <ul class="module-topics">
+                    <li><a href="digital-marketing-strategy/seo-and-sem.html">SEO/SEM</a></li>
+                    <li><a href="digital-marketing-strategy/social-media-strategy.html">Social Media Strategy</a></li>
+                    <li><a href="digital-marketing-strategy/email-marketing.html">Email Marketing</a></li>
+                    <li><a href="digital-marketing-strategy/funnel-building.html">Funnel Building</a></li>
+                </ul>
+                <div class="module-duration">18 hours</div>
+            </div>
+
+            <div class="module-card" data-module="7">
+                <div class="module-number">07</div>
+                <h2 class="module-title"><a href="advertising-and-campaign-planning/">Advertising & Campaign Planning</a></h2>
+                <ul class="module-topics">
+                    <li><a href="advertising-and-campaign-planning/ad-copywriting.html">Ad Copywriting</a></li>
+                    <li><a href="advertising-and-campaign-planning/media-planning.html">Media Planning</a></li>
+                    <li><a href="advertising-and-campaign-planning/campaign-lifecycle.html">Campaign Lifecycle</a></li>
+                    <li><a href="advertising-and-campaign-planning/ab-testing.html">A/B Testing</a></li>
+                </ul>
+                <div class="module-duration">16 hours</div>
+            </div>
+
+            <div class="module-card" data-module="8">
+                <div class="module-number">08</div>
+                <h2 class="module-title"><a href="analytics-and-performance/">Analytics and Performance</a></h2>
+                <ul class="module-topics">
+                    <li><a href="analytics-and-performance/google-analytics.html">Google Analytics</a></li>
+                    <li><a href="analytics-and-performance/kpis-and-roi.html">KPIs and ROI</a></li>
+                    <li><a href="analytics-and-performance/conversion-rate-optimization.html">Conversion Rate Optimization (CRO)</a></li>
+                </ul>
+                <div class="module-duration">12 hours</div>
+            </div>
+
+            <div class="module-card" data-module="9">
+                <div class="module-number">09</div>
+                <h2 class="module-title"><a href="content-marketing/">Content Marketing</a></h2>
+                <ul class="module-topics">
+                    <li><a href="content-marketing/long-form-content.html">Long-form Content</a></li>
+                    <li><a href="content-marketing/blogging.html">Blogging</a></li>
+                    <li><a href="content-marketing/video-marketing.html">Video Marketing</a></li>
+                    <li><a href="content-marketing/podcasting.html">Podcasting</a></li>
+                </ul>
+                <div class="module-duration">14 hours</div>
+            </div>
+
+            <div class="module-card" data-module="10">
+                <div class="module-number">10</div>
+                <h2 class="module-title"><a href="growth-hacking-and-virality/">Growth Hacking & Virality</a></h2>
+                <ul class="module-topics">
+                    <li><a href="growth-hacking-and-virality/viral-loops.html">Viral Loops</a></li>
+                    <li><a href="growth-hacking-and-virality/referral-systems.html">Referral Systems</a></li>
+                    <li><a href="growth-hacking-and-virality/case-studies.html">Case Studies (Dropbox, Airbnb)</a></li>
+                </ul>
+                <div class="module-duration">13 hours</div>
+            </div>
+
+            <div class="module-card" data-module="11">
+                <div class="module-number">11</div>
+                <h2 class="module-title"><a href="marketing-automation-and-crm/">Marketing Automation & CRM</a></h2>
+                <ul class="module-topics">
+                    <li><a href="marketing-automation-and-crm/tools.html">Tools (Hubspot, Mailchimp, Salesforce)</a></li>
+                    <li><a href="marketing-automation-and-crm/lead-nurturing.html">Lead Nurturing</a></li>
+                    <li><a href="marketing-automation-and-crm/customer-journey-mapping.html">Customer Journey Mapping</a></li>
+                </ul>
+                <div class="module-duration">11 hours</div>
+            </div>
+
+            <div class="module-card" data-module="12">
+                <div class="module-number">12</div>
+                <h2 class="module-title"><a href="ethics-and-regulations/">Ethics and Regulations</a></h2>
+                <ul class="module-topics">
+                    <li><a href="ethics-and-regulations/data-privacy-laws.html">Data Privacy Laws (GDPR, CCPA)</a></li>
+                    <li><a href="ethics-and-regulations/ethical-marketing.html">Ethical Marketing</a></li>
+                    <li><a href="ethics-and-regulations/greenwashing-authenticity.html">Greenwashing vs Authenticity</a></li>
+                </ul>
+                <div class="module-duration">7 hours</div>
+            </div>
+        </main>
+
+        <div class="cta-section">
+            <a href="/" class="cta-button" id="startLearning">Explore More</a>
+        </div>
+    </div>
+
+    <script>
+        // Initialize floating elements
+        function createFloatingElements() {
+            const container = document.querySelector('.floating-elements');
+            for (let i = 0; i < 20; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.style.left = Math.random() * 100 + '%';
+                element.style.animationDelay = Math.random() * 15 + 's';
+                container.appendChild(element);
+            }
+        }
+
+        // Progress tracking
+        let completedModules = 0;
+        const totalModules = 12;
+        const moduleCards = document.querySelectorAll('.module-card');
+        const progressFill = document.getElementById('progressFill');
+        const completedCounter = document.getElementById('completedModules');
+        const progressPercent = document.getElementById('progressPercent');
+
+        function updateProgress() {
+            const progress = (completedModules / totalModules) * 100;
+            progressFill.style.width = progress + '%';
+            completedCounter.textContent = completedModules;
+            progressPercent.textContent = Math.round(progress) + '%';
+        }
+
+        // Module interaction
+        moduleCards.forEach(card => {
+            card.addEventListener('click', function() {
+                if (this.classList.contains('completed')) {
+                    this.classList.remove('completed');
+                    completedModules--;
+                } else {
+                    this.classList.add('completed');
+                    completedModules++;
+                    // Add celebration effect
+                    createCelebrationEffect(this);
+                }
+                updateProgress();
+            });
+
+            // Hover effect for topics
+            card.addEventListener('mouseenter', function() {
+                const topics = this.querySelectorAll('.module-topics li');
+                topics.forEach((topic, index) => {
+                    setTimeout(() => {
+                        topic.style.transform = 'translateX(10px)';
+                        topic.style.color = 'var(--secondary-color)';
+                    }, index * 50);
+                });
+            });
+
+            card.addEventListener('mouseleave', function() {
+                const topics = this.querySelectorAll('.module-topics li');
+                topics.forEach(topic => {
+                    topic.style.transform = 'translateX(0)';
+                    topic.style.color = '';
+                });
+            });
+        });
+
+        // Celebration effect
+        function createCelebrationEffect(card) {
+            const rect = card.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'fixed';
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                particle.style.width = '6px';
+                particle.style.height = '6px';
+                particle.style.borderRadius = '50%';
+                particle.style.background = i % 2 === 0 ? 'var(--primary-color)' : 'var(--secondary-color)';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1000';
+                
+                document.body.appendChild(particle);
+
+                const angle = (i / 8) * Math.PI * 2;
+                const distance = 50 + Math.random() * 50;
+                const endX = centerX + Math.cos(angle) * distance;
+                const endY = centerY + Math.sin(angle) * distance;
+
+                particle.animate([
+                    { 
+                        transform: 'translate(0, 0) scale(1)',
+                        opacity: 1 
+                    },
+                    { 
+                        transform: `translate(${endX - centerX}px, ${endY - centerY}px) scale(0)`,
+                        opacity: 0 
+                    }
+                ], {
+                    duration: 800,
+                    easing: 'ease-out'
+                }).onfinish = () => {
+                    particle.remove();
+                };
+            }
+        }
+
+        // Smooth scrolling for CTA
+        document.getElementById('startLearning').addEventListener('click', function(e) {
+            e.preventDefault();
+            const firstModule = document.querySelector('.module-card');
+            firstModule.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
+            
+            // Add pulse effect
+            setTimeout(() => {
+                firstModule.style.animation = 'cardPulse 1s ease-out';
+            }, 500);
+        });
+
+        // Add pulse animation for first module highlight
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes cardPulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingElements();
+            updateProgress();
+            
+            // Animate stats on load
+            setTimeout(() => {
+                const stats = document.querySelectorAll('.stat-number');
+                stats.forEach(stat => {
+                    stat.style.animation = 'countUp 2s ease-out';
+                });
+            }, 500);
+        });
+
+        // Intersection Observer for card animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'cardEntry 0.8s ease-out both';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        moduleCards.forEach(card => {
+            observer.observe(card);
+        });
+
+        // Dynamic background color change based on scroll
+        window.addEventListener('scroll', function() {
+            const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            const hue = scrollPercent * 360;
+            document.body.style.setProperty('--dynamic-hue', hue);
+        });
+    </script>
+</body>
+</html>

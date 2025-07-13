@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Lost in the Digital Void</title>
+    <style>
+        :root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ff88;
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --card-color: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--background-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--primary-color), var(--secondary-color));
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .error-code {
+            font-size: 15rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            line-height: 1;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite, glitch 3s ease-in-out infinite;
+            position: relative;
+            text-shadow: 0 0 30px var(--primary-color);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            10% { transform: translate(-2px, 2px); }
+            20% { transform: translate(2px, -2px); }
+            30% { transform: translate(-2px, -2px); }
+            40% { transform: translate(2px, 2px); }
+        }
+
+        .error-message {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .error-subtitle {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .actions {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: none;
+            animation: slideInLeft 1s ease-out 1.5s both;
+        }
+
+        .btn:nth-child(2) {
+            animation: slideInRight 1s ease-out 1.5s both;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), #ff3377);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--card-color);
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 0, 85, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary-color);
+            color: var(--background-color);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .fun-facts {
+            background: var(--card-color);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 0, 85, 0.2);
+            animation: fadeIn 1s ease-out 2s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fun-facts::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 85, 0.05), transparent);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fun-facts-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .fun-facts h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .fact {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Interactive elements */
+        .interactive-element {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 8rem;
+            }
+            .error-message {
+                font-size: 2rem;
+            }
+            .actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Easter egg animation */
+        @keyframes konami {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-5deg) scale(1.1); }
+            50% { transform: rotate(5deg) scale(1.2); }
+            75% { transform: rotate(-3deg) scale(1.1); }
+        }
+
+        .konami-activated {
+            animation: konami 0.5s ease-in-out;
+        }
+    </style>
+<body>
+    <div class="bg-animation"></div>
+    
+    <div class="particles">
+        <!-- Particles will be generated by JavaScript -->
+    </div>
+
+    <div class="container">
+        <div class="error-code" id="errorCode">404</div>
+        
+        <h1 class="error-message">Oops! You've Found the Digital Bermuda Triangle</h1>
+        
+        <p class="error-subtitle">
+            The page you're looking for has vanished into the void. 
+            It's probably hanging out with missing socks and forgotten passwords.
+        </p>
+        
+        <div class="actions">
+            <a href="#" class="btn btn-primary" onclick="goHome()">Take Me Home</a>
+            <button class="btn btn-secondary" onclick="randomFact()">Tell Me Something Cool</button>
+        </div>
+        
+        <div class="fun-facts">
+            <div class="fun-facts-content">
+                <h3>🚀 Fun 404 Facts</h3>
+                <div class="fact" id="currentFact">
+                    The first 404 error was encountered at CERN in 1992. 
+                    Even scientists couldn't find what they were looking for!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="interactive-element" id="cursor"></div>
+
+    <script>
+        // Witty facts array
+        const funFacts = [
+            "The first 404 error was encountered at CERN in 1992. Even scientists couldn't find what they were looking for!",
+            "404 errors are named after room 404 at CERN where the first web servers were located. Plot twist: Room 404 doesn't exist!",
+            "The average internet user encounters about 4-5 404 errors per day. You're contributing to statistics!",
+            "In HTTP cat language, 404 means 'I can has page?' Answer: 'No, you cannot has page.'",
+            "Some websites have 404 pages more popular than their actual content. Congratulations, you found the good stuff!",
+            "404 backwards is 404. It's a palindrome that's as lost as the page you're looking for.",
+            "The most creative 404 page ever created was a fully functional Pac-Man game. This one just has dancing particles.",
+            "Statistically, 23% of all broken links lead to someone's abandoned MySpace page.",
+            "In an alternate universe, 404 errors are actually portals to pages that are too awesome for this reality.",
+            "The page you're looking for is probably having a coffee break. Pages need breaks too, you know!",
+            "404 is the only HTTP status code that has its own fan club. We're all members now.",
+            "Fun fact: This 404 page has more animations than most people's entire websites."
+        ];
+
+        // Generate floating particles
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Interactive cursor
+        function initCursor() {
+            const cursor = document.getElementById('cursor');
+            let mouseX = 0, mouseY = 0;
+            let cursorX = 0, cursorY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function updateCursor() {
+                cursorX += (mouseX - cursorX) * 0.1;
+                cursorY += (mouseY - cursorY) * 0.1;
+                cursor.style.left = cursorX + 'px';
+                cursor.style.top = cursorY + 'px';
+                requestAnimationFrame(updateCursor);
+            }
+            updateCursor();
+        }
+
+        // Random fact generator
+        function randomFact() {
+            const factElement = document.getElementById('currentFact');
+            const randomIndex = Math.floor(Math.random() * funFacts.length);
+            
+            factElement.style.opacity = '0';
+            factElement.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                factElement.textContent = funFacts[randomIndex];
+                factElement.style.opacity = '1';
+                factElement.style.transform = 'translateY(0)';
+                factElement.style.transition = 'all 0.3s ease';
+            }, 150);
+        }
+
+        // Home navigation
+        function goHome() {
+            // Add a fun exit animation
+            document.body.style.animation = 'fadeOut 0.5s ease-in-out';
+            setTimeout(() => {
+                window.history.back();
+            }, 500);
+        }
+
+        // Easter egg: Konami code
+        let konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+        let konamiIndex = 0;
+
+        document.addEventListener('keydown', (e) => {
+            if (e.keyCode === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    // Easter egg activated!
+                    document.getElementById('errorCode').classList.add('konami-activated');
+                    document.getElementById('currentFact').textContent = "🎉 Konami Code activated! You're a true 90s kid. The page is still missing though.";
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        // Click interactions
+        document.addEventListener('click', (e) => {
+            // Create ripple effect
+            const ripple = document.createElement('div');
+            ripple.style.position = 'fixed';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(255, 0, 85, 0.6)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.left = (e.clientX - 25) + 'px';
+            ripple.style.top = (e.clientY - 25) + 'px';
+            ripple.style.width = '50px';
+            ripple.style.height = '50px';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.zIndex = '9999';
+            
+            document.body.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to { transform: scale(4); opacity: 0; }
+            }
+            @keyframes fadeOut {
+                to { opacity: 0; transform: scale(0.8); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            initCursor();
+            
+            // Add some random glitch effects
+            setInterval(() => {
+                if (Math.random() < 0.1) {
+                    document.getElementById('errorCode').style.textShadow = 
+                        `${Math.random() * 10 - 5}px ${Math.random() * 10 - 5}px 30px var(--primary-color)`;
+                    setTimeout(() => {
+                        document.getElementById('errorCode').style.textShadow = '0 0 30px var(--primary-color)';
+                    }, 100);
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

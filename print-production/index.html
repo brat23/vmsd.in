@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Production Mastery</title>
+    <style>
+        :root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ff88;
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --card-color: #1e1e1e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .header-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: slideInDown 1s ease-out;
+        }
+        
+        .header-content p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+        
+        @keyframes slideInDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            background: var(--card-color);
+            padding: 1rem;
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Module Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .module-card {
+            background: var(--card-color);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .module-card:nth-child(1) { animation-delay: 0.1s; }
+        .module-card:nth-child(2) { animation-delay: 0.2s; }
+        .module-card:nth-child(3) { animation-delay: 0.3s; }
+        .module-card:nth-child(4) { animation-delay: 0.4s; }
+        .module-card:nth-child(5) { animation-delay: 0.5s; }
+        .module-card:nth-child(6) { animation-delay: 0.6s; }
+        .module-card:nth-child(7) { animation-delay: 0.7s; }
+        .module-card:nth-child(8) { animation-delay: 0.8s; }
+        .module-card:nth-child(9) { animation-delay: 0.9s; }
+        .module-card:nth-child(10) { animation-delay: 1.0s; }
+        
+        @keyframes fadeInUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .module-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 40px rgba(255, 0, 85, 0.3);
+        }
+        
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .module-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .module-number {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(255, 0, 85, 0.4);
+        }
+        
+        .module-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        
+        .status-locked {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .status-available {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--secondary-color);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        .status-completed {
+            background: rgba(255, 0, 85, 0.2);
+            color: var(--primary-color);
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px rgba(0, 255, 136, 0.5); }
+            to { box-shadow: 0 0 20px rgba(0, 255, 136, 0.8); }
+        }
+        
+        .module-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .submodules {
+            margin-top: 1rem;
+        }
+        
+        .submodule {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+        }
+        
+        .submodule:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: var(--secondary-color);
+            transform: translateX(5px);
+        }
+        
+        .submodule.completed {
+            border-left-color: var(--primary-color);
+            background: rgba(255, 0, 85, 0.1);
+        }
+        
+        .submodule-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .submodule-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            background: var(--card-color);
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.4s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+        
+        .close:hover {
+            color: var(--primary-color);
+        }
+        
+        .modal-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+        
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .lesson-content {
+            margin-bottom: 2rem;
+        }
+        
+        .lesson-item {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 15px;
+            border-left: 4px solid var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .lesson-item:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+        
+        .lesson-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--secondary-color);
+        }
+        
+        .lesson-description {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .complete-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 5px 15px rgba(255, 0, 85, 0.4);
+        }
+        
+        .complete-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 0, 85, 0.6);
+        }
+        
+        .complete-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .header-content h1 {
+                font-size: 2rem;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .module-card {
+                padding: 1.5rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+                padding: 1.5rem;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 0, 85, 0.4);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 0, 85, 0.6);
+        }
+        
+        /* Stats Cards */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: var(--card-color);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>Print Production Mastery</h1>
+                <p>Master the art and science of modern print production</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="progress-container">
+            <div class="progress-header">
+                <h3>Course Progress</h3>
+                <span id="progressText">0% Complete</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number" id="completedModules">0</div>
+                <div class="stat-label">Modules Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalLessons">45</div>
+                <div class="stat-label">Total Lessons</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="timeSpent">0</div>
+                <div class="stat-label">Hours Studied</div>
+            </div>
+        </div>
+
+        <div class="modules-grid" id="modulesGrid">
+            <!-- Modules will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="moduleModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+            </div>
+            <div class="lesson-content" id="lessonContent"></div>
+            <button class="complete-btn" id="completeBtn">Complete Module</button>
+        </div>
+    </div>
+
+    <button class="fab" onclick="resetProgress()" title="Reset Progress">↻</button>
+
+    <script>
+        // Module data
+        const modules = [
+            {
+                id: 1,
+                title: "Introduction to Print Production",
+                lessons: [
+                    {
+                        title: "What is Print Production?",
+                        description: "Understanding the fundamentals of print production, its role in modern business, and the complete workflow from concept to finished product."
+                    },
+                    {
+                        title: "History & Evolution",
+                        description: "Journey from manual presses to digital workflows, exploring key innovations that shaped the industry."
+                    },
+                    {
+                        title: "Importance in Design, Advertising, and Retail",
+                        description: "How print production impacts marketing, branding, and retail environments in today's digital age."
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Print Technologies",
+                lessons: [
+                    {
+                        title: "Offset Printing Fundamentals",
+                        description: "Master the principles of offset printing, including planographic processes and key components."
+                    },
+                    {
+                        title: "Digital Printing Systems",
+                        description: "Explore toner-based and inkjet technologies, variable data printing, and when to choose digital."
+                    },
+                    {
+                        title: "Technology Comparison",
+                        description: "Compare different printing technologies and learn to select the right method for each project."
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Print Media Types",
+                lessons: [
+                    {
+                        title: "Paper Classifications",
+                        description: "Understanding GSM, coating types, texture, brightness, and selecting the right paper for your project."
+                    },
+                    {
+                        title: "Specialty Media Applications",
+                        description: "Working with artboards, corrugated sheets, vinyl, and fabric printing substrates."
+                    },
+                    {
+                        title: "Signage Materials",
+                        description: "ACP panels, foam board, sunboard, backlit films, and transparent vinyl applications."
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Signage Production",
+                lessons: [
+                    {
+                        title: "Signage Types & Applications",
+                        description: "Backlit, frontlit, cut-out, and channel letter signage for different environments."
+                    },
+                    {
+                        title: "Indoor vs Outdoor Solutions",
+                        description: "Material selection and durability considerations for different installation environments."
+                    },
+                    {
+                        title: "Finishing Techniques",
+                        description: "Lamination, mounting, and finishing processes for professional signage."
+                    }
+                ]
+            },
+            {
+                id: 5,
+                title: "Print & Signage Machines",
+                lessons: [
+                    {
+                        title: "Machine Categories",
+                        description: "Desktop vs wide-format printers, cutting machines, and finishing equipment overview."
+                    },
+                    {
+                        title: "Specialized Equipment",
+                        description: "CNC routers, laser cutters, UV printers, eco-solvent, latex, and plotter cutters."
+                    },
+                    {
+                        title: "Equipment Selection",
+                        description: "Choosing the right machine for your production needs and budget considerations."
+                    }
+                ]
+            },
+            {
+                id: 6,
+                title: "Ink & Printing Passes",
+                lessons: [
+                    {
+                        title: "Ink Technologies",
+                        description: "CMYK, white ink, UV, eco-solvent, latex, and dye-sublimation ink systems."
+                    },
+                    {
+                        title: "Color Systems",
+                        description: "Understanding CMYK vs Pantone color matching and when to use each system."
+                    },
+                    {
+                        title: "Print Passes & Quality",
+                        description: "4-pass vs 6-pass vs 16-pass printing: quality vs speed optimization."
+                    }
+                ]
+            },
+            {
+                id: 7,
+                title: "File Preparation & Color Management",
+                lessons: [
+                    {
+                        title: "Technical Specifications",
+                        description: "DPI requirements, bleed setup, crop marks, and proper file preparation."
+                    },
+                    {
+                        title: "Color Space Management",
+                        description: "RGB vs CMYK workflows, color profiles, and maintaining color accuracy."
+                    },
+                    {
+                        title: "Proofing & Calibration",
+                        description: "Digital proofing, color calibration, and quality control processes."
+                    }
+                ]
+            },
+            {
+                id: 8,
+                title: "Costing, Estimation & Sustainability",
+                lessons: [
+                    {
+                        title: "Cost Analysis",
+                        description: "Understanding media costs, ink consumption, machine time, and labor calculations."
+                    },
+                    {
+                        title: "Print Cost Calculation",
+                        description: "Practical methods for accurate job costing and pricing strategies."
+                    },
+                    {
+                        title: "Sustainable Practices",
+                        description: "Eco-friendly materials, waste reduction, and sustainable production methods."
+                    }
+                ]
+            },
+            {
+                id: 9,
+                title: "Real-world Applications & Case Studies",
+                lessons: [
+                    {
+                        title: "Retail & Visual Merchandising",
+                        description: "Point-of-sale graphics, window displays, and retail environment graphics."
+                    },
+                    {
+                        title: "Exhibition & Event Graphics",
+                        description: "Trade show displays, stage backdrops, rollups, and standee production."
+                    },
+                    {
+                        title: "Packaging Applications",
+                        description: "Product packaging, labels, and specialty packaging solutions."
+                    }
+                ]
+            },
+            {
+                id: 10,
+                title: "Practical Projects & Industry Exposure",
+                lessons: [
+                    {
+                        title: "Hands-on Projects",
+                        description: "Live production jobs including banners, backlit boards, and sticker sheets."
+                    },
+                    {
+                        title: "Machine Operations",
+                        description: "Equipment demonstration, maintenance basics, and troubleshooting."
+                    },
+                    {
+                        title: "Industry Integration",
+                        description: "Facility visits, vendor coordination, and quality control checklists."
+                    }
+                ]
+            }
+        ];
+
+        // State management
+        let completedModules = new Set();
+        let currentModule = null;
+        let studyTime = 0;
+
+        // Initialize the application
+        function init() {
+            loadProgress();
+            renderModules();
+            updateStats();
+            startTimer();
+        }
+
+        // Load progress from memory
+        function loadProgress() {
+            // In a real app, this would load from localStorage
+            // For demo purposes, we'll keep it in memory
+        }
+
+        // Save progress to memory
+        function saveProgress() {
+            // In a real app, this would save to localStorage
+            updateStats();
+        }
+
+        // Render modules
+        function renderModules() {
+            const grid = document.getElementById('modulesGrid');
+            grid.innerHTML = '';
+
+            modules.forEach((module, index) => {
+                const isCompleted = completedModules.has(module.id);
+                const isAvailable = index === 0 || completedModules.has(modules[index - 1].id);
+                
+                const card = document.createElement('div');
+                card.className = 'module-card';
+                card.onclick = () => isAvailable ? openModule(module) : null;
+                
+                const statusClass = isCompleted ? 'status-completed' : 
+                                   isAvailable ? 'status-available' : 'status-locked';
+                const statusText = isCompleted ? 'Completed' : 
+                                  isAvailable ? 'Available' : 'Locked';
+
+                card.innerHTML = `
+                    <div class="module-header">
+                        <div class="module-number">${module.id}</div>
+                        <div class="module-status ${statusClass}">${statusText}</div>
+                    </div>
+                    <h3 class="module-title">${module.title}</h3>
+                    <div class="submodules">
+                        ${module.lessons.map(lesson => `
+                            <div class="submodule ${isCompleted ? 'completed' : ''}">
+                                <div class="submodule-title">${lesson.title}</div>
+                                <div class="submodule-desc">${lesson.description}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // Open module modal
+        function openModule(module) {
+            currentModule = module;
+            const modal = document.getElementById('moduleModal');
+            const title = document.getElementById('modalTitle');
+            const content = document.getElementById('lessonContent');
+            const completeBtn = document.getElementById('completeBtn');
+
+            title.textContent = module.title;
+            
+            content.innerHTML = module.lessons.map(lesson => `
+                <div class="lesson-item">
+                    <h4 class="lesson-title">${lesson.title}</h4>
+                    <p class="lesson-description">${lesson.description}</p>
+                </div>
+            `).join('');
+
+            const isCompleted = completedModules.has(module.id);
+            completeBtn.textContent = isCompleted ? 'Completed ✓' : 'Complete Module';
+            completeBtn.disabled = isCompleted;
+
+            modal.style.display = 'block';
+        }
+
+        // Complete module
+        function completeModule() {
+            if (currentModule) {
+                completedModules.add(currentModule.id);
+                saveProgress();
+                renderModules();
+                updateProgress();
+                closeModal();
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('moduleModal').style.display = 'none';
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const progress = (completedModules.size / modules.length) * 100;
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            progressFill.style.width = progress + '%';
+            progressText.textContent = Math.round(progress) + '% Complete';
+        }
+
+        // Update statistics
+        function updateStats() {
+            document.getElementById('completedModules').textContent = completedModules.size;
+            document.getElementById('timeSpent').textContent = Math.floor(studyTime / 3600);
+            updateProgress();
+        }
+
+        // Start timer
+        function startTimer() {
+            setInterval(() => {
+                studyTime++;
+                if (studyTime % 60 === 0) {
+                    updateStats();
+                }
+            }, 1000);
+        }
+
+        // Reset progress
+        function resetProgress() {
+            if (confirm('Are you sure you want to reset all progress?')) {
+                completedModules.clear();
+                studyTime = 0;
+                saveProgress();
+                renderModules();
+                updateStats();
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', init);
+        document.getElementById('completeBtn').addEventListener('click', completeModule);
+        document.querySelector('.close').addEventListener('click', closeModal);
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('moduleModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -2,6 +2,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visual Merchandising & Store Design</title>
@@ -14,27 +23,83 @@
         <nav>
             <div class="logo">VMSD.in</div>
             <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
+                <!-- <li><a href="#about">About</a></li> -->
+                <!-- <li><a href="#services">Services</a></li> -->
                 <li><a href="#learn">Learn</a></li>
                 <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#tools">Tools</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
         <div class="hero">
             <h1>Transforming Spaces, Inspiring Sales</h1>
-            <p class="reveal">We create stunning visual merchandising and store designs that captivate customers and elevate your brand.</p>
+            <p>We create stunning visual merchandising and store designs that captivate customers and elevate your brand.</p>
             <a href="#portfolio" class="cta-button">View Our Work</a>
         </div>
     </header>
 
     <main>
-        <section id="about" class="content-section">
-            <h2 class="reveal">About Us</h2>
-            <p class="reveal">We are a passionate team of designers and strategists dedicated to creating unforgettable retail experiences. We believe that great design is about more than just aesthetics; it's about creating a connection with your customers and driving business results.</p>
+
+        <section id="learn" class="content-section">
+            <h2 class="reveal">Learn</h2>
+            <div class="services-grid">
+                <a href="./sd/" class="service-card reveal">
+                    <h3>Store Design</h3>
+                    <p>Explore the fundamentals of creating a compelling and effective retail environment.</p>
+                </a>
+                <a href="./ed/" class="service-card reveal">
+                    <h3>Exhibition Design</h3>
+                    <p>Designing engaging and memorable exhibition spaces that tell a story.</p>
+                </a>
+                <a href="./vm/" class="service-card reveal">
+                    <h3>Visual Merchandising</h3>
+                    <p>Art and Science of Visual Merchandising</p>
+                </a>
+
+                <a href="./gd/" class="service-card reveal">
+                    <h3>Graphic Design</h3>
+                    <p>Design is where everything starts</p>
+                </a>
+
+                <a href="./pm/" class="service-card reveal">
+                    <h3>Project Management</h3>
+                    <br>
+                    <p>Manage Project lifecycle like a wizard</p>
+                </a>
+
+                <a href="./marketing/" class="service-card reveal">
+                    <h3>Marketing</h3>
+                    <br>
+                    <p>Marketing is all about selling water infront of river</p>
+                </a>
+
+                <a href="#" class="service-card reveal">
+                    <h3>Print Production</h3>
+                    <br>
+                    <!-- <p>The world around you is surrounded by signage and print medias - start exploring</p> -->
+                    <p>coming soon</p>
+                </a>
+
+                <a href="#" class="service-card reveal">
+                    <h3>Financial Analysis</h3>
+                    <br>
+                    <!-- <p>Finance has many verticals, my area of interest explored</p> -->
+                    <p>coming soon</p>
+                </a>
+
+                <a href="#" class="service-card reveal">
+                    <h3>Web Design and Development</h3>
+                    <br>
+                    <!-- <p>Marketing is all about selling water infront of river</p> -->
+                    <p>coming soon</p>
+
+                </a>
+
+            </div>
         </section>
 
-        <section id="services" class="content-section">
+
+                <!-- <section id="services" class="content-section">
             <h2 class="reveal">Our Services</h2>
             <div class="services-grid">
                 <div class="service-card reveal">
@@ -56,7 +121,53 @@
                     <p>We create temporary retail experiences that generate buzz and drive sales. From concept to execution, we'''ll help you make a big impact in a short amount of time.</p>
                 </div>
             </div>
+        </section> -->
+
+
+
+        
+
+
+
+        <section id="portfolio" class="content-section">
+            <h2 class="reveal">Portfolio</h2>
+            <div class="portfolio-grid">
+
+                <div class="portfolio-item reveal">
+                    <img src="images/dfr.png" alt="Portfolio Image 4">
+                    <div class="portfolio-overlay">
+                        <h3>Duty Free Retail</h3>
+                        <p>Liquor Display at the Airport Duty Free</p>
+                    </div>
+                </div>
+
+                
+                <div class="portfolio-item reveal">
+                    <img src="images/mk1.png" alt="Portfolio Image 2">
+                    <div class="portfolio-overlay">
+                        <h3>Mom's Wear</h3>
+                        <p>Merchandise Planogram and Implementation</p>
+                    </div>
+                </div>
+                
+                 <div class="portfolio-item reveal">
+                    <img src="images/cp2.png" alt="Portfolio Image 1">
+                    <div class="portfolio-overlay">
+                        <h3>Men's Wear</h3>
+                        <p>Display Principle's Ensemble Layering, folding and Presentation</p>
+                    </div>
+                </div>
+
+                <div class="portfolio-item reveal">
+                    <img src="images/planmk.png" alt="Portfolio Image 3">
+                    <div class="portfolio-overlay">
+                        <h3>Planogram - Kid's</h3>
+                        <p>Planogram in Action</p>
+                    </div>
+                </div>
+            </div>
         </section>
+
 
         <section id="tools" class="content-section">
             <h2 class="reveal">Tools</h2>
@@ -72,82 +183,15 @@
                 </div>
         </section>
 
-        <section id="learn" class="content-section">
-            <h2 class="reveal">Learn the Concepts</h2>
-            <div class="services-grid">
-                <a href="./sd/" class="service-card reveal">
-                    <h3>Store Design</h3>
-                    <p>Explore the fundamentals of creating a compelling and effective retail environment.</p>
-                </a>
-                <a href="./ed/" class="service-card reveal">
-                    <h3>Exhibition Design</h3>
-                    <p>Learn how to design engaging and memorable exhibition spaces that tell a story.</p>
-                </a>
-                <a href="./vm/" class="service-card reveal">
-                    <h3>Visual Merchandising</h3>
-                    <p>Learn the art of Visual Merchandising</p>
-                </a>
-
-                <a href="./gd/" class="service-card reveal">
-                    <h3>Graphic Design</h3>
-                    <p>Design is where everything starts</p>
-                </a>
-
-                <a href="./pm/" class="service-card reveal">
-                    <h3>Project Management</h3>
-                    <p>coming soon</p>
-                    <br>
-                    <p>Learn to manage Project lifecycle like a wizard</p>
-                </a>
-
-                <a href="./mk/" class="service-card reveal">
-                    <h3>Marketing</h3>
-                    <p>coming soon</p>
-                    <br>
-                    <p>Marketing is all about selling water infront of river</p>
-                </a>
-
-            </div>
-        </section>
-
-        <section id="portfolio" class="content-section">
-            <h2 class="reveal">Portfolio</h2>
-            <div class="portfolio-grid">
-                <div class="portfolio-item reveal">
-                    <img src="images/cp2.png" alt="Portfolio Image 1">
-                    <div class="portfolio-overlay">
-                        <h3>Classic Polo</h3>
-                        <p>Merchandise presentation</p>
-                    </div>
-                </div>
-                <div class="portfolio-item reveal">
-                    <img src="images/mk1.png" alt="Portfolio Image 2">
-                    <div class="portfolio-overlay">
-                        <h3>Miniklub</h3>
-                        <p>Planogram and implementation</p>
-                    </div>
-                </div>
-                <div class="portfolio-item reveal">
-                    <img src="images/planmk.png" alt="Portfolio Image 3">
-                    <div class="portfolio-overlay">
-                        <h3>Miniklub</h3>
-                        <p>Planogram in detail</p>
-                    </div>
-                </div>
-                 <div class="portfolio-item reveal">
-                    <img src="images/dfr.png" alt="Portfolio Image 4">
-                    <div class="portfolio-overlay">
-                        <h3>Duty Free Retail</h3>
-                        <p>Airport Duty Free Shop</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <!-- <section id="about" class="content-section">
+            <h2 class="reveal">About Us</h2>
+            <p class="reveal">We are a passionate team of designers and strategists dedicated to creating unforgettable retail experiences. We believe that great design is about more than just aesthetics; it's about creating a connection with your customers and driving business results.</p>
+        </section> -->
 
         <section id="contact" class="content-section">
             <h2 class="reveal">Contact Us</h2>
             <p class="reveal">Ready to elevate your retail experience? Let's talk.</p>
-            <a href="mailto:bharath@vmsd.in" class="cta-button reveal">Get in Touch</a>
+            <a href="https://bharath.vmsd.in" class="cta-button reveal">Get in Touch</a>
         </section>
     </main>
 
