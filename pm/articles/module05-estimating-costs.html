@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estimating Costs</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>Estimating Costs</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">"How much will it cost?" This is one of the first and most important questions that stakeholders will ask about a project. Answering this question accurately is one of the biggest challenges in project management. Cost estimating is the process of developing an approximation of the monetary resources needed to complete project activities. A good cost estimate is the foundation of a sound project budget and is essential for securing funding, making good decisions, and measuring project performance.</p>
+
+            <div class="interactive-cost-estimator">
+                <h3>Interactive Cost Estimation</h3>
+                <p>Let's estimate the cost of a small project. Choose an estimation technique and see how it affects the final cost estimate. For this exercise, assume a similar past project cost $10,000.</p>
+                <div class="cost-estimator-form">
+                    <label for="estimation-technique">Estimation Technique:</label>
+                    <select id="estimation-technique">
+                        <option value="analogous">Analogous Estimating</option>
+                        <option value="parametric">Parametric Estimating</option>
+                        <option value="bottom-up">Bottom-Up Estimating</option>
+                    </select>
+                    <div id="parametric-inputs" style="display:none;">
+                        <label for="parametric-rate">Rate per unit:</label>
+                        <input type="number" id="parametric-rate" value="100">
+                        <label for="parametric-units">Number of units:</label>
+                        <input type="number" id="parametric-units" value="120">
+                    </div>
+                     <div id="bottom-up-inputs" style="display:none;">
+                        <label for="task1-cost">Task 1 Cost:</label>
+                        <input type="number" id="task1-cost" value="5000">
+                        <label for="task2-cost">Task 2 Cost:</label>
+                        <input type="number" id="task2-cost" value="4500">
+                        <label for="task3-cost">Task 3 Cost:</label>
+                        <input type="number" id="task3-cost" value="3000">
+                    </div>
+                    <button id="estimate-cost">Estimate Cost</button>
+                </div>
+                <div id="cost-estimate-result" class="feedback-message"></div>
+            </div>
+
+            <h2>The Importance of Accurate Cost Estimates</h2>
+            <p>Accurate cost estimates are critical for a number of reasons:</p>
+            <ul class="custom-list">
+                <li><strong>Securing Funding:</strong> You can't get your project approved without a realistic estimate of how much it will cost.</li>
+                <li><strong>Decision Making:</strong> Cost estimates are a key input for making decisions about whether to proceed with a project, how to scope it, and which vendors to choose.</li>
+                <li><strong>Setting a Baseline for Performance:</strong> The cost estimate is the basis for the project budget. The budget is used as a baseline to measure the project's cost performance.</li>
+                <li><strong>Managing Stakeholder Expectations:</strong> A realistic cost estimate helps to manage stakeholder expectations and to avoid unpleasant surprises down the road.</li>
+            </ul>
+
+            <h2>Common Cost Estimating Techniques</h2>
+            <p>There are several techniques that project managers can use to estimate project costs. The best technique to use will depend on the level of detail and accuracy required, as well as the amount of information available.</p>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">1. Analogous Estimating</div>
+                    <div class="accordion-content">
+                        <p>Analogous estimating, also known as top-down estimating, uses the actual cost of a previous, similar project as the basis for estimating the cost of the current project. This is a quick and easy technique, but it is also the least accurate. It is most useful in the early stages of a project when there is limited information available.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">2. Parametric Estimating</div>
+                    <div class="accordion-content">
+                        <p>Parametric estimating uses a statistical relationship between historical data and other variables (e.g., square footage in construction) to calculate a cost estimate. For example, if you know that it costs $100 to build one square foot of office space, you can estimate the cost of a 10,000 square foot office building by multiplying the two numbers. Parametric estimating is more accurate than analogous estimating, but it requires a reliable source of historical data.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">3. Bottom-Up Estimating</div>
+                    <div class="accordion-content">
+                        <p>Bottom-up estimating is the most accurate but also the most time-consuming estimation technique. It involves estimating the cost of each individual work package or activity and then rolling up those estimates to get a total project cost. This technique is best used when you have a detailed Work Breakdown Structure (WBS) and a good understanding of the work involved.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header">4. Three-Point Estimating</div>
+                    <div class="accordion-content">
+                        <p>Three-point estimating is a technique that takes into account the uncertainty and risk of cost estimating. Instead of providing a single cost estimate, you provide three: a most likely estimate (M), an optimistic estimate (O), and a pessimistic estimate (P). These three estimates are then used to calculate a weighted average, most commonly using the PERT (Program Evaluation and Review Technique) formula: (O + 4M + P) / 6. This technique provides a more realistic and defensible cost estimate.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>The Cost Baseline</h2>
+            <p>The output of the cost estimating process is the cost estimate for each activity in the project. These estimates are then aggregated to create the total project cost estimate. This total estimate, along with a contingency reserve to account for known risks, forms the cost baseline. The cost baseline is the approved version of the time-phased project budget, excluding any management reserves. It is the benchmark against which you will measure your project's cost performance.</p>
+
+            <h2>Conclusion</h2>
+            <p>Cost estimating is a fundamental skill for any project manager. It is a process that requires a combination of art and science. You need to be able to use the right techniques, but you also need to have the experience and judgment to know when to trust your gut. By mastering the art of cost estimating, you can provide your stakeholders with the realistic and reliable information they need to make good decisions, and you can set your project up for success from the very beginning.</p>
+        </article>
+        <script>
+            // Interactive Cost Estimator
+            const estimationTechniqueSelect = document.getElementById('estimation-technique');
+            const parametricInputs = document.getElementById('parametric-inputs');
+            const bottomUpInputs = document.getElementById('bottom-up-inputs');
+            const estimateCostBtn = document.getElementById('estimate-cost');
+            const costEstimateResult = document.getElementById('cost-estimate-result');
+
+            estimationTechniqueSelect.addEventListener('change', () => {
+                parametricInputs.style.display = 'none';
+                bottomUpInputs.style.display = 'none';
+                const selectedTechnique = estimationTechniqueSelect.value;
+                if (selectedTechnique === 'parametric') {
+                    parametricInputs.style.display = 'block';
+                } else if (selectedTechnique === 'bottom-up') {
+                    bottomUpInputs.style.display = 'block';
+                }
+            });
+
+            estimateCostBtn.addEventListener('click', () => {
+                const selectedTechnique = estimationTechniqueSelect.value;
+                let estimatedCost = 0;
+
+                if (selectedTechnique === 'analogous') {
+                    estimatedCost = 10000; // Based on the provided similar project cost
+                } else if (selectedTechnique === 'parametric') {
+                    const rate = parseFloat(document.getElementById('parametric-rate').value);
+                    const units = parseFloat(document.getElementById('parametric-units').value);
+                    estimatedCost = rate * units;
+                } else if (selectedTechnique === 'bottom-up') {
+                    const task1Cost = parseFloat(document.getElementById('task1-cost').value);
+                    const task2Cost = parseFloat(document.getElementById('task2-cost').value);
+                    const task3Cost = parseFloat(document.getElementById('task3-cost').value);
+                    estimatedCost = task1Cost + task2Cost + task3Cost;
+                }
+
+                if (!isNaN(estimatedCost)) {
+                    costEstimateResult.innerHTML = `<strong>Estimated Cost:</strong> ${estimatedCost.toFixed(2)}`;
+                    costEstimateResult.style.color = 'var(--success-color)';
+                } else {
+                    costEstimateResult.textContent = 'Please enter valid numbers.';
+                    costEstimateResult.style.color = 'var(--error-color)';
+                }
+            });
+
+            // Accordion functionality
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const content = item.querySelector('.accordion-content');
+                    const isActive = item.classList.toggle('active');
+                    content.style.maxHeight = isActive ? content.scrollHeight + "px" : null;
+                });
+            });
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

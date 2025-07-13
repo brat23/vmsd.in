@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cost Variance & Forecasting</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>Cost Variance & Forecasting</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">Creating a project budget is a critical first step, but it's only the beginning. To keep your project on track financially, you need to constantly monitor your actual spending and compare it to your plan. This is where cost variance and forecasting come in. Cost variance tells you how far you have deviated from your budget, while forecasting predicts your future financial performance. Together, these tools provide the insights you need to make proactive decisions and to keep your project from going off the rails.</p>
+
+            <div class="interactive-variance-calculator">
+                <h3>Interactive Variance & Forecast Calculator</h3>
+                <p>Let's calculate the cost variance and forecast the final project cost. Enter the values below to see how your project is performing.</p>
+                <div class="variance-form">
+                    <div class="variance-input">
+                        <label for="ev">Earned Value (EV):</label>
+                        <input type="number" id="ev" placeholder="e.g., 50000">
+                    </div>
+                    <div class="variance-input">
+                        <label for="ac">Actual Cost (AC):</label>
+                        <input type="number" id="ac" placeholder="e.g., 55000">
+                    </div>
+                    <div class="variance-input">
+                        <label for="bac">Budget at Completion (BAC):</label>
+                        <input type="number" id="bac" placeholder="e.g., 100000">
+                    </div>
+                    <button id="calculate-variance">Calculate</button>
+                </div>
+                <div id="variance-result" class="feedback-message"></div>
+            </div>
+
+            <h2>Earned Value Management: The Foundation of Cost Control</h2>
+            <p>The concepts of cost variance and forecasting are rooted in a powerful project management technique called Earned Value Management (EVM). EVM is a methodology that combines scope, schedule, and resource measurements to assess project performance and progress. It provides a set of metrics that give you a clear and objective view of your project's health.</p>
+            <p>There are three key metrics in EVM:</p>
+            <ul class="custom-list">
+                <li><strong>Planned Value (PV):</strong> The authorized budget assigned to the scheduled work. This is how much you planned to have spent at a certain point in time.</li>
+                <li><strong>Earned Value (EV):</strong> The value of the work actually performed, expressed in terms of the budget authorized for that work. This is the value you have created.</li>
+                <li><strong>Actual Cost (AC):</strong> The total cost actually incurred in accomplishing the work performed. This is how much you have actually spent.</li>
+            </ul>
+
+            <h2>Cost Variance (CV): Are You Over or Under Budget?</h2>
+            <p>Cost Variance (CV) is a measure of the budget performance of a project. It is the difference between the earned value and the actual cost. The formula for cost variance is:</p>
+            <p class="formula">CV = EV - AC</p>
+            <p>The result of this calculation tells you whether you are over or under budget:</p>
+            <ul class="custom-list">
+                <li><strong>Positive CV:</strong> You are under budget. You have spent less than you planned for the work you have completed.</li>
+                <li><strong>Negative CV:</strong> You are over budget. You have spent more than you planned for the work you have completed.</li>
+                <li><strong>Zero CV:</strong> You are exactly on budget.</li>
+            </ul>
+            <p>Another useful metric is the Cost Performance Index (CPI). The CPI is a measure of the cost efficiency of a project. The formula for CPI is:</p>
+            <p class="formula">CPI = EV / AC</p>
+            <ul class="custom-list">
+                <li><strong>CPI greater than 1:</strong> You are under budget.</li>
+                <li><strong>CPI less than 1:</strong> You are over budget.</li>
+                <li><strong>CPI equal to 1:</strong> You are on budget.</li>
+            </ul>
+
+            <h2>Cost Forecasting: Predicting the Future</h2>
+            <p>While cost variance tells you where you are now, cost forecasting tells you where you are headed. It is the process of predicting the future financial performance of your project based on your performance to date. There are several formulas you can use to forecast your project's final cost.</p>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">1. Estimate at Completion (EAC)</div>
+                    <div class="accordion-content">
+                        <p>The Estimate at Completion (EAC) is your best guess at what the total cost of the project will be. There are several ways to calculate the EAC, depending on your assumptions about future performance.</p>
+                        <p><strong>Formula 1: Assuming past performance will continue.</strong> This is the most common formula. It assumes that you will continue to spend at the same rate as you have so far.</p>
+                        <p class="formula">EAC = BAC / CPI</p>
+                        <p><strong>Formula 2: Assuming future work will be performed at the planned rate.</strong> This formula is used when you believe that the past performance is not a good indicator of future performance.</p>
+                        <p class="formula">EAC = AC + (BAC - EV)</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">2. Estimate to Complete (ETC)</div>
+                    <div class="accordion-content">
+                        <p>The Estimate to Complete (ETC) is the expected cost to finish the remaining work on the project. The formula for ETC is:</p>
+                        <p class="formula">ETC = EAC - AC</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">3. Variance at Completion (VAC)</div>
+                    <div class="accordion-content">
+                        <p>The Variance at Completion (VAC) is the projected budget surplus or deficit at the end of the project. The formula for VAC is:</p>
+                        <p class="formula">VAC = BAC - EAC</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Taking Corrective Action</h2>
+            <p>The purpose of cost variance analysis and forecasting is not just to report the numbers. It is to provide you with the information you need to take corrective action. If you are over budget, you need to figure out why and what you can do about it. This could involve:</p>
+            <ul class="custom-list">
+                <li><strong>Reducing the scope of the project.</strong></li>
+                <li><strong>Finding more efficient ways to do the work.</strong></li>
+                <li><strong>Requesting additional funding.</strong></li>
+            </ul>
+            <p>The earlier you identify a problem, the more options you will have to fix it.</p>
+
+            <h2>Conclusion</h2>
+            <p>Cost variance and forecasting are essential tools for keeping your project on track financially. By regularly monitoring your earned value, actual cost, and planned value, you can get a clear picture of your project's cost performance. And by using forecasting techniques to predict your future performance, you can make proactive decisions to keep your project within budget. Mastering these techniques is a key step towards becoming a more effective and data-driven project manager.</p>
+        </article>
+        <script>
+            // Interactive Variance & Forecast Calculator
+            const calculateVarianceBtn = document.getElementById('calculate-variance');
+            const varianceResult = document.getElementById('variance-result');
+
+            calculateVarianceBtn.addEventListener('click', () => {
+                const ev = parseFloat(document.getElementById('ev').value);
+                const ac = parseFloat(document.getElementById('ac').value);
+                const bac = parseFloat(document.getElementById('bac').value);
+
+                if (isNaN(ev) || isNaN(ac) || isNaN(bac)) {
+                    varianceResult.textContent = 'Please enter valid numbers for all fields.';
+                    varianceResult.style.color = 'var(--error-color)';
+                    return;
+                }
+
+                const cv = ev - ac;
+                const cpi = ev / ac;
+                const eac = bac / cpi;
+                const vac = bac - eac;
+
+                let resultHTML = `
+                    <strong>Cost Variance (CV):</strong> ${cv.toFixed(2)} (${cv >= 0 ? 'Under Budget' : 'Over Budget'})<br>
+                    <strong>Cost Performance Index (CPI):</strong> ${cpi.toFixed(2)} (${cpi >= 1 ? 'Good' : 'Poor'})<br>
+                    <strong>Estimate at Completion (EAC):</strong> ${eac.toFixed(2)}<br>
+                    <strong>Variance at Completion (VAC):</strong> ${vac.toFixed(2)} (${vac >= 0 ? 'Projected Surplus' : 'Projected Deficit'})
+                `;
+
+                varianceResult.innerHTML = resultHTML;
+                varianceResult.style.color = cv >= 0 ? 'var(--success-color)' : 'var(--error-color)';
+            });
+
+            // Accordion functionality
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const content = item.querySelector('.accordion-content');
+                    const isActive = item.classList.toggle('active');
+                    content.style.maxHeight = isActive ? content.scrollHeight + "px" : null;
+                });
+            });
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

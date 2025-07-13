@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Boards</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>Kanban Boards</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">In the world of Agile, Scrum often gets most of the attention. But there is another powerful framework that is gaining popularity for its simplicity, flexibility, and focus on continuous flow: Kanban. At the heart of the Kanban method is the Kanban board, a visual tool that helps teams to manage their work, to identify bottlenecks, and to continuously improve their workflow. This article will explore what a Kanban board is, how it works, and how you can use it to bring a new level of efficiency and transparency to your projects.</p>
+
+            <div class="interactive-kanban-board">
+                <h3>Interactive Kanban Board</h3>
+                <p>Let's simulate a simple Kanban workflow. Drag the tasks from one column to the next to see how work flows across the board. Notice how the Work-in-Progress (WIP) limits affect your ability to move tasks.</p>
+                <div class="kanban-board-container">
+                    <div class="kanban-column" id="todo-column">
+                        <h4>To Do</h4>
+                        <div class="kanban-card" draggable="true" id="card1">Task 1</div>
+                        <div class="kanban-card" draggable="true" id="card2">Task 2</div>
+                        <div class="kanban-card" draggable="true" id="card3">Task 3</div>
+                    </div>
+                    <div class="kanban-column" id="inprogress-column" data-wip="2">
+                        <h4>In Progress (WIP: 2)</h4>
+                    </div>
+                    <div class="kanban-column" id="done-column">
+                        <h4>Done</h4>
+                    </div>
+                </div>
+                <div id="kanban-feedback" class="feedback-message"></div>
+            </div>
+
+            <h2>What is Kanban?</h2>
+            <p>Kanban is a method for managing knowledge work with an emphasis on just-in-time delivery while not overloading the team members. It originated in the 1940s at Toyota as a system for managing the flow of materials in their manufacturing process. The word "Kanban" is Japanese for "visual signal" or "card." In the early 2000s, David J. Anderson adapted the Kanban method for use in software development, and it has since been adopted by a wide variety of industries.</p>
+            <p>Unlike Scrum, which is based on fixed-length Sprints, Kanban is a flow-based system. The goal of Kanban is to create a smooth and continuous flow of work through the system. This is achieved by visualizing the workflow, limiting the amount of work in progress, and continuously measuring and improving the flow.</p>
+
+            <h2>The Four Core Principles of Kanban</h2>
+            <p>The Kanban method is based on four core principles:</p>
+            <ol class="custom-list">
+                <li><strong>Start with what you do now:</strong> Kanban does not require you to make drastic changes to your existing process. You can start by visualizing your current workflow and then gradually make improvements over time.</li>
+                <li><strong>Agree to pursue incremental, evolutionary change:</strong> Kanban is about making small, continuous improvements to your process. It is not about radical, disruptive change.</li>
+                <li><strong>Respect the current process, roles, responsibilities, and titles:</strong> Kanban does not prescribe any specific roles or processes. It is designed to be overlaid on top of your existing way of working.</li>
+                <li><strong>Encourage acts of leadership at all levels:</strong> In a Kanban system, everyone is encouraged to take a leadership role in improving the process.</li>
+            </ol>
+
+            <h2>The Six Practices of Kanban</h2>
+            <p>In addition to the four core principles, there are six key practices that are essential for a successful Kanban implementation.</p>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">1. Visualize the Workflow</div>
+                    <div class="accordion-content">
+                        <p>The first and most important practice is to visualize your workflow. This is done using a Kanban board. A Kanban board is a visual representation of your process, with columns representing the different stages of your workflow. Each work item is represented by a card that moves from left to right across the board as it progresses through the workflow.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">2. Limit Work in Progress (WIP)</div>
+                    <div class="accordion-content">
+                        <p>This is the cornerstone of the Kanban method. A WIP limit is a constraint on the number of work items that can be in a particular stage of the workflow at any given time. By limiting WIP, you can prevent your team from being overloaded, reduce context switching, and create a smoother flow of work. WIP limits are a powerful tool for identifying bottlenecks in your process.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">3. Manage Flow</div>
+                    <div class="accordion-content">
+                        <p>The goal of Kanban is to create a smooth and predictable flow of work. You can manage the flow by monitoring key metrics, such as lead time (the time it takes for a work item to go from start to finish) and cycle time (the time it takes for a work item to go through a particular stage of the workflow). By analyzing these metrics, you can identify opportunities to improve your process and to reduce waste.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header">4. Make Policies Explicit</div>
+                    <div class="accordion-content">
+                        <p>To create a smooth and consistent workflow, it's important to have clear and explicit policies. These policies should define how work is done in your system. For example, you might have a policy that defines what it means for a work item to be "Done" or a policy that outlines the process for expediting urgent work.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header">5. Implement Feedback Loops</div>
+                    <div class="accordion-content">
+                        <p>Feedback loops are essential for continuous improvement. Kanban encourages the use of regular feedback loops, such as daily stand-up meetings, service delivery reviews, and operations reviews. These meetings provide an opportunity for the team to review its performance, to identify problems, and to make adjustments to the process.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header">6. Improve Collaboratively, Evolve Experimentally</div>
+                    <div class="accordion-content">
+                        <p>Kanban is a process of continuous improvement. The team should be constantly looking for ways to improve its workflow. This is done through a process of collaborative experimentation. The team forms a hypothesis about how to improve the process, makes a small change, and then measures the results. If the change is successful, it is kept. If not, the team tries something else.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Kanban vs. Scrum</h2>
+            <p>While both Kanban and Scrum are Agile frameworks, there are some key differences between them:</p>
+            <ul class="custom-list">
+                <li><strong>Cadence:</strong> Scrum is based on fixed-length Sprints, while Kanban is a continuous flow system.</li>
+                <li><strong>Roles:</strong> Scrum has three prescribed roles (Product Owner, Scrum Master, Development Team), while Kanban has no prescribed roles.</li>
+                <li><strong>Change:</strong> In Scrum, the Sprint Backlog is fixed for the duration of the Sprint. In Kanban, changes can be made at any time, as long as they don't exceed the WIP limits.</li>
+                <li><strong>Metrics:</strong> Scrum teams often use velocity as their primary metric, while Kanban teams focus on lead time and cycle time.</li>
+            </ul>
+
+            <h2>Conclusion</h2>
+            <p>Kanban is a powerful and flexible framework for managing work and for driving continuous improvement. Its focus on visualization, flow, and limiting work in progress can help teams to become more efficient, more predictable, and more responsive to the needs of their customers. Whether you are working in software development, IT operations, or any other field of knowledge work, the principles and practices of Kanban can help you to take your team's performance to the next level.</p>
+        </article>
+        <script>
+            // Interactive Kanban Board
+            const kanbanCards = document.querySelectorAll('.kanban-card');
+            const kanbanColumns = document.querySelectorAll('.kanban-column');
+            const kanbanFeedback = document.getElementById('kanban-feedback');
+
+            kanbanCards.forEach(card => {
+                card.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', e.target.id);
+                });
+            });
+
+            kanbanColumns.forEach(column => {
+                column.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    column.classList.add('hovered');
+                });
+                column.addEventListener('dragleave', () => {
+                    column.classList.remove('hovered');
+                });
+                column.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const cardId = e.dataTransfer.getData('text');
+                    const cardElement = document.getElementById(cardId);
+                    const wipLimit = parseInt(column.dataset.wip);
+                    
+                    if (wipLimit && column.children.length -1 >= wipLimit) {
+                        kanbanFeedback.textContent = 'WIP limit reached! You cannot add more tasks to this column.';
+                        kanbanFeedback.style.color = 'var(--error-color)';
+                    } else {
+                        column.appendChild(cardElement);
+                        kanbanFeedback.textContent = '';
+                    }
+                    column.classList.remove('hovered');
+                });
+            });
+
+            // Accordion functionality
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const content = item.querySelector('.accordion-content');
+                    const isActive = item.classList.toggle('active');
+                    content.style.maxHeight = isActive ? content.scrollHeight + "px" : null;
+                });
+            });
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprint Planning & Review</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>Sprint Planning & Review</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">The Sprint is the heartbeat of Scrum. It is a short, time-boxed period during which a Scrum Team works to complete a set of work. But a Sprint is more than just a time-box. It is a container for all the other Scrum events, and it is bookended by two of the most important events in the framework: Sprint Planning and the Sprint Review. These two events provide the rhythm for the team, helping them to plan their work, to inspect their progress, and to adapt their plan as needed.</p>
+
+            <div class="interactive-sprint-planner">
+                <h3>Interactive Sprint Goal Planner</h3>
+                <p>A good Sprint Goal is a short, high-level summary of what the team plans to accomplish during the Sprint. Let's try to write one. Based on the selected Product Backlog Items, what would be a good Sprint Goal?</p>
+                <div class="sprint-goal-form">
+                    <h4>Selected Product Backlog Items:</h4>
+                    <ul class="custom-list">
+                        <li>As a user, I want to be able to log in with my email and password.</li>
+                        <li>As a user, I want to be able to reset my password if I forget it.</li>
+                        <li>As a user, I want to be able to log out of the application.</li>
+                    </ul>
+                    <label for="sprint-goal">Sprint Goal:</label>
+                    <input type="text" id="sprint-goal" placeholder="e.g., Implement a basic authentication system.">
+                    <button id="submit-goal">Submit Goal</button>
+                </div>
+                <div id="goal-feedback" class="feedback-message"></div>
+            </div>
+
+            <h2>Sprint Planning: What are we going to do?</h2>
+            <p>Sprint Planning is the event that kicks off the Sprint. It is a time-boxed meeting of up to eight hours for a one-month Sprint. The purpose of Sprint Planning is to create a plan for the Sprint. This plan is created by the collaborative work of the entire Scrum Team.</p>
+            <p>Sprint Planning answers two key questions:</p>
+            <ol class="custom-list">
+                <li><strong>What can be delivered in the Increment resulting from the upcoming Sprint?</strong> The Product Owner presents the ordered Product Backlog to the Development Team. The Development Team then selects the number of Product Backlog items it believes it can complete during the Sprint.</li>
+                <li><strong>How will the work needed to deliver the Increment be achieved?</strong> The Development Team plans the work needed to turn the selected Product Backlog items into a "Done" Increment. This often involves decomposing the Product Backlog items into smaller tasks, of one day or less. The result of this work is the Sprint Backlog.</li>
+            </ol>
+            <p>A key output of Sprint Planning is the Sprint Goal. The Sprint Goal is an objective that will be met within the Sprint through the implementation of the Sprint Backlog. It provides guidance to the Development Team on why it is building the Increment.</p>
+
+            <h2>The Sprint Review: What did we accomplish?</h2>
+            <p>The Sprint Review is held at the end of the Sprint to inspect the Increment and to adapt the Product Backlog if needed. It is a four-hour time-boxed meeting for a one-month Sprint. This is an informal meeting, not a status meeting. The presentation of the Increment is intended to elicit feedback and foster collaboration.</p>
+            <p>The key activities of a Sprint Review are:</p>
+            <ul class="custom-list">
+                <li>The Product Owner explains which Product Backlog items have been "Done" and which have not been "Done".</li>
+                <li>The Development Team discusses what went well during the Sprint, what problems it ran into, and how those problems were solved.</li>
+                <li>The Development Team demonstrates the work that it has "Done" and answers questions about the Increment.</li>
+                <li>The entire group collaborates on what to do next, so that the Sprint Review provides valuable input to subsequent Sprint Planning.</li>
+                <li>Review of the timeline, budget, potential capabilities, and marketplace for the next anticipated releases of functionality or capability of the product.</li>
+            </ul>
+            <p>The result of the Sprint Review is a revised Product Backlog that defines the probable Product Backlog items for the next Sprint.</p>
+
+            <h2>The Importance of the Sprint Review</h2>
+            <p>The Sprint Review is a critical feedback loop in the Scrum process. It is the primary opportunity for the stakeholders to see the work that has been done and to provide their input. This feedback is essential for ensuring that the product is on the right track and that it will meet the needs of the users.</p>
+            <p>A good Sprint Review is:</p>
+            <ul class="custom-list">
+                <li><strong>A demonstration, not a presentation:</strong> The focus should be on showing working software, not on showing slides.</li>
+                <li><strong>A collaboration, not a critique:</strong> The goal is to have a conversation with the stakeholders, not to defend the work that has been done.</li>
+                <li><strong>A forward-looking event, not a backward-looking one:</strong> While the review does look at what was done in the Sprint, the primary focus should be on what to do next.</li>
+            </ul>
+
+            <h2>Conclusion</h2>
+            <p>Sprint Planning and the Sprint Review are the two pillars that support the Sprint. Sprint Planning provides the team with a clear goal and a plan for how to achieve it. The Sprint Review provides the team with the feedback it needs to adapt its plan and to ensure that it is building the right product. By mastering these two events, you can help your Scrum Team to find its rhythm, to deliver value to your customers, and to continuously improve its performance. They are the engine of the empirical process control that makes Scrum so effective.</p>
+        </article>
+        <script>
+            // Interactive Sprint Goal Planner
+            const submitGoalBtn = document.getElementById('submit-goal');
+            const goalFeedback = document.getElementById('goal-feedback');
+
+            submitGoalBtn.addEventListener('click', () => {
+                const sprintGoal = document.getElementById('sprint-goal').value.trim();
+                if (sprintGoal) {
+                    goalFeedback.textContent = `"${sprintGoal}" is a good, concise Sprint Goal. It provides a clear focus for the team.`;
+                    goalFeedback.style.color = 'var(--success-color)';
+                } else {
+                    goalFeedback.textContent = 'Please enter a Sprint Goal.';
+                    goalFeedback.style.color = 'var(--error-color)';
+                }
+            });
+
+            // Accordion functionality (if you have any)
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const content = item.querySelector('.accordion-content');
+                    const isActive = item.classList.toggle('active');
+                    content.style.maxHeight = isActive ? content.scrollHeight + "px" : null;
+                });
+            });
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacity Planning</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>Capacity Planning</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">Imagine trying to pour a gallon of water into a pint glass. It's not going to work. In the same way, you can't expect your project team to complete a gallon's worth of work with a pint's worth of capacity. This is the essence of capacity planning: ensuring that you have the right amount of resources, particularly human resources, to meet the demands of your project. It's a critical process for preventing burnout, maintaining quality, and delivering projects on time.</p>
+
+            <div class="interactive-capacity-calculator">
+                <h3>Interactive Capacity Calculator</h3>
+                <p>Let's see if your team has the capacity for an upcoming sprint. Enter your team members, their availability, and the estimated work. The calculator will tell you if you're overbooked.</p>
+                <div class="capacity-form">
+                    <div id="team-members"></div>
+                    <button id="add-member">+ Add Team Member</button>
+                    <hr>
+                    <label for="sprint-duration">Sprint Duration (days):</label>
+                    <input type="number" id="sprint-duration" value="10">
+                    <label for="estimated-work">Estimated Work (hours):</label>
+                    <input type="number" id="estimated-work" placeholder="e.g., 240">
+                    <button id="calculate-capacity">Calculate Capacity</button>
+                </div>
+                <div id="capacity-result" class="feedback-message"></div>
+            </div>
+
+            <h2>What is Capacity Planning?</h2>
+            <p>Capacity planning is the process of determining the production capacity needed by an organization to meet changing demands for its products. In the context of project management, it is the process of determining the capacity of your project team and ensuring that it is sufficient to meet the demands of the project. Capacity is the maximum amount of work that a team can complete in a given period of time.</p>
+            <p>Capacity planning aims to answer two key questions:</p>
+            <ul class="custom-list">
+                <li><strong>What is our current capacity?</strong></li>
+                <li><strong>Do we have enough capacity to meet the demands of the project?</strong></li>
+            </ul>
+            <p>If the answer to the second question is no, then you need to take action. This could involve reducing the scope of the project, extending the timeline, or acquiring more resources.</p>
+
+            <h2>The Importance of Capacity Planning</h2>
+            <p>Without effective capacity planning, you are essentially flying blind. You are making commitments without knowing if you have the resources to deliver on them. This can lead to a host of problems:</p>
+            <ul class="custom-list">
+                <li><strong>Team Burnout:</strong> Overloading your team is a sure-fire way to decrease morale, increase stress, and reduce productivity.</li>
+                <li><strong>Reduced Quality:</strong> When teams are rushed, they are more likely to cut corners and make mistakes, leading to a lower quality product.</li>
+                <li><strong>Missed Deadlines:</strong> If you don't have enough capacity to complete the work, you will inevitably miss your deadlines.</li>
+                <li><strong>Increased Costs:</strong> The problems above can all lead to increased costs, whether it's from having to hire temporary staff, fix quality issues, or deal with the consequences of a delayed project.</li>
+            </ul>
+
+            <h2>Capacity Planning Strategies</h2>
+            <p>There are three main strategies for capacity planning. The right strategy for you will depend on your organization's goals and risk tolerance.</p>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">1. Lead Strategy</div>
+                    <div class="accordion-content">
+                        <p>The lead strategy involves adding capacity in anticipation of future demand. This is an aggressive strategy that is often used in high-growth industries. The advantage of the lead strategy is that you are always ready to meet new demand. The disadvantage is that you may end up with excess capacity if the demand doesn't materialize as expected.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">2. Lag Strategy</div>
+                    <div class="accordion-content">
+                        <p>The lag strategy involves adding capacity only after the demand has actually increased. This is a more conservative strategy that reduces the risk of excess capacity. The disadvantage is that you may miss out on opportunities if you can't meet the demand in a timely manner. This can lead to long wait times and customer dissatisfaction.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">3. Match Strategy</div>
+                    <div class="accordion-content">
+                        <p>The match strategy is a middle-of-the-road approach that involves adding capacity in small increments to match the changing demand. This strategy is less risky than the lead strategy and more responsive than the lag strategy. It's a good choice for organizations that want to balance the risks and rewards of capacity planning.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Capacity Planning in Agile</h2>
+            <p>Capacity planning is a core practice in Agile methodologies like Scrum. At the beginning of each sprint, the team calculates its capacity for the upcoming sprint. This is usually done by taking the number of team members, multiplying it by the number of days in the sprint, and then multiplying it by the number of productive hours per day. The team then subtracts any time for meetings, holidays, and other non-project work.</p>
+            <p>Once the team knows its capacity, it can select the amount of work it can realistically commit to completing in the sprint. This helps to ensure that the team is not overloaded and that it can deliver a potentially shippable increment of the product at the end of each sprint. This commitment-based approach is a key driver of the predictability and sustainability of Agile teams.</p>
+
+            <h2>Conclusion</h2>
+            <p>Capacity planning is a fundamental discipline in project management. It is the process of aligning your resources with the demands of your project to ensure that you can deliver on your commitments. By understanding your team's capacity and by choosing the right capacity planning strategy, you can avoid the pitfalls of over-commitment, reduce stress, improve quality, and ultimately deliver more successful projects. Whether you are planning a large-scale construction project or a two-week Agile sprint, capacity planning is a skill that will serve you well.</p>
+        </article>
+        <script>
+            // Interactive Capacity Calculator
+            const addMemberBtn = document.getElementById('add-member');
+            const teamMembers = document.getElementById('team-members');
+            let memberCount = 0;
+
+            addMemberBtn.addEventListener('click', () => {
+                memberCount++;
+                const memberDiv = document.createElement('div');
+                memberDiv.classList.add('team-member-input');
+                memberDiv.innerHTML = `
+                    <input type="text" placeholder="Member ${memberCount} Name">
+                    <input type="number" placeholder="Hours/Day" class="hours-per-day">
+                `;
+                teamMembers.appendChild(memberDiv);
+            });
+
+            const calculateCapacityBtn = document.getElementById('calculate-capacity');
+            const capacityResult = document.getElementById('capacity-result');
+
+            calculateCapacityBtn.addEventListener('click', () => {
+                const sprintDuration = parseInt(document.getElementById('sprint-duration').value);
+                const estimatedWork = parseInt(document.getElementById('estimated-work').value);
+                let totalCapacity = 0;
+
+                const members = document.querySelectorAll('.team-member-input');
+                members.forEach(member => {
+                    const hoursPerDay = parseInt(member.querySelector('.hours-per-day').value);
+                    if (!isNaN(hoursPerDay)) {
+                        totalCapacity += hoursPerDay * sprintDuration;
+                    }
+                });
+
+                if (isNaN(sprintDuration) || isNaN(estimatedWork) || totalCapacity === 0) {
+                    capacityResult.textContent = 'Please fill in all fields correctly.';
+                    capacityResult.style.color = 'var(--error-color)';
+                    return;
+                }
+
+                capacityResult.innerHTML = `<strong>Total Team Capacity:</strong> ${totalCapacity} hours.<br>`;
+                if (totalCapacity >= estimatedWork) {
+                    capacityResult.innerHTML += `You have enough capacity for the estimated work. You have a buffer of ${totalCapacity - estimatedWork} hours.`;
+                    capacityResult.style.color = 'var(--success-color)';
+                } else {
+                    capacityResult.innerHTML += `You are overbooked by ${estimatedWork - totalCapacity} hours. You need to reduce the scope or extend the timeline.`;
+                    capacityResult.style.color = 'var(--error-color)';
+                }
+            });
+
+            // Accordion functionality
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const content = item.querySelector('.accordion-content');
+                    const isActive = item.classList.toggle('active');
+                    content.style.maxHeight = isActive ? content.scrollHeight + "px" : null;
+                });
+            });
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

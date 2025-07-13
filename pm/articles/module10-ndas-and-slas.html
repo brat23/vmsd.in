@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NDAs and SLAs</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>NDAs and SLAs</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">In the intricate world of project management, especially when dealing with external parties, sensitive information, or critical services, legal agreements play a pivotal role. Two of the most common and crucial agreements you'll encounter are Non-Disclosure Agreements (NDAs) and Service Level Agreements (SLAs). While both are contracts, they serve distinct purposes: NDAs protect confidentiality, and SLAs define service expectations. Understanding their nuances is essential for safeguarding your project's interests and ensuring smooth collaborations.</p>
+
+            <div class="interactive-agreement-matcher">
+                <h3>Interactive Agreement Matcher</h3>
+                <p>Read the scenario and decide whether an NDA or an SLA is the primary agreement needed. Drag the scenario to the correct agreement type.</p>
+                <div class="agreement-container">
+                    <div class="scenario-items">
+                        <h4>Scenarios</h4>
+                        <div class="scenario-item" draggable="true" id="scenario1">You are hiring a freelance designer to work on a new, unreleased product concept.</div>
+                        <div class="scenario-item" draggable="true" id="scenario2">You are outsourcing your IT support, and you need to define response times for critical issues.</div>
+                        <div class="scenario-item" draggable="true" id="scenario3">Your company is discussing a potential merger with another firm, sharing financial data.</div>
+                        <div class="scenario-item" draggable="true" id="scenario4">You are contracting a cloud provider for your application, and uptime guarantees are crucial.</div>
+                    </div>
+                    <div class="agreement-types">
+                        <div class="agreement-dropzone" id="nda-zone"><strong>Non-Disclosure Agreement (NDA)</strong></div>
+                        <div class="agreement-dropzone" id="sla-zone"><strong>Service Level Agreement (SLA)</strong></div>
+                    </div>
+                </div>
+                <div id="agreement-feedback" class="feedback-message"></div>
+            </div>
+
+            <h2>Non-Disclosure Agreements (NDAs): Protecting Your Secrets</h2>
+            <p>A Non-Disclosure Agreement (NDA), also known as a confidentiality agreement, is a legally binding contract that establishes a confidential relationship between two or more parties. The purpose of an NDA is to protect sensitive information that is shared between parties, preventing it from being disclosed to unauthorized individuals or entities. NDAs are fundamental in many business contexts, especially in project management where intellectual property, trade secrets, or strategic plans are often shared with external vendors, partners, or even potential employees.</p>
+            <h3>Key Components of an NDA:</h3>
+            <ul class="custom-list">
+                <li><strong>Parties Involved:</strong> Clearly identifies the disclosing party (who shares the information) and the receiving party (who receives it).</li>
+                <li><strong>Definition of Confidential Information:</strong> Specifies what information is considered confidential (e.g., trade secrets, business plans, customer lists, software code). This is crucial for enforceability.</li>
+                <li><strong>Obligations of the Receiving Party:</strong> Outlines how the confidential information must be handled, typically including obligations to keep it secret, use it only for specified purposes, and not to reverse engineer it.</li>
+                <li><strong>Exclusions from Confidentiality:</strong> Defines what information is NOT considered confidential (e.g., information already known to the receiving party, publicly available information).</li>
+                <li><strong>Term:</strong> Specifies how long the agreement remains in effect.</li>
+                <li><strong>Remedies for Breach:</strong> Outlines the consequences if the agreement is violated.</li>
+            </ul>
+            <h3>When to Use an NDA in Projects:</h3>
+            <ul class="custom-list">
+                <li>When sharing new product ideas with potential investors or partners.</li>
+                <li>Before engaging with freelancers or contractors who will have access to proprietary information.</li>
+                <li>During due diligence for mergers, acquisitions, or joint ventures.</li>
+                <li>When discussing sensitive client data with third-party service providers.</li>
+            </ul>
+
+            <h2>Service Level Agreements (SLAs): Defining Performance Expectations</h2>
+            <p>A Service Level Agreement (SLA) is a contract between a service provider and a customer that defines the level of service expected from the provider. SLAs are crucial for managing expectations, ensuring accountability, and providing a clear framework for resolving disputes related to service delivery. They are commonly used in IT services, telecommunications, and any scenario where a service provider is critical to a project's success.</p>
+            <h3>Key Components of an SLA:</h3>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">1. Definition of Services</div>
+                    <div class="accordion-content">
+                        <p>Clearly describes the services to be provided, including scope, hours of operation, and any specific functionalities.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">2. Service Levels</div>
+                    <div class="accordion-content">
+                        <p>Quantifiable metrics that define the expected performance of the service. Examples include:<br><strong>Uptime:</strong> Percentage of time a system is operational (e.g., 99.9% uptime).<br><strong>Response Time:</strong> How quickly a service provider responds to an issue (e.g., 1-hour response time for critical issues).<br><strong>Resolution Time:</strong> How quickly an issue is resolved.<br><strong>Throughput:</strong> The volume of work processed within a given period.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">3. Performance Monitoring and Reporting</div>
+                    <div class="accordion-content">
+                        <p>Specifies how service levels will be measured, monitored, and reported to the customer. This often includes regular performance reports.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header">4. Penalties and Remedies</div>
+                    <div class="accordion-content">
+                        <p>Outlines the consequences if the service levels are not met. This could include service credits, financial penalties, or the right to terminate the contract.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header">5. Dispute Resolution</div>
+                    <div class="accordion-content">
+                        <p>Defines the process for resolving disagreements or breaches of the agreement.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>When to Use an SLA in Projects:</h3>
+            <ul class="custom-list">
+                <li>When engaging with IT service providers (e.g., cloud hosting, network support).</li>
+                <li>For outsourcing agreements where performance metrics are critical.</li>
+                <li>With vendors providing ongoing support or maintenance for project deliverables.</li>
+                <li>To define internal service expectations between departments.</li>
+            </ul>
+
+            <h2>NDA vs. SLA: Key Differences</h2>
+            <p>While both are legal agreements, their core functions are distinct:</p>
+            <ul class="custom-list">
+                <li><strong>Purpose:</strong> NDA protects information; SLA defines service quality.</li>
+                <li><strong>Focus:</strong> NDA focuses on confidentiality; SLA focuses on performance metrics.</li>
+                <li><strong>Parties:</strong> NDA typically involves parties sharing sensitive data; SLA involves a service provider and a customer.</li>
+                <li><strong>Trigger:</strong> NDA is triggered by the sharing of confidential information; SLA is triggered by the provision of a service.</li>
+            </ul>
+
+            <h2>Conclusion</h2>
+            <p>Non-Disclosure Agreements and Service Level Agreements are indispensable tools in the project manager's legal arsenal. NDAs provide the necessary legal framework to protect your project's sensitive information and intellectual property, fostering trust and enabling open collaboration with external parties. SLAs, on the other hand, ensure that critical services are delivered to agreed-upon standards, mitigating risks related to performance and ensuring the smooth operation of your project. By understanding and effectively utilizing both NDAs and SLAs, project managers can navigate complex legal landscapes, safeguard their project's assets, and build robust, reliable partnerships that contribute to overall project success.</p>
+        </article>
+        <script>
+            // Interactive Agreement Matcher
+            const scenarioItems = document.querySelectorAll('.scenario-item');
+            const agreementDropzones = document.querySelectorAll('.agreement-dropzone');
+            const agreementFeedback = document.getElementById('agreement-feedback');
+
+            scenarioItems.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', e.target.id);
+                });
+            });
+
+            agreementDropzones.forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('hovered');
+                });
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('hovered');
+                });
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const itemId = e.dataTransfer.getData('text');
+                    const itemElement = document.getElementById(itemId);
+                    zone.appendChild(itemElement);
+                    zone.classList.remove('hovered');
+
+                    // Feedback logic
+                    let isCorrect = false;
+                    if (zone.id === 'nda-zone') {
+                        if (itemId === 'scenario1' || itemId === 'scenario3') {
+                            isCorrect = true;
+                        }
+                    } else if (zone.id === 'sla-zone') {
+                        if (itemId === 'scenario2' || itemId === 'scenario4') {
+                            isCorrect = true;
+                        }
+                    }
+
+                    if (isCorrect) {
+                        agreementFeedback.textContent = 'Correct! That scenario aligns with this agreement type.';
+                        agreementFeedback.style.color = 'var(--success-color)';
+                    } else {
+                        agreementFeedback.textContent = 'Not quite. Re-evaluate the primary purpose of the agreement in this scenario.';
+                        agreementFeedback.style.color = 'var(--error-color)';
+                    }
+                });
+            });
+
+            // Accordion functionality
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const content = item.querySelector('.accordion-content');
+                    const isActive = item.classList.toggle('active');
+                    content.style.maxHeight = isActive ? content.scrollHeight + "px" : null;
+                });
+            });
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

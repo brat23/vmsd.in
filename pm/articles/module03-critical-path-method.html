@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Critical Path Method</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>Critical Path Method</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">In any project with more than a few tasks, you'll find that some tasks can be delayed without affecting the project's overall completion date, while others are so important that even a one-day delay will push back the entire project. These critical tasks make up what is known as the "critical path." The Critical Path Method (CPM) is a project management technique used to identify these critical tasks and to determine the shortest possible duration for a project. It is an essential tool for creating realistic schedules and for managing project timelines effectively.</p>
+
+            <div class="interactive-cpm-calculator">
+                <h3>Interactive Critical Path Calculator</h3>
+                <p>Let's calculate the critical path for a small project. Add tasks, their durations, and their dependencies. The calculator will then identify the critical path and the project's duration.</p>
+                <div class="cpm-form">
+                    <div id="cpm-tasks"></div>
+                    <button id="add-cpm-task">+ Add Task</button>
+                    <button id="calculate-cpm">Calculate Critical Path</button>
+                </div>
+                <div id="cpm-result" class="feedback-message"></div>
+            </div>
+
+            <h2>What is the Critical Path Method?</h2>
+            <p>The Critical Path Method (CPM) is a step-by-step project management technique for process planning that defines critical and non-critical tasks with the goal of preventing time-frame problems and process bottlenecks. The CPM is ideally suited to projects consisting of numerous activities that interact in a complex manner. It's a powerful tool for scheduling and managing complex projects.</p>
+            <p>The core idea of CPM is to identify the longest sequence of dependent tasks through the project network. This longest sequence is the critical path. The tasks on the critical path have zero "float" or "slack," which means they have no room for delay. Any delay to a task on the critical path will directly impact the project's completion date.</p>
+
+            <h2>The Importance of the Critical Path</h2>
+            <p>Identifying the critical path is essential for several reasons:</p>
+            <ul class="custom-list">
+                <li><strong>Accurate Project Duration:</strong> The length of the critical path determines the total duration of the project.</li>
+                <li><strong>Prioritization:</strong> It helps project managers to prioritize tasks. Tasks on the critical path require close monitoring and management.</li>
+                <li><strong>Resource Allocation:</strong> It helps in allocating resources more effectively. Resources should be assigned to critical path tasks first to ensure they are completed on time.</li>
+                <li><strong>Risk Management:</strong> The critical path highlights the tasks that carry the most risk to the project schedule. This allows project managers to develop contingency plans for these tasks.</li>
+                <li><strong>What-If Analysis:</strong> CPM allows project managers to perform "what-if" analysis. For example, you can see how a delay in one task will affect the overall project timeline.</li>
+            </ul>
+
+            <h2>How to Find the Critical Path: A 4-Step Process</h2>
+            <p>Finding the critical path involves a four-step process. Let's break it down.</p>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">1. List All Activities</div>
+                    <div class="accordion-content">
+                        <p>The first step is to list all the activities or tasks in the project. Your Work Breakdown Structure (WBS) is a great starting point for this. For each activity, you need to estimate its duration.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">2. Identify Dependencies</div>
+                    <div class="accordion-content">
+                        <p>The next step is to identify the dependencies between the activities. Which activities must be completed before others can begin? This information is used to create a project network diagram, which shows the sequence of activities.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">3. Draw the Network Diagram</div>
+                    <div class="accordion-content">
+                        <p>A network diagram is a graphical representation of the project's activities and their dependencies. Each activity is represented by a node, and arrows are used to show the dependencies between the nodes. The network diagram helps you to visualize the flow of the project.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header">4. Estimate the Time for Each Path</div>
+                    <div class="accordion-content">
+                        <p>The final step is to calculate the total time for each possible path through the network diagram. A path is a sequence of connected activities. The path with the longest duration is the critical path. The length of the critical path is the shortest possible time in which the entire project can be completed.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Understanding Float (or Slack)</h2>
+            <p>Tasks that are not on the critical path have a certain amount of "float" or "slack." Float is the amount of time that a task can be delayed without causing a delay to subsequent tasks (free float) or the project as a whole (total float). Tasks on the critical path have zero float.</p>
+            <p>Understanding float is important for managing your project schedule. It gives you flexibility. If a critical path task is delayed, you may be able to reallocate resources from a non-critical task with float to get the critical task back on track.</p>
+
+            <h2>Conclusion</h2>
+            <p>The Critical Path Method is a powerful and versatile tool for project scheduling and management. By identifying the critical path, you can gain a deeper understanding of your project's timeline, prioritize your efforts, and manage your resources more effectively. While the calculations can be complex for large projects, the principles of CPM are straightforward and can be applied to projects of any size. Mastering the Critical Path Method is a key step towards becoming a more effective and successful project manager.</p>
+        </article>
+        <script>
+            // Interactive CPM Calculator
+            const addCpmTaskBtn = document.getElementById('add-cpm-task');
+            const cpmTasks = document.getElementById('cpm-tasks');
+            let cpmTaskCount = 0;
+
+            addCpmTaskBtn.addEventListener('click', () => {
+                cpmTaskCount++;
+                const taskDiv = document.createElement('div');
+                taskDiv.classList.add('cpm-task-input');
+                taskDiv.innerHTML = `
+                    <input type="text" placeholder="Task ${cpmTaskCount} Name">
+                    <input type="number" placeholder="Duration">
+                    <input type="text" placeholder="Dependencies (e.g., 1,2)">
+                `;
+                cpmTasks.appendChild(taskDiv);
+            });
+
+            const calculateCpmBtn = document.getElementById('calculate-cpm');
+            const cpmResult = document.getElementById('cpm-result');
+
+            calculateCpmBtn.addEventListener('click', () => {
+                // This is a simplified CPM calculation for demonstration purposes.
+                // A full CPM calculation is more complex.
+                const tasks = [];
+                const taskElements = document.querySelectorAll('.cpm-task-input');
+                taskElements.forEach((taskEl, index) => {
+                    const name = taskEl.querySelector('input[type="text"]').value;
+                    const duration = parseInt(taskEl.querySelector('input[type="number"]').value);
+                    const dependencies = taskEl.querySelector('input[type="text"]:last-child').value.split(',').map(d => parseInt(d.trim()) - 1).filter(d => !isNaN(d));
+                    tasks.push({ id: index, name, duration, dependencies, earlyStart: 0, earlyFinish: 0 });
+                });
+
+                for (let i = 0; i < tasks.length; i++) {
+                    for (const task of tasks) {
+                        if (task.dependencies.length === 0) {
+                            task.earlyFinish = task.earlyStart + task.duration;
+                        } else {
+                            const maxDependencyFinish = Math.max(...task.dependencies.map(depId => tasks[depId].earlyFinish));
+                            task.earlyStart = maxDependencyFinish;
+                            task.earlyFinish = task.earlyStart + task.duration;
+                        }
+                    }
+                }
+
+                const projectDuration = Math.max(...tasks.map(t => t.earlyFinish));
+                cpmResult.innerHTML = `<strong>Project Duration:</strong> ${projectDuration} days.`;
+
+                // Simplified critical path identification
+                let criticalPath = [];
+                let currentTask = tasks.find(t => t.earlyFinish === projectDuration);
+                while(currentTask) {
+                    criticalPath.unshift(currentTask.name);
+                    if (currentTask.dependencies.length > 0) {
+                        const nextTaskId = currentTask.dependencies.reduce((prev, curr) => tasks[prev].earlyFinish > tasks[curr].earlyFinish ? prev : curr);
+                        currentTask = tasks[nextTaskId];
+                    } else {
+                        currentTask = null;
+                    }
+                }
+                cpmResult.innerHTML += `<br><strong>Critical Path:</strong> ${criticalPath.join(' → ')}`;
+            });
+
+            // Accordion functionality
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const content = item.querySelector('.accordion-content');
+                    const isActive = item.classList.toggle('active');
+                    content.style.maxHeight = isActive ? content.scrollHeight + "px" : null;
+                });
+            });
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

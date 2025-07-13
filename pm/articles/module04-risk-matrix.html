@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Matrix</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>Risk Matrix</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">Once you have identified a list of potential risks to your project, the next step is to figure out which ones you really need to worry about. Not all risks are created equal. Some are trivial, while others have the potential to derail your entire project. A risk matrix is a simple yet powerful tool that helps you to prioritize your risks by evaluating their probability of occurrence and their potential impact on the project. This allows you to focus your time and resources on the risks that matter most.</p>
+
+            <div class="interactive-risk-matrix">
+                <h3>Interactive Risk Matrix</h3>
+                <p>Plot a risk on the matrix below by selecting its probability and impact. The matrix will show you the overall risk level.</p>
+                <div class="risk-matrix-controls">
+                    <label for="risk-probability">Probability:</label>
+                    <select id="risk-probability">
+                        <option value="1">Very Low</option>
+                        <option value="2">Low</option>
+                        <option value="3">Medium</option>
+                        <option value="4">High</option>
+                        <option value="5">Very High</option>
+                    </select>
+                    <label for="risk-impact">Impact:</label>
+                    <select id="risk-impact">
+                        <option value="1">Very Low</option>
+                        <option value="2">Low</option>
+                        <option value="3">Medium</option>
+                        <option value="4">High</option>
+                        <option value="5">Very High</option>
+                    </select>
+                </div>
+                <div class="risk-matrix-container">
+                    <div class="risk-matrix-grid"></div>
+                </div>
+                <div id="risk-level-feedback" class="feedback-message"></div>
+            </div>
+
+            <h2>What is a Risk Matrix?</h2>
+            <p>A risk matrix, also known as a probability and impact matrix, is a tool used to visually represent the risks of a project. It is a grid that plots the probability of a risk occurring against the impact it would have if it did occur. The matrix is typically color-coded to indicate the severity of the risk, with high-severity risks in red, medium-severity risks in yellow, and low-severity risks in green.</p>
+            <p>The two key dimensions of a risk matrix are:</p>
+            <ul class="custom-list">
+                <li><strong>Probability:</strong> The likelihood of a risk event occurring. This is often rated on a scale of 1 to 5, from very low to very high.</li>
+                <li><strong>Impact:</strong> The consequences for the project if the risk event occurs. This is also often rated on a scale of 1 to 5, from very low to very high. The impact can be on the project's scope, schedule, budget, or quality.</li>
+            </ul>
+            <p>By multiplying the probability score by the impact score, you can calculate a risk score for each risk. This score helps you to objectively compare and prioritize risks.</p>
+
+            <h2>How to Use a Risk Matrix</h2>
+            <p>Using a risk matrix is a straightforward process:</p>
+            <ol class="custom-list">
+                <li><strong>Define your scales:</strong> The first step is to define the scales for probability and impact. What does a "high" probability mean in the context of your project? What does a "very high" impact look like? It's important to have clear and objective definitions for each level on your scale.</li>
+                <li><strong>Assess each risk:</strong> For each risk you have identified, you need to assess its probability and impact using your defined scales. This should be a team effort, involving experts and stakeholders who have knowledge of the specific risk.</li>
+                <li><strong>Plot the risks on the matrix:</strong> Once you have assessed the probability and impact of each risk, you can plot them on the matrix.</li>
+                <li><strong>Prioritize your risks:</strong> The risks in the top-right corner of the matrix (high probability and high impact) are your highest priority risks. These are the risks that you need to focus on developing response plans for.</li>
+            </ol>
+
+            <h2>Benefits of Using a Risk Matrix</h2>
+            <p>The risk matrix is a popular tool for a reason. It offers several key benefits:</p>
+            <ul class="custom-list">
+                <li><strong>Simplicity and Clarity:</strong> The visual nature of the risk matrix makes it easy to understand and communicate the risk profile of a project.</li>
+                <li><strong>Prioritization:</strong> It provides a clear and objective way to prioritize risks, ensuring that you focus on what matters most.</li>
+                <li><strong>Facilitates Discussion:</strong> The process of creating a risk matrix can facilitate a valuable discussion among the project team and stakeholders about the risks facing the project.</li>
+                <li><strong>Supports Decision Making:</strong> The risk matrix provides a solid foundation for making decisions about how to respond to risks.</li>
+            </ul>
+
+            <h2>Limitations of the Risk Matrix</h2>
+            <p>While the risk matrix is a useful tool, it's important to be aware of its limitations:</p>
+            <ul class="custom-list">
+                <li><strong>Subjectivity:</strong> The assessment of probability and impact can be subjective. Different people may have different opinions about the likelihood and consequences of a risk.</li>
+                <li><strong>Oversimplification:</strong> The risk matrix can sometimes oversimplify the complex nature of risk. It doesn't account for factors like the velocity of a risk (how quickly it can happen) or the interconnectedness of risks.</li>
+                <li><strong>False Sense of Security:</strong> A green-lit risk matrix can create a false sense of security. It's important to remember that even low-probability risks can happen, and you should still have contingency plans in place for them.</li>
+            </ul>
+
+            <h2>Conclusion</h2>
+            <p>The risk matrix is an essential tool in the project manager's toolkit. It provides a simple yet effective way to analyze and prioritize risks, enabling you to focus your attention on the threats and opportunities that have the greatest potential to affect your project. While it has its limitations, the risk matrix is an invaluable aid to decision-making and a key component of a robust risk management process. By using the risk matrix to guide your risk response planning, you can significantly increase your ability to navigate the uncertainties of your project and to achieve your project objectives.</p>
+        </article>
+        <script>
+            // Interactive Risk Matrix
+            const probabilitySelect = document.getElementById('risk-probability');
+            const impactSelect = document.getElementById('risk-impact');
+            const riskMatrixGrid = document.querySelector('.risk-matrix-grid');
+            const riskLevelFeedback = document.getElementById('risk-level-feedback');
+
+            function createRiskMatrix() {
+                riskMatrixGrid.innerHTML = '';
+                for (let i = 5; i > 0; i--) {
+                    for (let j = 1; j < 6; j++) {
+                        const cell = document.createElement('div');
+                        cell.classList.add('risk-matrix-cell');
+                        cell.dataset.impact = i;
+                        cell.dataset.probability = j;
+                        const riskScore = i * j;
+                        if (riskScore >= 15) {
+                            cell.style.backgroundColor = 'var(--error-color)';
+                        } else if (riskScore >= 5) {
+                            cell.style.backgroundColor = 'var(--warning-color)';
+                        } else {
+                            cell.style.backgroundColor = 'var(--success-color)';
+                        }
+                        riskMatrixGrid.appendChild(cell);
+                    }
+                }
+            }
+
+            function updateRiskMatrix() {
+                const probability = probabilitySelect.value;
+                const impact = impactSelect.value;
+
+                document.querySelectorAll('.risk-matrix-cell').forEach(cell => {
+                    cell.classList.remove('active');
+                });
+
+                const activeCell = document.querySelector(`.risk-matrix-cell[data-probability="${probability}"][data-impact="${impact}"]`);
+                if (activeCell) {
+                    activeCell.classList.add('active');
+                    const riskScore = probability * impact;
+                    let riskLevel = '';
+                    if (riskScore >= 15) {
+                        riskLevel = 'High';
+                        riskLevelFeedback.style.color = 'var(--error-color)';
+                    } else if (riskScore >= 5) {
+                        riskLevel = 'Medium';
+                        riskLevelFeedback.style.color = 'var(--warning-color)';
+                    } else {
+                        riskLevel = 'Low';
+                        riskLevelFeedback.style.color = 'var(--success-color)';
+                    }
+                    riskLevelFeedback.textContent = `This is a ${riskLevel} level risk.`;
+                }
+            }
+
+            createRiskMatrix();
+            updateRiskMatrix();
+
+            probabilitySelect.addEventListener('change', updateRiskMatrix);
+            impactSelect.addEventListener('change', updateRiskMatrix);
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

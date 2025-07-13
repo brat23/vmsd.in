@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-Mortem & Lessons Learned</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>Post-Mortem & Lessons Learned</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">The completion of a project is a significant milestone, but it's not truly over until you've taken the time to reflect, learn, and grow. This is the purpose of a project post-mortem, also known as a lessons learned session. It's a critical process for capturing knowledge, identifying what went well and what didn't, and ensuring that future projects benefit from past experiences. Without a robust post-mortem process, organizations risk repeating mistakes and missing opportunities for continuous improvement. This article will guide you through the importance and process of conducting effective post-mortems and documenting lessons learned.</p>
+
+            <div class="interactive-lessons-learned-sorter">
+                <h3>Interactive Lessons Learned Sorter</h3>
+                <p>For each statement, decide if it represents a positive or negative lesson learned. Drag it to the correct category.</p>
+                <div class="lessons-container">
+                    <div class="lesson-items">
+                        <h4>Lessons</h4>
+                        <div class="lesson-item" draggable="true" id="lesson1">The team adopted a new communication tool that significantly improved collaboration.</div>
+                        <div class="lesson-item" draggable="true" id="lesson2">Scope creep led to significant budget overruns and delays.</div>
+                        <div class="lesson-item" draggable="true" id="lesson3">Early stakeholder engagement resulted in fewer change requests later in the project.</div>
+                        <div class="lesson-item" draggable="true" id="lesson4">Resource conflicts caused delays in critical path activities.</div>
+                    </div>
+                    <div class="lesson-categories">
+                        <div class="lesson-category-dropzone" id="positive-lessons"><strong>Positive Lessons Learned</strong></div>
+                        <div class="lesson-category-dropzone" id="negative-lessons"><strong>Negative Lessons Learned</strong></div>
+                    </div>
+                </div>
+                <div id="lessons-feedback" class="feedback-message"></div>
+            </div>
+
+            <h2>What is a Project Post-Mortem?</h2>
+            <p>A project post-mortem is a process, typically a meeting or series of meetings, conducted at the end of a project (or a major phase) to evaluate its success, identify best practices, and pinpoint areas for improvement. The term "post-mortem" comes from the medical field, meaning "after death," but in project management, it signifies the end of the project and the opportunity to learn from its entire lifecycle.</p>
+            <p>The primary goals of a post-mortem are to:</p>
+            <ul class="custom-list">
+                <li><strong>Identify successes:</strong> What went well? What should we repeat?</li>
+                <li><strong>Identify failures/challenges:</strong> What went wrong? What could have been done differently?</li>
+                <li><strong>Document lessons learned:</strong> Capture insights and recommendations for future projects.</li>
+                <li><strong>Improve processes:</strong> Use the lessons learned to refine existing processes and develop new ones.</li>
+                <li><strong>Celebrate achievements:</strong> Recognize the team's hard work and celebrate the project's completion.</li>
+            </ul>
+
+            <h2>The Importance of Lessons Learned</h2>
+            <p>Lessons learned are the knowledge gained from the process of conducting a project. They are the insights and understanding derived from both successes and failures that can be applied to future projects to improve performance. Without a formal lessons learned process, organizations are doomed to repeat the same mistakes and miss out on opportunities for growth and efficiency.</p>
+            <p>Benefits of a robust lessons learned process include:</p>
+            <ul class="custom-list">
+                <li><strong>Increased Efficiency:</strong> Avoid repeating past mistakes, saving time and resources.</li>
+                <li><strong>Improved Quality:</strong> Implement best practices identified from successful projects.</li>
+                <li><strong>Enhanced Risk Management:</strong> Better anticipate and mitigate risks in future projects.</li>
+                <li><strong>Knowledge Retention:</strong> Prevents valuable knowledge from walking out the door when team members leave.</li>
+                <li><strong>Organizational Learning:</strong> Fosters a culture of continuous improvement and learning within the organization.</li>
+            </ul>
+
+            <h2>Conducting an Effective Post-Mortem Session</h2>
+            <p>A successful post-mortem requires careful planning and facilitation. Here are the key steps:</p>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">1. Plan the Session</div>
+                    <div class="accordion-content">
+                        <p><strong>Who to invite:</strong> Include key project team members, stakeholders, and anyone who significantly contributed to or was affected by the project. Keep the group size manageable.<br><strong>When to hold it:</strong> As soon as possible after project completion, while memories are fresh.<br><strong>Agenda:</strong> A clear agenda is crucial. Typically, it covers: project overview, what went well, what could be improved, lessons learned, and action items.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">2. Facilitate the Discussion</div>
+                    <div class="accordion-content">
+                        <p><strong>Create a safe environment:</strong> Emphasize that the goal is learning, not blaming. Encourage open and honest feedback.<br><strong>Focus on facts:</strong> Discuss specific events and their impacts, rather than generalizations.<br><strong>Use structured questions:</strong> Guide the discussion with questions like: "What was the original goal? What actually happened? Why did it happen? What can we learn from this?"<br><strong>Encourage participation:</strong> Ensure everyone has a voice, especially quieter team members.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">3. Document Lessons Learned</div>
+                    <div class="accordion-content">
+                        <p><strong>Capture key insights:</strong> Record all identified successes, challenges, and recommendations. Use a standardized template for consistency.<br><strong>Focus on actionable items:</strong> Lessons learned should lead to concrete actions. For example, instead of "communication was poor," write "Implement weekly team syncs with a clear agenda."<br><strong>Store in a central repository:</strong> Make the lessons learned easily accessible to future project teams. This could be a shared drive, a project management tool, or a dedicated knowledge base.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header">4. Implement and Follow Up</div>
+                    <div class="accordion-content">
+                        <p><strong>Assign ownership:</strong> Each action item from the lessons learned should have a clear owner and a deadline.<br><strong>Integrate into processes:</strong> The most important step is to actually apply the lessons learned. This might involve updating templates, revising procedures, or providing new training.<br><strong>Monitor effectiveness:</strong> Periodically review whether the implemented changes are having the desired effect.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Common Pitfalls to Avoid</h2>
+            <p>While the benefits are clear, many organizations struggle with effective post-mortems. Common pitfalls include:</p>
+            <ul class="custom-list">
+                <li><strong>Blame Game:</strong> Focusing on who is at fault rather than what went wrong.</li>
+                <li><strong>Lack of Action:</strong> Documenting lessons learned but failing to implement changes.</li>
+                <li><strong>Insufficient Participation:</strong> Not involving the right people in the discussion.</li>
+                <li><strong>Too Late or Too Early:</strong> Holding the session too long after the project (memories fade) or too early (not enough perspective).</li>
+                <li><strong>No Central Repository:</strong> Lessons learned are documented but then lost or inaccessible.</li>
+            </ul>
+
+            <h2>Conclusion</h2>
+            <p>The project post-mortem and lessons learned process is not merely a formality; it is a strategic imperative for organizational growth and continuous improvement. By systematically reflecting on past projects, both successes and failures, organizations can transform experience into knowledge, refine their processes, and build a more resilient and effective project management capability. Embrace the post-mortem as an opportunity to learn, adapt, and ensure that every project contributes to the collective wisdom of your team and organization.</p>
+        </article>
+        <script>
+            // Interactive Lessons Learned Sorter
+            const lessonItems = document.querySelectorAll('.lesson-item');
+            const lessonCategories = document.querySelectorAll('.lesson-category-dropzone');
+            const lessonsFeedback = document.getElementById('lessons-feedback');
+
+            lessonItems.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', e.target.id);
+                });
+            });
+
+            lessonCategories.forEach(category => {
+                category.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    category.classList.add('hovered');
+                });
+                category.addEventListener('dragleave', () => {
+                    category.classList.remove('hovered');
+                });
+                category.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const itemId = e.dataTransfer.getData('text');
+                    const itemElement = document.getElementById(itemId);
+                    category.appendChild(itemElement);
+                    category.classList.remove('hovered');
+
+                    // Simple feedback logic
+                    if ((category.id === 'positive-lessons' && (itemId === 'lesson1' || itemId === 'lesson3')) ||
+                        (category.id === 'negative-lessons' && (itemId === 'lesson2' || itemId === 'lesson4'))) {
+                        lessonsFeedback.textContent = 'Correct! This is a good categorization.';
+                        lessonsFeedback.style.color = 'var(--success-color)';
+                    } else {
+                        lessonsFeedback.textContent = 'Think about whether this lesson had a positive or negative impact.';
+                        lessonsFeedback.style.color = 'var(--error-color)';
+                    }
+                });
+            });
+
+            // Accordion functionality
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const content = item.querySelector('.accordion-content');
+                    const isActive = item.classList.toggle('active');
+                    content.style.maxHeight = isActive ? content.scrollHeight + "px" : null;
+                });
+            });
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Planning</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>Budget Planning</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">A project budget is more than just a spreadsheet of numbers. It is a detailed, time-phased plan for how you will spend your project's funds. It is the financial expression of your project plan, and it is one of the most important tools you have for managing your project. Budget planning is the process of creating this plan. It involves aggregating the estimated costs of individual activities or work packages to establish a total cost baseline for the project. A well-planned budget is essential for controlling costs, managing cash flow, and ensuring that your project has the financial resources it needs to succeed.</p>
+
+            <div class="interactive-budget-planner">
+                <h3>Interactive Budget Planner</h3>
+                <p>Let's create a simple project budget. Enter the costs for different categories and see how the total budget is calculated. Don't forget to add a contingency reserve!</p>
+                <div class="budget-form">
+                    <div class="budget-category">
+                        <label for="labor-cost">Labor Cost:</label>
+                        <input type="number" id="labor-cost" placeholder="e.g., 50000">
+                    </div>
+                    <div class="budget-category">
+                        <label for="materials-cost">Materials Cost:</label>
+                        <input type="number" id="materials-cost" placeholder="e.g., 20000">
+                    </div>
+                    <div class="budget-category">
+                        <label for="equipment-cost">Equipment Cost:</label>
+                        <input type="number" id="equipment-cost" placeholder="e.g., 10000">
+                    </div>
+                    <div class="budget-category">
+                        <label for="contingency-reserve">Contingency Reserve (%):</label>
+                        <input type="number" id="contingency-reserve" value="10">
+                    </div>
+                    <button id="calculate-budget">Calculate Total Budget</button>
+                </div>
+                <div id="budget-result" class="feedback-message"></div>
+            </div>
+
+            <h2>From Cost Estimates to Project Budget</h2>
+            <p>The project budget is built upon the cost estimates for the individual activities or work packages in the project. The process of developing the budget involves several steps:</p>
+            <ol class="custom-list">
+                <li><strong>Aggregate Costs:</strong> The first step is to aggregate the cost estimates for the individual work packages into a total cost for the project. This is typically done by rolling up the costs through the Work Breakdown Structure (WBS).</li>
+                <li><strong>Add Contingency Reserves:</strong> No estimate is perfect. There will always be uncertainty and risk in a project. A contingency reserve is an amount of money that is added to the budget to account for these known risks. The size of the contingency reserve is usually based on a risk analysis of the project.</li>
+                <li><strong>Establish the Cost Baseline:</strong> The sum of the aggregated costs and the contingency reserve is the cost baseline. The cost baseline is the approved, time-phased budget for the project. It is the benchmark against which you will measure your project's cost performance.</li>
+                <li><strong>Add Management Reserves:</strong> In addition to the contingency reserve, some organizations also add a management reserve to the budget. A management reserve is an amount of money that is set aside for unforeseen risks or changes to the project. The management reserve is not part of the cost baseline and is typically controlled by senior management.</li>
+            </ol>
+
+            <h2>The Importance of a Time-Phased Budget</h2>
+            <p>A project budget is not just a single number. It is a time-phased plan that shows how the project's funds will be spent over time. This is important for several reasons:</p>
+            <ul class="custom-list">
+                <li><strong>Cash Flow Management:</strong> A time-phased budget helps you to manage your project's cash flow. It shows you when you will need money and allows you to plan accordingly.</li>
+                <li><strong>Performance Measurement:</strong> A time-phased budget is essential for measuring your project's cost performance. By comparing your actual spending to your planned spending at any given point in time, you can determine if you are on track, ahead of schedule, or behind schedule. This is the basis of Earned Value Management (EVM).</li>
+                <li><strong>Resource Planning:</strong> A time-phased budget can also help you to plan your resources more effectively. It shows you when you will need to have people, equipment, and materials on site.</li>
+            </ul>
+
+            <h2>Budgeting in Agile Projects</h2>
+            <p>Budgeting in Agile projects is different from traditional projects. In a traditional project, the scope is fixed and the budget is estimated based on that scope. In an Agile project, the scope is variable and the budget is often fixed. The team is given a fixed budget for a certain period of time (e.g., a quarter or a year) and is expected to deliver as much value as possible within that budget.</p>
+            <p>This approach has several advantages:</p>
+            <ul class="custom-list">
+                <li><strong>Increased Flexibility:</strong> It allows the team to respond to changing priorities and to focus on delivering the most valuable features.</li>
+                <li><strong>Improved Cost Control:</strong> With a fixed budget, there is less risk of cost overruns.</li>
+                <li><strong>Greater Transparency:</strong> The fixed budget provides a clear and transparent view of the project's costs.</li>
+            </ul>
+
+            <h2>Conclusion</h2>
+            <p>Budget planning is a critical process that lays the financial foundation for your project. A well-planned budget is a powerful tool for managing your project, controlling your costs, and communicating with your stakeholders. It provides a clear roadmap for how you will spend your project's funds and a baseline for measuring your performance. By taking the time to create a detailed and realistic budget, you can significantly increase your chances of delivering a successful project that meets the needs of your stakeholders and delivers real value to your organization.</p>
+        </article>
+        <script>
+            // Interactive Budget Planner
+            const calculateBudgetBtn = document.getElementById('calculate-budget');
+            const budgetResult = document.getElementById('budget-result');
+
+            calculateBudgetBtn.addEventListener('click', () => {
+                const laborCost = parseFloat(document.getElementById('labor-cost').value) || 0;
+                const materialsCost = parseFloat(document.getElementById('materials-cost').value) || 0;
+                const equipmentCost = parseFloat(document.getElementById('equipment-cost').value) || 0;
+                const contingencyPercent = parseFloat(document.getElementById('contingency-reserve').value) || 0;
+
+                const subtotal = laborCost + materialsCost + equipmentCost;
+                const contingencyAmount = subtotal * (contingencyPercent / 100);
+                const totalBudget = subtotal + contingencyAmount;
+
+                if (subtotal > 0) {
+                    budgetResult.innerHTML = `
+                        <strong>Subtotal:</strong> ${subtotal.toFixed(2)}<br>
+                        <strong>Contingency Reserve (${contingencyPercent}%):</strong> ${contingencyAmount.toFixed(2)}<br>
+                        <strong>Total Budget:</strong> ${totalBudget.toFixed(2)}
+                    `;
+                    budgetResult.style.color = 'var(--success-color)';
+                } else {
+                    budgetResult.textContent = 'Please enter some costs to calculate the budget.';
+                    budgetResult.style.color = 'var(--error-color)';
+                }
+            });
+
+            // Accordion functionality (if you have any)
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const content = item.querySelector('.accordion-content');
+                    const isActive = item.classList.toggle('active');
+                    content.style.maxHeight = isActive ? content.scrollHeight + "px" : null;
+                });
+            });
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

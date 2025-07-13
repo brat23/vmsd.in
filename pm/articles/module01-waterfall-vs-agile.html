@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waterfall vs Agile</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>Waterfall vs Agile</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">In the world of project management, there are two dominant methodologies that have shaped how we build products and deliver value: Waterfall and Agile. They represent two fundamentally different philosophies about how to approach a project. Understanding their differences, strengths, and weaknesses is essential for choosing the right approach for your project.</p>
+
+            <div class="interactive-chooser">
+                <h3>Which Methodology Fits?</h3>
+                <p>Read the project descriptions below and select the methodology you think is a better fit. Get instant feedback on your choice!</p>
+                <div class="scenario-container">
+                    <div class="scenario" id="scenario1">
+                        <h4>Project: Building a new two-story office building.</h4>
+                        <p>The requirements are well-defined, the blueprints are finalized, and the construction process is linear and predictable.</p>
+                        <div class="choices">
+                            <button class="choice-btn" data-scenario="1" data-answer="waterfall">Waterfall</button>
+                            <button class="choice-btn" data-scenario="1" data-answer="agile">Agile</button>
+                        </div>
+                    </div>
+                    <div class="scenario" id="scenario2">
+                        <h4>Project: Developing a new social media app.</h4>
+                        <p>The market is constantly changing, user feedback is critical, and the final feature set is expected to evolve during development.</p>
+                        <div class="choices">
+                            <button class="choice-btn" data-scenario="2" data-answer="waterfall">Waterfall</button>
+                            <button class="choice-btn" data-scenario="2" data-answer="agile">Agile</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="chooser-feedback" class="feedback-message"></div>
+            </div>
+
+            <h2>The Waterfall Model: The Traditional Approach</h2>
+            <p>The Waterfall model is the classic, linear, and sequential approach to project management. As the name suggests, it's a process where you move from one phase to the next in a downward flow, like a waterfall. Each phase must be fully completed before moving on to the next. There's no going back.</p>
+            <p>The typical phases of a Waterfall project are:</p>
+            <ol class="custom-list">
+                <li><strong>Requirements:</strong> All project requirements are gathered and documented at the beginning.</li>
+                <li><strong>Design:</strong> The project team designs the system based on the requirements. This includes architectural design, data design, and UI/UX design.</li>
+                <li><strong>Implementation:</strong> The development team writes the code and builds the system according to the design.</li>
+                <li><strong>Testing:</strong> The quality assurance team thoroughly tests the entire system to find and fix any bugs.</li>
+                <li><strong>Deployment:</strong> The finished product is released to the customer.</li>
+                <li><strong>Maintenance:</strong> Ongoing support and maintenance are provided for the product.</li>
+            </ol>
+            
+            <h3>Strengths of Waterfall:</h3>
+            <ul class="custom-list">
+                <li><strong>Simplicity and Structure:</strong> The model is easy to understand and manage. The distinct phases and deliverables provide a clear structure.</li>
+                <li><strong>Clear Documentation:</strong> Waterfall projects produce extensive documentation, which can be very useful for new team members and for long-term maintenance.</li>
+                <li><strong>Predictability:</strong> With all requirements defined upfront, it's easier to estimate the project's cost and timeline.</li>
+            </ul>
+
+            <h3>Weaknesses of Waterfall:</h3>
+            <ul class="custom-list">
+                <li><strong>Inflexibility:</strong> The biggest drawback of Waterfall is its rigidity. It's very difficult and costly to make changes once a phase is completed.</li>
+                <li><strong>Slow Delivery:</strong> The customer doesn't see the final product until the very end of the project, which can be months or even years.</li>
+                <li><strong>High Risk:</strong> If the initial requirements are flawed, the entire project can be a failure. There is little room for error.</li>
+            </ul>
+
+            <h2>The Agile Manifesto: A New Way of Thinking</h2>
+            <p>In 2001, a group of software developers came together to write the "Manifesto for Agile Software Development." This document outlined a new set of values and principles for building software. Agile is not a single methodology, but a mindset and a collection of frameworks (like Scrum and Kanban) that embrace iterative development, customer collaboration, and the ability to respond to change.</p>
+            <p>The Agile Manifesto values:</p>
+            <ul class="custom-list">
+                <li><strong>Individuals and interactions</strong> over processes and tools</li>
+                <li><strong>Working software</strong> over comprehensive documentation</li>
+                <li><strong>Customer collaboration</strong> over contract negotiation</li>
+                <li><strong>Responding to change</strong> over following a plan</li>
+            </ul>
+
+            <h2>Agile in Practice: Iterative and Incremental</h2>
+            <p>Agile projects work in small cycles called "sprints" or "iterations," which typically last from one to four weeks. In each sprint, the team works on a small set of features from the backlog (a prioritized list of all desired features). At the end of each sprint, the team delivers a potentially shippable increment of the product. This allows for continuous feedback from the customer and the ability to adapt to changing requirements.</p>
+
+            <div class="comparison-slider-container">
+                <h3>Waterfall vs. Agile: A Visual Comparison</h3>
+                <div class="comparison-slider">
+                    <div class="slider-image" id="waterfall-image">
+                        <h4>Waterfall</h4>
+                        <img src="https://i.imgur.com/9y7X4sT.png" alt="Waterfall Process">
+                    </div>
+                    <div class="slider-image" id="agile-image">
+                        <h4>Agile</h4>
+                        <img src="https://i.imgur.com/L4k2h3u.png" alt="Agile Process">
+                    </div>
+                </div>
+                <input type="range" min="0" max="100" value="50" class="slider" id="methodology-slider">
+            </div>
+
+            <h3>Strengths of Agile:</h3>
+            <ul class="custom-list">
+                <li><strong>Flexibility and Adaptability:</strong> Agile's greatest strength is its ability to respond to change. New features can be added and priorities can be shifted at any time.</li>
+                <li><strong>Customer Satisfaction:</strong> The customer is involved throughout the process and can provide feedback at the end of each sprint. This ensures that the final product meets their needs.</li>
+                <li><strong>Faster Delivery:</strong> Working software is delivered in small increments, which means the customer gets value sooner.</li>
+                <li><strong>Reduced Risk:</strong> The iterative nature of Agile means that potential problems are identified and addressed early in the process.</li>
+            </ul>
+
+            <h3>Weaknesses of Agile:</h3>
+            <ul class="custom-list">
+                <li><strong>Less Predictability:</strong> Because the scope can change, it can be difficult to predict the final cost and timeline of an Agile project.</li>
+                <li><strong>Requires High Customer Involvement:</strong> The success of an Agile project depends on a high level of collaboration with the customer, which may not always be possible.</li>
+                <li><strong>Potential for Scope Creep:</strong> Without a disciplined approach, the flexibility of Agile can lead to an ever-expanding scope.</li>
+            </ul>
+
+            <h2>Which One Should You Choose?</h2>
+            <p>The choice between Waterfall and Agile depends on the nature of your project. There is no one-size-fits-all answer. A helpful way to think about it is to consider the level of uncertainty in your project. If the requirements are well-understood and unlikely to change, Waterfall can be a good choice. If the requirements are unclear or expected to evolve, Agile is likely the better option. In reality, many teams use a hybrid approach, combining elements of both methodologies to fit their specific needs.</p>
+        </article>
+        <script>
+            // Interactive Chooser
+            const choiceBtns = document.querySelectorAll('.choice-btn');
+            const chooserFeedback = document.getElementById('chooser-feedback');
+
+            choiceBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const scenario = btn.dataset.scenario;
+                    const answer = btn.dataset.answer;
+                    let isCorrect = false;
+
+                    if (scenario === '1' && answer === 'waterfall') {
+                        isCorrect = true;
+                    }
+                    if (scenario === '2' && answer === 'agile') {
+                        isCorrect = true;
+                    }
+
+                    if (isCorrect) {
+                        chooserFeedback.textContent = 'Correct! That methodology is a great fit for this type of project.';
+                        chooserFeedback.style.color = 'var(--success-color)';
+                        btn.style.backgroundColor = 'var(--success-color)';
+                    } else {
+                        chooserFeedback.textContent = 'Not the best fit. Think about the level of uncertainty and the need for flexibility.';
+                        chooserFeedback.style.color = 'var(--error-color)';
+                        btn.style.backgroundColor = 'var(--error-color)';
+                    }
+                    setTimeout(() => {
+                         chooserFeedback.textContent = '';
+                         btn.style.backgroundColor = 'var(--primary-color)';
+                    }, 3000);
+                });
+            });
+
+            // Comparison Slider
+            const slider = document.getElementById('methodology-slider');
+            const waterfallImage = document.getElementById('waterfall-image');
+            const agileImage = document.getElementById('agile-image');
+
+            slider.addEventListener('input', (e) => {
+                const value = e.target.value;
+                waterfallImage.style.opacity = (100 - value) / 50;
+                agileImage.style.opacity = value / 50;
+            });
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earned Value Management (EVM)</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>Earned Value Management (EVM)</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">Imagine you're building a house. You have a budget, a schedule, and a plan. Halfway through, you want to know: Are we on track? Are we over budget? Will we finish on time? Traditional methods might tell you how much you've spent, but not how much value you've actually received for that spending. This is where Earned Value Management (EVM) shines. EVM is a powerful project management methodology that integrates scope, schedule, and cost to provide a comprehensive and objective measure of project performance and progress. It's a critical tool for any project manager who wants to truly understand the health of their project.</p>
+
+            <div class="interactive-evm-calculator">
+                <h3>Interactive EVM Calculator</h3>
+                <p>Enter the values for Planned Value (PV), Earned Value (EV), and Actual Cost (AC) to calculate key EVM metrics and assess your project's performance.</p>
+                <div class="evm-form">
+                    <div class="evm-input">
+                        <label for="pv">Planned Value (PV):</label>
+                        <input type="number" id="pv" placeholder="e.g., 100000">
+                    </div>
+                    <div class="evm-input">
+                        <label for="ev">Earned Value (EV):</label>
+                        <input type="number" id="ev" placeholder="e.g., 90000">
+                    </div>
+                    <div class="evm-input">
+                        <label for="ac">Actual Cost (AC):</label>
+                        <input type="number" id="ac" placeholder="e.g., 95000">
+                    </div>
+                    <button id="calculate-evm">Calculate EVM Metrics</button>
+                </div>
+                <div id="evm-result" class="feedback-message"></div>
+            </div>
+
+            <h2>The Three Pillars of EVM</h2>
+            <p>EVM is built upon three fundamental values that provide a clear picture of project status:</p>
+            <ul class="custom-list">
+                <li><strong>Planned Value (PV):</strong> Also known as the Budgeted Cost of Work Scheduled (BCWS). This is the authorized budget assigned to the work that is scheduled to be completed by a given point in time. It represents the value of the work that *should* have been done.</li>
+                <li><strong>Earned Value (EV):</strong> Also known as the Budgeted Cost of Work Performed (BCWP). This is the value of the work actually completed, expressed in terms of the budget authorized for that work. It represents the value of the work that *has* been done.</li>
+                <li><strong>Actual Cost (AC):</strong> Also known as the Actual Cost of Work Performed (ACWP). This is the total cost actually incurred in accomplishing the work performed. It represents how much you *have spent*.</li>
+            </ul>
+
+            <h2>Key EVM Metrics and Formulas</h2>
+            <p>By comparing these three values, EVM generates a series of metrics that provide insights into project performance.</p>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">1. Cost Variance (CV)</div>
+                    <div class="accordion-content">
+                        <p><strong>Formula:</strong> CV = EV - AC<br><strong>Interpretation:</strong> Measures the budget performance of the project. A positive CV indicates that the project is under budget for the work completed. A negative CV means the project is over budget.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">2. Schedule Variance (SV)</div>
+                    <div class="accordion-content">
+                        <p><strong>Formula:</strong> SV = EV - PV<br><strong>Interpretation:</strong> Measures the schedule performance of the project. A positive SV indicates that the project is ahead of schedule for the work completed. A negative SV means the project is behind schedule.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">3. Cost Performance Index (CPI)</div>
+                    <div class="accordion-content">
+                        <p><strong>Formula:</strong> CPI = EV / AC<br><strong>Interpretation:</strong> Measures the cost efficiency of the project. A CPI greater than 1 indicates that the project is performing better than budgeted (cost-efficient). A CPI less than 1 means the project is over budget (cost-inefficient).</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header">4. Schedule Performance Index (SPI)</div>
+                    <div class="accordion-content">
+                        <p><strong>Formula:</strong> SPI = EV / PV<br><strong>Interpretation:</strong> Measures the schedule efficiency of the project. An SPI greater than 1 indicates that the project is performing better than scheduled (ahead of schedule). An SPI less than 1 means the project is behind schedule.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header">5. Estimate at Completion (EAC)</div>
+                    <div class="accordion-content">
+                        <p><strong>Formula (most common):</strong> EAC = BAC / CPI (where BAC is Budget at Completion)<br><strong>Interpretation:</strong> A forecast of the total cost of the project based on current performance. This formula assumes that the project will continue to perform at the same cost efficiency as it has to date.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header">6. Variance at Completion (VAC)</div>
+                    <div class="accordion-content">
+                        <p><strong>Formula:</strong> VAC = BAC - EAC<br><strong>Interpretation:</strong> The projected variance (difference) between the budget at completion and the estimate at completion. A positive VAC indicates a projected budget surplus, while a negative VAC indicates a projected budget deficit.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Benefits of Using EVM</h2>
+            <p>Implementing EVM provides significant advantages for project managers and stakeholders:</p>
+            <ul class="custom-list">
+                <li><strong>Early Warning System:</strong> EVM provides an early indication of project performance issues, allowing for timely corrective actions.</li>
+                <li><strong>Objective Performance Measurement:</strong> It offers a quantitative and objective way to assess project health, moving beyond subjective status reports.</li>
+                <li><strong>Improved Forecasting:</strong> EVM metrics provide a solid basis for forecasting future project costs and completion dates.</li>
+                <li><strong>Enhanced Communication:</strong> Provides a common language and set of metrics for discussing project status with all stakeholders.</li>
+                <li><strong>Better Decision Making:</strong> Data-driven insights enable more informed decisions regarding scope changes, resource allocation, and risk management.</li>
+            </ul>
+
+            <h2>Implementing EVM</h2>
+            <p>To effectively implement EVM, you need:</p>
+            <ul class="custom-list">
+                <li><strong>A well-defined Work Breakdown Structure (WBS):</strong> This is crucial for breaking down the project into manageable work packages for which PV, EV, and AC can be tracked.</li>
+                <li><strong>A detailed project schedule:</strong> To establish the Planned Value over time.</li>
+                <li><strong>Accurate cost estimates:</strong> For each work package.</li>
+                <li><strong>A system for tracking actual costs:</strong> To accurately capture AC.</li>
+                <li><strong>A method for measuring earned value:</strong> This can be based on physical progress, milestones, or other objective measures.</li>
+            </ul>
+
+            <h2>Conclusion</h2>
+            <p>Earned Value Management is more than just a set of formulas; it's a comprehensive project control system. By integrating scope, schedule, and cost data, EVM provides project managers with unparalleled visibility into project performance. It empowers them to identify problems early, make proactive decisions, and communicate project status with confidence. While it requires discipline and a robust data collection system, the insights gained from EVM are invaluable for delivering projects on time, within budget, and to the required quality. Mastering EVM is a hallmark of a truly effective project manager.</p>
+        </article>
+        <script>
+            // Interactive EVM Calculator
+            const calculateEvmBtn = document.getElementById('calculate-evm');
+            const evmResult = document.getElementById('evm-result');
+
+            calculateEvmBtn.addEventListener('click', () => {
+                const pv = parseFloat(document.getElementById('pv').value);
+                const ev = parseFloat(document.getElementById('ev').value);
+                const ac = parseFloat(document.getElementById('ac').value);
+
+                if (isNaN(pv) || isNaN(ev) || isNaN(ac)) {
+                    evmResult.textContent = 'Please enter valid numbers for all fields.';
+                    evmResult.style.color = 'var(--error-color)';
+                    return;
+                }
+
+                const cv = ev - ac;
+                const sv = ev - pv;
+                const cpi = ev / ac;
+                const spi = ev / pv;
+
+                let resultHTML = `
+                    <strong>Cost Variance (CV):</strong> ${cv.toFixed(2)} (${cv >= 0 ? 'Under Budget' : 'Over Budget'})<br>
+                    <strong>Schedule Variance (SV):</strong> ${sv.toFixed(2)} (${sv >= 0 ? 'Ahead of Schedule' : 'Behind Schedule'})<br>
+                    <strong>Cost Performance Index (CPI):</strong> ${cpi.toFixed(2)} (${cpi >= 1 ? 'Efficient' : 'Inefficient'})<br>
+                    <strong>Schedule Performance Index (SPI):</strong> ${spi.toFixed(2)} (${spi >= 1 ? 'Efficient' : 'Inefficient'})<br>
+                `;
+
+                // Simple EAC calculation assuming current CPI will continue
+                const bac = pv; // For simplicity, assuming PV at this point is BAC for the work planned
+                const eac = bac / cpi;
+                const vac = bac - eac;
+
+                resultHTML += `
+                    <strong>Estimate at Completion (EAC):</strong> ${eac.toFixed(2)}<br>
+                    <strong>Variance at Completion (VAC):</strong> ${vac.toFixed(2)} (${vac >= 0 ? 'Projected Surplus' : 'Projected Deficit'})
+                `;
+
+                evmResult.innerHTML = resultHTML;
+                evmResult.style.color = (cv >= 0 && sv >= 0) ? 'var(--success-color)' : 'var(--error-color)';
+            });
+
+            // Accordion functionality
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const content = item.querySelector('.accordion-content');
+                    const isActive = item.classList.toggle('active');
+                    content.style.maxHeight = isActive ? content.scrollHeight + "px" : null;
+                });
+            });
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

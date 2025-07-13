@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gantt Charts and Timelines</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>Gantt Charts and Timelines</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">A project without a timeline is like a ship without a rudder. You might be busy, but you have no idea if you're heading in the right direction or when you'll reach your destination. This is where Gantt charts and timelines come in. They are powerful tools for visualizing your project schedule, tracking your progress, and keeping everyone on the same page. This article will dive deep into what Gantt charts are, how to create them, and how to use them to keep your projects on track.</p>
+
+            <div class="interactive-gantt-chart">
+                <h3>Interactive Gantt Chart Builder</h3>
+                <p>Let's build a simple Gantt chart. Add some tasks, set their start and end dates, and see the chart come to life.</p>
+                <div class="gantt-form">
+                    <div id="gantt-tasks"></div>
+                    <button id="add-task">+ Add Task</button>
+                </div>
+                <div class="gantt-chart-container">
+                    <div class="gantt-chart-header">
+                        <div class="gantt-header-task">Task</div>
+                        <div class="gantt-header-timeline">Timeline</div>
+                    </div>
+                    <div id="gantt-chart-body"></div>
+                </div>
+            </div>
+
+            <h2>What is a Gantt Chart?</h2>
+            <p>A Gantt chart is a type of bar chart that illustrates a project schedule. It was invented by Henry Gantt in the early 20th century and has been a staple of project management ever since. The chart lists the tasks to be performed on the vertical axis, and time intervals on the horizontal axis. The width of the horizontal bars in the graph shows the duration of each activity. Gantt charts are excellent for showing the start and finish dates of the terminal elements and summary elements of a project.</p>
+            <p>A modern Gantt chart will typically show:</p>
+            <ul class="custom-list">
+                <li><strong>The start and end dates of the project.</strong></li>
+                <li><strong>What the project tasks are.</strong></li>
+                <li><strong>Who is working on each task.</strong></li>
+                <li><strong>How long each task will take.</strong></li>
+                <li><strong>How tasks group together, overlap, and link with each other.</strong></li>
+                <li><strong>The critical path of the project.</strong></li>
+            </ul>
+
+            <h2>The Key Components of a Gantt Chart</h2>
+            <p>To understand a Gantt chart, you need to be familiar with its key components:</p>
+            <ul class="custom-list">
+                <li><strong>Task List:</strong> A breakdown of all the tasks that need to be completed. This is usually derived from the Work Breakdown Structure (WBS).</li>
+                <li><strong>Timeline:</strong> The horizontal axis of the chart, which represents the project's duration. This can be in days, weeks, or months.</li>
+                <li><strong>Bars:</strong> The horizontal bars that represent the tasks. The length of the bar corresponds to the duration of the task.</li>
+                <li><strong>Milestones:</strong> Significant events in the project, such as the completion of a major deliverable or a project phase. Milestones are usually represented by a diamond shape.</li>
+                <li><strong>Dependencies:</strong> The relationships between tasks. For example, one task may not be able to start until another is finished. Dependencies are usually shown with arrows linking the tasks.</li>
+                <li><strong>Progress:</strong> A shaded area within a bar that shows how much of the task has been completed.</li>
+            </ul>
+
+            <h2>Creating a Gantt Chart: A Step-by-Step Guide</h2>
+            <p>Creating a Gantt chart can be done with specialized software like Microsoft Project or with simpler tools like Excel or even online Gantt chart makers. Here are the basic steps:</p>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">1. List All Your Tasks</div>
+                    <div class="accordion-content">
+                        <p>Start by listing all the tasks that need to be completed. Your Work Breakdown Structure (WBS) is the perfect source for this. For each task, you'll need to know its name, duration, and who is responsible for it.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">2. Identify Task Dependencies</div>
+                    <div class="accordion-content">
+                        <p>Some tasks will need to be completed before others can begin. These are called dependencies. There are four main types of dependencies:</p>
+                        <ul>
+                            <li><strong>Finish to Start (FS):</strong> Task B cannot start until Task A is finished. This is the most common type of dependency.</li>
+                            <li><strong>Start to Start (SS):</strong> Task B cannot start until Task A has started.</li>
+                            <li><strong>Finish to Finish (FF):</strong> Task B cannot finish until Task A is finished.</li>
+                            <li><strong>Start to Finish (SF):</strong> Task B cannot finish until Task A has started. This is the least common type.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">3. Create a Project Timeline</div>
+                    <div class="accordion-content">
+                        <p>Once you have your tasks and dependencies, you can create a timeline for your project. This will involve estimating the duration of each task and then sequencing them according to their dependencies. This is where you will determine the project's overall duration and its critical path.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header">4. Assign Resources to Tasks</div>
+                    <div class="accordion-content">
+                        <p>Assigning resources (people, equipment, materials) to each task is a crucial step. This will help you to ensure that you have the necessary resources available when you need them and to avoid resource conflicts.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>The Power of the Gantt Chart in Action</h2>
+            <p>Gantt charts are more than just a pretty picture of your project. They are a powerful tool for managing your project and communicating with your team and stakeholders. Here are some of the ways you can use a Gantt chart:</p>
+            <ul class="custom-list">
+                <li><strong>Track Progress:</strong> By updating the Gantt chart with the actual progress of each task, you can get a real-time view of your project's status. This allows you to identify any tasks that are falling behind and to take corrective action.</li>
+                <li><strong>Manage Resources:</strong> Gantt charts can help you to see who is working on what and to identify any potential resource bottlenecks.</li>
+                <li><strong>Communicate with Stakeholders:</strong> A Gantt chart is a great way to communicate your project schedule to stakeholders. It provides a clear and concise overview of the project and can help to manage expectations.</li>
+                <li><strong>Identify the Critical Path:</strong> The critical path is the sequence of tasks that determines the shortest possible duration of the project. Any delay in a critical path task will delay the entire project. A Gantt chart can help you to identify the critical path and to focus your attention on the tasks that matter most.</li>
+            </ul>
+
+            <h2>Conclusion</h2>
+            <p>Gantt charts are an indispensable tool for any project manager. They provide a clear and visual representation of your project schedule, helping you to plan your work, track your progress, and communicate with your team and stakeholders. While they may seem complex at first, the benefits of using a Gantt chart far outweigh the effort required to create one. By mastering the art of the Gantt chart, you will be well on your way to delivering successful projects on time and on budget.</p>
+        </article>
+        <script>
+            // Interactive Gantt Chart Builder
+            const addTaskBtn = document.getElementById('add-task');
+            const ganttTasks = document.getElementById('gantt-tasks');
+            const ganttChartBody = document.getElementById('gantt-chart-body');
+            let taskCount = 0;
+
+            addTaskBtn.addEventListener('click', () => {
+                taskCount++;
+                const taskDiv = document.createElement('div');
+                taskDiv.classList.add('gantt-task-input');
+                taskDiv.innerHTML = `
+                    <input type="text" placeholder="Task ${taskCount} Name">
+                    <input type="date" class="start-date">
+                    <input type="date" class="end-date">
+                `;
+                ganttTasks.appendChild(taskDiv);
+
+                // Add listener to update chart
+                taskDiv.querySelectorAll('input').forEach(input => {
+                    input.addEventListener('change', updateGanttChart);
+                });
+            });
+
+            function updateGanttChart() {
+                ganttChartBody.innerHTML = '';
+                const tasks = document.querySelectorAll('.gantt-task-input');
+                const projectStartDate = new Date(Math.min(...Array.from(tasks).map(t => new Date(t.querySelector('.start-date').value).getTime()).filter(d => !isNaN(d))));
+                const projectEndDate = new Date(Math.max(...Array.from(tasks).map(t => new Date(t.querySelector('.end-date').value).getTime()).filter(d => !isNaN(d))));
+                const projectDuration = (projectEndDate - projectStartDate) / (1000 * 60 * 60 * 24);
+
+                tasks.forEach(task => {
+                    const taskName = task.querySelector('input[type="text"]').value;
+                    const startDate = new Date(task.querySelector('.start-date').value);
+                    const endDate = new Date(task.querySelector('.end-date').value);
+
+                    if (taskName && !isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+                        const duration = (endDate - startDate) / (1000 * 60 * 60 * 24);
+                        const offset = (startDate - projectStartDate) / (1000 * 60 * 60 * 24);
+
+                        const taskRow = document.createElement('div');
+                        taskRow.classList.add('gantt-row');
+                        taskRow.innerHTML = `
+                            <div class="gantt-task-name">${taskName}</div>
+                            <div class="gantt-bar-container">
+                                <div class="gantt-bar" style="left: ${(offset / projectDuration) * 100}%; width: ${(duration / projectDuration) * 100}%;"></div>
+                            </div>
+                        `;
+                        ganttChartBody.appendChild(taskRow);
+                    }
+                });
+            }
+
+            // Accordion functionality
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const content = item.querySelector('.accordion-content');
+                    const isActive = item.classList.toggle('active');
+                    content.style.maxHeight = isActive ? content.scrollHeight + "px" : null;
+                });
+            });
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

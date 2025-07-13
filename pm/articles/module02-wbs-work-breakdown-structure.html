@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WBS (Work Breakdown Structure)</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="floating-particles"></div>
+    <div class="container">
+        <header class="article-header">
+            <a href="../index.html" class="back-button">← Back to Modules</a>
+            <h1>WBS (Work Breakdown Structure)</h1>
+        </header>
+        <article class="article-content">
+            <p class="intro">Once you have a clear scope for your project, the next challenge is to break down the work into manageable pieces. This is where the Work Breakdown Structure (WBS) comes in. The WBS is a powerful tool that helps you to visualize the entire scope of your project and to organize the work in a logical and hierarchical way. It is the foundation upon which you will build your project schedule, estimate your costs, and allocate your resources.</p>
+
+            <div class="interactive-wbs-creator">
+                <h3>Interactive WBS Creator</h3>
+                <p>Let's create a simple WBS for a project to build a new website. Enter the main project and then add some high-level deliverables and work packages below.</p>
+                <div class="wbs-form">
+                    <input type="text" id="wbs-project" placeholder="Project Name (e.g., New Corporate Website)">
+                    <div id="wbs-elements"></div>
+                    <button id="add-deliverable">+ Add Deliverable</button>
+                    <button id="generate-wbs">Generate WBS Diagram</button>
+                </div>
+                <div id="wbs-diagram-container"></div>
+            </div>
+
+            <h2>What is a Work Breakdown Structure?</h2>
+            <p>A Work Breakdown Structure (WBS) is a deliverable-oriented hierarchical decomposition of the work to be executed by the project team to accomplish the project objectives and create the required deliverables. The key word here is "deliverable-oriented." The WBS focuses on the outcomes of the work, not the work itself. It breaks down the project into smaller and smaller components until the work is manageable enough to be planned, estimated, and assigned to a team member.</p>
+            <p>The WBS is typically represented as a tree diagram, with the project at the top level, followed by the major deliverables, and then the work packages at the lowest level. A work package is the smallest unit of work in the WBS and can be realistically estimated and managed.</p>
+
+            <h2>The 100% Rule: The Guiding Principle of the WBS</h2>
+            <p>The most important principle to remember when creating a WBS is the 100% rule. This rule states that the WBS includes 100% of the work defined by the project scope and captures all deliverables – internal, external, interim – in terms of the work to be completed, including project management. The 100% rule applies at all levels within the hierarchy: the sum of the work at the "child" level must equal 100% of the work represented by the "parent." In other words, the WBS should contain nothing more and nothing less than the total scope of the project.</p>
+
+            <h2>Why is the WBS so Important?</h2>
+            <p>The WBS is one of the most important documents in project management. It provides a number of key benefits:</p>
+            <ul class="custom-list">
+                <li><strong>Clarity and Visibility:</strong> The WBS provides a clear and comprehensive view of the entire project scope. It helps to ensure that everyone on the team understands what needs to be done.</li>
+                <li><strong>Improved Planning:</strong> The WBS is the foundation for all other planning activities. It is used to develop the project schedule, estimate costs, and identify resource requirements.</li>
+                <li><strong>Better Control:</strong> The WBS allows you to track progress at a detailed level. By monitoring the completion of work packages, you can get an accurate picture of the project's status and identify any potential problems early on.</li>
+                <li><strong>Increased Accountability:</strong> By assigning work packages to specific team members, the WBS helps to ensure that everyone is accountable for their part of the project.</li>
+            </ul>
+
+            <h2>How to Create a WBS</h2>
+            <p>Creating a WBS is a team effort. It should involve the project manager, the project team, and key stakeholders. Here are the general steps to create a WBS:</p>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">1. Start with the Project Scope Statement</div>
+                    <div class="accordion-content">
+                        <p>The project scope statement is the primary input for the WBS. It provides a detailed description of the project's objectives, deliverables, and boundaries.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">2. Identify the Major Deliverables</div>
+                    <div class="accordion-content">
+                        <p>The next step is to identify the major deliverables of the project. These are the high-level outcomes that the project will produce. For example, if you are building a house, the major deliverables might be the foundation, the frame, the roof, and the interior.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">3. Decompose the Deliverables into Work Packages</div>
+                    <div class="accordion-content">
+                        <p>This is the core of the WBS process. You need to break down each major deliverable into smaller and smaller components until you reach the work package level. A good rule of thumb is that a work package should be small enough to be completed by a single person or a small team in a relatively short period of time (e.g., 8 to 80 hours of effort).</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header">4. Create a WBS Dictionary</div>
+                    <div class="accordion-content">
+                        <p>The WBS dictionary is a companion document to the WBS that provides detailed information about each element in the WBS. This can include a description of the work, the responsible person or team, the estimated cost, and the required resources. The WBS dictionary is essential for ensuring that everyone has a common understanding of the work to be performed.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>WBS Formats</h2>
+            <p>There are several ways to format a WBS. The most common formats are:</p>
+            <ul class="custom-list">
+                <li><strong>Tree Diagram:</strong> This is the most visual format and is great for showing the hierarchical structure of the project.</li>
+                <li><strong>Outline View:</strong> This format uses indentation to show the hierarchy. It is easy to create and read.</li>
+                <li><strong>Tabular View:</strong> This format uses a table to show the WBS elements, along with other information such as the WBS code, description, and responsible person.</li>
+            </ul>
+
+            <h2>Conclusion</h2>
+            <p>The Work Breakdown Structure is a fundamental tool in project management. It is the bridge between the project scope and the project plan. By breaking down the project into manageable pieces, the WBS provides the clarity, visibility, and control needed to successfully deliver a project on time, within budget, and to the satisfaction of all stakeholders. A well-crafted WBS is a sign of a well-planned project and is a key ingredient for project success.</p>
+        </article>
+        <script>
+            // Interactive WBS Creator
+            const addDeliverableBtn = document.getElementById('add-deliverable');
+            const wbsElements = document.getElementById('wbs-elements');
+            let deliverableCount = 0;
+
+            addDeliverableBtn.addEventListener('click', () => {
+                deliverableCount++;
+                const deliverableDiv = document.createElement('div');
+                deliverableDiv.classList.add('wbs-deliverable');
+                deliverableDiv.innerHTML = `
+                    <input type="text" placeholder="Deliverable ${deliverableCount} (e.g., Website Design)">
+                    <div class="wbs-work-packages">
+                        <input type="text" placeholder="Work Package 1 (e.g., Create Wireframes)">
+                        <input type="text" placeholder="Work Package 2 (e.g., Design Mockups)">
+                    </div>
+                `;
+                wbsElements.appendChild(deliverableDiv);
+            });
+
+            const generateWbsBtn = document.getElementById('generate-wbs');
+            const wbsDiagramContainer = document.getElementById('wbs-diagram-container');
+
+            generateWbsBtn.addEventListener('click', () => {
+                const projectName = document.getElementById('wbs-project').value;
+                if (!projectName) {
+                    wbsDiagramContainer.innerHTML = '<p style="color: var(--error-color);">Please enter a project name.</p>';
+                    return;
+                }
+
+                let diagramHTML = `<div class="wbs-diagram"><ul><li><span>${projectName}</span><ul>`;
+
+                const deliverables = document.querySelectorAll('.wbs-deliverable');
+                deliverables.forEach(deliverable => {
+                    const deliverableName = deliverable.querySelector('input[type="text"]').value;
+                    if (deliverableName) {
+                        diagramHTML += `<li><span>${deliverableName}</span><ul>`;
+                        const workPackages = deliverable.querySelectorAll('.wbs-work-packages input[type="text"]');
+                        workPackages.forEach(wp => {
+                            const wpName = wp.value;
+                            if (wpName) {
+                                diagramHTML += `<li><span>${wpName}</span></li>`;
+                            }
+                        });
+                        diagramHTML += `</ul></li>`;
+                    }
+                });
+
+                diagramHTML += `</ul></li></ul></div>`;
+                wbsDiagramContainer.innerHTML = diagramHTML;
+            });
+
+            // Accordion functionality
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const content = item.querySelector('.accordion-content');
+                    const isActive = item.classList.toggle('active');
+                    content.style.maxHeight = isActive ? content.scrollHeight + "px" : null;
+                });
+            });
+        </script>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>
