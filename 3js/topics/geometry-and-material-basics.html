@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometry & Material basics</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Geometry & Material basics</h1>
+    <p>In Three.js, 3D objects are typically created by combining a <b>Geometry</b> (which defines the shape of the object) and a <b>Material</b> (which defines its appearance, like color, texture, and how it reacts to light). These two components are then combined into a <code>Mesh</code> object, which can be added to your scene.</p>
+
+    <h2>Geometries</h2>
+    <p>Geometries define the shape and structure of a 3D object. They consist of vertices (points in 3D space) and faces (triangles that connect the vertices to form surfaces).</p>
+    
+    <h3><code>BoxGeometry(width, height, depth, widthSegments, heightSegments, depthSegments)</code></h3>
+    <p>Creates a rectangular cuboid.</p>
+    <ul>
+        <li><code>width</code>, <code>height</code>, <code>depth</code>: Dimensions along the X, Y, and Z axes.</li>
+        <li><code>widthSegments</code>, <code>heightSegments</code>, <code>depthSegments</code>: Optional. The number of segmented faces along the width, height, and depth of the sides. Useful for more detailed shading or deformations.</li>
+    </ul>
+
+    <h3><code>SphereGeometry(radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength)</code></h3>
+    <p>Creates a sphere.</p>
+    <ul>
+        <li><code>radius</code>: The radius of the sphere.</li>
+        <li><code>widthSegments</code>, <code>heightSegments</code>: The number of horizontal and vertical segments. Higher values result in a smoother sphere but more polygons.</li>
+        <li><code>phiStart</code>, <code>phiLength</code>, <code>thetaStart</code>, <code>thetaLength</code>: Optional. Used to create partial spheres (e.g., a hemisphere or a slice).</li>
+    </ul>
+
+    <h3><code>PlaneGeometry(width, height, widthSegments, heightSegments)</code></h3>
+    <p>Creates a flat rectangular plane.</p>
+    <ul>
+        <li><code>width</code>, <code>height</code>: Dimensions of the plane along the X and Y axes.</li>
+        <li><code>widthSegments</code>, <code>heightSegments</code>: Optional. The number of segmented faces along the width and height.</li>
+    </ul>
+
+    <h2>Materials</h2>
+    <p>Materials define the visual properties of a geometry, such as color, transparency, shininess, and how it interacts with light.</p>
+
+    <h3><code>MeshBasicMaterial(parameters)</code></h3>
+    <p>A non-photorealistic material that doesn't react to light. It's good for simple colored objects or when you don't have lights in your scene.</p>
+    <ul>
+        <li><code>color</code>: (e.g., <code>0xff0000</code> for red)</li>
+        <li><code>wireframe</code>: (boolean) Renders the object as a wireframe.</li>
+    </ul>
+
+    <h3><code>MeshStandardMaterial(parameters)</code></h3>
+    <p>A physically based rendering (PBR) material that accurately simulates how light interacts with surfaces. It requires lights in the scene to be visible.</p>
+    <ul>
+        <li><code>color</code>: (e.g., <code>0x00ff00</code> for green)</li>
+        <li><code>roughness</code>: (0.0 to 1.0) How rough the surface is. A value of 0.0 means a smooth, mirror-like surface, 1.0 means a completely diffuse surface.</li>
+        <li><code>metalness</code>: (0.0 to 1.0) How metallic the surface is. A value of 0.0 means a non-metal (dielectric), 1.0 means a metal.</li>
+    </ul>
+
+    <h2>Example: Basic Geometries with Materials</h2>
+    <p>Here's a complete example demonstrating how to create and display a box, sphere, and plane with different materials in Three.js:</p>
+
+    <iframe srcdoc="
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset=\"utf-8\">
+            <title>Three.js Geometries and Materials</title>
+            <style>
+                body { margin: 0; overflow: hidden; } /* Remove default margin and hide scrollbars */
+                canvas { display: block; } /* Ensure canvas takes full space */
+            </style>
+        </head>
+        <body>
+            <!-- Include the Three.js library from a CDN -->
+            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
+
+            <script>
+                // 1. Scene, Camera, Renderer setup
+                const scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x222222); // Set a dark background color
+
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                // Add some basic lighting for MeshStandardMaterial to be visible
+                const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
+                scene.add(ambientLight);
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+                directionalLight.position.set(1, 1, 1).normalize();
+                scene.add(directionalLight);
+
+                // 2. Create a Box (Cube)
+                const boxGeometry = new THREE.BoxGeometry(1, 1, 1); // width, height, depth
+                const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Red color, no light interaction
+                const box = new THREE.Mesh(boxGeometry, boxMaterial);
+                box.position.x = -2; // Move to the left
+                scene.add(box);
+
+                // 3. Create a Sphere
+                const sphereGeometry = new THREE.SphereGeometry(0.75, 32, 16); // radius, widthSegments, heightSegments
+                const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00, roughness: 0.5, metalness: 0.1 }); // Green, slightly rough, not very metallic
+                const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                sphere.position.x = 0; // Center
+                scene.add(sphere);
+
+                // 4. Create a Plane
+                const planeGeometry = new THREE.PlaneGeometry(3, 3); // width, height
+                const planeMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff, side: THREE.DoubleSide }); // Blue, visible from both sides
+                const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+                plane.rotation.x = -Math.PI / 2; // Rotate to lie flat on the XZ plane
+                plane.position.y = -1; // Move below the other objects
+                scene.add(plane);
+
+                // Position the camera
+                camera.position.z = 5;
+
+                // 5. Animation loop
+                function animate() {
+                    requestAnimationFrame(animate);
+
+                    box.rotation.x += 0.01;
+                    box.rotation.y += 0.01;
+
+                    sphere.rotation.y += 0.01;
+
+                    renderer.render(scene, camera);
+                }
+                animate();
+            </script>
+        </body>
+        </html>
+    " frameborder="0" width="100%" height="400px"></iframe>
+
+</body>
+</html>

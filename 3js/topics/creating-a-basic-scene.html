@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creating a basic scene (Scene, Camera, Renderer)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Creating a basic scene (Scene, Camera, Renderer)</h1>
+    <p>In Three.js, every 3D application starts with three fundamental components: a Scene, a Camera, and a Renderer.</p>
+
+    <h2>1. The Scene</h2>
+    <p>The scene is where you set up everything you want to display. Think of it as a container that holds all your objects, lights, and cameras. Without a scene, there's nowhere for your 3D world to exist.</p>
+    <pre><code>const scene = new THREE.Scene();</code></pre>
+
+    <h2>2. The Camera</h2>
+    <p>The camera defines what is visible in your scene and how it's viewed. It's essentially your viewpoint into the 3D world. The most common type of camera in Three.js is the <code>PerspectiveCamera</code>, which mimics how the human eye sees things, with objects appearing smaller as they get further away.</p>
+    <pre><code>const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 5; // Move the camera back to see the scene</code></pre>
+    <ul>
+        <li><code>fov</code> (field of view): The extent of the scene that is seen on the display at any given moment.</li>
+        <li><code>aspect</code>: The aspect ratio of the camera's frustum (width / height).</li>
+        <li><code>near</code>: The near clipping plane. Objects closer than this won't be rendered.</li>
+        <li><code>far</code>: The far clipping plane. Objects farther than this won't be rendered.</li>
+    </ul>
+
+    <h2>3. The Renderer</h2>
+    <p>The renderer is responsible for taking the scene and the camera's perspective and drawing it onto your HTML <code>&lt;canvas&gt;</code> element using WebGL. It handles all the complex calculations to translate your 3D scene into a 2D image that can be displayed on the screen.</p>
+    <pre><code>const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight); // Set the size of the renderer
+document.body.appendChild(renderer.domElement); // Add the renderer's canvas to the HTML document</code></pre>
+
+    <h2>Putting it all together: A Basic Rotating Cube</h2>
+    <p>Here's a complete example demonstrating how to set up a basic Three.js scene with a rotating cube. This code includes the scene, camera, renderer, a simple object (cube), and an animation loop.</p>
+
+    <iframe srcdoc="
+        <!DOCTYPE html>
+        <html lang=\"en\">
+        <head>
+            <meta charset=\"UTF-8\">
+            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+            <title>Three.js Basic Scene</title>
+            <style>
+                body { margin: 0; overflow: hidden; }
+                canvas { display: block; }
+            </style>
+        </head>
+        <body>
+            <script type=\"module\">
+                import * as THREE from 'https://unpkg.com/three@0.128.0/build/three.module.js';
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer();
+
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                const geometry = new THREE.BoxGeometry();
+                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+                const cube = new THREE.Mesh(geometry, material);
+                scene.add(cube);
+
+                camera.position.z = 5;
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    cube.rotation.x += 0.01;
+                    cube.rotation.y += 0.01;
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            </script>
+        </body>
+        </html>
+    " frameborder="0" width="100%" height="400px"></iframe>
+
+</body>
+</html>

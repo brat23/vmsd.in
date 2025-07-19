@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architectural walkthrough</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Architectural Walkthroughs with Three.js</h1>
+    <p>Three.js is a powerful JavaScript library for creating interactive 3D architectural walkthroughs directly in a web browser. This allows users to explore virtual buildings and spaces in a highly engaging and accessible manner, without the need for specialized software or plugins.</p>
+
+    <h2>Key Components for an Architectural Walkthrough:</h2>
+    <ul>
+        <li><b>3D Model:</b> A detailed 3D model of the architectural space (e.g., a building interior, an urban landscape). These are typically created in 3D modeling software (like Blender, SketchUp, Revit) and exported to formats like glTF or OBJ.</li>
+        <li><b>Camera Controls:</b> Intuitive navigation controls that allow users to move through the space (e.g., first-person controls, orbit controls for exterior views).</li>
+        <li><b>Lighting:</b> Realistic lighting to simulate natural and artificial light sources, enhancing the atmosphere and showcasing materials.</li>
+        <li><b>Materials and Textures:</b> High-quality materials and textures to represent surfaces accurately (e.g., wood, concrete, glass).</li>
+        <li><b>Performance Optimization:</b> Architectural models can be very complex, so optimizing assets and rendering performance is crucial for a smooth experience.</li>
+    </ul>
+
+    <h2>Basic Three.js Architectural Walkthrough Example (Conceptual)</h2>
+    <p>This example demonstrates a conceptual setup for a simple architectural scene. It includes a basic room structure and a camera that can be moved around. You would typically load a more complex architectural model and implement advanced controls for a full walkthrough.</p>
+
+    <iframe srcdoc="
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset=\"utf-8\">
+            <title>Architectural Walkthrough</title>
+            <style>
+                body { margin: 0; overflow: hidden; }
+                canvas { display: block; }
+            </style>
+        </head>
+        <body>
+            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
+            <script src=\"https://unpkg.com/three@0.128.0/examples/jsm/controls/PointerLockControls.js\"></script>
+            <script>
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ antialias: true });
+
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                // Add basic lighting
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                scene.add(ambientLight);
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(1, 1, 1).normalize();
+                scene.add(directionalLight);
+
+                // Create a simple room (floor, walls)
+                const floorGeometry = new THREE.PlaneGeometry(10, 10);
+                const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x888888, side: THREE.DoubleSide });
+                const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+                floor.rotation.x = Math.PI / 2;
+                scene.add(floor);
+
+                const wallMaterial = new THREE.MeshStandardMaterial({ color: 0xcccccc });
+                const wall1 = new THREE.Mesh(new THREE.BoxGeometry(10, 5, 0.1), wallMaterial);
+                wall1.position.z = -5;
+                wall1.position.y = 2.5;
+                scene.add(wall1);
+
+                const wall2 = new THREE.Mesh(new THREE.BoxGeometry(10, 5, 0.1), wallMaterial);
+                wall2.position.z = 5;
+                wall2.position.y = 2.5;
+                scene.add(wall2);
+
+                const wall3 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 5, 10), wallMaterial);
+                wall3.position.x = -5;
+                wall3.position.y = 2.5;
+                scene.add(wall3);
+
+                const wall4 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 5, 10), wallMaterial);
+                wall4.position.x = 5;
+                wall4.position.y = 2.5;
+                scene.add(wall4);
+
+                camera.position.set(0, 1.6, 0);
+
+                // PointerLockControls for first-person navigation
+                const controls = new THREE.PointerLockControls(camera, document.body);
+
+                document.addEventListener('click', function () {
+                    controls.lock();
+                });
+
+                const moveForward = false;
+                const moveBackward = false;
+                const moveLeft = false;
+                const moveRight = false;
+
+                document.addEventListener('keydown', function (event) {
+                    switch (event.code) {
+                        case 'KeyW':
+                            moveForward = true;
+                            break;
+                        case 'KeyS':
+                            moveBackward = true;
+                            break;
+                        case 'KeyA':
+                            moveLeft = true;
+                            break;
+                        case 'KeyD':
+                            moveRight = true;
+                            break;
+                    }
+                });
+
+                document.addEventListener('keyup', function (event) {
+                    switch (event.code) {
+                        case 'KeyW':
+                            moveForward = false;
+                            break;
+                        case 'KeyS':
+                            moveBackward = false;
+                            break;
+                        case 'KeyA':
+                            moveLeft = false;
+                            break;
+                        case 'KeyD':
+                            moveRight = false;
+                            break;
+                    }
+                });
+
+                const velocity = new THREE.Vector3();
+                const direction = new THREE.Vector3();
+
+                function animate() {
+                    requestAnimationFrame(animate);
+
+                    const delta = 0.01; // Fixed delta for consistent movement
+
+                    velocity.x -= velocity.x * 10.0 * delta;
+                    velocity.z -= velocity.z * 10.0 * delta;
+
+                    direction.z = Number(moveForward) - Number(moveBackward);
+                    direction.x = Number(moveRight) - Number(moveLeft);
+                    direction.normalize(); // this ensures consistent movements in all directions
+
+                    if (moveForward || moveBackward) velocity.z -= direction.z * 400.0 * delta;
+                    if (moveLeft || moveRight) velocity.x -= direction.x * 400.0 * delta;
+
+                    controls.moveRight(-velocity.x * delta);
+                    controls.moveForward(-velocity.z * delta);
+
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            </script>
+        </body>
+        </html>
+    " frameborder="0" width="100%" height="400px"></iframe>
+
+</body>
+</html>

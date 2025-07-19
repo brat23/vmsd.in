@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrbitControls, DragControls</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>OrbitControls and DragControls in Three.js</h1>
+    <p>Three.js provides powerful add-ons like <code>OrbitControls</code> and <code>DragControls</code> to enhance user interaction with your 3D scenes. These controls are not part of the core Three.js library and need to be imported separately.</p>
+
+    <h2>OrbitControls</h2>
+    <p><code>OrbitControls</code> allow the camera to orbit around a target point in the 3D scene. This is incredibly useful for exploring a scene from different angles, allowing users to rotate, pan, and zoom the camera.</p>
+    <h3>Key Features:</h3>
+    <ul>
+        <li><b>Rotation:</b> Orbit the camera around a central point.</li>
+        <li><b>Panning:</b> Move the camera horizontally and vertically.</li>
+        <li><b>Zooming:</b> Move the camera closer to or further from the target.</li>
+        <li>Can be configured with damping for smoother motion.</li>
+    </ul>
+    <h3>Usage:</h3>
+    <p>You create an instance of <code>OrbitControls</code> by passing the camera object and the HTML DOM element (usually the renderer's canvas) for event listeners. The controls need to be updated in the animation loop.</p>
+    <pre><code>import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; // an animation loop is required when damping is enabled
+controls.dampingFactor = 0.25;
+controls.screenSpacePanning = false;
+controls.maxPolarAngle = Math.PI / 2;
+
+function animate() {
+    requestAnimationFrame(animate);
+    controls.update(); // only required if controls.enableDamping or controls.autoRotate are set to true
+    renderer.render(scene, camera);
+}</code></pre>
+
+    <h2>DragControls</h2>
+    <p><code>DragControls</code> enable drag-and-drop interaction for 3D objects within the scene. This allows users to directly manipulate objects by dragging them with the mouse.</p>
+    <h3>Key Features:</h3>
+    <ul>
+        <li>Select and move individual 3D objects.</li>
+        <li>Can be configured to snap objects to a grid.</li>
+        <li>Allows for hover-on and hover-off effects.</li>
+    </ul>
+    <h3>Usage:</h3>
+    <p>To use <code>DragControls</code>, you need to provide an array of draggable 3D objects, the camera, and the DOM element. Event listeners can be added for <code>dragstart</code> and <code>dragend</code> events to perform actions when an object is being dragged or dropped.</p>
+    <pre><code>import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
+
+const objects = [cube, sphere]; // Array of objects to make draggable
+const dragControls = new DragControls(objects, camera, renderer.domElement);
+
+dragControls.addEventListener( 'dragstart', function ( event ) {
+    event.object.material.emissive.set( 0xaaaaaa );
+} );
+
+dragControls.addEventListener( 'dragend', function ( event ) {
+    event.object.material.emissive.set( 0x000000 );
+} );</code></pre>
+
+    <h2>Using them together</h2>
+    <p>It is possible to use both <code>OrbitControls</code> and <code>DragControls</code> in the same scene. However, potential conflicts can arise, as both might try to handle mouse events simultaneously. A common approach to mitigate this is to disable <code>OrbitControls</code> when an object is being hovered over or dragged by <code>DragControls</code>.</p>
+
+    <h2>Example: OrbitControls and DragControls</h2>
+    <p>This example demonstrates a scene where you can orbit the camera around a cube and also drag the cube around.</p>
+
+    <iframe srcdoc="
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset=\"utf-8\">
+            <title>Three.js Controls</title>
+            <style>
+                body { margin: 0; overflow: hidden; }
+                canvas { display: block; }
+            </style>
+        </head>
+        <body>
+            <script type=\"module\">
+                import * as THREE from 'https://unpkg.com/three@0.128.0/build/three.module.js';
+                import { OrbitControls } from 'https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js';
+                import { DragControls } from 'https://unpkg.com/three@0.128.0/examples/jsm/controls/DragControls.js';
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                // Add a cube
+                const geometry = new THREE.BoxGeometry(1, 1, 1);
+                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+                const cube = new THREE.Mesh(geometry, material);
+                scene.add(cube);
+
+                camera.position.z = 5;
+
+                // OrbitControls
+                const orbitControls = new OrbitControls(camera, renderer.domElement);
+                orbitControls.enableDamping = true;
+                orbitControls.dampingFactor = 0.25;
+
+                // DragControls
+                const objects = [cube];
+                const dragControls = new DragControls(objects, camera, renderer.domElement);
+
+                dragControls.addEventListener( 'dragstart', function ( event ) {
+                    orbitControls.enabled = false;
+                    event.object.material.emissive.set( 0xaaaaaa );
+                } );
+
+                dragControls.addEventListener( 'dragend', function ( event ) {
+                    orbitControls.enabled = true;
+                    event.object.material.emissive.set( 0x000000 );
+                } );
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    orbitControls.update();
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            </script>
+        </body>
+        </html>
+    " frameborder="0" width="100%" height="400px"></iframe>
+
+</body>
+</html>

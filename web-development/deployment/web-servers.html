@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Servers</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="article-page">
+    <div class="bg-animation"></div>
+    <div class="particles"></div>
+    <div class="progress-bar"></div>
+
+    <header>
+        <nav>
+            <div class="logo">VMSD.in</div>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#frontend">Frontend</a></li>
+                <li><a href="../index.html#backend">Backend</a></li>
+                <li><a href="../index.html#deployment">Deployment</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="section-content">
+                <h2>Web Servers</h2>
+                <p class="subtitle">A web server is a computer that stores, processes, and delivers web pages to clients. This article covers the basics of web servers and how to use them to deploy your applications.</p>
+                
+                <h3>Nginx</h3>
+                <p><span class="highlight">Nginx</span> is a popular web server that is known for its high performance and low memory footprint. This article will cover the basics of Nginx and how to use it to serve static files and to proxy requests to a backend server.</p>
+
+                <h4>Example: Nginx Configuration (Partial)</h4>
+                <pre><code>server {
+    listen 80;
+    server_name example.com;
+
+    location / {
+        root /var/www/html;
+        index index.html index.htm;
+    }
+}</code></pre>
+                
+                <h3>Apache</h3>
+                <p><span class="highlight">Apache</span> is another popular web server that is known for its flexibility and extensibility. This article will cover the basics of Apache and how to use it to serve static files and to proxy requests to a backend server.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VMSD.in</h3>
+                    <p>Empowering developers worldwide with comprehensive full-stack education. Join our community and transform your career in tech.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="../index.html#home">Home</a></p>
+                    <p><a href="../index.html#frontend">Frontend</a></p>
+                    <p><a href="../index.html#backend">Backend</a></p>
+                    <p><a href="../index.html#deployment">Deployment</a></p>
+                    <p><a href="../index.html#contact">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Technologies</h3>
+                    <p>HTML, CSS, JavaScript</p>
+                    <p>Python, Node.js</p>
+                    <p>Databases & Cloud</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <p><a href="#">Discord Community</a></p>
+                    <p><a href="#">GitHub</a></p>
+                    <p><a href="#">LinkedIn</a></p>
+                    <p><a href="#">Twitter</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 VMSD.in. All rights reserved. Built with passion for developers.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="../script.js"></script>
+
+</body>
+</html>

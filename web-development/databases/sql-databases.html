@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Databases</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="article-page">
+    <div class="bg-animation"></div>
+    <div class="particles"></div>
+    <div class="progress-bar"></div>
+
+    <header>
+        <nav>
+            <div class="logo">VMSD.in</div>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#frontend">Frontend</a></li>
+                <li><a href="../index.html#backend">Backend</a></li>
+                <li><a href="../index.html#deployment">Deployment</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="section-content">
+                <h2>SQL Databases</h2>
+                <p class="subtitle">SQL (Structured Query Language) is a standard language for accessing and manipulating databases. This article covers the basics of SQL and how to use it to interact with a relational database.</p>
+                
+                <h3>Relational Databases</h3>
+                <p>A <span class="highlight">relational database</span> is a type of database that stores data in tables. This article will cover the basics of relational databases, including how to create tables, how to define relationships between tables, and how to use primary and foreign keys.</p>
+
+                <h4>Example: SQL Table Creation</h4>
+                <pre><code>CREATE TABLE Users (
+    id INT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE
+);</code></pre>
+                
+                <h3>SQL Commands</h3>
+                <p>This article will cover the most common SQL commands, including how to <span class="highlight">create</span>, <span class="highlight">read</span>, <span class="highlight">update</span>, and <span class="highlight">delete</span> data. We will also cover how to use the <span class="highlight">SELECT</span> statement to query the database and how to use the <span class="highlight">WHERE</span> clause to filter the results.</p>
+
+                <h4>Example: SELECT Statement</h4>
+                <pre><code>SELECT username, email FROM Users WHERE id = 1;</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VMSD.in</h3>
+                    <p>Empowering developers worldwide with comprehensive full-stack education. Join our community and transform your career in tech.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="../index.html#home">Home</a></p>
+                    <p><a href="../index.html#frontend">Frontend</a></p>
+                    <p><a href="../index.html#backend">Backend</a></p>
+                    <p><a href="../index.html#deployment">Deployment</a></p>
+                    <p><a href="../index.html#contact">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Technologies</h3>
+                    <p>HTML, CSS, JavaScript</p>
+                    <p>Python, Node.js</p>
+                    <p>Databases & Cloud</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <p><a href="#">Discord Community</a></p>
+                    <p><a href="#">GitHub</a></p>
+                    <p><a href="#">LinkedIn</a></p>
+                    <p><a href="#">Twitter</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 VMSD.in. All rights reserved. Built with passion for developers.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="../script.js"></script>
+
+</body>
+</html>

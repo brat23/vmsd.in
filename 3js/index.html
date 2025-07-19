@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js & React Three Fiber Mastery</title>
+    <style>
+        :root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ff88;
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --card-color: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--background-color) 0%, #1a1a1a 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 0, 85, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.6; }
+        }
+
+        .hero-content {
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 20px rgba(255, 0, 85, 0.5); }
+            100% { text-shadow: 0 0 30px rgba(0, 255, 136, 0.5); }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .curriculum {
+            padding: 4rem 0;
+        }
+
+        .phase {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .phase:nth-child(2) { animation-delay: 0.2s; }
+        .phase:nth-child(3) { animation-delay: 0.4s; }
+        .phase:nth-child(4) { animation-delay: 0.6s; }
+        .phase:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .phase-header {
+            background: var(--card-color);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phase-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .phase-header:hover::before {
+            left: 100%;
+        }
+
+        .phase-header:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 0, 85, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .phase-number {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-right: 1rem;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .phase-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .phase-description {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        .weeks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .weeks-grid.expanded {
+            max-height: 2000px;
+        }
+
+        .week-card {
+            background: var(--card-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .week-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .week-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .week-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.15);
+        }
+
+        .week-card.completed {
+            border-color: var(--secondary-color);
+            background: linear-gradient(135deg, var(--card-color) 0%, rgba(0, 255, 136, 0.1) 100%);
+        }
+
+        .week-card.completed::before {
+            transform: scaleX(1);
+        }
+
+        .week-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .week-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .week-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .week-topics {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .week-topics li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .week-topics li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .week-topics li:hover {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .week-topics li:hover::before {
+            transform: scale(1.2);
+        }
+
+        a.topic-link {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        a.topic-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-cube {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
+            opacity: 0.1;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .stat-card {
+            background: var(--card-color);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 0, 85, 0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .toggle-btn.rotated {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .weeks-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .bonus-section {
+            background: linear-gradient(135deg, var(--card-color) 0%, rgba(255, 0, 85, 0.1) 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 4rem 0;
+            border: 1px solid rgba(255, 0, 85, 0.3);
+        }
+
+        .bonus-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .bonus-topics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .bonus-topic {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .bonus-topic:hover {
+            background: rgba(255, 0, 85, 0.1);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <div class="floating-elements" id="floatingElements"></div>
+
+    <div class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Three.js & React Three Fiber</h1>
+                <p>Master 3D Web Development with Interactive Learning</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="overallProgress" style="width: 0%"></div>
+                </div>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalWeeks">14</div>
+                        <div class="stat-label">Weeks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="completedWeeks">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalTopics">50+</div>
+                        <div class="stat-label">Topics</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="progressPercent">0%</div>
+                        <div class="stat-label">Progress</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="curriculum">
+            <div class="phase">
+                <div class="phase-header" onclick="togglePhase(this)">
+                    <span class="phase-number">1</span>
+                    <div>
+                        <h2 class="phase-title"><a href="topics/fundamentals-of-3d-and-threejs.html" class="topic-link">📚 Fundamentals of 3D & Three.js (Vanilla)</a></h2>
+                        <p class="phase-description">Master the core concepts of 3D graphics and Three.js fundamentals</p>
+                    </div>
+                    <button class="toggle-btn">▼</button>
+                </div>
+                <div class="weeks-grid">
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">📘</div>
+                            <h3 class="week-title"><a href="topics/week-1-getting-started.html" class="topic-link">Week 1: Getting Started</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/what-is-webgl.html" class="topic-link">What is WebGL?</a></li>
+                            <li><a href="topics/introduction-to-threejs.html" class="topic-link">Introduction to Three.js</a></li>
+                            <li><a href="topics/creating-a-basic-scene.html" class="topic-link">Creating a basic scene (Scene, Camera, Renderer)</a></li>
+                            <li><a href="topics/adding-a-cube-and-rendering.html" class="topic-link">Adding a Cube and rendering</a></li>
+                        </ul>
+                    </div>
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">🛠️</div>
+                            <h3 class="week-title"><a href="topics/week-2-core-concepts.html" class="topic-link">Week 2: Core Concepts</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/geometry-and-material-basics.html" class="topic-link">Geometry & Material basics (Box, Sphere, Plane)</a></li>
+                            <li><a href="topics/mesh-and-object-creation.html" class="topic-link">Mesh and object creation</a></li>
+                            <li><a href="topics/lights.html" class="topic-link">Lights (Ambient, Directional, Point, Spot)</a></li>
+                            <li><a href="topics/shadows-and-lighting-logic.html" class="topic-link">Shadows and lighting logic</a></li>
+                        </ul>
+                    </div>
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">🎮</div>
+                            <h3 class="week-title"><a href="topics/week-3-controls-and-animation.html" class="topic-link">Week 3: Controls & Animation</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/orbit-controls-drag-controls.html" class="topic-link">OrbitControls, DragControls</a></li>
+                            <li><a href="topics/basic-animation-loop.html" class="topic-link">Basic animation loop (requestAnimationFrame)</a></li>
+                            <li><a href="topics/rotation-scaling-and-position-updates.html" class="topic-link">Rotation, scaling, and position updates</a></li>
+                            <li><a href="topics/raycasting-and-object-interaction.html" class="topic-link">Raycasting & object interaction</a></li>
+                        </ul>
+                    </div>
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">📦</div>
+                            <h3 class="week-title"><a href="topics/week-4-scene-management.html" class="topic-link">Week 4: Scene Management</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/grouping-objects.html" class="topic-link">Grouping objects</a></li>
+                            <li><a href="topics/fog-background-and-environment-maps.html" class="topic-link">Fog, background, and environment maps</a></li>
+                            <li><a href="topics/texture-loading-and-mapping.html" class="topic-link">Texture loading and mapping (diffuse, bump, normal)</a></li>
+                            <li><a href="topics/model-loading.html" class="topic-link">Model loading (GLTFLoader, OBJLoader)</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <div class="phase-header" onclick="togglePhase(this)">
+                    <span class="phase-number">2</span>
+                    <div>
+                        <h2 class="phase-title"><a href="topics/introduction-to-react-and-react-three-fiber.html" class="topic-link">⚛️ Introduction to React + React Three Fiber</a></h2>
+                        <p class="phase-description">Learn how to build 3D experiences with React Three Fiber</p>
+                    </div>
+                    <button class="toggle-btn">▼</button>
+                </div>
+                <div class="weeks-grid">
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">📘</div>
+                            <h3 class="week-title"><a href="topics/week-5-react-three-fiber-basics.html" class="topic-link">Week 5: React Three Fiber Basics</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/what-is-react-three-fiber.html" class="topic-link">What is React Three Fiber?</a></li>
+                            <li><a href="topics/setup-with-vite-cra-nextjs.html" class="topic-link">Setup with Vite / CRA / Next.js</a></li>
+                            <li><a href="topics/canvas-and-the-render-loop.html" class="topic-link">&lt;Canvas /&gt; and the render loop</a></li>
+                            <li><a href="topics/mesh-box-geometry-mesh-standard-material.html" class="topic-link">&lt;mesh&gt;, &lt;boxGeometry&gt;, &lt;meshStandardMaterial&gt;</a></li>
+                        </ul>
+                    </div>
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">🧠</div>
+                            <h3 class="week-title"><a href="topics/week-6-building-with-r3f.html" class="topic-link">Week 6: Building with R3F</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/using-hooks.html" class="topic-link">Using hooks: useFrame, useThree, useLoader</a></li>
+                            <li><a href="topics/lights-cameras-and-materials-in-r3f.html" class="topic-link">Lights, cameras, and materials in R3F</a></li>
+                            <li><a href="topics/nesting-components-to-build-scenes.html" class="topic-link">Nesting components to build scenes</a></li>
+                            <li><a href="topics/reusable-components-and-props.html" class="topic-link">Reusable components and props</a></li>
+                        </ul>
+                    </div>
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">🧱</div>
+                            <h3 class="week-title"><a href="topics/week-7-drei-and-helper-libraries.html" class="topic-link">Week 7: DREI & Helper Libraries</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/drei-and-helper-libraries.html" class="topic-link">@react-three/drei: OrbitControls, Text, Environment</a></li>
+                            <li><a href="topics/debugging-with-leva-stats.html" class="topic-link">Debugging with Leva, Stats</a></li>
+                            <li><a href="topics/using-usetexture-usegltf-center-bounds.html" class="topic-link">Using useTexture, useGLTF, Center, Bounds</a></li>
+                        </ul>
+                    </div>
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">📦</div>
+                            <h3 class="week-title"><a href="topics/week-8-importing-models-and-assets.html" class="topic-link">Week 8: Importing Models and Assets</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/using-gltf-models.html" class="topic-link">Using glTF models</a></li>
+                            <li><a href="topics/handling-animations.html" class="topic-link">Handling animations (useAnimations)</a></li>
+                            <li><a href="topics/texture-loading-with-usetexture.html" class="topic-link">Texture loading with useTexture</a></li>
+                            <li><a href="topics/hosting-and-loading-3d-assets.html" class="topic-link">Hosting & loading 3D assets</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <div class="phase-header" onclick="togglePhase(this)">
+                    <span class="phase-number">3</span>
+                    <div>
+                        <h2 class="phase-title"><a href="topics/interactivity-physics-and-advanced-techniques.html" class="topic-link">🔧 Interactivity, Physics & Advanced Techniques</a></h2>
+                        <p class="phase-description">Add physics, interactions, and advanced effects to your 3D scenes</p>
+                    </div>
+                    <button class="toggle-btn">▼</button>
+                </div>
+                <div class="weeks-grid">
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">🧠</div>
+                            <h3 class="week-title"><a href="topics/week-9-interactions-and-state.html" class="topic-link">Week 9: Interactions and State</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/hover-click-drag-selection-logic.html" class="topic-link">Hover, click, drag, selection logic</a></li>
+                            <li><a href="topics/raycasting-in-r3f.html" class="topic-link">Raycasting in R3F</a></li>
+                            <li><a href="topics/state-management-in-3d.html" class="topic-link">State management in 3D (Zustand or Redux)</a></li>
+                            <li><a href="topics/camera-transitions.html" class="topic-link">Camera transitions</a></li>
+                        </ul>
+                    </div>
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">🎇</div>
+                            <h3 class="week-title"><a href="topics/week-10-animation-and-effects.html" class="topic-link">Week 10: Animation & Effects</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/keyframe-animations.html" class="topic-link">Keyframe animations</a></li>
+                            <li><a href="topics/tweening.html" class="topic-link">Tweening (GSAP or React Spring)</a></li>
+                            <li><a href="topics/particle-systems.html" class="topic-link">Particle systems</a></li>
+                            <li><a href="topics/post-processing.html" class="topic-link">Post-processing: Bloom, FXAA, Depth of Field</a></li>
+                        </ul>
+                    </div>
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">⚙️</div>
+                            <h3 class="week-title"><a href="topics/week-11-physics-and-constraints.html" class="topic-link">Week 11: Physics & Constraints</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/integrating-react-three-rapier.html" class="topic-link">Integrating @react-three/rapier (physics engine)</a></li>
+                            <li><a href="topics/collision-detection.html" class="topic-link">Collision detection</a></li>
+                            <li><a href="topics/soft-bodies-constraints-and-joints.html" class="topic-link">Soft bodies, constraints, and joints</a></li>
+                            <li><a href="topics/creating-physics-based-gameplay.html" class="topic-link">Creating physics-based gameplay</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <div class="phase-header" onclick="togglePhase(this)">
+                    <span class="phase-number">4</span>
+                    <div>
+                        <h2 class="phase-title"><a href="topics/ui-integration-optimization-and-projects.html" class="topic-link">🌐 UI Integration, Optimization & Projects</a></h2>
+                        <p class="phase-description">Build real-world projects with optimized performance</p>
+                    </div>
+                    <button class="toggle-btn">▼</button>
+                </div>
+                <div class="weeks-grid">
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">💡</div>
+                            <h3 class="week-title"><a href="topics/week-12-ui-3d-react.html" class="topic-link">Week 12: UI + 3D + React</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/syncing-2d-html-with-3d.html" class="topic-link">Syncing 2D HTML (DOM) with 3D</a></li>
+                            <li><a href="topics/tooltips-menus-overlays.html" class="topic-link">Tooltips, menus, overlays</a></li>
+                            <li><a href="topics/drag-and-drop-or-clickable-uis-in-3d.html" class="topic-link">Drag-and-drop or clickable UIs in 3D</a></li>
+                        </ul>
+                    </div>
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">🧼</div>
+                            <h3 class="week-title"><a href="topics/week-13-performance-and-best-practices.html" class="topic-link">Week 13: Performance & Best Practices</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/reduce-draw-calls-and-optimize-assets.html" class="topic-link">Reduce draw calls & optimize assets</a></li>
+                            <li><a href="topics/use-instances-usememo-preload-lazy.html" class="topic-link">Use Instances, useMemo, preload, lazy</a></li>
+                            <li><a href="topics/device-compatibility.html" class="topic-link">Device compatibility (mobile, VR)</a></li>
+                        </ul>
+                    </div>
+                    <div class="week-card" onclick="toggleWeek(this)">
+                        <div class="week-header">
+                            <div class="week-icon">🚀</div>
+                            <h3 class="week-title"><a href="topics/week-14-real-world-projects.html" class="topic-link">Week 14: Real-World Projects</a></h3>
+                        </div>
+                        <ul class="week-topics">
+                            <li><a href="topics/portfolio-landing-page-with-3d.html" class="topic-link">Portfolio landing page with 3D</a></li>
+                            <li><a href="topics/3d-product-viewer.html" class="topic-link">3D product viewer</a></li>
+                            <li><a href="topics/small-game-or-interactive-scene.html" class="topic-link">Small game or interactive scene</a></li>
+                            <li><a href="topics/architectural-walkthrough.html" class="topic-link">Architectural walkthrough</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bonus-section">
+                <h2 class="bonus-title"><a href="topics/bonus-topics.html" class="topic-link">🧪 Bonus Topics (Advanced Users)</a></h2>
+                <div class="bonus-topics">
+                    <div class="bonus-topic">
+                        <h4><a href="topics/custom-glsl-shaders.html" class="topic-link">Custom GLSL Shaders</a></h4>
+                        <p>Writing your own RawShaderMaterial</p>
+                    </div>
+                    <div class="bonus-topic">
+                        <h4><a href="topics/custom-geometry.html" class="topic-link">Custom Geometry</a></h4>
+                        <p>Creating custom geometry from scratch</p>
+                    </div>
+                    <div class="bonus-topic">
+                        <h4><a href="topics/vr-ar-development.html" class="topic-link">VR/AR Development</a></h4>
+                        <p>WebXR with @react-three/xr</p>
+                    </div>
+                    <div class="bonus-topic">
+                        <h4><a href="topics/procedural-generation.html" class="topic-link">Procedural Generation</a></h4>
+                        <p>Algorithmic content creation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+            scrollProgress.style.width = scrolled + '%';
+        });
+
+        // Create floating elements
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            for (let i = 0; i < 15; i++) {
+                const cube = document.createElement('div');
+                cube.className = 'floating-cube';
+                cube.style.left = Math.random() * 100 + '%';
+                cube.style.animationDelay = Math.random() * 15 + 's';
+                cube.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                container.appendChild(cube);
+            }
+        }
+
+        // Toggle phase expansion
+        function togglePhase(header) {
+            const grid = header.nextElementSibling;
+            const toggleBtn = header.querySelector('.toggle-btn');
+            
+            grid.classList.toggle('expanded');
+            toggleBtn.classList.toggle('rotated');
+        }
+
+        // Toggle week completion
+        function toggleWeek(weekCard) {
+            weekCard.classList.toggle('completed');
+            updateProgress();
+        }
+
+        // Update progress statistics
+        function updateProgress() {
+            const totalWeeks = document.querySelectorAll('.week-card').length;
+            const completedWeeks = document.querySelectorAll('.week-card.completed').length;
+            const progress = Math.round((completedWeeks / totalWeeks) * 100);
+
+            document.getElementById('completedWeeks').textContent = completedWeeks;
+            document.getElementById('progressPercent').textContent = progress + '%';
+            document.getElementById('overallProgress').style.width = progress + '%';
+
+            // Animate numbers
+            animateNumber(document.getElementById('completedWeeks'), completedWeeks);
+            animateNumber(document.getElementById('progressPercent'), progress, '%');
+        }
+
+        // Animate number changes
+        function animateNumber(element, targetValue, suffix = '') {
+            const startValue = parseInt(element.textContent) || 0;
+            const duration = 1000;
+            const startTime = performance.now();
+
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const currentValue = Math.round(startValue + (targetValue - startValue) * easeOutQuart);
+                
+                element.textContent = currentValue + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        }
+
+        // Intersection Observer for animations
+        function initIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.phase').forEach(phase => {
+                observer.observe(phase);
+            });
+        }
+
+        // Smooth scrolling for internal links
+        function smoothScrollTo(element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Add particle effect on week completion
+        function createParticleEffect(element) {
+            const rect = element.getBoundingClientRect();
+            const particles = [];
+            
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'fixed';
+                particle.style.left = rect.left + rect.width / 2 + 'px';
+                particle.style.top = rect.top + rect.height / 2 + 'px';
+                particle.style.width = '4px';
+                particle.style.height = '4px';
+                particle.style.background = i % 2 === 0 ? 'var(--primary-color)' : 'var(--secondary-color)';
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '9999';
+                
+                const angle = (i / 12) * Math.PI * 2;
+                const velocity = 2 + Math.random() * 3;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
+                particle.vx = vx;
+                particle.vy = vy;
+                particle.life = 1;
+                
+                document.body.appendChild(particle);
+                particles.push(particle);
+            }
+            
+            function animateParticles() {
+                particles.forEach((particle, index) => {
+                    particle.life -= 0.02;
+                    if (particle.life <= 0) {
+                        particle.remove();
+                        particles.splice(index, 1);
+                        return;
+                    }
+                    
+                    const currentLeft = parseFloat(particle.style.left);
+                    const currentTop = parseFloat(particle.style.top);
+                    
+                    particle.style.left = currentLeft + particle.vx + 'px';
+                    particle.style.top = currentTop + particle.vy + 'px';
+                    particle.style.opacity = particle.life;
+                    
+                    particle.vy += 0.1; // gravity
+                });
+                
+                if (particles.length > 0) {
+                    requestAnimationFrame(animateParticles);
+                }
+            }
+            
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Enhanced week toggle with particle effect
+        function toggleWeek(weekCard) {
+            const wasCompleted = weekCard.classList.contains('completed');
+            weekCard.classList.toggle('completed');
+            
+            if (!wasCompleted) {
+                createParticleEffect(weekCard);
+                
+                // Add completion sound effect (visual feedback)
+                weekCard.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    weekCard.style.transform = '';
+                }, 200);
+            }
+            
+            updateProgress();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const focused = document.activeElement;
+                if (focused.classList.contains('week-card')) {
+                    e.preventDefault();
+                    toggleWeek(focused);
+                } else if (focused.classList.contains('phase-header')) {
+                    e.preventDefault();
+                    togglePhase(focused);
+                }
+            }
+        });
+
+        // Add focus styles for accessibility
+        const style = document.createElement('style');
+        style.textContent = `
+            .week-card:focus, .phase-header:focus {
+                outline: 2px solid var(--primary-color);
+                outline-offset: 2px;
+            }
+            .week-card:focus-visible, .phase-header:focus-visible {
+                outline: 2px solid var(--primary-color);
+                outline-offset: 2px;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Make cards focusable
+        document.querySelectorAll('.week-card, .phase-header').forEach(element => {
+            element.setAttribute('tabindex', '0');
+        });
+
+        // Auto-save progress to localStorage (if available)
+        function saveProgress() {
+            try {
+                const completedWeeks = Array.from(document.querySelectorAll('.week-card.completed'))
+                    .map(card => card.querySelector('.week-title').textContent);
+                // Note: localStorage not available in Claude environment
+                // localStorage.setItem('threejs-course-progress', JSON.stringify(completedWeeks));
+            } catch (e) {
+                // Fallback: store in memory
+                window.courseProgress = completedWeeks;
+            }
+        }
+
+        // Load progress from localStorage (if available)
+        function loadProgress() {
+            try {
+                // Note: localStorage not available in Claude environment
+                // const saved = localStorage.getItem('threejs-course-progress');
+                const saved = window.courseProgress;
+                if (saved) {
+                    const completedWeeks = JSON.parse(saved);
+                    document.querySelectorAll('.week-card').forEach(card => {
+                        const title = card.querySelector('.week-title').textContent;
+                        if (completedWeeks.includes(title)) {
+                            card.classList.add('completed');
+                        }
+                    });
+                    updateProgress();
+                }
+            } catch (e) {
+                console.log('No saved progress found');
+            }
+        }
+
+        // Enhanced mobile responsiveness
+        function handleMobileInteractions() {
+            if (window.innerWidth <= 768) {
+                document.querySelectorAll('.week-card').forEach(card => {
+                    card.addEventListener('touchstart', (e) => {
+                        card.style.transform = 'scale(0.98)';
+                    });
+                    
+                    card.addEventListener('touchend', (e) => {
+                        card.style.transform = '';
+                    });
+                });
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            createFloatingElements();
+            initIntersectionObserver();
+            loadProgress();
+            handleMobileInteractions();
+            
+            // Add some initial completed weeks for demo
+            setTimeout(() => {
+                const firstWeek = document.querySelector('.week-card');
+                if (firstWeek && !firstWeek.classList.contains('completed')) {
+                    toggleWeek(firstWeek);
+                }
+            }, 1000);
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            handleMobileInteractions();
+        });
+
+        // Add custom cursor effect
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.querySelector('.custom-cursor');
+            if (!cursor) {
+                const newCursor = document.createElement('div');
+                newCursor.className = 'custom-cursor';
+                newCursor.style.cssText = `
+                    position: fixed;
+                    width: 20px;
+                    height: 20px;
+                    background: radial-gradient(circle, var(--primary-color), var(--secondary-color));
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    opacity: 0.5;
+                    transition: transform 0.1s ease;
+                `;
+                document.body.appendChild(newCursor);
+            }
+            
+            const actualCursor = document.querySelector('.custom-cursor');
+            if (actualCursor) {
+                actualCursor.style.left = e.clientX - 10 + 'px';
+                actualCursor.style.top = e.clientY - 10 + 'px';
+            }
+        });
+
+        // Hide custom cursor on mobile
+        if ('ontouchstart' in window) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const cursor = document.querySelector('.custom-cursor');
+                if (cursor) {
+                    cursor.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

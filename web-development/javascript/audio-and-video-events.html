@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio and Video Events</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="article-page">
+    <div class="bg-animation"></div>
+    <div class="particles"></div>
+    <div class="progress-bar"></div>
+
+    <header>
+        <nav>
+            <div class="logo">VMSD.in</div>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#frontend">Frontend</a></li>
+                <li><a href="../index.html#backend">Backend</a></li>
+                <li><a href="../index.html#deployment">Deployment</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="section-content">
+                <h2>Audio and Video Events</h2>
+                <p class="subtitle">The HTML5 <span class="highlight">audio</span> and <span class="highlight">video</span> elements provide a number of events that can be used to control playback and respond to changes in the media. This article covers how to use these events in JavaScript.</p>
+                
+                <h3>Media Events</h3>
+                <p>This article will cover the different <span class="highlight">media events</span> that are available, such as the <span class="highlight">play</span>, <span class="highlight">pause</span>, and <span class="highlight">ended</span> events. We will also cover how to use these events to create a custom media player.</p>
+
+                <h4>Example: Play/Pause Event</h4>
+                <pre><code>const video = document.getElementById("myVideo");
+video.addEventListener("play", () => {
+  console.log("Video started playing.");
+});
+video.addEventListener("pause", () => {
+  console.log("Video paused.");
+});</code></pre>
+                
+                <h3>Track Events</h3>
+                <p>In addition to the media events, there are also a number of <span class="highlight">track events</span> that can be used to respond to changes in the text tracks of a media element. This article will cover how to use these events to create a more accessible media player.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VMSD.in</h3>
+                    <p>Empowering developers worldwide with comprehensive full-stack education. Join our community and transform your career in tech.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="../index.html#home">Home</a></p>
+                    <p><a href="../index.html#frontend">Frontend</a></p>
+                    <p><a href="../index.html#backend">Backend</a></p>
+                    <p><a href="../index.html#deployment">Deployment</a></p>
+                    <p><a href="../index.html#contact">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Technologies</h3>
+                    <p>HTML, CSS, JavaScript</p>
+                    <p>Python, Node.js</p>
+                    <p>Databases & Cloud</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <p><a href="#">Discord Community</a></p>
+                    <p><a href="#">GitHub</a></p>
+                    <p><a href="#">LinkedIn</a></p>
+                    <p><a href="#">Twitter</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 VMSD.in. All rights reserved. Built with passion for developers.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="../script.js"></script>
+
+</body>
+</html>

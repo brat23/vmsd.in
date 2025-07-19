@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pseudo Classes and Elements</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="article-page">
+    <div class="bg-animation"></div>
+    <div class="particles"></div>
+    <div class="progress-bar"></div>
+
+    <header>
+        <nav>
+            <div class="logo">VMSD.in</div>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#frontend">Frontend</a></li>
+                <li><a href="../index.html#backend">Backend</a></li>
+                <li><a href="../index.html#deployment">Deployment</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="section-content">
+                <h2>Pseudo-Classes and Elements</h2>
+                <p class="subtitle">Pseudo-classes and pseudo-elements are special keywords in CSS that allow you to style elements based on their state or position. This article covers how to use these powerful features to create more dynamic and engaging designs.</p>
+                
+                <h3>Pseudo-Classes</h3>
+                <p>A <span class="highlight">pseudo-class</span> is a keyword added to a selector that specifies a special state of the selected element. For example, the <span class="highlight">:hover</span> pseudo-class can be used to change the style of a button when the user hovers over it. Other common pseudo-classes include <span class="highlight">:focus</span>, <span class="highlight">:active</span>, and <span class="highlight">:nth-child()</span>.</p>
+
+                <h4>Example: Hover Effect</h4>
+                <pre><code>button:hover {
+  background-color: lightblue;
+}</code></pre>
+                
+                <h3>Pseudo-Elements</h3>
+                <p>A <span class="highlight">pseudo-element</span> is a keyword added to a selector that allows you to style a specific part of the selected element. For example, the <span class="highlight">::before</span> and <span class="highlight">::after</span> pseudo-elements can be used to add content before or after an element's content. Other common pseudo-elements include <span class="highlight">::first-line</span> and <span class="highlight">::first-letter</span>.</p>
+
+                <h4>Example: ::before Pseudo-Element</h4>
+                <pre><code>p::before {
+  content: "Read this: ";
+  font-weight: bold;
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VMSD.in</h3>
+                    <p>Empowering developers worldwide with comprehensive full-stack education. Join our community and transform your career in tech.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="../index.html#home">Home</a></p>
+                    <p><a href="../index.html#frontend">Frontend</a></p>
+                    <p><a href="../index.html#backend">Backend</a></p>
+                    <p><a href="../index.html#deployment">Deployment</a></p>
+                    <p><a href="../index.html#contact">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Technologies</h3>
+                    <p>HTML, CSS, JavaScript</p>
+                    <p>Python, Node.js</p>
+                    <p>Databases & Cloud</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <p><a href="#">Discord Community</a></p>
+                    <p><a href="#">GitHub</a></p>
+                    <p><a href="#">LinkedIn</a></p>
+                    <p><a href="#">Twitter</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 VMSD.in. All rights reserved. Built with passion for developers.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="../script.js"></script>
+
+</body>
+</html>

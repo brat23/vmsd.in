@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Texture loading with useTexture</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Texture Loading with <code>useTexture</code> in React Three Fiber</h1>
+    <p><code>useTexture</code> is a convenient hook provided by <code>@react-three/drei</code> that simplifies the process of loading textures in React Three Fiber applications. It is the recommended approach for texture loading in modern R3F setups.</p>
+
+    <h2>How to Use <code>useTexture</code></h2>
+
+    <h3>1. Basic Usage (Single Texture):</h3>
+    <p>To load a single texture and apply it to a material, you can pass the path to the texture file directly to <code>useTexture</code>.</p>
+    <pre><code>import { useTexture } from '@react-three/drei';
+import React from 'react';
+
+function MyTexturedBox() {
+  const texture = useTexture('/path/to/your/texture.jpg');
+
+  return (
+    &lt;mesh&gt;
+      &lt;boxGeometry args={[1, 1, 1]} /&gt;
+      &lt;meshStandardMaterial map={texture} /&gt;
+    &lt;/mesh&gt;
+  );
+}
+
+export default MyTexturedBox;</code></pre>
+
+    <h3>2. Loading Multiple Textures:</h3>
+    <p>When you need to load multiple textures (e.g., color map, normal map, roughness map for PBR materials), you can pass an array of texture paths to <code>useTexture</code>. The hook will return an array of loaded <code>Texture</code> objects in the same order as the input paths.</p>
+    <pre><code>import { useTexture } from '@react-three/drei';
+import React from 'react';
+
+function PBRMaterialBox() {
+  const [colorMap, normalMap, roughnessMap] = useTexture([
+    '/path/to/color.jpg',
+    '/path/to/normal.jpg',
+    '/path/to/roughness.jpg',
+  ]);
+
+  return (
+    &lt;mesh&gt;
+      &lt;sphereGeometry args={[1, 64, 64]} /&gt;
+      &lt;meshStandardMaterial
+        map={colorMap}
+        normalMap={normalMap}
+        roughnessMap={roughnessMap}
+      /&gt;
+    &lt;/mesh&gt;
+  );
+}
+
+export default PBRMaterialBox;</code></pre>
+
+    <h3>3. Using an Object for Material Properties:</h3>
+    <p><code>useTexture</code> can also accept an object where keys correspond to material properties (like <code>map</code>, <code>normalMap</code>, <code>aoMap</code>) and values are the texture paths. This can make your code cleaner when dealing with multiple PBR textures.</p>
+    <pre><code>import { useTexture } from '@react-three/drei';
+import React from 'react';
+
+function AdvancedTexturedObject() {
+  const textures = useTexture({
+    map: 'textures/PavingStones130_1K_Color.jpg',
+    normalMap: 'textures/PavingStones130_1K_NormalGL.jpg',
+    roughnessMap: 'textures/PavingStones130_1K_Roughness.jpg',
+    aoMap: 'textures/PavingStones130_1K_AmbientOcclusion.jpg',
+  });
+
+  return (
+    &lt;mesh&gt;
+      &lt;boxGeometry /&gt;
+      &lt;meshStandardMaterial {...textures} /&gt;
+    &lt;/mesh&gt;
+  );
+}
+
+export default AdvancedTexturedObject;</code></pre>
+
+    <h2>Important Considerations:</h2>
+    <ul>
+        <li><b>Suspense:</b> Texture loading is asynchronous. Ensure your component using <code>useTexture</code> is wrapped in a <code>&lt;Suspense&gt;</code> boundary to handle the loading state.</li>
+        <li><b>Error Handling:</b> If a texture file is invalid or not found, <code>useTexture</code> can cause a runtime error. Consider using an <code>ErrorBoundary</code> to gracefully handle such issues.</li>
+        <li><b>Texture Properties:</b> After loading, you can manipulate the <code>Texture</code> object's properties, such as <code>repeat</code>, <code>wrapS</code>, and <code>wrapT</code>, to control how the texture is applied and tiled on your mesh.</li>
+    </ul>
+
+</body>
+</html>

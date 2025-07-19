@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is React Three Fiber?</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>What is React Three Fiber (R3F)?</h1>
+    <p>React Three Fiber (R3F) is a React renderer for Three.js, a powerful JavaScript 3D library. It allows developers to build 3D scenes and animations for the web and React Native applications using React's familiar component-based architecture and declarative syntax.</p>
+
+    <h2>Key Aspects of React Three Fiber:</h2>
+    <ul>
+        <li><b>React Renderer:</b> R3F acts as a bridge, converting React's JSX elements into Three.js objects and managing the 3D scene. This means you write your 3D scene using React components, which then get translated into Three.js objects behind the scenes.</li>
+        <li><b>Declarative Syntax:</b> Instead of using Three.js's imperative API (where you explicitly tell the browser what to do step-by-step), R3F lets you define your 3D scene using React components. This makes it easier to manage complex scenes and reason about your 3D hierarchy.</li>
+        <li><b>Integration with React Ecosystem:</b> It seamlessly integrates with React features like hooks (<code>useFrame</code>, <code>useThree</code>, <code>useLoader</code>) and context, allowing you to leverage the existing React development workflow and state management solutions.</li>
+        <li><b>Performance:</b> R3F renders components outside of React's reconciliation process, which means there's minimal overhead. It can even outperform plain Three.js in terms of scale due to React's scheduling abilities and efficient updates.</li>
+        <li><b>Ecosystem:</b> There's a rich ecosystem around R3F, including libraries like <code>@react-three/drei</code> for helpful abstractions, ready-to-use components, and utilities that simplify common tasks.</li>
+    </ul>
+
+    <h2>Why Use R3F?</h2>
+    <p>R3F brings the benefits of React development (component reusability, declarative code, state management) to the world of 3D graphics. If you're already familiar with React, R3F significantly lowers the barrier to entry for creating complex and interactive 3D experiences on the web.</p>
+
+    <h2>Basic R3F Example: A Rotating Box</h2>
+    <p>Here's a simple example of a rotating box using React Three Fiber. Note that this requires a React environment to run.</p>
+    <pre><code>import React, { useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+
+function Box(props) {
+  // This reference will give us direct access to the THREE.Mesh object
+  const meshRef = useRef();
+  // Subscribe this component to the render-loop, rotate the mesh every frame
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x += 0.01;
+      meshRef.current.rotation.y += 0.01;
+    }
+  });
+
+  // Return the view, these are regular Three.js elements expressed in JSX
+  return (
+    &lt;mesh {...props} ref={meshRef}&gt;
+      &lt;boxGeometry args={[1, 1, 1]} /&gt;
+      &lt;meshStandardMaterial color={'hotpink'} /&gt;
+    &lt;/mesh&gt;
+  );
+}
+
+export default function App() {
+  return (
+    &lt;Canvas&gt;
+      &lt;ambientLight /&gt;
+      &lt;pointLight position={[10, 10, 10]} /&gt;
+      &lt;Box position={[-1.2, 0, 0]} /&gt;
+      &lt;Box position={[1.2, 0, 0]} /&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+</body>
+</html>

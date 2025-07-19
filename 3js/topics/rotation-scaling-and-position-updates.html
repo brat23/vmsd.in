@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotation, scaling, and position updates</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Object Transformations: Position, Rotation, and Scaling in Three.js</h1>
+    <p>In Three.js, manipulating objects in a 3D scene involves transforming them through changes in their position, rotation, and scaling. These transformations are managed through the <code>Object3D</code> class, which is the base class for most objects in Three.js, including <code>Mesh</code>, <code>Camera</code>, and <code>Light</code> objects.</p>
+
+    <h2>Position</h2>
+    <p>The <code>position</code> property of an <code>Object3D</code> instance is a <code>Vector3</code> object. It represents the object's local position relative to its parent object. You can modify the position by directly setting its <code>x</code>, <code>y</code>, and <code>z</code> components or by using <code>Vector3</code> methods like <code>set()</code>, <code>setX()</code>, <code>setY()</code>, <code>setZ()</code>, or <code>copy()</code>.</p>
+    <pre><code>mesh.position.x = 5; // Move 5 units along the X-axis
+mesh.position.set(1, 2, 3); // Set X, Y, and Z coordinates</code></pre>
+
+    <h2>Rotation</h2>
+    <p>The <code>rotation</code> property of an <code>Object3D</code> is an <code>Euler</code> angle instance, representing rotations around the X, Y, and Z axes in radians. You can set individual axis rotations or use the <code>set()</code> method. Three.js also uses <code>Quaternion</code> objects for rotation, which can help avoid issues like Gimbal Lock that can occur with Euler angles. The <code>lookAt()</code> method is a convenient way to orient an object to face a specific point in space.</p>
+    <pre><code>object.rotation.y += 0.01; // Rotate around the Y-axis
+object.rotation.set(Math.PI / 2, 0, 0); // Set rotation to 90 degrees around X-axis
+object.lookAt(new THREE.Vector3(0, 0, 0)); // Make the object look at the origin</code></pre>
+
+    <h2>Scaling</h2>
+    <p>The <code>scale</code> property of an <code>Object3D</code> is also a <code>Vector3</code> object. By default, the scale vector is <code>(1, 1, 1)</code>, meaning no scaling is applied. Setting values less than 1 will make the object smaller, while values greater than 1 will make it larger. You can scale uniformly by setting all three components to the same value or non-uniformly by assigning different values to <code>x</code>, <code>y</code>, and <code>z</code>.</p>
+    <pre><code>object.scale.set(2, 2, 2); // Scale uniformly by 2
+object.scale.y = 0.5; // Scale only along the Y-axis by 0.5</code></pre>
+
+    <h2>Example: Object Transformations</h2>
+    <p>This example demonstrates how to change the position, rotation, and scale of a cube in a Three.js scene.</p>
+
+    <iframe srcdoc="
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset=\"utf-8\">
+            <title>Three.js Transformations</title>
+            <style>
+                body { margin: 0; overflow: hidden; }
+                canvas { display: block; }
+            </style>
+        </head>
+        <body>
+            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
+            <script>
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                const geometry = new THREE.BoxGeometry(1, 1, 1);
+                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+                const cube = new THREE.Mesh(geometry, material);
+                scene.add(cube);
+
+                camera.position.z = 5;
+
+                function animate() {
+                    requestAnimationFrame(animate);
+
+                    // Position update
+                    cube.position.x = Math.sin(Date.now() * 0.001) * 2; // Oscillate along X-axis
+
+                    // Rotation update
+                    cube.rotation.x += 0.01;
+                    cube.rotation.y += 0.01;
+
+                    // Scaling update
+                    const scaleFactor = 1 + Math.sin(Date.now() * 0.002) * 0.5; // Oscillate scale
+                    cube.scale.set(scaleFactor, scaleFactor, scaleFactor);
+
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            </script>
+        </body>
+        </html>
+    " frameborder="0" width="100%" height="400px"></iframe>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalStorage and CRUD Operations</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="article-page">
+    <div class="bg-animation"></div>
+    <div class="particles"></div>
+    <div class="progress-bar"></div>
+
+    <header>
+        <nav>
+            <div class="logo">VMSD.in</div>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#frontend">Frontend</a></li>
+                <li><a href="../index.html#backend">Backend</a></li>
+                <li><a href="../index.html#deployment">Deployment</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="section-content">
+                <h2>LocalStorage and CRUD Operations</h2>
+                <p class="subtitle">LocalStorage is a web storage technology that allows you to store data in the browser. This article covers how to use LocalStorage to perform CRUD (Create, Read, Update, Delete) operations.</p>
+                
+                <h3>Creating and Reading Data</h3>
+                <p>This article will cover how to use the <span class="highlight">setItem()</span> and <span class="highlight">getItem()</span> methods to create and read data from LocalStorage. We will also cover how to use the <span class="highlight">JSON.stringify()</span> and <span class="highlight">JSON.parse()</span> methods to store and retrieve complex data.</p>
+
+                <h4>Example: Storing and Retrieving Data</h4>
+                <pre><code>localStorage.setItem("username", "Alice");
+const user = localStorage.getItem("username");
+console.log(user); // "Alice"</code></pre>
+                
+                <h3>Updating and Deleting Data</h3>
+                <p>This article will cover how to use the <span class="highlight">setItem()</span> and <span class="highlight">removeItem()</span> methods to update and delete data from LocalStorage. We will also cover how to use the <span class="highlight">clear()</span> method to remove all data from LocalStorage.</p>
+
+                <h4>Example: Updating and Deleting Data</h4>
+                <pre><code>localStorage.setItem("username", "Bob"); // Update
+localStorage.removeItem("username"); // Delete
+localStorage.clear(); // Clear all</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VMSD.in</h3>
+                    <p>Empowering developers worldwide with comprehensive full-stack education. Join our community and transform your career in tech.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="../index.html#home">Home</a></p>
+                    <p><a href="../index.html#frontend">Frontend</a></p>
+                    <p><a href="../index.html#backend">Backend</a></p>
+                    <p><a href="../index.html#deployment">Deployment</a></p>
+                    <p><a href="../index.html#contact">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Technologies</h3>
+                    <p>HTML, CSS, JavaScript</p>
+                    <p>Python, Node.js</p>
+                    <p>Databases & Cloud</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <p><a href="#">Discord Community</a></p>
+                    <p><a href="#">GitHub</a></p>
+                    <p><a href="#">LinkedIn</a></p>
+                    <p><a href="#">Twitter</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 VMSD.in. All rights reserved. Built with passion for developers.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="../script.js"></script>
+
+</body>
+</html>

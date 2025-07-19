@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using glTF models</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Using glTF Models in Three.js</h1>
+    <p>Using glTF (GL Transmission Format) models in Three.js is a common and efficient way to display 3D content on the web. glTF is often referred to as the "JPEG of 3D" due to its optimization for web delivery.</p>
+
+    <h2>Loading glTF Models with <code>GLTFLoader</code></h2>
+    <p>To load glTF models in Three.js, you primarily use the <code>GLTFLoader</code> class, which is part of the Three.js examples. It needs to be imported explicitly.</p>
+    <pre><code>import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';</code></pre>
+
+    <h3>Basic Usage:</h3>
+    <p>The <code>loader.load</code> method takes the model's URL, a callback for when the model is loaded, an optional callback for progress updates, and an optional callback for error handling.</p>
+    <pre><code>import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+// Scene, Camera, Renderer setup (assuming these are already defined)
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Add some basic lighting to see the model
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+directionalLight.position.set(1, 1, 1).normalize();
+scene.add(directionalLight);
+
+camera.position.z = 5;
+
+const loader = new GLTFLoader();
+
+loader.load(
+    // resource URL (replace with your model's path)
+    'path/to/your_model.gltf', // or .glb
+    // called when the resource is loaded
+    function (gltf) {
+        scene.add(gltf.scene);
+
+        // Optional: Access animations if present
+        // if (gltf.animations && gltf.animations.length) {
+        //     const mixer = new THREE.AnimationMixer(gltf.scene);
+        //     gltf.animations.forEach((clip) => {
+        //         mixer.clipAction(clip).play();
+        //     });
+        //     // Remember to update the mixer in your animation loop
+        // }
+
+    },
+    // called while loading is in progress
+    function (xhr) {
+        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    // called when loading has errors
+    function (error) {
+        console.error('An error happened', error);
+    }
+);
+
+// Animation loop (essential for rendering)
+function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+}
+animate();
+</code></pre>
+
+    <h2>Important Considerations:</h2>
+    <ul>
+        <li><b>File Types:</b> glTF assets can be provided in JSON (<code>.gltf</code>) or binary (<code>.glb</code>) format. Binary <code>.glb</code> files are self-contained.</li>
+        <li><b>DRACO Compression:</b> If your glTF models use DRACO compression, you'll need to include <code>DRACOLoader</code> and set it on your <code>GLTFLoader</code> instance.</li>
+        <li><b>Lighting:</b> glTF models often rely on proper lighting in the scene to appear correctly. Ensure you have adequate light sources.</li>
+        <li><b>Scaling and Positioning:</b> Models might load at unexpected scales or positions. You can adjust the <code>scale</code> and <code>position</code> properties of <code>gltf.scene</code> after loading.</li>
+        <li><b>Animations:</b> glTF supports animations. You'll use <code>THREE.AnimationMixer</code> and <code>THREE.Clock</code> to play these animations.</li>
+        <li><b>Local Server:</b> When developing, serve your files using a local web server to avoid CORS issues.</li>
+    </ul>
+
+</body>
+</html>

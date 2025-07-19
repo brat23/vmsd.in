@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hover, click, drag, selection logic</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Hover, Click, Drag, and Selection Logic in React Three Fiber</h1>
+    <p>React Three Fiber (R3F) simplifies handling user interactions with 3D objects by integrating directly with React's event system. This allows you to use familiar event handlers like <code>onPointerOver</code>, <code>onPointerOut</code>, and <code>onClick</code> directly on your 3D components.</p>
+
+    <h2>Hover and Click Interactions</h2>
+    <p>R3F components expose pointer event handlers that work similarly to DOM events. When the user's mouse (or touch) interacts with a mesh, these events are triggered.</p>
+    <ul>
+        <li><b><code>onPointerOver</code>:</b> Fired when the pointer enters the object.</li>
+        <li><b><code>onPointerOut</code>:</b> Fired when the pointer leaves the object.</li>
+        <li><b><code>onClick</code>:</b> Fired when the object is clicked.</li>
+        <li><b><code>onPointerMove</code>:</b> Fired when the pointer moves over the object.</li>
+    </ul>
+    <p>These handlers receive an event object that contains useful information, such as the intersected object, the point of intersection, and the original DOM event.</p>
+
+    <h2>Drag and Selection Logic</h2>
+    <p>Implementing drag and more complex selection (like marquee selection) often involves combining R3F's pointer events with state management and potentially external libraries or custom raycasting logic.</p>
+    <ul>
+        <li><b>Dragging Individual Objects:</b> For simple dragging, libraries like <code>@react-three/drei</code> provide <code>&lt;TransformControls&gt;</code> or <code>&lt;DragControls&gt;</code> that handle the dragging logic for you.</li>
+        <li><b>Marquee Selection (Area Selection):</b> This is more complex. It typically involves:</li>
+        <ol>
+            <li>Capturing mouse down, mouse move, and mouse up events on the canvas.</li>
+            <li>Rendering a 2D selection rectangle (marquee) on the screen using HTML/CSS.</li>
+            <li>On mouse up, converting the 2D screen coordinates of the selection rectangle into 3D space to determine which objects are within the selection area. This often involves using <code>THREE.Frustum</code> and <code>THREE.Matrix4</code> to create a selection frustum and checking if object bounding boxes intersect with it.</li>
+            <li>Highlighting the selected objects.</li>
+        </ol>
+    </ul>
+
+    <h2>Example: Hover and Click on a Box</h2>
+    <p>This example demonstrates how to change the color of a box on hover and log a message when it's clicked. Note that this requires a React environment to run.</p>
+
+    <pre><code>import React, { useRef, useState } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+
+function InteractiveBox(props) {
+  const meshRef = useRef();
+  const [hovered, setHover] = useState(false);
+  const [clicked, setClick] = useState(false);
+
+  // Simple rotation animation
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x += 0.005;
+      meshRef.current.rotation.y += 0.005;
+    }
+  });
+
+  return (
+    &lt;mesh
+      {...props}
+      ref={meshRef}
+      scale={clicked ? 1.2 : 1} // Scale up when clicked
+      onClick={() => setClick(!clicked)}
+      onPointerOver={() => setHover(true)}
+      onPointerOut={() => setHover(false)}
+    &gt;
+      &lt;boxGeometry args={[1, 1, 1]} /&gt;
+      &lt;meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} /&gt;
+    &lt;/mesh&gt;
+  );
+}
+
+export default function App() {
+  return (
+    &lt;Canvas camera={{ position: [0, 0, 3] }}&gt;
+      &lt;ambientLight intensity={0.5} /&gt;
+      &lt;pointLight position={[10, 10, 10]} /&gt;
+      &lt;InteractiveBox /&gt;
+      &lt;OrbitControls /&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+</body>
+</html>

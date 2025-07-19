@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reusable components and props</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Reusable Components and Props in React Three Fiber</h1>
+    <p>React Three Fiber (R3F) leverages React's component-based architecture to create and manage Three.js scenes, making it easy to build reusable 3D components and manage their properties using props.</p>
+
+    <h2>Reusable Components in React Three Fiber</h2>
+    <p>In R3F, you define 3D objects and their behaviors as standard React components. This allows you to encapsulate Three.js logic, state, and interactions within self-contained units that can be reused throughout your application.</p>
+    <p>For example, instead of manually creating a <code>THREE.Mesh</code> and its geometry and material in imperative Three.js code, you can define a <code>Box</code> component that renders a mesh with a box geometry and a standard material. This component can then be instantiated multiple times with different properties.</p>
+
+    <h2>Props in React Three Fiber</h2>
+    <p>Props in R3F function identically to props in standard React. They are used to pass data and attributes from a parent component to a child component, allowing you to customize instances of your reusable 3D components.</p>
+    <h3>How Props are Typically Used:</h3>
+    <ol>
+        <li><b>Standard Properties:</b> Most Three.js object properties (like <code>position</code>, <code>scale</code>, <code>rotation</code>, <code>color</code>, <code>intensity</code> for lights, etc.) can be passed directly as props to their corresponding JSX elements. R3F automatically maps these props to the underlying Three.js object's properties.</li>
+        <li><b>Constructor Arguments (<code>args</code> prop):</b> For Three.js objects that require arguments during their instantiation (e.g., <code>new THREE.BoxGeometry(width, height, depth)</code>), R3F uses a special <code>args</code> prop. This prop accepts an array of values that are passed directly to the Three.js constructor.</li>
+        <li><b>Custom Props:</b> You can define your own custom props for your reusable R3F components, just like in any React component. These props can then be used to control the appearance, behavior, or any other aspect of your 3D object.</li>
+    </ol>
+
+    <h2>Example of a Reusable Component with Props</h2>
+    <p>Here's a simple example of a reusable <code>Box</code> component that accepts <code>position</code>, <code>color</code>, and <code>rotationSpeed</code> as props. Note that this requires a React environment to run.</p>
+
+    <pre><code>import React, { useRef, useState } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+
+// Reusable Box component
+function Box(props) {
+  const meshRef = useRef();
+  const [hovered, setHover] = useState(false);
+  const [active, setActive] = useState(false);
+
+  useFrame((state, delta) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x += delta * (props.rotationSpeed || 1);
+      meshRef.current.rotation.y += delta * (props.rotationSpeed || 1);
+    }
+  });
+
+  return (
+    &lt;mesh
+      {...props} // Spread all other props (like position) onto the mesh
+      ref={meshRef}
+      scale={active ? [1.5, 1.5, 1.5] : [1, 1, 1]}
+      onClick={() => setActive(!active)}
+      onPointerOver={() => setHover(true)}
+      onPointerOut={() => setHover(false)}
+    &gt;
+      &lt;boxGeometry args={[1, 1, 1]} /&gt;
+      &lt;meshStandardMaterial color={hovered ? 'hotpink' : props.color} /&gt;
+    &lt;/mesh&gt;
+  );
+}
+
+// App component using the reusable Box
+export default function App() {
+  return (
+    &lt;Canvas&gt;
+      &lt;ambientLight intensity={0.5} /&gt;
+      &lt;pointLight position={[10, 10, 10]} /&gt;
+      &lt;Box position={[-1.2, 0, 0]} color="orange" rotationSpeed={2} /&gt;
+      &lt;Box position={[1.2, 0, 0]} color="purple" rotationSpeed={0.5} /&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+</body>
+</html>

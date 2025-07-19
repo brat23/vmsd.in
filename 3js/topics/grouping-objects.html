@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grouping objects</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Grouping Objects in Three.js</h1>
+    <p>In Three.js, you can group objects together using <code>THREE.Group</code>. A <code>THREE.Group</code> is a special type of <code>Object3D</code> that acts as a container for other objects. When you add objects to a group, their transformations (position, rotation, scale) become relative to the group's transformation. This allows you to move, rotate, or scale multiple objects as a single unit.</p>
+
+    <h2>How to Use <code>THREE.Group</code></h2>
+
+    <h3>1. Create a <code>THREE.Group</code> instance:</h3>
+    <pre><code>const group = new THREE.Group();</code></pre>
+
+    <h3>2. Add objects to the group:</h3>
+    <p>You can add any <code>Object3D</code> (like <code>Mesh</code>, <code>Light</code>, <code>Camera</code>, or even other <code>Group</code>s) to a group using its <code>add()</code> method.</p>
+    <pre><code>const boxGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const box = new THREE.Mesh(boxGeometry, boxMaterial);
+box.position.set(-0.75, 0, 0); // Position relative to the group
+
+const sphereGeometry = new THREE.SphereGeometry(0.4, 32, 32);
+const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphere.position.set(0.75, 0, 0); // Position relative to the group
+
+group.add(box);
+group.add(sphere);</code></pre>
+
+    <h3>3. Add the group to the scene:</h3>
+    <p>Once objects are added to the group, you add the group itself to your scene.</p>
+    <pre><code>scene.add(group);</code></pre>
+
+    <h3>4. Transform the group:</h3>
+    <p>Now, any transformations applied to the <code>group</code> will affect all its children.</p>
+    <pre><code>group.position.set(0, 0, 0); // Moves the entire group
+group.rotation.y = Math.PI / 4; // Rotates the entire group
+group.scale.set(1.5, 1.5, 1.5); // Scales the entire group</code></pre>
+
+    <h2>Key Benefits of Grouping:</h2>
+    <ul>
+        <li><b>Hierarchical Transformations:</b> Simplifies managing complex scenes by allowing you to transform multiple objects as a single entity.</li>
+        <li><b>Organization:</b> Helps organize your scene graph, making it easier to manage and understand relationships between objects.</li>
+        <li><b>Performance (Indirectly):</b> While not a direct performance boost for rendering, it can simplify updates and calculations if you're moving many objects together.</li>
+    </ul>
+
+    <h2>Example: Grouping Objects</h2>
+    <p>This example demonstrates how to create a group of objects and apply transformations to the entire group.</p>
+
+    <iframe srcdoc="
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset=\"utf-8\">
+            <title>Three.js Grouping</title>
+            <style>
+                body { margin: 0; overflow: hidden; }
+                canvas { display: block; }
+            </style>
+        </head>
+        <body>
+            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
+            <script>
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                // Create a group
+                const group = new THREE.Group();
+                scene.add(group);
+
+                // Add a box to the group
+                const boxGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+                const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+                const box = new THREE.Mesh(boxGeometry, boxMaterial);
+                box.position.set(-0.75, 0, 0);
+                group.add(box);
+
+                // Add a sphere to the group
+                const sphereGeometry = new THREE.SphereGeometry(0.4, 32, 32);
+                const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+                const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                sphere.position.set(0.75, 0, 0);
+                group.add(sphere);
+
+                camera.position.z = 5;
+
+                function animate() {
+                    requestAnimationFrame(animate);
+
+                    group.rotation.y += 0.01; // Rotate the entire group
+
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            </script>
+        </body>
+        </html>
+    " frameborder="0" width="100%" height="400px"></iframe>
+
+</body>
+</html>

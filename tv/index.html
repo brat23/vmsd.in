@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Chart Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ff88;
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --card-color: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: var(--card-color);
+            padding: 1rem 2rem;
+            border-bottom: 2px solid var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .control-group input,
+        .control-group select {
+            background: var(--background-color);
+            color: var(--text-color);
+            border: 1px solid var(--primary-color);
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .control-group input[type="color"] {
+            width: 40px;
+            height: 35px;
+            cursor: pointer;
+        }
+
+        .symbol-input {
+            min-width: 200px;
+        }
+
+        .color-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--card-color);
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .chart-container {
+            background: var(--card-color);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--primary-color);
+        }
+
+        .chart-wrapper {
+            width: 100%;
+            height: 500px;
+            position: relative;
+        }
+
+        .preset-themes {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .theme-btn {
+            background: var(--card-color);
+            color: var(--text-color);
+            border: 1px solid var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .info-section {
+            background: var(--card-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+            margin-top: 1rem;
+        }
+
+        .info-section h3 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-section p {
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .error {
+            text-align: center;
+            padding: 2rem;
+            color: var(--primary-color);
+        }
+
+        .stock-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--background-color);
+            border-radius: 4px;
+        }
+
+        .stock-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .stock-change {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .stock-change.positive {
+            color: var(--secondary-color);
+        }
+
+        .stock-change.negative {
+            color: var(--primary-color);
+        }
+
+        .quick-symbols {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .symbol-btn {
+            background: var(--background-color);
+            color: var(--text-color);
+            border: 1px solid var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .symbol-btn:hover {
+            background: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .control-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .symbol-input {
+                min-width: 100%;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .chart-wrapper {
+                height: 400px;
+            }
+
+            .stock-info {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Stock Chart Viewer</h1>
+        <div class="controls">
+            <div class="control-group">
+                <label for="symbol">Symbol:</label>
+                <input type="text" id="symbol" class="symbol-input" value="^NSEI" placeholder="Enter symbol (e.g., ^NSEI, RELIANCE.NS)">
+            </div>
+            <div class="control-group">
+                <label for="period">Period:</label>
+                <select id="period">
+                    <option value="1d">1 Day</option>
+                    <option value="5d">5 Days</option>
+                    <option value="1mo" selected>1 Month</option>
+                    <option value="3mo">3 Months</option>
+                    <option value="6mo">6 Months</option>
+                    <option value="1y">1 Year</option>
+                    <option value="2y">2 Years</option>
+                    <option value="5y">5 Years</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="interval">Interval:</label>
+                <select id="interval">
+                    <option value="1m">1 min</option>
+                    <option value="5m">5 min</option>
+                    <option value="15m">15 min</option>
+                    <option value="30m">30 min</option>
+                    <option value="1h">1 hour</option>
+                    <option value="1d" selected>1 day</option>
+                    <option value="1wk">1 week</option>
+                    <option value="1mo">1 month</option>
+                </select>
+            </div>
+            <button class="btn" onclick="loadChart()">Load Chart</button>
+        </div>
+        
+        <div class="quick-symbols">
+            <button class="symbol-btn" onclick="setSymbol('^NSEI')">NIFTY 50</button>
+            <button class="symbol-btn" onclick="setSymbol('^NSEBANK')">BANK NIFTY</button>
+            <button class="symbol-btn" onclick="setSymbol('RELIANCE.NS')">RELIANCE</button>
+            <button class="symbol-btn" onclick="setSymbol('TCS.NS')">TCS</button>
+            <button class="symbol-btn" onclick="setSymbol('INFY.NS')">INFOSYS</button>
+            <button class="symbol-btn" onclick="setSymbol('HDFCBANK.NS')">HDFC BANK</button>
+            <button class="symbol-btn" onclick="setSymbol('AAPL')">APPLE</button>
+            <button class="symbol-btn" onclick="setSymbol('TSLA')">TESLA</button>
+            <button class="symbol-btn" onclick="setSymbol('GOOGL')">GOOGLE</button>
+            <button class="symbol-btn" onclick="setSymbol('MSFT')">MICROSOFT</button>
+        </div>
+        
+        <div class="color-controls">
+            <div class="control-group">
+                <label for="primary-color">Primary:</label>
+                <input type="color" id="primary-color" value="#ff0055">
+            </div>
+            <div class="control-group">
+                <label for="secondary-color">Secondary:</label>
+                <input type="color" id="secondary-color" value="#00ff88">
+            </div>
+            <div class="control-group">
+                <label for="background-color">Background:</label>
+                <input type="color" id="background-color" value="#121212">
+            </div>
+            <div class="control-group">
+                <label for="text-color">Text:</label>
+                <input type="color" id="text-color" value="#ffffff">
+            </div>
+            <div class="control-group">
+                <label for="card-color">Card:</label>
+                <input type="color" id="card-color" value="#1e1e1e">
+            </div>
+            <button class="btn btn-secondary" onclick="applyColors()">Apply Colors</button>
+        </div>
+
+        <div class="preset-themes">
+            <button class="theme-btn" onclick="applyTheme('dark')">Dark Theme</button>
+            <button class="theme-btn" onclick="applyTheme('neon')">Neon Theme</button>
+            <button class="theme-btn" onclick="applyTheme('blue')">Blue Theme</button>
+            <button class="theme-btn" onclick="applyTheme('green')">Green Theme</button>
+            <button class="theme-btn" onclick="applyTheme('purple')">Purple Theme</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="chart-container">
+            <div id="stock-info" class="stock-info" style="display: none;">
+                <div>
+                    <div id="stock-name">Stock Name</div>
+                    <div id="stock-price" class="stock-price">$0.00</div>
+                </div>
+                <div>
+                    <div id="stock-change" class="stock-change">+0.00 (0.00%)</div>
+                </div>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="stockChart"></canvas>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3>How to Use:</h3>
+            <p><strong>Indian Stocks:</strong> Use .NS suffix (e.g., RELIANCE.NS, TCS.NS, INFY.NS)</p>
+            <p><strong>Indian Indices:</strong> Use ^ prefix (e.g., ^NSEI for NIFTY 50, ^NSEBANK for BANK NIFTY)</p>
+            <p><strong>US Stocks:</strong> Use ticker directly (e.g., AAPL, TSLA, GOOGL, MSFT)</p>
+            <p><strong>Crypto:</strong> Use -USD suffix (e.g., BTC-USD, ETH-USD)</p>
+            <p><strong>Quick Access:</strong> Click on the symbol buttons above for popular stocks</p>
+            <p><strong>Customization:</strong> Use color pickers to customize the theme and click "Apply Colors"</p>
+        </div>
+    </div>
+
+    <script>
+        let chart;
+        let currentData = [];
+
+        // Initialize with default chart
+        document.addEventListener('DOMContentLoaded', function() {
+            loadChart();
+        });
+
+        function setSymbol(symbol) {
+            document.getElementById('symbol').value = symbol;
+            loadChart();
+        }
+
+        async function loadChart() {
+            const symbol = document.getElementById('symbol').value.trim();
+            const period = document.getElementById('period').value;
+            const interval = document.getElementById('interval').value;
+            
+            if (!symbol) {
+                alert('Please enter a symbol');
+                return;
+            }
+
+            showLoading();
+            
+            try {
+                // Small delay to show loading state
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                // Generate sample data since we can't access real APIs in this environment
+                const data = generateSampleData(symbol, period, interval);
+                displayChart(data, symbol);
+                updateStockInfo(symbol, data);
+            } catch (error) {
+                console.error('Error loading chart:', error);
+                showError('Failed to load chart data. Please try again.');
+            }
+        }
+
+        function generateSampleData(symbol, period, interval) {
+            const days = period === '1d' ? 1 : period === '5d' ? 5 : period === '1mo' ? 30 : 
+                        period === '3mo' ? 90 : period === '6mo' ? 180 : 
+                        period === '1y' ? 365 : period === '2y' ? 730 : 1825;
+            
+            const basePrice = symbol.includes('NSEI') ? 18000 : 
+                            symbol.includes('NSEBANK') ? 45000 :
+                            symbol.includes('RELIANCE') ? 2500 :
+                            symbol.includes('TCS') ? 3500 :
+                            symbol.includes('AAPL') ? 180 :
+                            symbol.includes('TSLA') ? 250 :
+                            symbol.includes('GOOGL') ? 140 :
+                            symbol.includes('MSFT') ? 350 : 100;
+            
+            const dataPoints = Math.min(days, 100);
+            const data = [];
+            let currentPrice = basePrice;
+            
+            for (let i = 0; i < dataPoints; i++) {
+                const date = new Date();
+                date.setDate(date.getDate() - (dataPoints - i));
+                
+                // Generate realistic price movement
+                const change = (Math.random() - 0.5) * 0.05; // ±2.5% random change
+                currentPrice *= (1 + change);
+                
+                data.push({
+                    date: date.toISOString().split('T')[0],
+                    price: parseFloat(currentPrice.toFixed(2)),
+                    volume: Math.floor(Math.random() * 1000000) + 100000
+                });
+            }
+            
+            return data;
+        }
+
+        function displayChart(data, symbol) {
+            const ctx = document.getElementById('stockChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
+            const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color').trim();
+            const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim();
+            const cardColor = getComputedStyle(document.documentElement).getPropertyValue('--card-color').trim();
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => d.date),
+                    datasets: [{
+                        label: symbol,
+                        data: data.map(d => d.price),
+                        borderColor: secondaryColor,
+                        backgroundColor: secondaryColor + '20',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.1,
+                        pointRadius: 0,
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: secondaryColor,
+                        pointHoverBorderColor: primaryColor,
+                        pointHoverBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: textColor,
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: cardColor,
+                            titleColor: textColor,
+                            bodyColor: textColor,
+                            borderColor: primaryColor,
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    return `Price: $${context.parsed.y.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: textColor,
+                                maxTicksLimit: 10
+                            },
+                            grid: {
+                                color: cardColor
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: textColor,
+                                callback: function(value) {
+                                    return '$' + value.toFixed(2);
+                                }
+                            },
+                            grid: {
+                                color: cardColor
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            });
+            
+            currentData = data;
+            hideLoading();
+        }
+
+        function updateStockInfo(symbol, data) {
+            const stockInfo = document.getElementById('stock-info');
+            const stockName = document.getElementById('stock-name');
+            const stockPrice = document.getElementById('stock-price');
+            const stockChange = document.getElementById('stock-change');
+            
+            if (data.length > 1) {
+                const currentPrice = data[data.length - 1].price;
+                const previousPrice = data[data.length - 2].price;
+                const change = currentPrice - previousPrice;
+                const changePercent = ((change / previousPrice) * 100);
+                
+                stockName.textContent = symbol;
+                stockPrice.textContent = `$${currentPrice.toFixed(2)}`;
+                
+                const changeText = `${change >= 0 ? '+' : ''}${change.toFixed(2)} (${changePercent.toFixed(2)}%)`;
+                stockChange.textContent = changeText;
+                stockChange.className = `stock-change ${change >= 0 ? 'positive' : 'negative'}`;
+                
+                stockInfo.style.display = 'flex';
+            }
+        }
+
+        function showLoading() {
+            const chartContainer = document.querySelector('.chart-wrapper');
+            const canvas = chartContainer.querySelector('#stockChart');
+            if (canvas) {
+                canvas.style.display = 'none';
+            }
+            
+            let loadingDiv = chartContainer.querySelector('.loading');
+            if (!loadingDiv) {
+                loadingDiv = document.createElement('div');
+                loadingDiv.className = 'loading';
+                chartContainer.appendChild(loadingDiv);
+            }
+            loadingDiv.textContent = 'Loading chart data...';
+            loadingDiv.style.display = 'block';
+        }
+
+        function showError(message) {
+            const chartContainer = document.querySelector('.chart-wrapper');
+            const canvas = chartContainer.querySelector('#stockChart');
+            if (canvas) {
+                canvas.style.display = 'none';
+            }
+            
+            let errorDiv = chartContainer.querySelector('.error');
+            if (!errorDiv) {
+                errorDiv = document.createElement('div');
+                errorDiv.className = 'error';
+                chartContainer.appendChild(errorDiv);
+            }
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideLoading() {
+            const chartContainer = document.querySelector('.chart-wrapper');
+            const loadingDiv = chartContainer.querySelector('.loading');
+            const errorDiv = chartContainer.querySelector('.error');
+            const canvas = chartContainer.querySelector('#stockChart');
+            
+            if (loadingDiv) loadingDiv.style.display = 'none';
+            if (errorDiv) errorDiv.style.display = 'none';
+            if (canvas) canvas.style.display = 'block';
+        }
+
+        function applyColors() {
+            const primaryColor = document.getElementById('primary-color').value;
+            const secondaryColor = document.getElementById('secondary-color').value;
+            const backgroundColor = document.getElementById('background-color').value;
+            const textColor = document.getElementById('text-color').value;
+            const cardColor = document.getElementById('card-color').value;
+            
+            const root = document.documentElement;
+            root.style.setProperty('--primary-color', primaryColor);
+            root.style.setProperty('--secondary-color', secondaryColor);
+            root.style.setProperty('--background-color', backgroundColor);
+            root.style.setProperty('--text-color', textColor);
+            root.style.setProperty('--card-color', cardColor);
+            
+            // Reload chart with new colors
+            if (currentData.length > 0) {
+                displayChart(currentData, document.getElementById('symbol').value);
+            }
+        }
+
+        function applyTheme(theme) {
+            const themes = {
+                dark: {
+                    primary: '#ff0055',
+                    secondary: '#00ff88',
+                    background: '#121212',
+                    text: '#ffffff',
+                    card: '#1e1e1e'
+                },
+                neon: {
+                    primary: '#ff006e',
+                    secondary: '#00f5ff',
+                    background: '#0a0a0a',
+                    text: '#ffffff',
+                    card: '#1a1a1a'
+                },
+                blue: {
+                    primary: '#0080ff',
+                    secondary: '#00d4ff',
+                    background: '#0c1419',
+                    text: '#ffffff',
+                    card: '#1a252f'
+                },
+                green: {
+                    primary: '#00ff80',
+                    secondary: '#80ff00',
+                    background: '#0a1f0a',
+                    text: '#ffffff',
+                    card: '#1a2f1a'
+                },
+                purple: {
+                    primary: '#8000ff',
+                    secondary: '#ff00ff',
+                    background: '#1a0a1f',
+                    text: '#ffffff',
+                    card: '#2f1a2f'
+                }
+            };
+            
+            const selectedTheme = themes[theme];
+            if (selectedTheme) {
+                document.getElementById('primary-color').value = selectedTheme.primary;
+                document.getElementById('secondary-color').value = selectedTheme.secondary;
+                document.getElementById('background-color').value = selectedTheme.background;
+                document.getElementById('text-color').value = selectedTheme.text;
+                document.getElementById('card-color').value = selectedTheme.card;
+                
+                applyColors();
+            }
+        }
+    </script>
+</body><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candlestick Chart Data Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-adapter-date-fns/3.0.0/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ff88;
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --card-color: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--card-color);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-group label {
+            font-size: 0.9em;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .color-input {
+            width: 60px;
+            height: 40px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .color-input:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        .symbol-input {
+            background: var(--card-color);
+            border: 2px solid var(--primary-color);
+            color: var(--text-color);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 1em;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .symbol-input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 10px var(--secondary-color);
+        }
+
+        .symbol-input option {
+            background: var(--card-color);
+            color: var(--text-color);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .chart-container {
+            background: var(--card-color);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .preset-btn {
+            background: var(--card-color);
+            color: var(--text-color);
+            border: 2px solid var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .preset-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .theme-info {
+            background: var(--card-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .theme-info h3 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .color-preview {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .color-box {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            border: 2px solid var(--text-color);
+        }
+
+        .data-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .data-input {
+            background: var(--card-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .data-input h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .data-input textarea {
+            width: 100%;
+            height: 200px;
+            background: var(--background-color);
+            color: var(--text-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            resize: vertical;
+        }
+
+        .data-input textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 10px var(--secondary-color);
+        }
+
+        .sample-data {
+            background: var(--card-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .sample-data h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .sample-data pre {
+            background: var(--background-color);
+            color: var(--text-color);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.8em;
+            overflow-x: auto;
+            border: 1px solid var(--primary-color);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-color);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid var(--primary-color);
+        }
+
+        .stat-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .chart-wrapper {
+                height: 400px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .data-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Candlestick Chart Data Viewer</h1>
+            <div class="theme-info">
+                <h3>Interactive OHLC Chart with Custom Data</h3>
+                <div class="color-preview">
+                    <div class="color-box" style="background: var(--primary-color)" title="Primary"></div>
+                    <div class="color-box" style="background: var(--secondary-color)" title="Secondary"></div>
+                    <div class="color-box" style="background: var(--background-color)" title="Background"></div>
+                    <div class="color-box" style="background: var(--text-color)" title="Text"></div>
+                    <div class="color-box" style="background: var(--card-color)" title="Card"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="presets">
+            <button class="preset-btn" onclick="applyPreset('cyber')">🔥 Cyber</button>
+            <button class="preset-btn" onclick="applyPreset('ocean')">🌊 Ocean</button>
+            <button class="preset-btn" onclick="applyPreset('forest')">🌲 Forest</button>
+            <button class="preset-btn" onclick="applyPreset('sunset')">🌅 Sunset</button>
+            <button class="preset-btn" onclick="applyPreset('purple')">💜 Purple</button>
+            <button class="preset-btn" onclick="applyPreset('default')">⚡ Default</button>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Primary Color</label>
+                <input type="color" class="color-input" id="primaryColor" value="#ff0055">
+            </div>
+            <div class="control-group">
+                <label>Secondary Color</label>
+                <input type="color" class="color-input" id="secondaryColor" value="#00ff88">
+            </div>
+            <div class="control-group">
+                <label>Background</label>
+                <input type="color" class="color-input" id="backgroundColor" value="#121212">
+            </div>
+            <div class="control-group">
+                <label>Text Color</label>
+                <input type="color" class="color-input" id="textColor" value="#ffffff">
+            </div>
+            <div class="control-group">
+                <label>Card Color</label>
+                <input type="color" class="color-input" id="cardColor" value="#1e1e1e">
+            </div>
+            <div class="control-group">
+                <label>Sample Data</label>
+                <select class="symbol-input" id="sampleSelect">
+                    <option value="nifty">NIFTY 50</option>
+                    <option value="banknifty">BANK NIFTY</option>
+                    <option value="reliance">RELIANCE</option>
+                    <option value="crypto">BITCOIN</option>
+                    <option value="custom">Custom Data</option>
+                </select>
+            </div>
+            <button class="btn" onclick="updateChart()">Update Chart</button>
+        </div>
+
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <h4>Current Price</h4>
+                <div class="stat-value" id="currentPrice">₹0.00</div>
+            </div>
+            <div class="stat-card">
+                <h4>Daily Change</h4>
+                <div class="stat-value" id="dailyChange">0.00%</div>
+            </div>
+            <div class="stat-card">
+                <h4>Volume</h4>
+                <div class="stat-value" id="volume">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>High/Low</h4>
+                <div class="stat-value" id="highLow">₹0/₹0</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-wrapper">
+                <canvas id="candlestickChart"></canvas>
+            </div>
+        </div>
+
+        <div class="data-panel">
+            <div class="data-input">
+                <h3>📝 Custom Data Input</h3>
+                <textarea id="customData" placeholder="Enter OHLC data in JSON format (see sample format on the right)"></textarea>
+                <button class="btn" onclick="loadCustomData()" style="margin-top: 10px;">Load Custom Data</button>
+            </div>
+            <div class="sample-data">
+                <h3>📋 Sample Data Format</h3>
+                <pre id="sampleFormat">[
+  {
+    "date": "2024-01-01",
+    "open": 21500,
+    "high": 21600,
+    "low": 21400,
+    "close": 21550,
+    "volume": 1234567
+  },
+  {
+    "date": "2024-01-02",
+    "open": 21550,
+    "high": 21700,
+    "low": 21450,
+    "close": 21650,
+    "volume": 1345678
+  }
+]</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let candlestickChart;
+        let currentData = [];
+
+        // Sample data sets
+        const sampleData = {
+            nifty: [
+                { date: '2024-07-01', open: 24100, high: 24200, low: 24000, close: 24150, volume: 1234567 },
+                { date: '2024-07-02', open: 24150, high: 24300, low: 24100, close: 24250, volume: 1345678 },
+                { date: '2024-07-03', open: 24250, high: 24350, low: 24200, close: 24300, volume: 1456789 },
+                { date: '2024-07-04', open: 24300, high: 24400, low: 24250, close: 24350, volume: 1567890 },
+                { date: '2024-07-05', open: 24350, high: 24450, low: 24300, close: 24400, volume: 1678901 },
+                { date: '2024-07-08', open: 24400, high: 24500, low: 24350, close: 24450, volume: 1789012 },
+                { date: '2024-07-09', open: 24450, high: 24550, low: 24400, close: 24500, volume: 1890123 },
+                { date: '2024-07-10', open: 24500, high: 24600, low: 24450, close: 24550, volume: 1901234 }
+            ],
+            banknifty: [
+                { date: '2024-07-01', open: 52000, high: 52500, low: 51800, close: 52200, volume: 987654 },
+                { date: '2024-07-02', open: 52200, high: 52600, low: 52000, close: 52400, volume: 1098765 },
+                { date: '2024-07-03', open: 52400, high: 52700, low: 52200, close: 52500, volume: 1209876 },
+                { date: '2024-07-04', open: 52500, high: 52800, low: 52300, close: 52600, volume: 1320987 },
+                { date: '2024-07-05', open: 52600, high: 52900, low: 52400, close: 52700, volume: 1432098 },
+                { date: '2024-07-08', open: 52700, high: 53000, low: 52500, close: 52800, volume: 1543209 },
+                { date: '2024-07-09', open: 52800, high: 53100, low: 52600, close: 52900, volume: 1654320 },
+                { date: '2024-07-10', open: 52900, high: 53200, low: 52700, close: 53000, volume: 1765431 }
+            ],
+            reliance: [
+                { date: '2024-07-01', open: 2800, high: 2850, low: 2780, close: 2820, volume: 5432109 },
+                { date: '2024-07-02', open: 2820, high: 2880, low: 2800, close: 2860, volume: 6543210 },
+                { date: '2024-07-03', open: 2860, high: 2900, low: 2840, close: 2880, volume: 7654321 },
+                { date: '2024-07-04', open: 2880, high: 2920, low: 2860, close: 2900, volume: 8765432 },
+                { date: '2024-07-05', open: 2900, high: 2940, low: 2880, close: 2920, volume: 9876543 },
+                { date: '2024-07-08', open: 2920, high: 2960, low: 2900, close: 2940, volume: 10987654 },
+                { date: '2024-07-09', open: 2940, high: 2980, low: 2920, close: 2960, volume: 12098765 },
+                { date: '2024-07-10', open: 2960, high: 3000, low: 2940, close: 2980, volume: 13209876 }
+            ],
+            crypto: [
+                { date: '2024-07-01', open: 65000, high: 66000, low: 64000, close: 65500, volume: 123456 },
+                { date: '2024-07-02', open: 65500, high: 67000, low: 65000, close: 66500, volume: 234567 },
+                { date: '2024-07-03', open: 66500, high: 68000, low: 66000, close: 67500, volume: 345678 },
+                { date: '2024-07-04', open: 67500, high: 69000, low: 67000, close: 68500, volume: 456789 },
+                { date: '2024-07-05', open: 68500, high: 70000, low: 68000, close: 69500, volume: 567890 },
+                { date: '2024-07-08', open: 69500, high: 71000, low: 69000, close: 70500, volume: 678901 },
+                { date: '2024-07-09', open: 70500, high: 72000, low: 70000, close: 71500, volume: 789012 },
+                { date: '2024-07-10', open: 71500, high: 73000, low: 71000, close: 72500, volume: 890123 }
+            ]
+        };
+
+        // Initialize chart
+        function initChart() {
+            const ctx = document.getElementById('candlestickChart').getContext('2d');
+            
+            candlestickChart = new Chart(ctx, {
+                type: 'candlestick',
+                data: {
+                    datasets: [{
+                        label: 'OHLC Data',
+                        data: [],
+                        borderColor: '#ff0055',
+                        backgroundColor: 'rgba(255, 0, 85, 0.1)',
+                        borderWidth: 1,
+                        candlestick: {
+                            upColor: '#00ff88',
+                            downColor: '#ff0055',
+                            borderUpColor: '#00ff88',
+                            borderDownColor: '#ff0055',
+                            wickUpColor: '#00ff88',
+                            wickDownColor: '#ff0055'
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Candlestick Chart',
+                            color: '#ffffff'
+                        },
+                        legend: {
+                            labels: {
+                                color: '#ffffff'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Custom candlestick chart implementation
+        function createCandlestickChart() {
+            const ctx = document.getElementById('candlestickChart').getContext('2d');
+            
+            candlestickChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'High-Low',
+                        data: [],
+                        backgroundColor: 'transparent',
+                        borderColor: '#ffffff',
+                        borderWidth: 1,
+                        categoryPercentage: 0.8,
+                        barPercentage: 0.1
+                    }, {
+                        label: 'Open-Close',
+                        data: [],
+                        backgroundColor: [],
+                        borderColor: [],
+                        borderWidth: 1,
+                        categoryPercentage: 0.8,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Candlestick Chart',
+                            color: '#ffffff',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update chart with data
+        function updateChartData(data) {
+            currentData = data;
+            
+            const labels = data.map(d => d.date);
+            const highLowData = data.map(d => [d.low, d.high]);
+            const openCloseData = data.map(d => [Math.min(d.open, d.close), Math.max(d.open, d.close)]);
+            
+            const colors = data.map(d => d.close >= d.open ? '#00ff88' : '#ff0055');
+            const borderColors = data.map(d => d.close >= d.open ? '#00ff88' : '#ff0055');
+            
+            candlestickChart.data.labels = labels;
+            candlestickChart.data.datasets[0].data = highLowData;
+            candlestickChart.data.datasets[1].data = openCloseData;
+            candlestickChart.data.datasets[1].backgroundColor = colors;
+            candlestickChart.data.datasets[1].borderColor = borderColors;
+            
+            candlestickChart.update();
+            updateStats(data);
+        }
+
+        // Update statistics
+        function updateStats(data) {
+            if (data.length === 0) return;
+            
+            const latest = data[data.length - 1];
+            const previous = data.length > 1 ? data[data.length - 2] : latest;
+            const change = ((latest.close - previous.close) / previous.close * 100).toFixed(2);
+            
+            document.getElementById('currentPrice').textContent = `₹${latest.close.toLocaleString()}`;
+            document.getElementById('dailyChange').textContent = `${change}%`;
+            document.getElementById('dailyChange').style.color = change >= 0 ? '#00ff88' : '#ff0055';
+            document.getElementById('volume').textContent = latest.volume.toLocaleString();
+            document.getElementById('highLow').textContent = `₹${latest.high.toLocaleString()}/₹${latest.low.toLocaleString()}`;
+        }
+
+        // Load sample data
+        function loadSampleData() {
+            const select = document.getElementById('sampleSelect');
+            const selectedData = sampleData[select.value];
+            
+            if (selectedData) {
+                updateChartData(selectedData);
+                document.getElementById('customData').value = JSON.stringify(selectedData, null, 2);
+            }
+        }
+
+        // Load custom data
+        function loadCustomData() {
+            const customDataText = document.getElementById('customData').value;
+            try {
+                const data = JSON.parse(customDataText);
+                updateChartData(data);
+            } catch (error) {
+                alert('Invalid JSON format. Please check your data.');
+            }
+        }
+
+        // Color change handlers
+        function updateColors() {
+            const primaryColor = document.getElementById('primaryColor').value;
+            const secondaryColor = document.getElementById('secondaryColor').value;
+            const backgroundColor = document.getElementById('backgroundColor').value;
+            const textColor = document.getElementById('textColor').value;
+            const cardColor = document.getElementById('cardColor').value;
+
+            document.documentElement.style.setProperty('--primary-color', primaryColor);
+            document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+            document.documentElement.style.setProperty('--background-color', backgroundColor);
+            document.documentElement.style.setProperty('--text-color', textColor);
+            document.documentElement.style.setProperty('--card-color', cardColor);
+        }
+
+        // Add event listeners
+        document.querySelectorAll('.color-input').forEach(input => {
+            input.addEventListener('change', updateColors);
+        });
+
+        document.getElementById('sampleSelect').addEventListener('change', loadSampleData);
+
+        // Preset themes
+        const presets = {
+            cyber: { primary: '#ff0055', secondary: '#00ff88', background: '#121212', text: '#ffffff', card: '#1e1e1e' },
+            ocean: { primary: '#00bcd4', secondary: '#4fc3f7', background: '#0d1421', text: '#e1f5fe', card: '#1a2332' },
+            forest: { primary: '#4caf50', secondary: '#81c784', background: '#0d1b0f', text: '#e8f5e8', card: '#1b2e1f' },
+            sunset: { primary: '#ff6b35', secondary: '#f7931e', background: '#1a0e0a', text: '#fff4f0', card: '#2d1b17' },
+            purple: { primary: '#9c27b0', secondary: '#e91e63', background: '#1a0d1a', text: '#f3e5f5', card: '#2d1b2d' },
+            default: { primary: '#ff0055', secondary: '#00ff88', background: '#121212', text: '#ffffff', card: '#1e1e1e' }
+        };
+
+        function applyPreset(presetName) {
+            const preset = presets[presetName];
+            if (preset) {
+                document.getElementById('primaryColor').value = preset.primary;
+                document.getElementById('secondaryColor').value = preset.secondary;
+                document.getElementById('backgroundColor').value = preset.background;
+                document.getElementById('textColor').value = preset.text;
+                document.getElementById('cardColor').value = preset.card;
+                updateColors();
+            }
+        }
+
+        function updateChart() {
+            loadSampleData();
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            createCandlestickChart();
+            updateColors();
+            loadSampleData();
+        });
+    </script>
+</body>
+</html>
+</html>

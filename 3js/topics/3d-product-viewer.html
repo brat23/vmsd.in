@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D product viewer</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+        }
+        #viewer-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>3D Product Viewer</h1>
+    <p>A 3D product viewer allows users to interactively explore a product from all angles directly in their web browser. This enhances the online shopping experience by providing a more comprehensive view than static images.</p>
+
+    <h2>Key Features of a 3D Product Viewer:</h2>
+    <ul>
+        <li><b>Interactive Controls:</b> Users can rotate, pan, and zoom the product.</li>
+        <li><b>Model Loading:</b> Ability to load various 3D model formats (e.g., glTF, OBJ).</li>
+        <li><b>Lighting:</b> Proper lighting to showcase product details and materials.</li>
+        <li><b>Responsiveness:</b> Adapts to different screen sizes and devices.</li>
+        <li><b>Annotations/Hotspots (Optional):</b> Displaying information about specific parts of the product.</li>
+    </ul>
+
+    <h2>Basic Three.js Product Viewer Example</h2>
+    <p>This example demonstrates a basic setup for a 3D product viewer using Three.js. It includes a simple cube as a placeholder, interactive orbit controls, and basic lighting. You would typically replace the cube with your actual 3D product model (e.g., a glTF file loaded with <code>GLTFLoader</code>).</p>
+
+    <div id="viewer-container">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js"></script>
+        <script>
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('viewer-container').appendChild(renderer.domElement);
+
+            // Add basic lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 1, 1).normalize();
+            scene.add(directionalLight);
+
+            // Placeholder: A simple cube (replace with your 3D model)
+            const geometry = new THREE.BoxGeometry(1, 1, 1);
+            const material = new THREE.MeshStandardMaterial({ color: 0x0077ff });
+            const productMesh = new THREE.Mesh(geometry, material);
+            scene.add(productMesh);
+
+            camera.position.z = 3;
+
+            // OrbitControls for interaction
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true; // Enable damping (inertia) for smoother controls
+            controls.dampingFactor = 0.25;
+            controls.screenSpacePanning = false;
+            controls.maxPolarAngle = Math.PI / 2;
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update(); // Only required if controls.enableDamping or controls.autoRotate are set to true
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Handle window resizing
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        </script>
+    </div>
+
+    <h2>How to Load Your Own 3D Model:</h2>
+    <p>To replace the placeholder cube with your own 3D model (e.g., a glTF file), you would use a loader like <code>GLTFLoader</code>:</p>
+    <pre><code>import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const loader = new GLTFLoader();
+loader.load(
+    'path/to/your_product.gltf',
+    function (gltf) {
+        // Remove the placeholder cube
+        scene.remove(productMesh);
+        // Add your loaded model to the scene
+        scene.add(gltf.scene);
+        // Adjust position/scale of gltf.scene if needed
+    },
+    undefined,
+    function (error) {
+        console.error('An error happened loading the model', error);
+    }
+);
+</code></pre>
+
+</body>
+</html>

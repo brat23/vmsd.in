@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hosting & loading 3D assets</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Hosting and Loading 3D Assets in Three.js</h1>
+    <p>Three.js is a powerful JavaScript library for displaying 3D graphics in a web browser. To effectively use 3D models in your Three.js projects, you'll need to understand how to host these assets and then load them into your scene.</p>
+
+    <h2>Hosting 3D Assets</h2>
+    <p>3D assets, such as models, textures, and animations, are typically static files that need to be served by a web server. Here are common methods for hosting them:</p>
+
+    <h3>1. Local Development Server:</h3>
+    <p>For development, you can use a simple local HTTP server (e.g., Node.js <code>http-server</code>, Python's <code>http.server</code>, or <code>npx serve</code>). This allows your browser to access the files from your local machine.</p>
+    <pre><code>npx serve .</code></pre>
+
+    <h3>2. Content Delivery Network (CDN):</h3>
+    <p>CDNs are highly recommended for production environments. They distribute your assets across multiple servers globally, reducing latency and improving loading times for users worldwide.</p>
+
+    <h3>3. Cloud Storage Services:</h3>
+    <p>Services like Amazon S3, Google Cloud Storage, or Azure Blob Storage are excellent for hosting static assets. They offer high availability, scalability, and can be integrated with CDNs.</p>
+
+    <h3>4. Your Own Web Server:</h3>
+    <p>If you have a dedicated web server (e.g., Apache, Nginx), you can place your 3D asset files in a publicly accessible directory.</p>
+
+    <h2>Loading 3D Assets in Three.js</h2>
+    <p>Three.js uses various "loaders" to import different 3D file formats. The most recommended and widely adopted format for web-based 3D is <b>glTF (GL Transmission Format)</b>, often referred to as the "JPEG of 3D" due to its efficiency and suitability for web delivery.</p>
+
+    <h3>Loading glTF Models with <code>GLTFLoader</code>:</h3>
+    <pre><code>import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+// Instantiate a loader
+const loader = new GLTFLoader();
+
+// Load a glTF resource
+loader.load(
+    // resource URL
+    'path/to/your_model.gltf', // or .glb
+    // called when the resource is loaded
+    function ( gltf ) {
+        scene.add( gltf.scene );
+    },
+    // called while loading is progressing
+    function ( xhr ) {
+        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+    },
+    // called when loading has errors
+    function ( error ) {
+        console.error( 'An error happened', error );
+    }
+);
+</code></pre>
+
+    <h3>Other Common Loaders:</h3>
+    <p>While glTF is preferred, Three.js also supports other formats with dedicated loaders:</p>
+    <ul>
+        <li><code>OBJLoader</code> for <code>.obj</code> files.</li>
+        <li><code>FBXLoader</code> for <code>.fbx</code> files.</li>
+        <li><code>TextureLoader</code> for image textures (e.g., <code>.jpg</code>, <code>.png</code>).</li>
+    </ul>
+
+    <h2>Important Considerations:</h2>
+    <ul>
+        <li><b>CORS (Cross-Origin Resource Sharing):</b> If your 3D assets are hosted on a different domain than your Three.js application, you might encounter CORS issues.</li>
+        <li><b>Asset Optimization:</b> Large 3D models can significantly impact loading times. Optimize your assets by compressing them, reducing polygon count, and optimizing textures.</li>
+        <li><b>Asynchronous Loading:</b> Three.js loaders are designed for asynchronous loading, which prevents the user interface from freezing while assets are being fetched.</li>
+        <li><b>Error Handling:</b> Always include error callbacks to gracefully handle cases where assets fail to load.</li>
+    </ul>
+
+</body>
+</html>

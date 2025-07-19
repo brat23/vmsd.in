@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asynchronous Javascript</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="article-page">
+    <div class="bg-animation"></div>
+    <div class="particles"></div>
+    <div class="progress-bar"></div>
+
+    <header>
+        <nav>
+            <div class="logo">VMSD.in</div>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#frontend">Frontend</a></li>
+                <li><a href="../index.html#backend">Backend</a></li>
+                <li><a href="../index.html#deployment">Deployment</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="section-content">
+                <h2>Asynchronous JavaScript</h2>
+                <p class="subtitle">Asynchronous JavaScript is a programming technique that allows you to perform long-running tasks without blocking the main thread. This article covers the different ways to work with asynchronous code in JavaScript.</p>
+                
+                <h3>Callbacks</h3>
+                <p>A <span class="highlight">callback</span> is a function that is passed as an argument to another function and is executed after some operation has been completed. This article will cover how to use callbacks to handle asynchronous operations, such as making an API request or waiting for a timer to finish.</p>
+
+                <h4>Example: Callback for Asynchronous Operation</h4>
+                <pre><code>setTimeout(() => {
+  console.log("This runs after 1 second");
+}, 1000);</code></pre>
+                
+                <h3>Promises and Async/Await</h3>
+                <p><span class="highlight">Promises</span> and <span class="highlight">async/await</span> are two newer features in JavaScript that make it easier to work with asynchronous code. This article will cover how to use promises and async/await to write cleaner and more readable asynchronous code.</p>
+
+                <h4>Example: Async/Await</h4>
+                <pre><code>async function fetchData() {
+  const response = await fetch("https://api.example.com/data");
+  const data = await response.json();
+  console.log(data);
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VMSD.in</h3>
+                    <p>Empowering developers worldwide with comprehensive full-stack education. Join our community and transform your career in tech.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="../index.html#home">Home</a></p>
+                    <p><a href="../index.html#frontend">Frontend</a></p>
+                    <p><a href="../index.html#backend">Backend</a></p>
+                    <p><a href="../index.html#deployment">Deployment</a></p>
+                    <p><a href="../index.html#contact">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Technologies</h3>
+                    <p>HTML, CSS, JavaScript</p>
+                    <p>Python, Node.js</p>
+                    <p>Databases & Cloud</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <p><a href="#">Discord Community</a></p>
+                    <p><a href="#">GitHub</a></p>
+                    <p><a href="#">LinkedIn</a></p>
+                    <p><a href="#">Twitter</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 VMSD.in. All rights reserved. Built with passion for developers.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="../script.js"></script>
+
+</body>
+</html>

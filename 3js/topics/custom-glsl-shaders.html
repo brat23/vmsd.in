@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom GLSL Shaders</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Custom GLSL Shaders in Three.js</h1>
+    <p>Three.js allows you to use custom GLSL (OpenGL Shading Language) shaders to achieve highly customized visual effects that go beyond the capabilities of its built-in materials. This gives you direct control over how your 3D objects are rendered on the GPU.</p>
+
+    <h2>What are GLSL Shaders?</h2>
+    <p>GLSL is a C-like language specifically designed for programming Graphics Processing Units (GPUs). GPUs are highly parallel processors, making them extremely efficient for rendering graphics. In Three.js, you typically work with two main types of shaders:</p>
+    <ul>
+        <li><b>Vertex Shader:</b> This shader processes each vertex of your 3D model. Its primary responsibilities include transforming the vertex's position from model space to screen space, and passing data (like color, normals, or UV coordinates) to the fragment shader.</li>
+        <li><b>Fragment (or Pixel) Shader:</b> This shader runs for every "fragment" (which often corresponds to a pixel) that makes up the rendered geometry. Its main job is to determine the final color of that fragment, taking into account lighting, textures, and other visual properties.</li>
+    </ul>
+
+    <h2>Using Custom Shaders in Three.js</h2>
+    <p>You can create custom <code>ShaderMaterial</code> instances in Three.js, providing your own GLSL code for the vertex and fragment shaders. This gives you direct control over the rendering pipeline, allowing for effects like:</p>
+    <ul>
+        <li>Procedural textures</li>
+        <li>Advanced lighting models</li>
+        <li>Post-processing effects</li>
+        <li>Custom animations based on vertex manipulation</li>
+        <li>Non-photorealistic rendering</li>
+    </ul>
+
+    <h2>Example: Simple Custom Shader (Color Gradient)</h2>
+    <p>This example demonstrates a basic custom shader that creates a color gradient on a plane based on its Y-coordinate. This requires a Three.js setup.</p>
+
+    <iframe srcdoc="
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset=\"utf-8\">
+            <title>Custom Shader</title>
+            <style>
+                body { margin: 0; overflow: hidden; }
+                canvas { display: block; }
+            </style>
+        </head>
+        <body>
+            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
+            <script>
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ antialias: true });
+
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                // Custom Vertex Shader
+                const vertexShader = `
+                    void main() {
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `;
+
+                // Custom Fragment Shader
+                const fragmentShader = `
+                    void main() {
+                        // Create a gradient based on the Y-coordinate (normalized to 0-1 range)
+                        float gradient = (gl_FragCoord.y / 480.0); // Assuming canvas height is 480
+                        gl_FragColor = vec4(gradient, 0.0, 1.0 - gradient, 1.0); // Green to Blue gradient
+                    }
+                `;
+
+                // Create a ShaderMaterial
+                const customMaterial = new THREE.ShaderMaterial({
+                    vertexShader: vertexShader,
+                    fragmentShader: fragmentShader,
+                });
+
+                // Create a plane to apply the shader to
+                const geometry = new THREE.PlaneGeometry(2, 2);
+                const plane = new THREE.Mesh(geometry, customMaterial);
+                scene.add(plane);
+
+                camera.position.z = 1;
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            </script>
+        </body>
+        </html>
+    " frameborder="0" width="100%" height="400px"></iframe>
+
+</body>
+</html>

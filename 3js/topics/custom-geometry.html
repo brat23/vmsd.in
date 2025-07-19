@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Geometry</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Custom Geometry in Three.js</h1>
+    <p>In Three.js, while there are many built-in geometries (like BoxGeometry, SphereGeometry, etc.), you often need to create custom shapes that are not readily available. This is primarily done using <code>THREE.BufferGeometry</code>, which is the modern and efficient way to represent mesh data.</p>
+
+    <h2><code>THREE.BufferGeometry</code></h2>
+    <p><code>BufferGeometry</code> stores vertex attributes (like position, normal, and UV coordinates) in typed arrays, which are then directly passed to the GPU. This makes it highly performant for complex geometries.</p>
+
+    <h3>Key Attributes of <code>BufferGeometry</code>:</h3>
+    <p>To define a custom geometry, you typically need to specify at least the following attributes:</p>
+    <ul>
+        <li><b><code>position</code>:</b> Defines the 3D coordinates (x, y, z) for each vertex. It's a flat array where every three consecutive values represent the x, y, and z coordinates of a single vertex.</li>
+        <li><b><code>normal</code>:</b> Normals are vectors that define the direction a surface is facing at each vertex. They are crucial for lighting calculations. Like positions, normals are typically stored as a flat array of (x, y, z) components for each vertex.</li>
+        <li><b><code>uv</code> (or <code>uvs</code>):</b> These are 2D texture coordinates (u, v) that map a 2D texture onto the 3D surface of your geometry. Each vertex has a corresponding UV coordinate.</li>
+        <li><b><code>index</code> (Optional but Recommended):</b> An index attribute allows you to reuse vertices. Instead of defining each vertex for every face it belongs to, you define unique vertices once and then use indices to specify which three vertices form each triangle. This saves memory and can improve performance.</li>
+    </ul>
+
+    <h2>Creating a Custom Triangle Geometry Example</h2>
+    <p>Here's a basic example of how to create a single triangle using <code>BufferGeometry</code>:</p>
+
+    <pre><code>import * as THREE from 'three';
+
+// Scene, Camera, Renderer setup (assuming these are already defined)
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// 1. Define the vertex data
+const positions = new Float32Array([
+    0.0,  1.0,  0.0,  // Vertex 0 (top)
+   -1.0, -1.0,  0.0,  // Vertex 1 (bottom-left)
+    1.0, -1.0,  0.0   // Vertex 2 (bottom-right)
+]);
+
+// Normals for a flat triangle pointing towards the camera (positive Z)
+const normals = new Float32Array([
+    0.0,  0.0,  1.0,  // Normal for Vertex 0
+    0.0,  0.0,  1.0,  // Normal for Vertex 1
+    0.0,  0.0,  1.0   // Normal for Vertex 2
+]);
+
+// UV coordinates for texture mapping
+const uvs = new Float32Array([
+    0.5,  1.0,  // UV for Vertex 0 (top-center of texture)
+    0.0,  0.0,  // UV for Vertex 1 (bottom-left of texture)
+    1.0,  0.0   // UV for Vertex 2 (bottom-right of texture)
+]);
+
+// 2. Create a new BufferGeometry
+const geometry = new THREE.BufferGeometry();
+
+// 3. Set the attributes
+geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+geometry.setAttribute('normal', new THREE.BufferAttribute(normals, 3));
+geometry.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
+
+// Optional: If you have shared vertices, you can use an index buffer.
+// For a single triangle, it's just 0, 1, 2.
+// const indices = new Uint16Array([0, 1, 2]);
+// geometry.setIndex(new THREE.BufferAttribute(indices, 1));
+
+// 4. Create a material
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, side: THREE.DoubleSide });
+
+// 5. Create a Mesh using the custom geometry and material
+const triangleMesh = new THREE.Mesh(geometry, material);
+scene.add(triangleMesh);
+
+camera.position.z = 2;
+
+function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</code></pre>
+
+    <h2>Important Considerations:</h2>
+    <ul>
+        <li><b><code>computeVertexNormals()</code>:</b> If you don't manually define normals, you can call <code>geometry.computeVertexNormals()</code> after setting the <code>position</code> attribute.</li>
+        <li><b><code>computeBoundingBox()</code> and <code>computeBoundingSphere()</code>:</b> For proper camera culling and other optimizations, it's often beneficial to call these methods after defining your geometry.</li>
+        <li><b>Performance:</b> <code>BufferGeometry</code> is designed for performance. Modifying the geometry data frequently can be less performant than with the older <code>Geometry</code> class, but it's still possible by accessing and updating the <code>array</code> property of the <code>BufferAttribute</code> and setting <code>needsUpdate = true</code>.</li>
+    </ul>
+
+</body>
+</html>

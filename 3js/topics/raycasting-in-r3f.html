@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raycasting in R3F</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Raycasting in React Three Fiber</h1>
+    <p>Raycasting in React Three Fiber (R3F) allows you to detect interactions between a virtual "ray" (often originating from the camera and pointing towards the mouse cursor) and objects in your 3D scene. This is fundamental for implementing interactive experiences like clicking on objects, hovering, or dragging.</p>
+
+    <h2>1. Built-in Pointer Events (Recommended for most cases)</h2>
+    <p>For typical interactions such as <code>onClick</code>, <code>onPointerOver</code>, <code>onPointerOut</code>, <code>onPointerMove</code>, etc., React Three Fiber automatically handles the underlying raycasting. You can attach these event handlers directly to your mesh components, similar to how you would with DOM elements.</p>
+    <p>The <code>&lt;Canvas /&gt;</code> component in R3F sets up a raycaster by default. This raycaster's origin and direction are automatically updated based on mouse movement and window resizing, and it uses the currently active camera to determine the ray's path.</p>
+
+    <h3>Example: Interactive Box and Sphere</h3>
+    <pre><code>import { Canvas } from '@react-three/fiber';
+import { Box } from '@react-three/drei'; // A helpful component from @react-three/drei
+
+function MyInteractiveScene() {
+  return (
+    &lt;Canvas&gt;
+      &lt;ambientLight /&gt;
+      &lt;pointLight position={[10, 10, 10]} /&gt;
+
+      {/* A clickable box */}
+      &lt;Box
+        args={[1, 1, 1]} // Dimensions: width, height, depth
+        position={[0, 0, 0]}
+        onClick={(event) => {
+          console.log('Box clicked!', event.object.name);
+          // You can access properties of the intersected object via event.object
+          // event.stopPropagation() can be used to prevent events from bubbling up to parent objects
+        }}
+        onPointerOver={(event) => {
+          console.log('Pointer over box');
+          document.body.style.cursor = 'pointer';
+        }}
+        onPointerOut={(event) => {
+          console.log('Pointer out of box');
+          document.body.style.cursor = 'auto';
+        }}
+      &gt;
+        &lt;meshStandardMaterial color="hotpink" /&gt;
+      &lt;/Box&gt;
+
+      {/* Another clickable sphere */}
+      &lt;mesh
+        position={[2, 0, 0]}
+        onClick={() => console.log('Sphere clicked!')}
+      &gt;
+        &lt;sphereGeometry args={[0.7, 32, 32]} /&gt;
+        &lt;meshStandardMaterial color="royalblue" /&gt;
+      &lt;/mesh&gt;
+    &lt;/Canvas&gt;
+  );
+}
+
+export default MyInteractiveScene;</code></pre>
+
+    <h2>2. Manual Raycasting (For Advanced Use Cases)</h2>
+    <p>While R3F's built-in events are powerful, there might be situations where you need more control, such as:</p>
+    <ul>
+        <li>Detecting clicks or interactions on areas of the screen where there isn't a specific mesh.</li>
+        <li>Implementing custom intersection logic (e.g., finding all objects intersected by a ray, not just the first one).</li>
+        <li>Performing raycasts from arbitrary points or directions, not just from the camera based on mouse position.</li>
+    </ul>
+    <p>In these cases, you can directly use Three.js's <code>Raycaster</code> class within your R3F components. You can access the <code>WebGLRenderer</code> (<code>gl</code>), <code>Camera</code> (<code>camera</code>), and <code>Scene</code> (<code>scene</code>) objects from the <code>useThree</code> hook provided by R3F.</p>
+
+    <h3>Example of Manual Raycasting:</h3>
+    <pre><code>import { Canvas, useThree } from '@react-three/fiber';
+import { useEffect } from 'react';
+import * as THREE from 'three';
+
+function RaycasterHandler() {
+  const { gl, camera, scene } = useThree();
+
+  useEffect(() => {
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+
+    const onCanvasClick = (event) => {
+      // Calculate pointer position in normalized device coordinates (-1 to +1)
+      pointer.x = (event.clientX / gl.domElement.clientWidth) * 2 - 1;
+      pointer.y = -(event.clientY / gl.domElement.clientHeight) * 2 + 1;
+
+      // Update the raycaster with the camera and pointer position
+      raycaster.setFromCamera(pointer, camera);
+
+      // Calculate objects intersecting the ray
+      // The second argument (true) makes it recursive, checking children of objects
+      const intersects = raycaster.intersectObjects(scene.children, true);
+
+      if (intersects.length > 0) {
+        console.log('Manual Raycast: Intersected object(s):', intersects);
+      } else {
+        console.log('Manual Raycast: Clicked on empty space.');
+      }
+    };
+
+    // Attach the event listener to the canvas DOM element
+    gl.domElement.addEventListener('click', onCanvasClick);
+
+    // Clean up the event listener
+    return () => {
+      gl.domElement.removeEventListener('click', onCanvasClick);
+    };
+  }, [gl, camera, scene]);
+
+  return null;
+}
+
+function MySceneWithManualRaycasting() {
+  return (
+    &lt;Canvas&gt;
+      &lt;ambientLight /&gt;
+      &lt;pointLight position={[10, 10, 10]} /&gt;
+
+      &lt;mesh position={[0, 0, 0]}&gt;
+        &lt;boxGeometry args={[1, 1, 1]} /&gt;
+        &lt;meshStandardMaterial color="orange" /&gt;
+      &lt;/mesh&gt;
+
+      &lt;RaycasterHandler /&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+</body>
+</html>

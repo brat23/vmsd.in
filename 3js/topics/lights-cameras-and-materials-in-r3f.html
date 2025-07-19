@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lights, cameras, and materials in R3F</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Lights, Cameras, and Materials in React Three Fiber</h1>
+    <p>React Three Fiber (R3F) simplifies the process of incorporating lights, cameras, and materials into your 3D scenes by providing them as declarative React components. This allows you to define your scene's visual properties using familiar React syntax.</p>
+
+    <h2>Lights</h2>
+    <p>Lights are crucial for illuminating your 3D scene. R3F supports various types of lights, mirroring those available in Three.js. You can add lights as JSX components directly within your <code>&lt;Canvas&gt;</code> element.</p>
+    <h3>Common Light Types:</h3>
+    <ul>
+        <li><b><code>&lt;ambientLight /&gt;</code>:</b> Illuminates all objects in the scene equally, providing a general, diffused illumination.</li>
+        <li><b><code>&lt;pointLight /&gt;</code>:</b> Emits light from a single point in all directions, similar to a lamp.</li>
+        <li><b><code>&lt;directionalLight /&gt;</code>:</b> Simulates distant light sources like the sun, emitting parallel rays that illuminate the entire scene from a specific direction.</li>
+        <li><b><code>&lt;spotLight /&gt;</code>:</b> Emits light in a cone shape, useful for highlighting specific areas.</li>
+    </ul>
+    <pre><code>import { Canvas } from '@react-three/fiber';
+
+function SceneWithLights() {
+  return (
+    &lt;Canvas&gt;
+      &lt;ambientLight intensity={0.5} /&gt;
+      &lt;pointLight position={[10, 10, 10]} /&gt;
+      &lt;directionalLight position={[-5, 5, 5]} /&gt;
+      &lt;spotLight position={[0, 5, 0]} angle={0.3} penumbra={1} /&gt;
+      &lt;!-- Your 3D objects go here --&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+    <h2>Cameras</h2>
+    <p>The camera defines what is visible in your 3D scene and how it is viewed. By default, R3F's <code>&lt;Canvas&gt;</code> component sets up a <code>THREE.PerspectiveCamera</code>. You can customize the camera's properties directly on the <code>&lt;Canvas&gt;</code> component or by adding a dedicated camera component.</p>
+    <h3>Key Camera Properties:</h3>
+    <ul>
+        <li><code>fov</code> (Field of View): Determines the vertical angle the camera can see.</li>
+        <li><code>aspect</code> (Aspect Ratio): The width-to-height proportion of the camera's view.</li>
+        <li><code>near</code> and <code>far</code>: Define the clipping planes; objects outside this range are not rendered.</li>
+        <li><code>position</code>: The camera's location in 3D space.</li>
+    </ul>
+    <pre><code>import { Canvas } from '@react-three/fiber';
+
+function SceneWithCustomCamera() {
+  return (
+    &lt;Canvas camera={{ fov: 75, position: [0, 0, 5] }}&gt;
+      &lt;!-- Your 3D objects go here --&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+    <h2>Materials</h2>
+    <p>Materials define the visual properties of your 3D objects, such as color, shininess, and how they react to light. R3F allows you to apply various Three.js materials to your meshes as child components.</p>
+    <h3>Common Material Types:</h3>
+    <ul>
+        <li><b><code>&lt;meshBasicMaterial /&gt;</code>:</b> A simple material not affected by lights.</li>
+        <li><b><code>&lt;meshLambertMaterial /&gt;</code>:</b> Reacts to light, suitable for non-shiny surfaces.</li>
+        <li><b><code>&lt;meshPhongMaterial /&gt;</code>:</b> Reacts to light, supports specular highlights for shiny surfaces.</li>
+        <li><b><code>&lt;meshStandardMaterial /&gt;</code>:</b> A physically-based rendering (PBR) material that offers realistic lighting interactions with properties like <code>metalness</code> and <code>roughness</code>. Often preferred for realistic scenes.</li>
+    </ul>
+    <pre><code>import { Canvas } from '@react-three/fiber';
+
+function SceneWithMaterials() {
+  return (
+    &lt;Canvas&gt;
+      &lt;ambientLight /&gt;
+      &lt;pointLight position={[10, 10, 10]} /&gt;
+      &lt;mesh&gt;
+        &lt;boxGeometry args={[1, 1, 1]} /&gt;
+        &lt;meshStandardMaterial color="hotpink" roughness={0.5} metalness={0.1} /&gt;
+      &lt;/mesh&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+</body>
+</html>

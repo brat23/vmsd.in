@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fog, background, and environment maps</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Fog, Background, and Environment Maps in Three.js</h1>
+    <p>These elements are crucial for creating realistic and immersive 3D environments in Three.js. They help define the atmosphere, visual boundaries, and reflective properties of your scene.</p>
+
+    <h2>Fog</h2>
+    <p>Fog adds a sense of depth and distance to your scene by making objects appear less distinct as they get further away. Three.js provides two main types of fog:</p>
+    <ul>
+        <li><b><code>THREE.Fog(color, near, far)</code>:</b> Creates linear fog. The fog starts at <code>near</code> distance and becomes fully opaque at <code>far</code> distance.</li>
+        <li><b><code>THREE.FogExp2(color, density)</code>:</b> Creates exponential fog, where the density increases exponentially with distance. <code>density</code> controls how quickly the fog becomes opaque.</li>
+    </ul>
+    <p>To apply fog, you set the <code>scene.fog</code> property to an instance of either <code>THREE.Fog</code> or <code>THREE.FogExp2</code>. It's often recommended to set the <code>scene.background</code> color to the same color as the fog for a seamless transition, especially with linear fog.</p>
+    <pre><code>// Linear Fog
+scene.fog = new THREE.Fog(0xcce0ff, 10, 100); // light blue color, starts at 10 units, opaque at 100 units
+
+// OR Exponential Fog
+// scene.fog = new THREE.FogExp2(0xcce0ff, 0.01); // light blue color, density 0.01</code></pre>
+
+    <h2>Background</h2>
+    <p>The scene's background can be a solid color, a panoramic image, or an environment map. Setting a background helps to define the overall mood and context of your 3D world.</p>
+    <pre><code>// Solid color background
+scene.background = new THREE.Color(0x121212);
+
+// Panoramic image background (using a texture loader)
+// const textureLoader = new THREE.TextureLoader();
+// textureLoader.load('path/to/your/panorama.jpg', function(texture) {
+//     scene.background = texture;
+// });</code></pre>
+
+    <h2>Environment Maps</h2>
+    <p>Environment maps are images that surround the scene and can be used for reflections and lighting on objects, as well as for the background. They are particularly effective with physically based rendering (PBR) materials like <code>MeshStandardMaterial</code> and <code>MeshPhysicalMaterial</code> to create realistic reflections.</p>
+    <p>You can load cube textures (six images for the faces of a cube) or equirectangular textures (a single panoramic image) and set them as <code>scene.environment</code> (for reflections) and/or <code>scene.background</code>.</p>
+    <pre><code>// Example using an equirectangular HDR environment map
+// import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
+
+// const pmremGenerator = new THREE.PMREMGenerator(renderer);
+// pmremGenerator.compileEquirectangularShader();
+
+// new RGBELoader()
+//     .setPath('path/to/your/environment/maps/')
+//     .load('your_environment_map.hdr', (texture) => {
+//         const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+//         texture.dispose();
+
+//         scene.environment = envMap; // For reflections on PBR materials
+//         scene.background = envMap; // Set as background
+
+//         // Optional: Add blur to the background
+//         scene.backgroundBlurriness = 0.5; // Value between 0 and 1
+//     });</code></pre>
+
+    <h2>Example: Fog and Background Color</h2>
+    <p>This example demonstrates a simple scene with fog and a matching background color, creating a sense of atmospheric depth.</p>
+
+    <iframe srcdoc="
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset=\"utf-8\">
+            <title>Three.js Fog and Background</title>
+            <style>
+                body { margin: 0; overflow: hidden; }
+                canvas { display: block; }
+            </style>
+        </head>
+        <body>
+            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
+            <script>
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                // Set background color
+                const backgroundColor = 0xcce0ff; // Light blue
+                scene.background = new THREE.Color(backgroundColor);
+
+                // Add linear fog
+                scene.fog = new THREE.Fog(backgroundColor, 1, 50);
+
+                // Add a cube
+                const geometry = new THREE.BoxGeometry(1, 1, 1);
+                const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+                const cube = new THREE.Mesh(geometry, material);
+                scene.add(cube);
+
+                // Add multiple cubes at varying distances to show fog effect
+                for (let i = 0; i < 20; i++) {
+                    const distantCube = new THREE.Mesh(geometry, material);
+                    distantCube.position.set(
+                        (Math.random() - 0.5) * 20,
+                        (Math.random() - 0.5) * 20,
+                        -Math.random() * 40 - 5 // Place them further back
+                    );
+                    scene.add(distantCube);
+                }
+
+                camera.position.z = 5;
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    cube.rotation.x += 0.01;
+                    cube.rotation.y += 0.01;
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            </script>
+        </body>
+        </html>
+    " frameborder="0" width="100%" height="400px"></iframe>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model loading (GLTFLoader, OBJLoader)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>3D Model Loading in Three.js (GLTFLoader, OBJLoader)</h1>
+    <p>Three.js provides various loaders to import 3D models into your scenes, with <code>GLTFLoader</code> and <code>OBJLoader</code> being two commonly used ones. These loaders are not part of the core Three.js library and need to be imported separately.</p>
+
+    <h2>GLTFLoader</h2>
+    <p>glTF (GL Transmission Format) is an open format specification for efficient delivery and loading of 3D content. It's often referred to as the "JPEG of 3D" and is the recommended format for 3D assets on the web due to its efficiency and support for animations, materials, and textures. GLTFLoader can load both <code>.gltf</code> (JSON) and <code>.glb</code> (binary) files.</p>
+    <h3>Usage:</h3>
+    <pre><code>import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+const loader = new GLTFLoader();
+
+loader.load(
+    // resource URL
+    'path/to/your_model.gltf',
+    // called when the resource is loaded
+    function (gltf) {
+        scene.add(gltf.scene);
+
+        // Access properties of the loaded model
+        // gltf.animations; // Array<THREE.AnimationClip>
+        // gltf.scene;     // THREE.Group
+        // gltf.scenes;    // Array<THREE.Group>
+        // gltf.cameras;   // Array<THREE.Camera>
+        // gltf.asset;     // Object
+
+        // Optional: If your model has animations, you can play them
+        // const mixer = new THREE.AnimationMixer(gltf.scene);
+        // gltf.animations.forEach((clip) => {
+        //     mixer.clipAction(clip).play();
+        // });
+    },
+    // called while loading is in progress
+    function (xhr) {
+        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    // called when loading has errors
+    function (error) {
+        console.error('An error happened', error);
+    }
+);
+</code></pre>
+
+    <h2>OBJLoader</h2>
+    <p>The OBJ file format is a simple data format that represents 3D geometry, including vertex positions, UV coordinates, vertex normals, and faces. It's a widely supported format, though it doesn't support animations. When importing an OBJ, the default material will be a white <code>MeshPhongMaterial</code>, so you will need at least one light in your scene for the model to be visible.</p>
+    <h3>Usage:</h3>
+    <pre><code>import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js'; // Often used with OBJLoader for materials
+
+const objLoader = new OBJLoader();
+const mtlLoader = new MTLLoader(); // For loading materials if available
+
+// Load materials first if an .mtl file exists
+mtlLoader.load(
+    'path/to/your_model.mtl',
+    function (materials) {
+        materials.preload();
+        objLoader.setMaterials(materials);
+
+        // Load the OBJ file
+        objLoader.load(
+            // resource URL
+            'path/to/your_model.obj',
+            // called when resource is loaded
+            function (object) {
+                scene.add(object);
+            },
+            // called when loading is in progress
+            function (xhr) {
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+            // called when loading has errors
+            function (error) {
+                console.error('An error happened', error);
+            }
+        );
+    },
+    function (xhr) {
+        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    function (error) {
+        console.error('An error happened loading MTL', error);
+    }
+);
+</code></pre>
+
+    <h2>Important Note on Local File Loading</h2>
+    <p>Due to browser security restrictions, you cannot directly load local 3D model files (e.g., from your hard drive using <code>file://</code> protocol) in a web browser. You need to serve your HTML and 3D model files from a web server (e.g., using Node.js with Express, Python's <code>http.server</code>, or a VS Code extension like Live Server).</p>
+
+</body>
+</html>

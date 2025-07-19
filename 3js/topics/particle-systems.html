@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Particle systems</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Particle Systems in Three.js</h1>
+    <p>Particle systems are a powerful way to create visual effects like smoke, fire, rain, dust, and stars in 3D web applications. They are highly performant, allowing for hundreds of thousands of particles on screen with a reasonable frame rate.</p>
+
+    <h2>Core Components for Creating Particle Systems:</h2>
+    <ol>
+        <li><b><code>BufferGeometry</code>:</b> This is used to define the positions of individual particles. Each vertex in the <code>BufferGeometry</code> represents a single particle. You can manually add vertices to a geometry created from scratch, or use existing geometries.</li>
+        <li><b><code>PointsMaterial</code>:</b> This material is specifically designed for rendering points. It allows you to control properties like the color, size, and even apply textures to the particles. The <code>size</code> property defines the size of the points in pixels, and <code>sizeAttenuation</code> can be used to make distant particles appear smaller.</li>
+        <li><b><code>Points</code>:</b> Instead of creating a <code>Mesh</code> object, you create a <code>Points</code> object by passing the <code>BufferGeometry</code> and <code>PointsMaterial</code> to its constructor. This tells Three.js to render the vertices as points rather than a solid object.</li>
+    </ol>
+
+    <h2>Basic Example: Simple Starfield</h2>
+    <p>Here's a basic example of how you might set up a simple particle system to create a starfield effect:</p>
+
+    <pre><code>import * as THREE from 'three';
+
+// Scene, Camera, Renderer setup (assuming these are already defined)
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// 1. Create a BufferGeometry
+const particlesGeometry = new THREE.BufferGeometry();
+const vertices = [];
+
+// Add some random vertices for particles
+for (let i = 0; i < 10000; i++) {
+    const x = THREE.MathUtils.randFloatSpread(2000); // Random value between -1000 and 1000
+    const y = THREE.MathUtils.randFloatSpread(2000);
+    const z = THREE.MathUtils.randFloatSpread(2000);
+    vertices.push(x, y, z);
+}
+
+particlesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+// 2. Create a PointsMaterial
+const particlesMaterial = new THREE.PointsMaterial({
+    color: 0x888888, // Grey color
+    size: 15,        // Size of the particles
+    sizeAttenuation: true // Particles further away appear smaller
+});
+
+// You can also add a texture to the particles
+// const particleTexture = new THREE.TextureLoader().load('path/to/your/particle_texture.png');
+// particlesMaterial.map = particleTexture;
+// particlesMaterial.transparent = true; // Enable transparency for textures with alpha channels
+
+// 3. Create a Points object and add it to the scene
+const particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
+scene.add(particleSystem);
+
+camera.position.z = 500;
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    particleSystem.rotation.x += 0.0005;
+    particleSystem.rotation.y += 0.001;
+
+    renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</code></pre>
+
+    <h2>Advanced Particle Systems:</h2>
+    <p>For more advanced particle systems with complex behaviors like spawning, destruction, and animation, you often need to:</p>
+    <ul>
+        <li><b>Update particle attributes:</b> Modify the position, color, or other attributes of particles over time within the <code>BufferGeometry</code>.</li>
+        <li><b>Use custom shaders:</b> For highly customized effects and better performance, especially with many particles, you can write custom <code>ShaderMaterial</code>s to control how particles are rendered and animated on the GPU.</li>
+        <li><b>Utilize specialized libraries:</b> Libraries like <code>three-nebula</code> and <code>three.quarks</code> provide powerful APIs and visual editors for creating complex particle effects, often handling the underlying <code>BufferGeometry</code> and shader complexities for you.</li>
+    </ul>
+
+</body>
+</html>

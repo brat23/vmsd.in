@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is WebGL?</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>What is WebGL?</h1>
+    <p>WebGL (Web Graphics Library) is a JavaScript API for rendering high-performance interactive 3D and 2D graphics within any compatible web browser without the use of plug-ins. WebGL does so by introducing an API that closely conforms to OpenGL ES 2.0 that can be used in HTML5 &lt;canvas&gt; elements.</p>
+    <p>This conformance to OpenGL ES 2.0 means that the API is also very similar to the full desktop version of OpenGL, so many of the concepts you may have learned from using OpenGL in other environments can be applied to WebGL.</p>
+    
+    <h2>How it Works</h2>
+    <p>WebGL integrates directly with the HTML DOM. The &lt;canvas&gt; element is used as the drawing surface for WebGL. To get a WebGL rendering context, you simply request the "webgl" context from a &lt;canvas&gt; element.</p>
+    <p>Once you have the WebGL context, you can use the WebGL API to draw points, lines, and triangles. WebGL uses a shader-based pipeline, which means you provide small programs called shaders that run on the GPU. There are two types of shaders:</p>
+    <ul>
+        <li><b>Vertex Shaders:</b> These are responsible for transforming the vertices of your geometry from their original 3D space into the 2D space of the screen.</li>
+        <li><b>Fragment (or Pixel) Shaders:</b> These are responsible for determining the color of each pixel that makes up the shapes you are drawing.</li>
+    </ul>
+
+    <h2>Simple WebGL Example</h2>
+    <p>Here is a very basic example of a WebGL program that draws a single triangle. This example demonstrates the core concepts of setting up a WebGL context, creating shaders, and drawing a simple shape.</p>
+    
+    <canvas id="glCanvas" width="640" height="480"></canvas>
+
+    <script>
+        const canvas = document.getElementById('glCanvas');
+        const gl = canvas.getContext('webgl');
+
+        if (!gl) {
+            alert('Unable to initialize WebGL. Your browser or machine may not support it.');
+        }
+
+        // Vertex shader program
+        const vsSource = `
+            attribute vec4 aVertexPosition;
+            void main(void) {
+                gl_Position = aVertexPosition;
+            }
+        `;
+
+        // Fragment shader program
+        const fsSource = `
+            void main(void) {
+                gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+            }
+        `;
+
+        function initShaderProgram(gl, vsSource, fsSource) {
+            const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
+            const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
+
+            const shaderProgram = gl.createProgram();
+            gl.attachShader(shaderProgram, vertexShader);
+            gl.attachShader(shaderProgram, fragmentShader);
+            gl.linkProgram(shaderProgram);
+
+            if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+                alert('Unable to initialize the shader program: ' + gl.getProgramInfoLog(shaderProgram));
+                return null;
+            }
+
+            return shaderProgram;
+        }
+
+        function loadShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                alert('An error occurred compiling the shaders: ' + gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
+                return null;
+            }
+
+            return shader;
+        }
+
+        const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
+
+        const programInfo = {
+            program: shaderProgram,
+            attribLocations: {
+                vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+            },
+        };
+
+        const buffers = initBuffers(gl);
+
+        drawScene(gl, programInfo, buffers);
+
+        function initBuffers(gl) {
+            const positionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
+            const positions = [
+                 0.0,  1.0,  0.0,
+                -1.0, -1.0,  0.0,
+                 1.0, -1.0,  0.0,
+            ];
+
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+            return {
+                position: positionBuffer,
+            };
+        }
+
+        function drawScene(gl, programInfo, buffers) {
+            gl.clearColor(0.0, 0.0, 0.0, 1.0);
+            gl.clear(gl.COLOR_BUFFER_BIT);
+
+            {
+                const numComponents = 3;
+                const type = gl.FLOAT;
+                const normalize = false;
+                const stride = 0;
+                const offset = 0;
+                gl.bindBuffer(gl.ARRAY_BUFFER, buffers.position);
+                gl.vertexAttribPointer(
+                    programInfo.attribLocations.vertexPosition,
+                    numComponents,
+                    type,
+                    normalize,
+                    stride,
+                    offset);
+                gl.enableVertexAttribArray(
+                    programInfo.attribLocations.vertexPosition);
+            }
+
+            gl.useProgram(programInfo.program);
+
+            {
+                const offset = 0;
+                const vertexCount = 3;
+                gl.drawArrays(gl.TRIANGLES, offset, vertexCount);
+            }
+        }
+    </script>
+</body>
+</html>

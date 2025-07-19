@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup with Vite / CRA / Next.js</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Setting up React Three Fiber with Vite, Create React App, and Next.js</h1>
+    <p>React Three Fiber (R3F) is a React renderer for Three.js, allowing you to build 3D scenes using React components. It simplifies the process of working with Three.js by integrating it into the React ecosystem.</p>
+
+    <h2>General Installation</h2>
+    <p>Regardless of the framework you choose, you'll need to install <code>three</code> (the core Three.js library) and <code>@react-three/fiber</code>. It's also highly recommended to install <code>@react-three/drei</code>, which provides useful helpers and abstractions.</p>
+    <pre><code>npm install three @react-three/fiber @react-three/drei
+# or
+yarn add three @react-three/fiber @react-three/drei</code></pre>
+
+    <h2>Vite</h2>
+    <p>Vite works well with React Three Fiber out of the box, offering a fast development experience.</p>
+    <h3>Steps:</h3>
+    <ol>
+        <li><b>Create a new Vite React project:</b>
+            <pre><code>npm create vite@latest my-r3f-app -- --template react
+cd my-r3f-app</code></pre>
+            <p>For TypeScript, select <code>React</code> as the framework and <code>TypeScript</code> or <code>TypeScript + SWC</code> when prompted.</p>
+        </li>
+        <li><b>Install dependencies:</b>
+            <pre><code>npm install three @react-three/fiber @react-three/drei
+# If using TypeScript, also install:
+npm install @types/three --save-dev</code></pre>
+        </li>
+        <li><b>Start the development server:</b>
+            <pre><code>npm run dev</code></pre>
+            <p>You can then add a <code>&lt;Canvas&gt;</code> component from <code>@react-three/fiber</code> to your <code>App.jsx</code> (or <code>App.tsx</code>) to start building your 3D scene.</p>
+        </li>
+    </ol>
+
+    <h2>Create React App (CRA)</h2>
+    <p>Create React App also works out of the box with React Three Fiber, requiring no special configuration.</p>
+    <h3>Steps:</h3>
+    <ol>
+        <li><b>Create a new React project:</b>
+            <pre><code>npx create-react-app my-r3f-app --template typescript # Add --template typescript for TypeScript
+cd my-r3f-app</code></pre>
+        </li>
+        <li><b>Install dependencies:</b>
+            <pre><code>npm install three @react-three/fiber @react-three/drei</code></pre>
+        </li>
+        <li><b>Start the development server:</b>
+            <pre><code>npm start</code></pre>
+            <p>You can then import <code>Canvas</code> from <code>@react-three/fiber</code> and start creating your 3D components within your React application.</p>
+        </li>
+    </ol>
+
+    <h2>Next.js</h2>
+    <p>Next.js requires a small additional configuration, especially for newer versions, to handle <code>three.js</code> modules correctly.</p>
+    <h3>Steps:</h3>
+    <ol>
+        <li><b>Create a new Next.js project:</b>
+            <pre><code>npx create-next-app@latest my-r3f-app
+cd my-r3f-app</code></pre>
+            <p>During the setup, you'll be asked if you want to use TypeScript; select yes.</p>
+        </li>
+        <li><b>Install dependencies:</b>
+            <pre><code>npm install three @react-three/fiber @react-three/drei</code></pre>
+        </li>
+        <li><b>Configure <code>next.config.js</code>:</b>
+            <p>For Next.js 13.1 or later, you need to add <code>three</code> to the <code>transpilePackages</code> property in <code>next.config.js</code> to ensure proper transpilation of <code>three.js</code> modules.</p>
+            <pre><code>// next.config.js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  transpilePackages: ['three'], // Add this line
+};
+
+module.exports = nextConfig;</code></pre>
+            <p>For Next.js 13.0 or older, you might need to use <code>next-transpile-modules</code>.</p>
+        </li>
+        <li><b>Start the development server:</b>
+            <pre><code>npm run dev</code></pre>
+            <p>When working with Next.js, especially with App Router, components that use React Hooks (like <code>useFrame</code> from R3F) need to be client-side components. You can achieve this by adding <code>"use client";</code> at the top of your component file.</p>
+        </li>
+    </ol>
+
+</body>
+</html>

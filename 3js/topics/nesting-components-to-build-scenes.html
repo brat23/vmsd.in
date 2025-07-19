@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nesting components to build scenes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Nesting Components to Build Scenes in React Three Fiber</h1>
+    <p>In React Three Fiber (R3F), building complex 3D scenes is made intuitive by leveraging React's component-based architecture. This means you can nest R3F components just like you would nest regular React components, creating a hierarchical structure that mirrors the Three.js scene graph.</p>
+
+    <h2>How Nesting Works in R3F</h2>
+    <ul>
+        <li><b>Declarative Scene Graph:</b> R3F allows you to declaratively build your Three.js scene graph using JSX. Each R3F component (e.g., <code>&lt;mesh&gt;</code>, <code>&lt;group&gt;</code>, <code>&lt;pointLight&gt;</code>) corresponds to a Three.js object.</li>
+        <li><b>Parent-Child Relationship:</b> When you nest an R3F component inside another, the inner component becomes a child of the outer component in the Three.js scene graph. This implies:</li>
+        <ul>
+            <li><b>Transformations are inherited:</b> A child's position, rotation, and scale are relative to its parent. If you move or rotate a parent, its children will move or rotate with it.</li>
+            <li><b>Visibility and rendering:</b> Children are rendered within the context of their parent.</li>
+        </ul>
+        <li><b>Reusability and Composition:</b> Nesting promotes reusability and composition. You can create complex scene elements as self-contained components and then compose them to build larger scenes.</li>
+    </ul>
+
+    <h2>Example: Nested Boxes</h2>
+    <p>This example demonstrates how to nest components to create a group of boxes that can be transformed as a single unit. Note that this requires a React environment to run.</p>
+
+    <pre><code>import React from 'react';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+
+// A reusable component for a colored box
+function Box({ position, color }) {
+  return (
+    &lt;mesh position={position}&gt;
+      &lt;boxGeometry args={[1, 1, 1]} /&gt;
+      &lt;meshStandardMaterial color={color} /&gt;
+    &lt;/mesh&gt;
+  );
+}
+
+// A component that groups multiple boxes
+function BoxGroup() {
+  return (
+    // The &lt;group&gt; component acts as a container for other Three.js objects.
+    // Transformations applied to the group will affect all its children.
+    &lt;group position={[0, 0, 0]}&gt;
+      &lt;Box position={[-1.5, 0, 0]} color="hotpink" /&gt;
+      &lt;Box position={[0, 0, 0]} color="orange" /&gt;
+      &lt;Box position={[1.5, 0, 0]} color="lightblue" /&gt;
+    &lt;/group&gt;
+  );
+}
+
+// The main scene component
+export default function Scene() {
+  return (
+    &lt;Canvas&gt;
+      &lt;ambientLight intensity={0.5} /&gt;
+      &lt;pointLight position={[10, 10, 10]} /&gt;
+
+      {/* Nesting the BoxGroup component */}
+      &lt;BoxGroup /&gt;
+
+      {/* Another group, demonstrating independent positioning */}
+      &lt;group position={[0, 2, 0]}&gt;
+        &lt;Box position={[-0.75, 0, 0]} color="green" /&gt;
+        &lt;Box position={[0.75, 0, 0]} color="purple" /&gt;
+      &lt;/group&gt;
+
+      &lt;OrbitControls /&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+</body>
+</html>

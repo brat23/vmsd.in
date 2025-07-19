@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lights</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Lights in Three.js</h1>
+    <p>Lights are crucial in 3D graphics for illuminating your scene and making objects visible. Three.js provides several types of lights, each with unique characteristics and use cases:</p>
+
+    <h2>AmbientLight</h2>
+    <p>An <code>AmbientLight</code> globally illuminates all objects in the scene equally. It has no direction and cannot cast shadows. Its primary purpose is to provide a base level of illumination, faking indirect lighting, and its position in the scene does not affect the lighting.</p>
+    <pre><code>const ambientLight = new THREE.AmbientLight(0x404040); // soft white light</code></pre>
+
+    <h2>DirectionalLight</h2>
+    <p>A <code>DirectionalLight</code> simulates light coming from an infinitely far away source, like the sun. All light rays produced by a <code>DirectionalLight</code> are parallel. It is commonly used to represent daylight and can cast shadows. The direction of the light is determined by its position relative to its target.</p>
+    <pre><code>const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5); // white light, half intensity
+directionalLight.position.set(1, 1, 1).normalize(); // from top-right-front</code></pre>
+
+    <h2>PointLight</h2>
+    <p>A <code>PointLight</code> emits light from a single point in all directions, similar to a bare lightbulb. It can cast shadows and has properties for <code>distance</code> (maximum range) and <code>decay</code> (how the light dims over distance).</p>
+    <pre><code>const pointLight = new THREE.PointLight(0xff0000, 1, 100); // red light, full intensity, 100 units distance
+pointLight.position.set(0, 10, 0);</code></pre>
+
+    <h2>SpotLight</h2>
+    <p>A <code>SpotLight</code> emits from a single point in a specific direction, forming a cone of light that increases in size further from the source. <code>SpotLight</code> can cast shadows and has parameters like <code>angle</code> (maximum dispersion), <code>penumbra</code> (percentage of the cone attenuated), <code>distance</code>, and <code>decay</code>. It also has a <code>target</code> property, allowing it to point at a specific object or position.</p>
+    <pre><code>const spotLight = new THREE.SpotLight(0x00ff00, 1, 100, Math.PI / 4, 0.5, 2); // green light
+spotLight.position.set(0, 10, 0);
+spotLight.target.position.set(0, 0, 0);
+scene.add(spotLight.target); // target must be added to the scene</code></pre>
+
+    <h2>Example: Demonstrating Different Light Types</h2>
+    <p>This example shows a scene with a sphere and a plane, illuminated by different types of lights. You can observe how each light type affects the scene.</p>
+
+    <iframe srcdoc="
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset=\"utf-8\">
+            <title>Three.js Lights</title>
+            <style>
+                body { margin: 0; overflow: hidden; }
+                canvas { display: block; }
+            </style>
+        </head>
+        <body>
+            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
+            <script>
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                // Add a sphere
+                const geometry = new THREE.SphereGeometry(1, 32, 32);
+                const material = new THREE.MeshStandardMaterial({ color: 0xcccccc, roughness: 0.5, metalness: 0.1 });
+                const sphere = new THREE.Mesh(geometry, material);
+                scene.add(sphere);
+
+                // Add a plane
+                const planeGeometry = new THREE.PlaneGeometry(10, 10);
+                const planeMaterial = new THREE.MeshStandardMaterial({ color: 0x888888, side: THREE.DoubleSide });
+                const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+                plane.rotation.x = -Math.PI / 2;
+                plane.position.y = -2;
+                scene.add(plane);
+
+                // Ambient Light
+                const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
+                scene.add(ambientLight);
+
+                // Directional Light
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(5, 5, 5).normalize();
+                scene.add(directionalLight);
+
+                // Point Light
+                const pointLight = new THREE.PointLight(0xff0000, 1, 50);
+                pointLight.position.set(-3, 3, 0);
+                scene.add(pointLight);
+
+                // Spot Light
+                const spotLight = new THREE.SpotLight(0x0000ff, 1, 50, Math.PI / 6, 0.5, 2);
+                spotLight.position.set(3, 3, 0);
+                spotLight.target.position.set(0, 0, 0);
+                scene.add(spotLight);
+                scene.add(spotLight.target);
+
+                camera.position.z = 5;
+                camera.position.y = 1;
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    sphere.rotation.y += 0.005;
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            </script>
+        </body>
+        </html>
+    " frameborder="0" width="100%" height="400px"></iframe>
+
+</body>
+</html>

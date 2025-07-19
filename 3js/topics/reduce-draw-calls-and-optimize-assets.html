@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reduce draw calls & optimize assets</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Reducing Draw Calls and Optimizing Assets in Three.js</h1>
+    <p>Optimizing Three.js scenes is crucial for achieving smooth performance and a good user experience, especially with complex 3D models and environments. Key strategies involve reducing draw calls and efficiently managing assets.</p>
+
+    <h2>Understanding Draw Calls</h2>
+    <p>A draw call is a command sent from the CPU to the GPU to render objects. Each draw call incurs CPU overhead, so minimizing their number is crucial for performance, especially in complex scenes.</p>
+
+    <h2>Techniques for Reducing Draw Calls</h2>
+    <ul>
+        <li><b><code>InstancedMesh</code>:</b> Use <code>THREE.InstancedMesh</code> when you need to render a large number of objects that share the same geometry and material but have different positions, rotations, or scales. This allows the GPU to render all instances in a single draw call.</li>
+        <li><b>Geometry Merging:</b> For static objects that share the same material, you can merge their geometries into a single <code>BufferGeometry</code>. This combines multiple meshes into one, reducing the number of draw calls to just one for the merged object.</li>
+        <li><b>Texture Atlases:</b> Combine multiple smaller textures into a single, larger texture atlas. This reduces the number of texture swaps the GPU needs to perform.</li>
+        <li><b><code>Points</code>:</b> For rendering a large number of small, simple elements like particles, consider using <code>THREE.Points</code>, which can render many points in a single draw call.</li>
+    </ul>
+
+    <h2>Techniques for Optimizing Assets</h2>
+    <h3>1. Geometry Optimization:</h3>
+    <ul>
+        <li><b>Low-Poly Models:</b> Design or acquire 3D models with the lowest possible polygon count.</li>
+        <li><b>Decimation/Simplification:</b> Use 3D modeling software to reduce the number of polygons.</li>
+        <li><b>Draco Compression:</b> For GLTF/GLB models, use Draco mesh compression to drastically reduce file sizes.</li>
+    </ul>
+    <h3>2. Texture Optimization:</h3>
+    <ul>
+        <li><b>Appropriate Resolution:</b> Use textures with resolutions appropriate for their on-screen size.</li>
+        <li><b>Power of Two Dimensions:</b> Textures with dimensions that are powers of two (e.g., 256x256) are generally more efficient.</li>
+        <li><b>Compressed Textures:</b> Utilize modern compressed texture formats like Basis Universal or KTX2 for smaller file sizes and faster GPU decoding.</li>
+    </ul>
+    <h3>3. Material Optimization:</h3>
+    <ul>
+        <li><b>Simpler Materials:</b> Choose the simplest material type that meets your visual requirements (e.g., <code>MeshBasicMaterial</code> over <code>MeshStandardMaterial</code> if advanced lighting is not needed).</li>
+    </ul>
+
+    <h2>Culling Techniques</h2>
+    <p>Culling techniques prevent objects that are not visible from being rendered, saving GPU resources.</p>
+    <ul>
+        <li><b>Frustum Culling:</b> Three.js automatically performs frustum culling, not rendering objects outside the camera's view.</li>
+        <li><b>Level of Detail (LOD):</b> Use <code>THREE.LOD</code> to render different versions of a model based on its distance from the camera. Distant objects can use lower-polygon models.</li>
+    </ul>
+
+    <h2>General Performance Tips</h2>
+    <ul>
+        <li><b>Dispose of Unused Resources:</b> Call <code>dispose()</code> on objects, geometries, materials, or textures when they are no longer needed to free up GPU memory.</li>
+        <li><b>Avoid Object Creation in Render Loop:</b> Do not create new Three.js objects (like <code>Vector3</code>) inside the render loop.</li>
+        <li><b>Use <code>BufferGeometry</code>:</b> Always prefer <code>BufferGeometry</code> over the older <code>Geometry</code> class for efficiency.</li>
+    </ul>
+
+</body>
+</html>

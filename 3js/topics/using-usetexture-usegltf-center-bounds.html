@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using useTexture, useGLTF, Center, Bounds</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Using <code>useTexture</code>, <code>useGLTF</code>, <code>&lt;Center&gt;</code>, and <code>&lt;Bounds&gt;</code> in React Three Fiber</h1>
+    <p>React Three Fiber (R3F) leverages a declarative approach to build 3D scenes with React. The <code>@react-three/drei</code> library provides a collection of useful helpers and abstractions that simplify common tasks, including loading textures and models, and positioning objects.</p>
+
+    <h2><code>useTexture</code></h2>
+    <p>The <code>useTexture</code> hook from <code>@react-three/drei</code> is the recommended and most convenient way to load textures. It simplifies the process of loading one or multiple textures and applying them to materials.</p>
+    <h3>Usage:</h3>
+    <p>You can pass a single texture path, an array of paths, or an object mapping texture names to paths. The hook returns the loaded texture(s) which can then be assigned to material properties like <code>map</code>, <code>normalMap</code>, <code>roughnessMap</code>, etc.</p>
+    <pre><code>import { useTexture } from '@react-three/drei';
+
+function TexturedBox() {
+  const [colorMap, normalMap, roughnessMap] = useTexture([
+    'path/to/color.jpg',
+    'path/to/normal.jpg',
+    'path/to/roughness.jpg',
+  ]);
+
+  return (
+    &lt;mesh&gt;
+      &lt;boxGeometry args={[2, 2, 2]} /&gt;
+      &lt;meshStandardMaterial
+        map={colorMap}
+        normalMap={normalMap}
+        roughnessMap={roughnessMap}
+      /&gt;
+    &lt;/mesh&gt;
+  );
+}</code></pre>
+
+    <h2><code>useGLTF</code></h2>
+    <p>The <code>useGLTF</code> hook, also from <code>@react-three/drei</code>, is designed for loading GLTF (Graphics Library Transmission Format) 3D models, which are a popular and efficient format for 3D assets on the web.</p>
+    <h3>Usage:</h3>
+    <p><code>useGLTF</code> takes the path to your <code>.gltf</code> or <code>.glb</code> file and returns an object containing the model's scene, nodes, and materials. You typically render the <code>gltf.scene</code> as a primitive.</p>
+    <pre><code>import { useGLTF } from '@react-three/drei';
+import { Suspense } from 'react';
+
+function Model({ url }) {
+  const { scene } = useGLTF(url);
+  return &lt;primitive object={scene} /&gt;;
+}
+
+function App() {
+  return (
+    &lt;Canvas&gt;
+      &lt;Suspense fallback={null}&gt;
+        &lt;Model url="/path/to/your/model.glb" /&gt;
+      &lt;/Suspense&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+    <h2><code>&lt;Center&gt;</code></h2>
+    <p>The <code>&lt;Center&gt;</code> component from <code>@react-three/drei</code> automatically centers its child objects within the scene. This is particularly useful when you load models that might have their origin point far from their visual center.</p>
+    <h3>Usage:</h3>
+    <p>Simply wrap the 3D objects you want to center with the <code>&lt;Center&gt;</code> component.</p>
+    <pre><code>import { Center } from '@react-three/drei';
+
+function MyScene() {
+  // ... load your model or create objects
+  return (
+    &lt;Center&gt;
+      &lt;primitive object={scene} /&gt; &lt;!-- Your loaded model or other objects --&gt;
+    &lt;/Center&gt;
+  );
+}</code></pre>
+
+    <h2><code>&lt;Bounds&gt;</code></h2>
+    <p>The <code>&lt;Bounds&gt;</code> component from <code>@react-three/drei</code> is used to automatically adjust the camera's view to fit all the objects contained within it. This is often used for "fit-all" functionality, ensuring that all relevant 3D content is visible on screen.</p>
+    <h3>Usage:</h3>
+    <p>Wrap the objects you want the camera to frame with the <code>&lt;Bounds&gt;</code> component. You can also provide props to control the camera's behavior, such as <code>fit</code> (to fit the bounds), <code>observe</code> (to re-fit when children change), and <code>clip</code> (to prevent clipping).</p>
+    <pre><code>import { Bounds } from '@react-three/drei';
+
+function MySceneWithBounds() {
+  // ... load your model or create objects
+  return (
+    &lt;Bounds observe fit&gt;
+      &lt;primitive object={scene} /&gt;
+      &lt;!-- Add other objects here that you want to be included in the bounds --&gt;
+    &lt;/Bounds&gt;
+  );
+}</code></pre>
+
+</body>
+</html>

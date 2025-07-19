@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Higher order functions and Callbacks</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="article-page">
+    <div class="bg-animation"></div>
+    <div class="particles"></div>
+    <div class="progress-bar"></div>
+
+    <header>
+        <nav>
+            <div class="logo">VMSD.in</div>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#frontend">Frontend</a></li>
+                <li><a href="../index.html#backend">Backend</a></li>
+                <li><a href="../index.html#deployment">Deployment</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="section-content">
+                <h2>Higher-Order Functions and Callbacks</h2>
+                <p class="subtitle">Higher-order functions and callbacks are powerful features in JavaScript that allow you to write more flexible and reusable code. This article covers what higher-order functions and callbacks are and how to use them.</p>
+                
+                <h3>Higher-Order Functions</h3>
+                <p>A <span class="highlight">higher-order function</span> is a function that takes another function as an argument or returns a function as a result. This article will cover how to create and use higher-order functions to create more flexible and reusable code.</p>
+
+                <h4>Example: Higher-Order Function (map)</h4>
+                <pre><code>const numbers = [1, 2, 3];
+const doubled = numbers.map(num => num * 2); // doubled is [2, 4, 6]</code></pre>
+                
+                <h3>Callbacks</h3>
+                <p>A <span class="highlight">callback</span> is a function that is passed as an argument to another function and is executed after some operation has been completed. This article will cover how to use callbacks to handle asynchronous operations, such as making an API request or waiting for a timer to finish.</p>
+
+                <h4>Example: Callback Function</h4>
+                <pre><code>function fetchData(callback) {
+  setTimeout(() => {
+    const data = "Some data";
+    callback(data);
+  }, 1000);
+}
+
+fetchData(data => {
+  console.log(data); // Logs "Some data" after 1 second
+});</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VMSD.in</h3>
+                    <p>Empowering developers worldwide with comprehensive full-stack education. Join our community and transform your career in tech.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="../index.html#home">Home</a></p>
+                    <p><a href="../index.html#frontend">Frontend</a></p>
+                    <p><a href="../index.html#backend">Backend</a></p>
+                    <p><a href="../index.html#deployment">Deployment</a></p>
+                    <p><a href="../index.html#contact">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Technologies</h3>
+                    <p>HTML, CSS, JavaScript</p>
+                    <p>Python, Node.js</p>
+                    <p>Databases & Cloud</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <p><a href="#">Discord Community</a></p>
+                    <p><a href="#">GitHub</a></p>
+                    <p><a href="#">LinkedIn</a></p>
+                    <p><a href="#">Twitter</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 VMSD.in. All rights reserved. Built with passion for developers.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="../script.js"></script>
+
+</body>
+</html>

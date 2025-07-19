@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State management in 3D (Zustand or Redux)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>State Management in React Three Fiber (Zustand or Redux)</h1>
+    <p>When building complex 3D applications with React Three Fiber (R3F), managing application state effectively becomes crucial. You can integrate various state management solutions like Zustand and Redux to handle your application's state, including 3D scene-related data.</p>
+
+    <h2>Zustand</h2>
+    <p>Zustand is often recommended for React Three Fiber projects due to its simplicity, small bundle size, and performance characteristics. R3F itself uses Zustand internally, which can lead to better performance as it avoids unnecessary re-renders. It's particularly good for managing "app/local state" rather than "transitionary/frame-by-frame state" which is better handled by <code>useFrame</code> for mutations.</p>
+    <h3>Pros:</h3>
+    <ul>
+        <li><b>Simplicity:</b> Minimalist API based on hooks, easy to learn and use.</li>
+        <li><b>Performance:</b> Designed to be fast and scalable, avoiding unnecessary React re-renders.</li>
+        <li><b>Less Boilerplate:</b> Typically requires less code compared to Redux.</li>
+    </ul>
+    <h3>Usage Example (Conceptual):</h3>
+    <pre><code>import create from 'zustand';
+
+// Define your store
+const useStore = create(set => ({
+  boxColor: 'hotpink',
+  setBoxColor: (color) => set({ boxColor: color }),
+}));
+
+function MyBox() {
+  const boxColor = useStore(state => state.boxColor);
+  return (
+    &lt;mesh&gt;
+      &lt;boxGeometry /&gt;
+      &lt;meshStandardMaterial color={boxColor} /&gt;
+    &lt;/mesh&gt;
+  );
+}
+
+function ColorChanger() {
+  const setBoxColor = useStore(state => state.setBoxColor);
+  return (
+    &lt;button onClick={() => setBoxColor('royalblue')}&gt;Change Box Color&lt;/button&gt;
+  );
+}</code></pre>
+
+    <h2>Redux</h2>
+    <p>Redux is a more comprehensive state management library, known for its predictable state container. It can also be used with React Three Fiber, especially for larger and more complex applications where a centralized state and powerful debugging tools are beneficial.</p>
+    <h3>Pros:</h3>
+    <ul>
+        <li><b>Centralized State:</b> Provides a single, centralized store for your application's state.</li>
+        <li><b>Debugging Tools:</b> Redux DevTools offer powerful debugging capabilities.</li>
+        <li><b>Mature Ecosystem:</b> Has a mature ecosystem with many middleware and extensions.</li>
+    </ul>
+    <h3>Considerations:</h3>
+    <ul>
+        <li>Can introduce more boilerplate compared to simpler solutions.</li>
+        <li>For rapidly changing state (like per-frame updates), it's often more performant to use R3F's <code>useFrame</code> hook directly to mutate Three.js objects, as this avoids unnecessary React re-renders.</li>
+    </ul>
+
+    <h2>General Considerations for State Management in R3F</h2>
+    <ul>
+        <li><b><code>useFrame</code> for Animations:</b> For highly frequent updates, such as animations or physics simulations, it's often more performant to use R3F's <code>useFrame</code> hook to directly mutate properties of Three.js objects rather than relying on state management solutions, as this avoids unnecessary React re-renders.</li>
+        <li><b>Selective State:</b> When using state managers, be mindful of how you select and consume state to prevent excessive re-renders of your 3D components.</li>
+        <li><b>Context API:</b> For simpler state management needs, React's Context API can also be a viable option, though it might lead to more re-renders compared to optimized solutions like Zustand.</li>
+    </ul>
+
+</body>
+</html>

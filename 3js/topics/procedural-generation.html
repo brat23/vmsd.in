@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procedural Generation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Procedural Generation in Three.js</h1>
+    <p>Procedural generation in Three.js involves algorithmically creating 3D content rather than manually modeling it. This technique is highly valuable for generating diverse and dynamic scenes, reducing memory footprint, and enabling real-time content creation.</p>
+
+    <h2>Key Techniques for Procedural Generation:</h2>
+    <ul>
+        <li><b>Procedural Geometry:</b> You can generate custom 3D models by programmatically defining their vertices (points in 3D space) and faces (triangles connecting those vertices). Three.js's <code>BufferGeometry</code> class is fundamental for this, allowing efficient creation and manipulation of complex shapes.</li>
+        <li><b>Terrain Generation:</b> This often involves displacing the vertices of a simple <code>PlaneGeometry</code> based on a heightmap. Heightmaps are typically generated using noise functions like Perlin noise or Simplex noise, which produce organic, natural-looking patterns.</li>
+        <li><b>L-Systems (Lindenmayer Systems):</b> These are fractal-like grammatical systems used to model the growth of plants and other organic structures. By defining a set of rules, L-systems can generate complex branching patterns, which are then translated into 3D geometry.</li>
+        <li><b>Procedural Textures and Materials:</b> Instead of using pre-made image files, textures can be generated dynamically using shaders (written in GLSL). This allows for highly customizable and memory-efficient materials.</li>
+    </ul>
+
+    <h2>Example: Procedural Terrain Generation (Conceptual)</h2>
+    <p>This example demonstrates a conceptual approach to generating a simple procedural terrain using a noise function to displace vertices of a plane. This requires a Three.js setup.</p>
+
+    <pre><code>import * as THREE from 'three';
+
+// Scene, Camera, Renderer setup (assuming these are already defined)
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Add basic lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+directionalLight.position.set(1, 1, 1).normalize();
+scene.add(directionalLight);
+
+// Create a plane geometry
+const planeGeometry = new THREE.PlaneGeometry(10, 10, 100, 100); // Large number of segments for detail
+const planeMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00, wireframe: false });
+const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+plane.rotation.x = -Math.PI / 2; // Rotate to be horizontal
+scene.add(plane);
+
+// Simple noise function (conceptual - a real noise function would be more complex)
+function getNoise(x, y) {
+    return Math.sin(x * 0.5) * Math.cos(y * 0.5) * 0.5 + 0.5;
+}
+
+// Displace vertices based on noise
+const positionAttribute = plane.geometry.getAttribute('position');
+for (let i = 0; i < positionAttribute.count; i++) {
+    const x = positionAttribute.getX(i);
+    const y = positionAttribute.getY(i);
+    const z = positionAttribute.getZ(i);
+
+    const noiseValue = getNoise(x, y);
+    positionAttribute.setZ(i, z + noiseValue * 2); // Displace along Z (up/down)
+}
+positionAttribute.needsUpdate = true; // Important: tell Three.js to update the buffer
+plane.geometry.computeVertexNormals(); // Recalculate normals for correct lighting
+
+camera.position.set(0, 5, 5);
+camera.lookAt(0, 0, 0);
+
+function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</code></pre>
+
+</body>
+</html>

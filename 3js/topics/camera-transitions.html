@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera transitions</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Camera Transitions in Three.js</h1>
+    <p>Smooth camera transitions are essential for creating a polished and engaging user experience in 3D applications. Instead of abruptly jumping between views, animating the camera's position and orientation provides a more natural and immersive feel. Since Three.js itself doesn't provide built-in tweening (interpolation) for these animations, external libraries are commonly used.</p>
+
+    <h2>Recommended Approach: Using Tweening Libraries</h2>
+    <p>The most effective way to handle camera transitions in Three.js is by using a dedicated JavaScript tweening library. These libraries simplify the process of interpolating values over time, allowing you to define start and end states, duration, and easing functions.</p>
+    <p>Two popular choices are:</p>
+    <ul>
+        <li><b>Tween.js (<code>@tweenjs/tween.js</code>):</b> A lightweight and flexible tweening engine.</li>
+        <li><b>GSAP (GreenSock Animation Platform):</b> A powerful and feature-rich animation library, widely used for professional-grade animations.</li>
+    </ul>
+    <p>Both libraries allow you to animate properties of any JavaScript object, including the <code>position</code> and <code>rotation</code> properties of a Three.js <code>Camera</code> object.</p>
+
+    <h2>Key Camera Properties for Transitions</h2>
+    <p>When performing camera transitions, you'll primarily be animating:</p>
+    <ul>
+        <li><b><code>camera.position</code>:</b> This <code>THREE.Vector3</code> property defines the camera's location in 3D space. Animating its <code>x</code>, <code>y</code>, and <code>z</code> components will move the camera.</li>
+        <li><b><code>camera.lookAt(targetVector)</code>:</b> This method points the camera towards a specific <code>THREE.Vector3</code> target. To smoothly transition the camera's view, you'll often need to animate the <code>targetVector</code> and call <code>camera.lookAt()</code> in each frame of the animation.</li>
+        <li><b><code>camera.fov</code> (Field of View):</b> For zoom-in or zoom-out effects, you can animate the <code>fov</code> property of a <code>PerspectiveCamera</code> and then call <code>camera.updateProjectionMatrix()</code> to apply the change.</li>
+    </ul>
+
+    <h2>Example: Camera Position Transition with Tween.js (Conceptual)</h2>
+    <p>This example demonstrates a conceptual approach to animating a camera's position using Tween.js. Note that this requires a Three.js setup and the Tween.js library to be included in your project.</p>
+
+    <pre><code>import * as THREE from 'three';
+import * as TWEEN from '@tweenjs/tween.js';
+
+// Assume scene, camera, renderer are already set up
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Add a simple cube to the scene
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+
+// Initial camera position
+camera.position.set(0, 0, 5);
+
+// Define a target camera position
+const targetPosition = new THREE.Vector3(5, 5, 10);
+
+// Create a new tween for the camera's position
+const positionTween = new TWEEN.Tween(camera.position)
+    .to(targetPosition, 2000) // Animate to targetPosition over 2000ms
+    .easing(TWEEN.Easing.Quadratic.InOut) // Use an easing function for smooth animation
+    .onUpdate(() => {
+        // This function is called on every frame of the tween
+        // The camera.position is automatically updated by TWEEN
+    })
+    .onComplete(() => {
+        console.log('Camera transition complete!');
+    });
+
+// Start the tween (e.g., after a delay or user interaction)
+// positionTween.start();
+
+// Animation loop
+function animate() {
+    requestAnimationFrame(animate);
+
+    TWEEN.update(); // Update all active tweens
+
+    renderer.render(scene, camera);
+}
+animate();
+
+// Example of how to trigger the transition (e.g., on a click)
+// document.addEventListener('click', () => {
+//     positionTween.start();
+// });
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</code></pre>
+
+</body>
+</html>

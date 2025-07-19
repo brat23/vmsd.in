@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raycasting & object interaction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Raycasting and Object Interaction in Three.js</h1>
+    <p>Raycasting is a fundamental technique in 3D graphics used to determine if a ray (an imaginary line extending infinitely in one direction) intersects with any objects in a 3D scene. In Three.js, this is commonly used for enabling user interaction, such as detecting mouse clicks or hovers on 3D objects.</p>
+
+    <h2>How Raycasting Works</h2>
+    <p>The process generally involves:</p>
+    <ol>
+        <li><b>Defining a Ray:</b> A ray is defined by an origin (starting point) and a direction. For mouse interaction, this ray typically originates from the camera's position and extends through the 3D point corresponding to the 2D mouse cursor on the screen.</li>
+        <li><b>Checking for Intersections:</b> The raycaster then checks for intersections between this ray and the objects in your scene.</li>
+        <li><b>Processing Intersections:</b> If intersections are found, the raycaster returns a list of intersected objects, ordered by distance from the ray's origin.</li>
+    </ol>
+
+    <h2>Key Components for Raycasting</h2>
+    <ul>
+        <li><code>THREE.Raycaster</code>: The object that performs the actual raycasting calculations.</li>
+        <li><code>THREE.Vector2</code>: Used to store the normalized device coordinates (NDC) of your mouse position. NDC range from -1 to +1 across the viewport.</li>
+    </ul>
+
+    <h2>Implementing Object Interaction with Raycasting</h2>
+
+    <h3>1. Initialize Raycaster and Mouse Vector</h3>
+    <pre><code>const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();</code></pre>
+
+    <h3>2. Update Mouse Coordinates</h3>
+    <p>Attach an event listener (e.g., <code>mousemove</code> or <code>click</code>) to your renderer's DOM element to update the <code>mouse</code> vector whenever the mouse moves or is clicked. You need to convert the screen coordinates to NDC.</p>
+    <pre><code>function onMouseMove(event) {
+    // Calculate mouse position in normalized device coordinates (-1 to +1)
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+}
+
+window.addEventListener('mousemove', onMouseMove, false);</code></pre>
+
+    <h3>3. Perform Raycasting in your Animation Loop or on Event</h3>
+    <p>In your animation loop (or within your event handler), you'll update the raycaster and check for intersections.</p>
+    <pre><code>// Update the picking ray with the camera and mouse position
+raycaster.setFromCamera(mouse, camera);
+
+// Calculate objects intersecting the picking ray
+const intersects = raycaster.intersectObjects(scene.children, true); // 'true' for recursive check
+
+if (intersects.length > 0) {
+    const intersectedObject = intersects[0].object;
+    console.log('Intersected object:', intersectedObject.name || intersectedObject.uuid);
+    // Perform actions, e.g., change color, display info, select object
+} else {
+    // No intersection
+}</code></pre>
+
+    <h2>Example: Hover and Click Interaction</h2>
+    <p>This example demonstrates how to change the color of a cube when you hover over it and log a message when you click it.</p>
+
+    <iframe srcdoc="
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset=\"utf-8\">
+            <title>Three.js Raycasting</title>
+            <style>
+                body { margin: 0; overflow: hidden; }
+                canvas { display: block; }
+            </style>
+        </head>
+        <body>
+            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
+            <script>
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                // Add a cube
+                const geometry = new THREE.BoxGeometry(1, 1, 1);
+                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+                const cube = new THREE.Mesh(geometry, material);
+                cube.name = 'myCube';
+                scene.add(cube);
+
+                camera.position.z = 5;
+
+                const raycaster = new THREE.Raycaster();
+                const mouse = new THREE.Vector2();
+                let intersectedObject = null;
+
+                function onMouseMove(event) {
+                    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                }
+
+                function onClick(event) {
+                    raycaster.setFromCamera(mouse, camera);
+                    const intersects = raycaster.intersectObjects(scene.children, true);
+
+                    if (intersects.length > 0) {
+                        if (intersects[0].object === cube) {
+                            alert('Cube clicked!');
+                        }
+                    }
+                }
+
+                window.addEventListener('mousemove', onMouseMove, false);
+                window.addEventListener('click', onClick, false);
+
+                function animate() {
+                    requestAnimationFrame(animate);
+
+                    raycaster.setFromCamera(mouse, camera);
+                    const intersects = raycaster.intersectObjects(scene.children, true);
+
+                    if (intersects.length > 0) {
+                        if (intersectedObject != intersects[0].object) {
+                            if (intersectedObject) {
+                                intersectedObject.material.color.set(0x00ff00); // Reset color
+                            }
+                            intersectedObject = intersects[0].object;
+                            intersectedObject.material.color.set(0xff0000); // Highlight red
+                        }
+                    } else {
+                        if (intersectedObject) {
+                            intersectedObject.material.color.set(0x00ff00); // Reset color
+                        }
+                        intersectedObject = null;
+                    }
+
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            </script>
+        </body>
+        </html>
+    " frameborder="0" width="100%" height="400px"></iframe>
+
+</body>
+</html>

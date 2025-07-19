@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using hooks: useFrame, useThree, useLoader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>React Three Fiber Hooks: <code>useFrame</code>, <code>useThree</code>, <code>useLoader</code></h1>
+    <p>React Three Fiber (R3F) provides several powerful hooks that allow you to interact with the Three.js scene and its lifecycle directly within your React components. These hooks simplify common tasks and integrate seamlessly with React's functional component paradigm.</p>
+
+    <h2><code>useFrame</code></h2>
+    <p>The <code>useFrame</code> hook allows you to execute code on every rendered frame. It's the primary way to create animations, update controls, or implement any logic that needs to run continuously as the scene renders. The callback function provided to <code>useFrame</code> receives the current state of the Three.js scene and a <code>delta</code> value (the time elapsed since the last frame), which is useful for creating frame-rate independent animations.</p>
+    <pre><code>import { useFrame } from '@react-three/fiber';
+
+function AnimatedBox() {
+  const meshRef = useRef();
+  useFrame((state, delta) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x += 0.01;
+      meshRef.current.rotation.y += 0.01;
+      // You can also use delta for frame-rate independent animation
+      // meshRef.current.rotation.z += delta * 2; 
+    }
+  });
+  return &lt;mesh ref={meshRef}&gt;...&lt;/mesh&gt;;
+}</code></pre>
+
+    <h2><code>useThree</code></h2>
+    <p>The <code>useThree</code> hook provides direct access to the core Three.js state model. This state includes essential elements like the default renderer (<code>gl</code>), the scene, the camera, the current size of the canvas, mouse coordinates, and more. It's reactive, meaning if you resize the browser, <code>useThree</code> will provide updated measurements. You can use <code>useThree</code> to dynamically modify the Three.js scene, camera, and renderer within your functional components.</p>
+    <pre><code>import { useThree } from '@react-three/fiber';
+
+function CameraLogger() {
+  const { camera, gl, scene } = useThree();
+  console.log('Camera:', camera);
+  console.log('Renderer:', gl);
+  console.log('Scene:', scene);
+  return null; // This component doesn't render anything visual
+}</code></pre>
+
+    <h2><code>useLoader</code></h2>
+    <p>The <code>useLoader</code> hook is used to load assets (like 3D models, textures, or fonts) and integrates with React's Suspense for easier fallback and error handling. It can take any Three.js loader (e.g., <code>GLTFLoader</code>, <code>OBJLoader</code>, <code>TextureLoader</code>) as its first argument and the URL of the asset as the second. Assets loaded with <code>useLoader</code> are cached by default, using their URLs as cache keys, which allows for efficient re-use of loaded data across your component tree.</p>
+    <pre><code>import { useLoader } from '@react-three/fiber';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
+function Model() {
+  const gltf = useLoader(GLTFLoader, 'path/to/your/model.gltf');
+  return &lt;primitive object={gltf.scene} /&gt;;
+}</code></pre>
+
+    <h2>Example: Combining Hooks</h2>
+    <p>This conceptual example shows how these hooks can be used together within an R3F application. Note that this requires a React environment to run.</p>
+
+    <pre><code>import React, { useRef, Suspense } from 'react';
+import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
+function SpinningBox() {
+  const meshRef = useRef();
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x += 0.01;
+      meshRef.current.rotation.y += 0.01;
+    }
+  });
+  return (
+    &lt;mesh ref={meshRef}&gt;
+      &lt;boxGeometry args={[1, 1, 1]} /&gt;
+      &lt;meshStandardMaterial color={'orange'} /&gt;
+    &lt;/mesh&gt;
+  );
+}
+
+function SceneContent() {
+  const { camera } = useThree();
+  // You can manipulate the camera here, for example
+  // camera.position.z = 5;
+
+  // Example of loading a model (replace with a valid path if you want to test)
+  // const gltf = useLoader(GLTFLoader, 'path/to/your/model.gltf');
+
+  return (
+    &lt;&gt;
+      &lt;ambientLight /&gt;
+      &lt;pointLight position={[10, 10, 10]} /&gt;
+      &lt;SpinningBox position={[-1.2, 0, 0]} /&gt;
+      &lt;SpinningBox position={[1.2, 0, 0]} /&gt;
+      {/* &lt;primitive object={gltf.scene} /&gt; */}
+    &lt;/&gt;
+  );
+}
+
+export default function App() {
+  return (
+    &lt;Canvas&gt;
+      &lt;Suspense fallback={null}&gt;
+        &lt;SceneContent /&gt;
+      &lt;/Suspense&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+</body>
+</html>

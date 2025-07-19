@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-processing: Bloom, FXAA, Depth of Field</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Post-processing in Three.js: Bloom, FXAA, and Depth of Field</h1>
+    <p>Post-processing refers to effects applied to an entire rendered image after the 3D scene has been drawn. Three.js offers robust post-processing capabilities to enhance visual realism and artistic effects, including Bloom, FXAA (Fast Approximate Anti-aliasing), and Depth of Field (DoF). These effects are typically managed using the <code>EffectComposer</code>.</p>
+
+    <h2>General Post-Processing Setup</h2>
+    <p>To apply post-processing effects in Three.js, you generally follow these steps:</p>
+    <ol>
+        <li><b>Initialize <code>EffectComposer</code>:</b> Instead of rendering directly to the <code>WebGLRenderer</code>, you render to an <code>EffectComposer</code>.</li>
+        <li><b>Add <code>RenderPass</code>:</b> The first pass added to the composer is usually a <code>RenderPass</code>, which renders your scene into the composer's internal render target.</li>
+        <li><b>Add Effect Passes:</b> Subsequent passes apply the desired visual effects (like Bloom, FXAA, DoF) by processing the output of the previous pass.</li>
+        <li><b>Add <code>OutputPass</code>:</b> Often, an <code>OutputPass</code> is added as the final pass to handle tone mapping and output the result to the screen.</li>
+        <li><b>Render with Composer:</b> In your animation loop, you call <code>composer.render()</code> instead of <code>renderer.render()</code>.</li>
+    </ol>
+    <p>You will need to import the necessary passes from <code>three/examples/jsm/postprocessing/</code>.</p>
+
+    <h2>Bloom (Unreal Bloom)</h2>
+    <p>The Bloom effect simulates the optical phenomenon where light from bright areas of an image appears to bleed into surrounding darker areas, creating a glowing effect.</p>
+    <ul>
+        <li><b>Implementation:</b> Use <code>UnrealBloomPass</code>.</li>
+        <li><b>Parameters:</b> Key parameters include <code>strength</code> (intensity of the bloom), <code>radius</code> (spread of the bloom), and <code>threshold</code> (luminance level above which pixels will bloom).</li>
+    </ul>
+
+    <h2>FXAA (Fast Approximate Anti-aliasing)</h2>
+    <p>FXAA is a post-processing anti-aliasing technique that smooths jagged edges in a rendered image. It's a relatively fast method suitable for real-time applications.</p>
+    <ul>
+        <li><b>Implementation:</b> Typically achieved using a <code>ShaderPass</code> with an FXAA shader.</li>
+        <li><b>Placement:</b> FXAA is generally applied towards the end of the post-processing chain, after other effects and color space conversions.</li>
+    </ul>
+
+    <h2>Depth of Field (DoF)</h2>
+    <p>Depth of Field simulates the focus of a camera lens, where objects at a certain distance are in sharp focus, while objects closer or further away appear blurred.</p>
+    <ul>
+        <li><b>Implementation:</b> Three.js provides examples for Depth of Field, often involving a <code>DepthOfFieldPass</code> or custom shaders that utilize depth information.</li>
+        <li><b>Parameters:</b> Common parameters include <code>focalLength</code>, <code>focalDepth</code>, <code>fstop</code>, and <code>maxblur</code>, which control the focus plane and the intensity of the blur.</li>
+    </ul>
+
+    <h2>Example: Basic Post-processing Setup (Conceptual)</h2>
+    <p>This example shows a conceptual setup for post-processing. To see the effects, you would typically add specific passes like <code>UnrealBloomPass</code>, <code>ShaderPass</code> (for FXAA), or <code>DepthOfFieldPass</code> to the composer.</p>
+
+    <pre><code>import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+// import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+// import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+// import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
+
+// Scene, Camera, Renderer setup (assuming these are already defined)
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Add a cube to the scene
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+
+camera.position.z = 5;
+
+// 1. Initialize EffectComposer
+const composer = new EffectComposer(renderer);
+
+// 2. Add RenderPass
+composer.addPass(new RenderPass(scene, camera));
+
+// 3. Add Effect Passes (uncomment and configure as needed)
+// const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+// composer.addPass(bloomPass);
+
+// const fxaaPass = new ShaderPass(FXAAShader);
+// fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( window.innerWidth * window.devicePixelRatio );
+// fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( window.innerHeight * window.devicePixelRatio );
+// composer.addPass(fxaaPass);
+
+// Animation loop
+function animate() {
+    requestAnimationFrame(animate);
+
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+
+    // Render with composer instead of renderer
+    composer.render();
+}
+animate();
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    composer.setSize(window.innerWidth, window.innerHeight);
+    // Update FXAA resolution if used
+    // if (fxaaPass) {
+    //     fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( window.innerWidth * window.devicePixelRatio );
+    //     fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( window.innerHeight * window.devicePixelRatio );
+    // }
+});
+</code></pre>
+
+</body>
+</html>

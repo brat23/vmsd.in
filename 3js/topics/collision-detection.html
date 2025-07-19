@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collision detection</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Collision Detection in Three.js</h1>
+    <p>Three.js itself does not have a built-in, comprehensive collision detection system that handles complex physics interactions. Instead, it provides tools that allow developers to implement collision detection using various techniques. The most common approaches involve bounding volumes, raycasting, and integrating dedicated physics engines.</p>
+
+    <h2>1. Bounding Volumes</h2>
+    <p>This is the most common and performant method for basic collision detection in Three.js. It involves approximating the 3D objects with simpler geometric shapes (bounding volumes) and checking for intersections between these simpler shapes.</p>
+    <ul>
+        <li><b>Bounding Boxes (<code>THREE.Box3</code>):</b> An axis-aligned bounding box (AABB) is a rectangular box that encloses an object. You can check for intersections between two <code>Box3</code> objects using methods like <code>intersectsBox()</code>. To create a bounding box for a <code>Mesh</code>, you can use <code>new THREE.Box3().setFromObject(mesh)</code>.</li>
+        <li><b>Bounding Spheres (<code>THREE.Sphere</code>):</b> A bounding sphere is a sphere that encloses an object. You can check for intersections between two <code>Sphere</code> objects.</li>
+    </ul>
+    <h3>How to use Bounding Volumes:</h3>
+    <ol>
+        <li>Create <code>THREE.Box3</code> or <code>THREE.Sphere</code> instances for the objects you want to check for collisions.</li>
+        <li>Update the bounding volumes' positions and sizes to match their corresponding 3D objects in each frame.</li>
+        <li>Use the <code>intersectsBox()</code> or <code>intersectsSphere()</code> methods to check for overlaps between the bounding volumes.</li>
+    </ol>
+
+    <h2>2. Raycasting (<code>THREE.Raycaster</code>)</h2>
+    <p>Raycasting involves casting a ray (a line with an origin and direction) into the scene and checking which objects it intersects. This is commonly used for mouse interaction/picking, line-of-sight checks, and simple collision detection by casting rays from an object's vertices in the direction of movement.</p>
+
+    <h2>3. Physics Engines</h2>
+    <p>For more realistic and complex collision detection, especially involving physics simulations like gravity, friction, and rigid body dynamics, it's highly recommended to integrate a dedicated JavaScript physics library. These libraries create a "physics world" where simplified representations of your Three.js objects interact, and then update the positions and rotations of your Three.js meshes based on the physics simulation.</p>
+    <h3>Popular physics libraries for Three.js include:</h3>
+    <ul>
+        <li><b>Ammo.js:</b> A powerful 3D physics engine, a direct port of the Bullet physics engine.</li>
+        <li><b>Cannon.js:</b> A lightweight 3D physics engine.</li>
+        <li><b>Physijs:</b> A Three.js plugin that provides an easy way to integrate physics using Ammo.js under the hood.</li>
+        <li><b>Oimo.js:</b> Another lightweight 3D physics engine.</li>
+        <li><b>Rapier:</b> A fast, cross-platform physics engine.</li>
+    </ul>
+
+    <h2>Example: Bounding Box Collision Detection (Conceptual)</h2>
+    <p>This example demonstrates a conceptual approach to checking for collisions between two cubes using bounding boxes. Note that this requires a Three.js setup.</p>
+
+    <pre><code>import * as THREE from 'three';
+
+// Scene, Camera, Renderer setup (assuming these are already defined)
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Create two cubes
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material1 = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const material2 = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+
+const cube1 = new THREE.Mesh(geometry, material1);
+cube1.position.set(-1, 0, 0);
+scene.add(cube1);
+
+const cube2 = new THREE.Mesh(geometry, material2);
+cube2.position.set(1, 0, 0);
+scene.add(cube2);
+
+camera.position.z = 5;
+
+// Create bounding boxes for the cubes
+const bbox1 = new THREE.Box3();
+const bbox2 = new THREE.Box3();
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    // Move cube1 to demonstrate collision
+    cube1.position.x = Math.sin(Date.now() * 0.001) * 2;
+
+    // Update bounding boxes to current object positions
+    bbox1.setFromObject(cube1);
+    bbox2.setFromObject(cube2);
+
+    // Check for collision
+    if (bbox1.intersectsBox(bbox2)) {
+        cube1.material.color.set(0xffa500); // Change color on collision
+        cube2.material.color.set(0xffa500);
+    } else {
+        cube1.material.color.set(0xff0000); // Reset color
+        cube2.material.color.set(0x0000ff);
+    }
+
+    renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</code></pre>
+
+</body>
+</html>

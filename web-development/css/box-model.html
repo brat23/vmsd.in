@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Model</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="article-page">
+    <div class="bg-animation"></div>
+    <div class="particles"></div>
+    <div class="progress-bar"></div>
+
+    <header>
+        <nav>
+            <div class="logo">VMSD.in</div>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#frontend">Frontend</a></li>
+                <li><a href="../index.html#backend">Backend</a></li>
+                <li><a href="../index.html#deployment">Deployment</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="section-content">
+                <h2>Box Model</h2>
+                <p class="subtitle">The CSS box model is a fundamental concept that describes how elements are rendered on a webpage. This article covers the different parts of the box model and how they work together to create the layout of a page.</p>
+                
+                <h3>Content, Padding, Border, and Margin</h3>
+                <p>The box model is composed of four parts: the <span class="highlight">content</span>, <span class="highlight">padding</span>, <span class="highlight">border</span>, and <span class="highlight">margin</span>. The content is the actual content of the element, such as text or an image. The padding is the space between the content and the border. The border is a line that goes around the padding and content. The margin is the space between the border and other elements on the page.</p>
+
+                <h4>Example: Box Model Properties</h4>
+                <pre><code>.box {
+  width: 100px;
+  height: 100px;
+  padding: 20px;
+  border: 5px solid black;
+  margin: 10px;
+}</code></pre>
+                
+                <h3>Box-Sizing</h3>
+                <p>The <span class="highlight">"box-sizing"</span> property allows you to change how the box model is calculated. By default, the width and height of an element are calculated based on the content, padding, and border. The "box-sizing" property can be used to change this so that the width and height are calculated based on the content only. This can be useful for creating more predictable layouts.</p>
+
+                <h4>Example: box-sizing: border-box</h4>
+                <pre><code>.box-sizing-example {
+  box-sizing: border-box;
+  width: 100px;
+  padding: 20px;
+  border: 5px solid red;
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VMSD.in</h3>
+                    <p>Empowering developers worldwide with comprehensive full-stack education. Join our community and transform your career in tech.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="../index.html#home">Home</a></p>
+                    <p><a href="../index.html#frontend">Frontend</a></p>
+                    <p><a href="../index.html#backend">Backend</a></p>
+                    <p><a href="../index.html#deployment">Deployment</a></p>
+                    <p><a href="../index.html#contact">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Technologies</h3>
+                    <p>HTML, CSS, JavaScript</p>
+                    <p>Python, Node.js</p>
+                    <p>Databases & Cloud</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <p><a href="#">Discord Community</a></p>
+                    <p><a href="#">GitHub</a></p>
+                    <p><a href="#">LinkedIn</a></p>
+                    <p><a href="#">Twitter</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 VMSD.in. All rights reserved. Built with passion for developers.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="../script.js"></script>
+
+</body>
+</html>

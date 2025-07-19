@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&lt;mesh&gt;, &lt;boxGeometry&gt;, &lt;meshStandardMaterial&gt;</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1><code>&lt;mesh&gt;</code>, <code>&lt;boxGeometry&gt;</code>, and <code>&lt;meshStandardMaterial&gt;</code> in React Three Fiber</h1>
+    <p>In React Three Fiber (R3F), you define your 3D scene using JSX, which then gets translated into Three.js objects. The core components for creating a visible 3D object are <code>&lt;mesh&gt;</code>, a geometry component (like <code>&lt;boxGeometry&gt;</code>), and a material component (like <code>&lt;meshStandardMaterial&gt;</code>).</p>
+
+    <h2><code>&lt;mesh&gt;</code></h2>
+    <p>The <code>&lt;mesh&gt;</code> component is the fundamental building block for displaying 3D objects in R3F. It acts as a container for a geometry and a material. In Three.js terms, it creates a <code>THREE.Mesh</code> object.</p>
+    <pre><code>&lt;mesh&gt;
+  &lt;!-- Geometry goes here --&gt;
+  &lt;!-- Material goes here --&gt;
+&lt;/mesh&gt;</code></pre>
+
+    <h2><code>&lt;boxGeometry&gt;</code></h2>
+    <p><code>&lt;boxGeometry&gt;</code> is an R3F component that represents a <code>THREE.BoxGeometry</code>. It defines the shape of a cube or cuboid. You pass arguments to its constructor using the <code>args</code> prop.</p>
+    <ul>
+        <li><code>args={[width, height, depth]}</code>: Defines the dimensions of the box.</li>
+    </ul>
+    <pre><code>&lt;boxGeometry args={[1, 1, 1]} /&gt; &lt;!-- Creates a 1x1x1 unit cube --&gt;</code></pre>
+
+    <h2><code>&lt;meshStandardMaterial&gt;</code></h2>
+    <p><code>&lt;meshStandardMaterial&gt;</code> is an R3F component that represents a <code>THREE.MeshStandardMaterial</code>. This is a physically based rendering (PBR) material, meaning it accurately simulates how light interacts with surfaces, resulting in more realistic visuals. It requires lights in the scene to be visible.</p>
+    <ul>
+        <li><code>color</code>: Sets the base color of the material (e.g., <code>"hotpink"</code>, <code>"#ff00ff"</code>, or a hexadecimal number like <code>0xff00ff</code>).</li>
+        <li><code>roughness</code>: (0.0 to 1.0) How rough the surface is. Lower values make the surface shinier.</li>
+        <li><code>metalness</code>: (0.0 to 1.0) How metallic the surface is.</li>
+    </ul>
+    <pre><code>&lt;meshStandardMaterial color="hotpink" roughness={0.5} metalness={0.1} /&gt;</code></pre>
+
+    <h2>Example: A Basic Box in R3F</h2>
+    <p>This example shows how to create a simple 3D box using these components within a React Three Fiber <code>&lt;Canvas&gt;</code>. Remember that this code needs to be run within a React project setup with R3F installed.</p>
+
+    <pre><code>import React from 'react';
+import { Canvas } from '@react-three/fiber';
+
+function MyBox() {
+  return (
+    &lt;mesh&gt;
+      &lt;boxGeometry args={[1, 1, 1]} /&gt;
+      &lt;meshStandardMaterial color="hotpink" /&gt;
+    &lt;/mesh&gt;
+  );
+}
+
+export default function App() {
+  return (
+    &lt;Canvas&gt;
+      &lt;ambientLight intensity={0.5} /&gt;
+      &lt;pointLight position={[10, 10, 10]} /&gt;
+      &lt;MyBox /&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+</body>
+</html>

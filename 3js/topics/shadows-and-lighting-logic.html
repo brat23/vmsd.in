@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadows and lighting logic</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Shadows and Lighting Logic in Three.js</h1>
+    <p>Shadows add a crucial layer of realism to 3D scenes by providing depth cues and grounding objects within their environment. Three.js implements shadows using a technique called <b>shadow mapping</b>.</p>
+
+    <h2>Enabling Shadows</h2>
+    <p>To enable shadows in your Three.js scene, you need to configure three main components:</p>
+    <ol>
+        <li><b>Renderer:</b> You must enable shadow maps on the WebGLRenderer.</li>
+        <li><b>Light Source:</b> Only certain light types can cast shadows. You need to explicitly enable shadow casting for these lights.</li>
+        <li><b>Objects:</b> Objects that should cast shadows need to have <code>castShadow</code> set to <code>true</code>, and objects that should receive shadows need to have <code>receiveShadow</code> set to <code>true</code>.</li>
+    </ol>
+
+    <h3>1. Enable Shadows on the Renderer</h3>
+    <pre><code>renderer.shadowMap.enabled = true;</code></pre>
+
+    <h3>2. Configure the Light Source</h3>
+    <p>Only <code>DirectionalLight</code>, <code>PointLight</code>, and <code>SpotLight</code> can cast shadows. For your chosen light, set:</p>
+    <pre><code>light.castShadow = true;</code></pre>
+    <p>You can also adjust properties of the light's shadow camera to control the quality and extent of the shadows:</p>
+    <ul>
+        <li><code>light.shadow.mapSize.width</code> and <code>light.shadow.mapSize.height</code>: Define the resolution of the shadow map. Higher values mean better quality but more performance cost.</li>
+        <li><code>light.shadow.camera.near</code> and <code>light.shadow.camera.far</code>: Define the frustum of the light's camera, similar to a regular camera.</li>
+        <li><code>light.shadow.bias</code> and <code>light.shadow.normalBias</code>: Small adjustments to help reduce shadow artifacts like "shadow acne."</li>
+    </ul>
+
+    <h3>3. Configure Objects</h3>
+    <p>For each <code>Mesh</code> object in your scene:</p>
+    <pre><code>mesh.castShadow = true;   // If this object should cast a shadow
+mesh.receiveShadow = true; // If this object should receive shadows</code></pre>
+
+    <h2>Shadow Map Types</h2>
+    <p>Three.js offers different shadow map types, which affect the quality and performance of shadows:</p>
+    <ul>
+        <li><code>THREE.BasicShadowMap</code>: Fastest, but lowest quality (hard edges).</li>
+        <li><code>THREE.PCFShadowMap</code>: (Default) Uses Percentage-Closer Filtering for smoother shadows.</li>
+        <li><code>THREE.PCFSoftShadowMap</code>: Provides even softer shadows with PCF.</li>
+        <li><code>THREE.VSMShadowMap</code>: Uses Variance Shadow Map algorithm.</li>
+    </ul>
+    <pre><code>renderer.shadowMap.type = THREE.PCFSoftShadowMap;</code></pre>
+
+    <h2>Example: Shadows in Action</h2>
+    <p>This example demonstrates a simple scene with a sphere casting a shadow onto a plane, illuminated by a <code>DirectionalLight</code>.</p>
+
+    <iframe srcdoc="
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset=\"utf-8\">
+            <title>Three.js Shadows</title>
+            <style>
+                body { margin: 0; overflow: hidden; }
+                canvas { display: block; }
+            </style>
+        </head>
+        <body>
+            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
+            <script>
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                renderer.shadowMap.enabled = true;
+                renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+
+                // Add a sphere (caster and receiver)
+                const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
+                const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+                const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                sphere.position.y = 1;
+                sphere.castShadow = true; // Sphere will cast a shadow
+                scene.add(sphere);
+
+                // Add a plane (receiver)
+                const planeGeometry = new THREE.PlaneGeometry(10, 10);
+                const planeMaterial = new THREE.MeshStandardMaterial({ color: 0x888888, side: THREE.DoubleSide });
+                const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+                plane.rotation.x = -Math.PI / 2;
+                plane.position.y = -0.5;
+                plane.receiveShadow = true; // Plane will receive shadows
+                scene.add(plane);
+
+                // Add a directional light (caster)
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+                directionalLight.position.set(5, 10, 7.5);
+                directionalLight.castShadow = true; // Light will cast shadows
+                scene.add(directionalLight);
+
+                // Set up shadow properties for the light
+                directionalLight.shadow.mapSize.width = 1024;
+                directionalLight.shadow.mapSize.height = 1024;
+                directionalLight.shadow.camera.near = 0.5;
+                directionalLight.shadow.camera.far = 50;
+                directionalLight.shadow.camera.left = -5;
+                directionalLight.shadow.camera.right = 5;
+                directionalLight.shadow.camera.top = 5;
+                directionalLight.shadow.camera.bottom = -5;
+
+                // Add ambient light for overall scene illumination
+                const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
+                scene.add(ambientLight);
+
+                camera.position.set(0, 2, 5);
+                camera.lookAt(0, 0, 0);
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    sphere.rotation.y += 0.005;
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            </script>
+        </body>
+        </html>
+    " frameborder="0" width="100%" height="400px"></iframe>
+
+</body>
+</html>

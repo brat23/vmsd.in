@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Texture loading and mapping</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Texture Loading and Mapping in Three.js</h1>
+    <p>Loading and mapping textures like diffuse, bump, and normal maps is crucial for adding visual detail and realism to 3D objects in Three.js. This process primarily involves using the <code>THREE.TextureLoader</code> to load image files and then assigning these loaded textures to specific properties of a material, most commonly <code>THREE.MeshStandardMaterial</code> for physically based rendering (PBR).</p>
+
+    <h2>1. Texture Loading</h2>
+    <p>To load any texture in Three.js, you use the <code>THREE.TextureLoader</code> class. This loader handles the asynchronous loading of image files and provides a <code>Texture</code> object that can be applied to materials.</p>
+    <pre><code>import * as THREE from 'three';
+
+const loader = new THREE.TextureLoader();
+
+// Load a texture with an optional callback for when it's loaded
+const diffuseTexture = loader.load(
+    'path/to/your/diffuse_map.jpg',
+    function (texture) {
+        console.log('Diffuse texture loaded:', texture);
+    },
+    undefined, // onProgress callback (not supported by TextureLoader)
+    function (err) {
+        console.error('An error occurred loading the diffuse texture:', err);
+    }
+);
+</code></pre>
+
+    <h2>2. Diffuse Map (Color Map)</h2>
+    <p>The diffuse map, often referred to as the color map or albedo map, defines the base color of the material. It's the most fundamental texture and is assigned to the <code>map</code> property of a material.</p>
+    <pre><code>const material = new THREE.MeshStandardMaterial({
+    map: diffuseTexture, // Assign the loaded diffuse texture to the 'map' property
+});</code></pre>
+
+    <h2>3. Bump Map</h2>
+    <p>A bump map is a grayscale image that creates the illusion of surface irregularities and depth by altering the perceived lighting across the surface. It does not, however, modify the actual geometry of the object.</p>
+    <pre><code>const bumpTexture = loader.load('path/to/your/bump_map.jpg');
+
+const material = new THREE.MeshStandardMaterial({
+    map: diffuseTexture,
+    bumpMap: bumpTexture, // Assign the loaded bump texture
+    bumpScale: 0.5,      // Adjust the intensity of the bump effect (default is 1)
+});</code></pre>
+
+    <h2>4. Normal Map</h2>
+    <p>A normal map is an RGB image that provides more detailed and accurate surface normal information than a bump map. The red, green, and blue channels of the normal map correspond to the X, Y, and Z components of the surface normal, respectively. Like bump maps, normal maps simulate depth and detail without increasing the polygon count of the geometry.</p>
+    <pre><code>const normalTexture = loader.load('path/to/your/normal_map.jpg');
+
+const material = new THREE.MeshStandardMaterial({
+    map: diffuseTexture,
+    normalMap: normalTexture, // Assign the loaded normal texture
+    normalScale: new THREE.Vector2(1, 1), // Adjust the intensity of the normal map effect
+});</code></pre>
+
+    <h2>Example: Applying Textures</h2>
+    <p>This example demonstrates how to load and apply a diffuse texture to a cube. For bump and normal maps, you would follow a similar loading process and assign them to their respective material properties.</p>
+
+    <iframe srcdoc="
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset=\"utf-8\">
+            <title>Three.js Textures</title>
+            <style>
+                body { margin: 0; overflow: hidden; }
+                canvas { display: block; }
+            </style>
+        </head>
+        <body>
+            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
+            <script>
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                // Add a light source for MeshStandardMaterial
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                scene.add(ambientLight);
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+                directionalLight.position.set(1, 1, 1);
+                scene.add(directionalLight);
+
+                // Load a texture (replace with your image path)
+                const textureLoader = new THREE.TextureLoader();
+                const texture = textureLoader.load('https://threejs.org/examples/textures/uv_grid_opengl.jpg'); // Example texture
+
+                const geometry = new THREE.BoxGeometry(1, 1, 1);
+                const material = new THREE.MeshStandardMaterial({ map: texture });
+                const cube = new THREE.Mesh(geometry, material);
+                scene.add(cube);
+
+                camera.position.z = 3;
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    cube.rotation.x += 0.01;
+                    cube.rotation.y += 0.01;
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            </script>
+        </body>
+        </html>
+    " frameborder="0" width="100%" height="400px"></iframe>
+
+</body>
+</html>

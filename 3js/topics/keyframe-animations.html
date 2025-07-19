@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyframe animations</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Keyframe Animations in Three.js</h1>
+    <p>Three.js provides a comprehensive animation system that uses keyframes to define how properties of objects change over time. This system allows for animating various aspects of an object, including position, scale, rotation, material properties (like color or opacity), bones of a skinned mesh, and morph targets.</p>
+
+    <h2>Core Components of Keyframe Animations:</h2>
+    <ul>
+        <li><b>Keyframes:</b> These are the fundamental building blocks. Each keyframe specifies a value for a particular property at a specific time.</li>
+        <li><b><code>KeyframeTrack</code>:</b> A <code>KeyframeTrack</code> is a timed sequence of keyframes that animates a specific property of an object. Three.js offers various subclasses for different data types (e.g., <code>VectorKeyframeTrack</code> for positions, <code>QuaternionKeyframeTrack</code> for rotations).</li>
+        <li><b><code>AnimationClip</code>:</b> An <code>AnimationClip</code> is a reusable collection of one or more <code>KeyframeTrack</code>s. It represents a complete animation sequence (e.g., a "walk" animation).</li>
+        <li><b><code>AnimationMixer</code>:</b> The <code>AnimationMixer</code> is responsible for playing animations on a specific object in the scene. You typically create one <code>AnimationMixer</code> per animated object.</li>
+        <li><b><code>AnimationAction</code>:</b> An <code>AnimationAction</code> schedules and controls the performance of an <code>AnimationClip</code> on an <code>AnimationMixer</code>. It provides controls for playing, pausing, looping, and adjusting the speed of an animation.</li>
+    </ul>
+
+    <h2>Workflow for Keyframe Animations:</h2>
+    <ol>
+        <li><b>Define Keyframes:</b> Create <code>KeyframeTrack</code>s by specifying time and value arrays for the properties you want to animate.</li>
+        <li><b>Create <code>AnimationClip</code>:</b> Combine one or more <code>KeyframeTrack</code>s into an <code>AnimationClip</code>.</li>
+        <li><b>Instantiate <code>AnimationMixer</code>:</b> Create an <code>AnimationMixer</code> instance, associating it with the object you want to animate.</li>
+        <li><b>Create <code>AnimationAction</code>:</b> Get an <code>AnimationAction</code> from the <code>AnimationMixer</code> using your <code>AnimationClip</code>.</li>
+        <li><b>Control Animation:</b> Use the <code>AnimationAction</code> to play, pause, loop, or blend the animation.</li>
+        <li><b>Update Mixer:</b> In your animation loop (e.g., <code>requestAnimationFrame</code>), update the <code>AnimationMixer</code> with the elapsed time (<code>deltaTime</code>) to advance the animation.</li>
+    </ol>
+
+    <h2>Example: Simple Keyframe Animation (Conceptual)</h2>
+    <p>This example demonstrates a basic keyframe animation where a cube moves along the X-axis. Note that this requires a Three.js setup.</p>
+
+    <pre><code>import * as THREE from 'three';
+
+// Scene, Camera, Renderer setup (assuming these are already defined)
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Create a cube
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+
+camera.position.z = 5;
+
+// 1. Create a KeyframeTrack for position
+const times = [0, 2, 4]; // Keyframe times in seconds
+const values = [
+    0, 0, 0, // Position at time 0 (x, y, z)
+    2, 0, 0, // Position at time 2
+    0, 0, 0  // Position at time 4
+];
+const positionTrack = new THREE.VectorKeyframeTrack('cube.position', times, values);
+
+// 2. Create an AnimationClip
+const duration = 4; // Total duration of the animation
+const clip = new THREE.AnimationClip('CubeMovement', duration, [positionTrack]);
+
+// 3. Create an AnimationMixer
+const mixer = new THREE.AnimationMixer(cube);
+
+// 4. Create an AnimationAction
+const action = mixer.clipAction(clip);
+
+// 5. Play the animation
+action.play();
+
+const clock = new THREE.Clock();
+
+// Animation loop
+function animate() {
+    requestAnimationFrame(animate);
+
+    const delta = clock.getDelta();
+    mixer.update(delta); // Update the mixer with elapsed time
+
+    renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</code></pre>
+
+</body>
+</html>

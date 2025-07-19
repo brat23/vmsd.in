@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handling animations (useAnimations)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Handling Animations with <code>useAnimations</code> in React Three Fiber</h1>
+    <p>When working with 3D models that include animations (like those often found in glTF/GLB files), React Three Fiber, in conjunction with <code>@react-three/drei</code>, provides the <code>useAnimations</code> hook to simplify their playback and control.</p>
+
+    <h2>What is <code>useAnimations</code>?</h2>
+    <p>The <code>useAnimations</code> hook from <code>@react-three/drei</code> is designed to streamline the process of managing and playing animation clips associated with a 3D model. It abstracts away much of the boilerplate code typically required for Three.js animation mixers and actions.</p>
+
+    <h2>How to Use <code>useAnimations</code></h2>
+    <p>The typical workflow involves:</p>
+    <ol>
+        <li><b>Load your 3D model:</b> You'll usually load a glTF/GLB model using <code>useGLTF</code> (also from <code>@react-three/drei</code>). This hook provides the <code>animations</code> array from your model.</li>
+        <li><b>Pass animations to <code>useAnimations</code>:</b> You pass the <code>animations</code> array and a <code>ref</code> to the mesh or group that contains the animated model to <code>useAnimations</code>.</li>
+        <li><b>Control animation actions:</b> The hook returns an object with <code>actions</code> (an object mapping animation clip names to <code>THREE.AnimationAction</code> instances) and <code>mixer</code> (the <code>THREE.AnimationMixer</code> instance). You can then use methods like <code>actions[clipName].play()</code>, <code>actions[clipName].stop()</code>, <code>actions[clipName].setWeight()</code>, etc., to control the animations.</li>
+    </ol>
+
+    <h2>Example: Playing a Model Animation</h2>
+    <p>This example demonstrates how to load a glTF model with animations and play a specific animation clip using <code>useAnimations</code>. Note that this requires a React environment to run and a <code>.glb</code> model with embedded animations.</p>
+
+    <pre><code>import React, { useEffect, useRef, Suspense } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { useGLTF, useAnimations, OrbitControls } from '@react-three/drei';
+
+function AnimatedModel(props) {
+  const group = useRef();
+  // Load the glTF model and its animations
+  const { scene, animations } = useGLTF(props.url);
+  // Get animation actions and mixer
+  const { actions } = useAnimations(animations, group);
+
+  useEffect(() => {
+    // Play a specific animation when the component mounts
+    // Replace 'YourAnimationName' with the actual name of an animation clip in your model
+    // You can inspect your glTF model in a viewer to find animation clip names.
+    const animationName = 'Idle'; // Common animation name, replace if needed
+    if (actions[animationName]) {
+      actions[animationName].play();
+    }
+
+    // Optional: Clean up animation when component unmounts
+    return () => {
+      if (actions[animationName]) {
+        actions[animationName].stop();
+      }
+    };
+  }, [actions]); // Re-run effect if actions change
+
+  return (
+    &lt;group ref={group} {...props} dispose={null}&gt;
+      &lt;primitive object={scene} /&gt;
+    &lt;/group&gt;
+  );
+}
+
+export default function App() {
+  return (
+    &lt;Canvas camera={{ position: [0, 1, 3] }}&gt;
+      &lt;ambientLight intensity={0.5} /&gt;
+      &lt;pointLight position={[10, 10, 10]} /&gt;
+      &lt;Suspense fallback={null}&gt;
+        &lt;AnimatedModel url="/path/to/your_animated_model.glb" /&gt; &lt;!-- Replace with your model path --&gt;
+      &lt;/Suspense&gt;
+      &lt;OrbitControls /&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+    <h3>Key Points:</h3>
+    <ul>
+        <li><b><code>group</code> ref:</b> The <code>useAnimations</code> hook needs a <code>ref</code> to the <code>THREE.Object3D</code> (usually a <code>&lt;group&gt;</code> or the <code>&lt;primitive&gt;</code> itself) that contains the animated mesh.</li>
+        <li><b><code>animations</code> array:</b> This comes directly from the <code>useGLTF</code> hook.</li>
+        <li><b><code>actions</code> object:</b> This is the most important part. It's a dictionary where keys are the names of your animation clips (as defined in your 3D software) and values are <code>THREE.AnimationAction</code> instances.</li>
+        <li><b><code>useEffect</code>:</b> You'll typically use <code>useEffect</code> to trigger animation playback when the component mounts or when certain props/state change.</li>
+        <li><b><code>useFrame</code> (optional):</b> For more complex animation logic or updates per frame, you might use <code>useFrame</code> to interact with the <code>mixer</code> directly, though <code>useAnimations</code> handles the basic mixer updates for you.</li>
+    </ul>
+
+</body>
+</html>

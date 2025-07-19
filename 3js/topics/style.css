@@ -1,0 +1,29 @@
+:root {
+    --primary-color: #ff0055;
+    --secondary-color: #00ff88;
+    --background-color: #121212;
+    --text-color: #ffffff;
+    --card-color: #1e1e1e;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 2rem;
+}
+
+a.topic-link {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+a.topic-link:hover {
+    color: var(--secondary-color);
+}
+
+h1 {
+    color: var(--primary-color);
+}

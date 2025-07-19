@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Mastery Hub</title>
+    <style>
+        :root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ff88;
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --card-color: #1e1e1e;
+            --hover-glow: rgba(255, 0, 85, 0.2);
+            --secondary-glow: rgba(0, 255, 136, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, var(--primary-color) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--secondary-color) 0%, transparent 50%);
+            opacity: 0.05;
+            z-index: -1;
+            animation: backgroundPulse 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes backgroundPulse {
+            0% { opacity: 0.03; }
+            100% { opacity: 0.08; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 20px rgba(255, 0, 85, 0.5)); }
+            100% { filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.5)); }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 0.8;
+                transform: translateY(0);
+            }
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .module-card {
+            background: var(--card-color);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, var(--hover-glow), transparent);
+            transition: transform 0.6s;
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        .module-card:hover::before {
+            transform: translateX(0) translateY(0) rotate(45deg);
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 
+                0 20px 60px rgba(255, 0, 85, 0.2),
+                0 0 40px rgba(255, 0, 85, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .module-icon {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        .module-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .module-description {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .subtopics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .subtopic-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+            color: var(--text-color);
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subtopic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .subtopic-card:hover::before {
+            left: 100%;
+        }
+
+        .subtopic-card:hover {
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateX(5px);
+            border-color: var(--secondary-color);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .subtopic-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .module-card {
+                padding: 1.5rem;
+            }
+            
+            .subtopics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            header {
+                padding: 2rem 0;
+            }
+        }
+
+        /* Loading animation */
+        .module-card {
+            animation: slideInUp 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .module-card:nth-child(1) { animation-delay: 0.1s; }
+        .module-card:nth-child(2) { animation-delay: 0.2s; }
+        .module-card:nth-child(3) { animation-delay: 0.3s; }
+        .module-card:nth-child(4) { animation-delay: 0.4s; }
+        .module-card:nth-child(5) { animation-delay: 0.5s; }
+        .module-card:nth-child(6) { animation-delay: 0.6s; }
+        .module-card:nth-child(7) { animation-delay: 0.7s; }
+
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 0;
+            opacity: 0.6;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--background-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="hero-title">Finance Mastery Hub</h1>
+            <p class="subtitle">Master the Art of Financial Intelligence with Interactive Learning Modules</p>
+        </header>
+
+        <main class="modules-grid">
+            <!-- Personal Finance Module -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">💰</div>
+                    <h2 class="module-title">Personal Finance</h2>
+                </div>
+                <p class="module-description">Master individual financial management, planning, and security for a prosperous future.</p>
+                <div class="subtopics-grid">
+                    <a href="#budgeting" class="subtopic-card">
+                        <span class="subtopic-text">Budgeting and Saving</span>
+                    </a>
+                    <a href="#emergency-funds" class="subtopic-card">
+                        <span class="subtopic-text">Emergency Funds</span>
+                    </a>
+                    <a href="#debt-management" class="subtopic-card">
+                        <span class="subtopic-text">Debt Management</span>
+                    </a>
+                    <a href="#insurance" class="subtopic-card">
+                        <span class="subtopic-text">Insurance Planning</span>
+                    </a>
+                    <a href="#retirement" class="subtopic-card">
+                        <span class="subtopic-text">Retirement Planning</span>
+                    </a>
+                    <a href="#tax-planning" class="subtopic-card">
+                        <span class="subtopic-text">Tax Planning</span>
+                    </a>
+                    <a href="#investment-basics" class="subtopic-card">
+                        <span class="subtopic-text">Investment Basics</span>
+                    </a>
+                    <a href="#risk-management" class="subtopic-card">
+                        <span class="subtopic-text">Personal Risk Management</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Financial Markets Module -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">📈</div>
+                    <h2 class="module-title">Financial Markets & Instruments</h2>
+                </div>
+                <p class="module-description">Understand how markets operate and explore the diverse range of financial instruments available.</p>
+                <div class="subtopics-grid">
+                    <a href="#equity" class="subtopic-card">
+                        <span class="subtopic-text">Equity Markets</span>
+                    </a>
+                    <a href="#debt" class="subtopic-card">
+                        <span class="subtopic-text">Debt Instruments</span>
+                    </a>
+                    <a href="#derivatives" class="subtopic-card">
+                        <span class="subtopic-text">Derivatives</span>
+                    </a>
+                    <a href="#commodities" class="subtopic-card">
+                        <span class="subtopic-text">Commodities</span>
+                    </a>
+                    <a href="#forex-crypto" class="subtopic-card">
+                        <span class="subtopic-text">Forex & Crypto</span>
+                    </a>
+                    <a href="#mutual-funds" class="subtopic-card">
+                        <span class="subtopic-text">Mutual Funds & ETFs</span>
+                    </a>
+                    <a href="#market-participants" class="subtopic-card">
+                        <span class="subtopic-text">Market Participants</span>
+                    </a>
+                    <a href="#regulators" class="subtopic-card">
+                        <span class="subtopic-text">Market Regulators</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Fundamental Analysis Module -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">🔍</div>
+                    <h2 class="module-title">Fundamental Analysis</h2>
+                </div>
+                <p class="module-description">Analyze the intrinsic value and financial health of companies and economic environments.</p>
+                <div class="subtopics-grid">
+                    <a href="#macroeconomics" class="subtopic-card">
+                        <span class="subtopic-text">Macroeconomics</span>
+                    </a>
+                    <a href="#microeconomics" class="subtopic-card">
+                        <span class="subtopic-text">Microeconomics</span>
+                    </a>
+                    <a href="#financial-statements" class="subtopic-card">
+                        <span class="subtopic-text">Financial Statements</span>
+                    </a>
+                    <a href="#ratio-analysis" class="subtopic-card">
+                        <span class="subtopic-text">Ratio Analysis</span>
+                    </a>
+                    <a href="#valuation" class="subtopic-card">
+                        <span class="subtopic-text">Valuation Models</span>
+                    </a>
+                    <a href="#sector-analysis" class="subtopic-card">
+                        <span class="subtopic-text">Sector Analysis</span>
+                    </a>
+                    <a href="#management-moat" class="subtopic-card">
+                        <span class="subtopic-text">Management & Moat</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Technical Analysis Module -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">📊</div>
+                    <h2 class="module-title">Technical Analysis</h2>
+                </div>
+                <p class="module-description">Master chart patterns, indicators, and price action to predict market movements.</p>
+                <div class="subtopics-grid">
+                    <a href="#chart-types" class="subtopic-card">
+                        <span class="subtopic-text">Chart Types</span>
+                    </a>
+                    <a href="#dow-theory" class="subtopic-card">
+                        <span class="subtopic-text">Dow Theory</span>
+                    </a>
+                    <a href="#price-action" class="subtopic-card">
+                        <span class="subtopic-text">Price Action</span>
+                    </a>
+                    <a href="#scientific-method" class="subtopic-card">
+                        <span class="subtopic-text">Scientific Method</span>
+                    </a>
+                    <a href="#support-resistance" class="subtopic-card">
+                        <span class="subtopic-text">Support & Resistance</span>
+                    </a>
+                    <a href="#trendlines" class="subtopic-card">
+                        <span class="subtopic-text">Trendlines & Channels</span>
+                    </a>
+                    <a href="#indicators" class="subtopic-card">
+                        <span class="subtopic-text">Technical Indicators</span>
+                    </a>
+                    <a href="#chart-patterns" class="subtopic-card">
+                        <span class="subtopic-text">Chart Patterns</span>
+                    </a>
+                    <a href="#volume-analysis" class="subtopic-card">
+                        <span class="subtopic-text">Volume Analysis</span>
+                    </a>
+                    <a href="#trading-psychology" class="subtopic-card">
+                        <span class="subtopic-text">Trading Psychology</span>
+                    </a>
+                    <a href="#risk-position" class="subtopic-card">
+                        <span class="subtopic-text">Risk & Position Sizing</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Corporate Finance Module -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">🏢</div>
+                    <h2 class="module-title">Corporate Finance</h2>
+                </div>
+                <p class="module-description">Understand how businesses make strategic financial decisions and optimize capital structure.</p>
+                <div class="subtopics-grid">
+                    <a href="#time-value" class="subtopic-card">
+                        <span class="subtopic-text">Time Value of Money</span>
+                    </a>
+                    <a href="#capital-budgeting" class="subtopic-card">
+                        <span class="subtopic-text">Capital Budgeting</span>
+                    </a>
+                    <a href="#capital-structure" class="subtopic-card">
+                        <span class="subtopic-text">Capital Structure</span>
+                    </a>
+                    <a href="#working-capital" class="subtopic-card">
+                        <span class="subtopic-text">Working Capital</span>
+                    </a>
+                    <a href="#dividend-policy" class="subtopic-card">
+                        <span class="subtopic-text">Dividend Policy</span>
+                    </a>
+                    <a href="#ma" class="subtopic-card">
+                        <span class="subtopic-text">M&A</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Behavioral Finance Module -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">🧠</div>
+                    <h2 class="module-title">Behavioral Finance</h2>
+                </div>
+                <p class="module-description">Explore the psychological factors that influence financial decisions and market behavior.</p>
+                <div class="subtopics-grid">
+                    <a href="#cognitive-biases" class="subtopic-card">
+                        <span class="subtopic-text">Cognitive Biases</span>
+                    </a>
+                    <a href="#emotional-investing" class="subtopic-card">
+                        <span class="subtopic-text">Emotional Investing</span>
+                    </a>
+                    <a href="#market-bubbles" class="subtopic-card">
+                        <span class="subtopic-text">Market Bubbles</span>
+                    </a>
+                    <a href="#investor-types" class="subtopic-card">
+                        <span class="subtopic-text">Investor Psychology</span>
+                    </a>
+                    <a href="#decision-making" class="subtopic-card">
+                        <span class="subtopic-text">Decision Making</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Portfolio Management Module -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">🎯</div>
+                    <h2 class="module-title">Portfolio Management</h2>
+                </div>
+                <p class="module-description">Learn to build and manage diversified investment portfolios for long-term wealth creation.</p>
+                <div class="subtopics-grid">
+                    <a href="#asset-allocation" class="subtopic-card">
+                        <span class="subtopic-text">Asset Allocation</span>
+                    </a>
+                    <a href="#diversification" class="subtopic-card">
+                        <span class="subtopic-text">Diversification</span>
+                    </a>
+                    <a href="#mpt" class="subtopic-card">
+                        <span class="subtopic-text">Modern Portfolio Theory</span>
+                    </a>
+                    <a href="#risk-return" class="subtopic-card">
+                        <span class="subtopic-text">Risk vs Return</span>
+                    </a>
+                    <a href="#passive-active" class="subtopic-card">
+                        <span class="subtopic-text">Passive vs Active</span>
+                    </a>
+                    <a href="#rebalancing" class="subtopic-card">
+                        <span class="subtopic-text">Rebalancing</span>
+                    </a>
+                    <a href="#wealth-creation" class="subtopic-card">
+                        <span class="subtopic-text">Wealth Building</span>
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 Finance Mastery Hub. Empowering Financial Intelligence.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add smooth hover effects and interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const moduleCards = document.querySelectorAll('.module-card');
+            const subtopicCards = document.querySelectorAll('.subtopic-card');
+
+            // Enhanced module card interactions
+            moduleCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.willChange = 'transform';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.willChange = 'auto';
+                });
+            });
+
+            // Subtopic card interactions
+            subtopicCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Add a subtle pulse animation on click
+                    this.style.animation = 'none';
+                    this.offsetHeight; // Trigger reflow
+                    this.style.animation = 'pulse 0.3s ease-out';
+                });
+            });
+
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, observerOptions);
+
+            moduleCards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // Add pulse animation keyframes
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes pulse {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.05); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Parallax effect for background
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                document.body.style.backgroundPosition = `0 ${rate}px`;
+            });
+
+            // Add loading completion class
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

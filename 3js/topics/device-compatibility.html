@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device compatibility (mobile, VR)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Device Compatibility: Mobile and VR with Three.js</h1>
+    <p>Three.js offers strong compatibility with various devices, including mobile and virtual reality (VR) platforms. This enables developers to create immersive 3D experiences that are accessible across a wide range of hardware.</p>
+
+    <h2>Mobile Compatibility</h2>
+    <p>Three.js applications run directly in modern web browsers, making them inherently compatible with mobile devices. However, optimizing for mobile performance is crucial due to limited processing power and battery life.</p>
+    <h3>Considerations for Mobile:</h3>
+    <ul>
+        <li><b>Performance Optimization:</b> Mobile devices have less powerful GPUs than desktops. Optimize models (lower poly count), textures (smaller resolutions, compressed formats), and reduce draw calls.</li>
+        <li><b>Touch Controls:</b> Implement touch-based controls for navigation and interaction, as traditional mouse and keyboard inputs are not available.</li>
+        <li><b>Device Orientation:</b> Utilize device orientation APIs for gyroscope-based camera controls or augmented reality (AR) experiences.</li>
+        <li><b>Battery Life:</b> Be mindful of continuous animations and complex shaders, which can drain battery quickly.</li>
+    </ul>
+
+    <h2>VR Compatibility (WebXR)</h2>
+    <p>Three.js is a leading library for creating VR experiences on the web, primarily through its integration with the <b>WebXR Device API</b>. WebXR is a web standard that enables immersive virtual reality (VR) and augmented reality (AR) applications to run directly in web browsers, without needing external plug-ins.</p>
+    <h3>Key Aspects of Three.js Mobile VR Compatibility:</h3>
+    <ul>
+        <li><b>WebXR Integration:</b> Three.js utilizes the WebXR Device API to enable VR and AR functionalities. This allows for stereoscopic rendering, tracking of device position and orientation, and processing user input from motion controllers, all within the browser.</li>
+        <li><b>Cross-Platform Support:</b> Three.js, often in conjunction with WebXR, supports a range of VR devices, including mobile VR headsets (like Google Cardboard) and more advanced headsets (like Oculus and HTC Vive).</li>
+        <li><b>Browser Compatibility:</b> For mobile AR, WebXR is best supported on Chrome and Samsung Internet Browser on Android devices. For mobile VR, Oculus Browser and Wolvic are recommended.</li>
+        <li><b>Performance:</b> Three.js is engineered for high performance, facilitating the real-time rendering of intricate 3D models directly on the web, which is essential for smooth VR experiences.</li>
+        <li><b>Development Ecosystem:</b> Frameworks like A-Frame are built on Three.js and simplify the creation of 3D and VR content with an HTML-like syntax, making it easier to develop for mobile VR headsets.</li>
+    </ul>
+
+    <h2>Example: Basic WebXR VR Scene (Conceptual)</h2>
+    <p>This is a conceptual example of a basic WebXR VR scene. A full working example requires a WebXR-enabled browser and a VR headset.</p>
+
+    <pre><code>import * as THREE from 'three';
+import { VRButton } from 'three/addons/webxr/VRButton.js';
+
+// Scene, Camera, Renderer setup (assuming these are already defined)
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Enable XR
+renderer.xr.enabled = true;
+
+// Add VR button to the DOM
+document.body.appendChild(VRButton.createButton(renderer));
+
+// Add a cube to the scene
+const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+
+camera.position.set(0, 1.6, 0); // Position camera for VR (eye level)
+
+// Animation loop for VR
+renderer.setAnimationLoop(function () {
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    renderer.render(scene, camera);
+});
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</code></pre>
+
+</body>
+</html>

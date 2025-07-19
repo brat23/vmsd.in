@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debugging with Leva, Stats</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Debugging React Three Fiber with Leva and Stats</h1>
+    <p>Debugging 3D applications can be challenging due to their visual nature and complex interactions. Tools like Leva and <code>@react-three/drei</code>'s Stats component provide powerful ways to inspect, modify, and monitor your React Three Fiber scenes in real-time.</p>
+
+    <h2>Leva: Interactive Debugging GUI</h2>
+    <p>Leva is a powerful, declarative GUI component that facilitates real-time tweaking of parameters within your R3F applications. It allows you to create interactive controls (like sliders, color pickers, and checkboxes) that directly manipulate values in your 3D scene, making it easier to fine-tune visuals and behaviors without constantly editing code.</p>
+    <h3>Setup:</h3>
+    <ol>
+        <li><b>Installation:</b>
+            <pre><code>npm install leva
+# or
+yarn add leva</code></pre>
+        </li>
+        <li><b>Usage with <code>useControls</code> Hook:</b> To add controls, import and use the <code>useControls</code> hook from <code>leva</code> within your React component. This hook returns an object containing the current values of your controls.</li>
+    </ol>
+    <pre><code>import { useControls } from 'leva';
+
+function MyDebuggedBox() {
+  const { color, positionX } = useControls({
+    color: '#ff0000', // Initial color
+    positionX: { value: 0, min: -5, max: 5, step: 0.1 }, // Slider for X position
+  });
+
+  return (
+    &lt;mesh position={[positionX, 0, 0]}&gt;
+      &lt;boxGeometry args={[1, 1, 1]} /&gt;
+      &lt;meshStandardMaterial color={color} /&gt;
+    &lt;/mesh&gt;
+  );
+}</code></pre>
+    <p>You can also add the <code>&lt;Leva /&gt;</code> component to your root component to configure the appearance of the GUI (e.g., <code>&lt;Leva collapsed /&gt;</code>).</p>
+
+    <h2>Stats: Performance Monitoring</h2>
+    <p>The <code>@react-three/drei</code> library provides a convenient <code>Stats</code> component to monitor your scene's performance, including frames per second (FPS), memory usage, and more.</p>
+    <h3>Setup:</h3>
+    <ol>
+        <li><b>Installation:</b> (If you haven't already)
+            <pre><code>npm install @react-three/drei
+# or
+yarn add @react-three/drei</code></pre>
+        </li>
+        <li><b>Usage:</b> Simply import <code>Stats</code> and add it inside your <code>&lt;Canvas&gt;</code> component.</li>
+    </ol>
+    <pre><code>import { Canvas } from '@react-three/fiber';
+import { Stats } from '@react-three/drei';
+
+function MySceneWithStats() {
+  return (
+    &lt;Canvas&gt;
+      &lt;Stats /&gt; &lt;!-- This will display FPS and other stats --&gt;
+      &lt;!-- Your 3D scene components --&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+    <h2>Example: Leva and Stats Integration (Conceptual)</h2>
+    <p>This conceptual example shows how you might integrate both Leva controls and performance stats into your R3F application. Note that this requires a React environment to run.</p>
+
+    <pre><code>import React from 'react';
+import { Canvas } from '@react-three/fiber';
+import { Stats } from '@react-three/drei';
+import { useControls, Leva } from 'leva';
+
+function DebuggableBox() {
+  const { color, scale, rotationSpeed } = useControls({
+    color: '#00ff00',
+    scale: { value: 1, min: 0.1, max: 2, step: 0.1 },
+    rotationSpeed: { value: 0.01, min: 0, max: 0.1, step: 0.001 },
+  });
+
+  const meshRef = useRef();
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x += rotationSpeed;
+      meshRef.current.rotation.y += rotationSpeed;
+    }
+  });
+
+  return (
+    &lt;mesh ref={meshRef} scale={scale}&gt;
+      &lt;boxGeometry args={[1, 1, 1]} /&gt;
+      &lt;meshStandardMaterial color={color} /&gt;
+    &lt;/mesh&gt;
+  );
+}
+
+export default function App() {
+  return (
+    &lt;&gt;
+      &lt;Leva collapsed /&gt; &lt;!-- Leva GUI --&gt;
+      &lt;Canvas&gt;
+        &lt;Stats /&gt; &lt;!-- Performance Stats --&gt;
+        &lt;ambientLight /&gt;
+        &lt;pointLight position={[10, 10, 10]} /&gt;
+        &lt;DebuggableBox /&gt;
+      &lt;/Canvas&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+
+</body>
+</html>

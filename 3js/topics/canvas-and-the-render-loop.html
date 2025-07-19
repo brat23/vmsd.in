@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&lt;Canvas /&gt; and the render loop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1><code>&lt;Canvas /&gt;</code> and the Render Loop in React Three Fiber</h1>
+    <p>In React Three Fiber (R3F), the <code>&lt;Canvas&gt;</code> component is the cornerstone of your 3D scene. It acts as the entry point and a portal into Three.js, rendering Three.js elements rather than standard DOM elements. It also plays a crucial role in managing the render loop, abstracting away much of the underlying Three.js setup.</p>
+
+    <h2>The <code>&lt;Canvas&gt;</code> Component</h2>
+    <p>When you use the <code>&lt;Canvas&gt;</code> component, R3F automatically sets up several essential elements for your 3D scene:</p>
+    <ul>
+        <li><b>Scene:</b> It creates a new Three.js scene where all your 3D objects will be added.</li>
+        <li><b>Camera:</b> By default, it sets up a new perspective camera. You can also provide your own camera.</li>
+        <li><b>WebGLRenderer:</b> It initializes a <code>WebGLRenderer</code> to handle the rendering of your 3D scene.</li>
+        <li><b>Render Loop:</b> It establishes a render loop with automatic rendering to the screen.</li>
+        <li><b>Pointer Events:</b> It sets up pointer events via raycasting on meshes that have <code>onPointer</code> props, enabling interactivity.</li>
+        <li><b>Tone Mapping:</b> It configures tone mapping.</li>
+        <li><b>Window Resize Handling:</b> It automatically handles window resizing, adjusting the canvas and camera as needed.</li>
+    </ul>
+    <p>The <code>&lt;Canvas&gt;</code> component stretches to 100% of its parent container, so you need to ensure its parent has defined dimensions for the canvas to be visible.</p>
+
+    <h2>The React Three Fiber Render Loop</h2>
+    <p>In traditional Three.js, you would typically set up your own animation loop using <code>requestAnimationFrame</code>. R3F abstracts this away, providing an automatic render loop by default.</p>
+    <ul>
+        <li><b>Automatic Rendering:</b> By default, R3F runs a game-like loop at 60 frames per second (fps), continuously rendering the scene.</li>
+        <li><b><code>useFrame</code> Hook:</b> The <code>useFrame</code> hook is a core part of interacting with the render loop. It allows you to execute code on every rendered frame, which is useful for animations, updating controls, and other continuous effects. The callback function provided to <code>useFrame</code> receives the current state of the scene and a <code>delta</code> value (the time elapsed since the last frame).</li>
+        <li><b>Optimized Rendering (<code>frameloop</code> and <code>invalidateFrameloop</code>):</b> While R3F defaults to continuous rendering, you can control the render mode for performance optimization. You can set the <code>frameloop</code> prop on the <code>&lt;Canvas&gt;</code> component to <code>'always'</code>, <code>'demand'</code>, or <code>'never'</code>. Setting <code>invalidateFrameloop</code> to <code>true</code> on the <code>&lt;Canvas&gt;</code> component will make it render only when changes are detected (e.g., prop changes), rather than continuously. This is known as "render on demand" and can be beneficial for performance in static scenes.</li>
+        <li><b>Manual Rendering:</b> For more advanced control, you can take over the render loop entirely. If you provide a <code>renderPriority</code> greater than zero to the <code>useFrame</code> hook, R3F will disable automatic rendering, and you become responsible for manually triggering renders.</li>
+    </ul>
+
+    <h2>Example: Basic R3F Canvas and Render Loop</h2>
+    <p>This is a conceptual example showing how a basic R3F setup looks. Note that this requires a React environment to run.</p>
+    <pre><code>import React, { useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+
+function Box(props) {
+  const meshRef = useRef();
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x += 0.01;
+      meshRef.current.rotation.y += 0.01;
+    }
+  });
+
+  return (
+    &lt;mesh {...props} ref={meshRef}&gt;
+      &lt;boxGeometry args={[1, 1, 1]} /&gt;
+      &lt;meshStandardMaterial color={'orange'} /&gt;
+    &lt;/mesh&gt;
+  );
+}
+
+export default function App() {
+  return (
+    &lt;Canvas&gt;
+      &lt;ambientLight /&gt;
+      &lt;pointLight position={[10, 10, 10]} /&gt;
+      &lt;Box position={[-1.2, 0, 0]} /&gt;
+      &lt;Box position={[1.2, 0, 0]} /&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+</body>
+</html>

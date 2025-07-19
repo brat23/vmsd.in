@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrating @react-three/rapier (physics engine)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Integrating <code>@react-three/rapier</code> (Physics Engine)</h1>
+    <p><code>@react-three/rapier</code> is a powerful and performant physics engine integration for React Three Fiber. It allows you to add realistic physics simulations to your 3D scenes, enabling objects to collide, react to forces, and interact with each other in a physically accurate way. It leverages the Rapier physics engine, which is written in Rust and compiled to WebAssembly for high performance.</p>
+
+    <h2>Setup and Installation</h2>
+    <p>To integrate <code>@react-three/rapier</code> into your React Three Fiber project, you'll need to install the necessary packages:</p>
+    <pre><code>npm install @react-three/fiber @react-three/drei @react-three/rapier rapier-js
+# or
+yarn add @react-three/fiber @react-three/drei @react-three/rapier rapier-js</code></pre>
+    <ul>
+        <li><code>@react-three/fiber</code>: The core React Three Fiber library.</li>
+        <li><code>@react-three/drei</code>: Provides useful helpers and abstractions (like <code>OrbitControls</code>).</li>
+        <li><code>@react-three/rapier</code>: The React Three Fiber bindings for Rapier.</li>
+        <li><code>rapier-js</code>: The core Rapier physics engine.</li>
+    </ul>
+
+    <h2>Key Components and Concepts</h2>
+    <ul>
+        <li><b><code>&lt;Physics&gt;</code>:</b> This component acts as the physics world container. All physics-enabled objects must be children of this component. You can enable debug visuals by adding the <code>debug</code> prop.</li>
+        <li><b><code>&lt;RigidBody&gt;</code>:</b> This component wraps your 3D meshes and makes them participate in the physics simulation. You can define their type (e.g., <code>dynamic</code>, <code>fixed</code>, <code>kinematic</code>) and collider shape (e.g., <code>cuboid</code>, <code>ball</code>).</li>
+        <li><b><code>colliders</code> prop:</b> Used on <code>&lt;RigidBody&gt;</code> to define the shape of the physics collider. Common values include <code>"cuboid"</code>, <code>"ball"</code>, <code>"trimesh"</code>, etc.</li>
+        <li><b><code>useFrame</code> hook:</b> While Rapier handles the physics simulation, you might still use <code>useFrame</code> to apply forces, read positions, or implement custom logic that interacts with the physics world.</li>
+    </ul>
+
+    <h2>Example: Falling Boxes on a Plane</h2>
+    <p>This example demonstrates a basic setup with a ground plane and several falling boxes, all interacting with the Rapier physics engine. Note that this requires a React environment to run.</p>
+
+    <pre><code>import React, { useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, Plane } from '@react-three/drei';
+import { Physics, RigidBody, Debug } from '@react-three/rapier';
+
+function Box(props) {
+  const ref = useRef();
+  return (
+    &lt;RigidBody ref={ref} colliders="cuboid" {...props}&gt;
+      &lt;mesh&gt;
+        &lt;boxGeometry args={[1, 1, 1]} /&gt;
+        &lt;meshStandardMaterial color="orange" /&gt;
+      &lt;/mesh&gt;
+    &lt;/RigidBody&gt;
+  );
+}
+
+export default function App() {
+  return (
+    &lt;Canvas camera={{ position: [0, 5, 10], fov: 50 }}&gt;
+      &lt;ambientLight intensity={0.5} /&gt;
+      &lt;directionalLight position={[10, 10, 5]} intensity={1} /&gt;
+      &lt;OrbitControls /&gt;
+
+      &lt;Physics debug&gt; &lt;!-- Add debug prop to visualize colliders --&gt;
+        {/* Ground Plane */}
+        &lt;RigidBody type="fixed" colliders="cuboid"&gt;
+          &lt;Plane args={[20, 20]} rotation-x={-Math.PI / 2} position-y={-0.5}&gt;
+            &lt;meshStandardMaterial color="lightgray" /&gt;
+          &lt;/Plane&gt;
+        &lt;/RigidBody&gt;
+
+        {/* Falling Boxes */}
+        &lt;Box position={[0, 5, 0]} /&gt;
+        &lt;Box position={[0.5, 7, 0.5]} /&gt;
+        &lt;Box position={[-0.5, 9, -0.5]} /&gt;
+
+      &lt;/Physics&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+
+</body>
+</html>
