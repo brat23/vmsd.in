@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Correlation Analysis</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Correlation Analysis</h1>
+    <a href="index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
+    <h2 class="section-title">Discover the Relationships Between Your Variables</h2>
+    <p>Correlation analysis is a statistical method that is used to discover the relationships between two or more variables. In this section, we will learn how to calculate and interpret correlation coefficients.</p>
+    
+    <h3>Pearson Correlation Coefficient</h3>
+    <p>The Pearson correlation coefficient is a measure of the linear relationship between two variables. It ranges from -1 to 1, where -1 indicates a perfect negative linear relationship, 1 indicates a perfect positive linear relationship, and 0 indicates no linear relationship.</p>
+
+    <h3>Spearman Correlation Coefficient</h3>
+    <p>The Spearman correlation coefficient is a measure of the monotonic relationship between two variables. It is a non-parametric measure of correlation, which means that it does not assume that the data is normally distributed.</p>
+
+    <h3>Correlation vs. Causation</h3>
+    <p>It is important to remember that correlation does not imply causation. Just because two variables are correlated does not mean that one variable causes the other. There may be a third variable that is causing both variables to change.</p>
+
+    <h3>Interactive Chart</h3>
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'scatter',
+      data: {
+        datasets: [{
+          label: 'Correlation Analysis',
+          data: [
+            { x: 10, y: 20 },
+            { x: 15, y: 25 },
+            { x: 20, y: 30 },
+            { x: 25, y: 35 },
+            { x: 30, y: 40 },
+            { x: 35, y: 45 },
+            { x: 40, y: 50 },
+          ],
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          x: {
+            type: 'linear',
+            position: 'bottom'
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Results Presentation</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Results Presentation</h1>
+    <a href="index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
+    <h2 class="section-title">Communicate Your Findings to a Wider Audience</h2>
+    <p>Once you have built your machine learning model, you need to communicate your findings to a wider audience. This is a crucial step in any data science project, as even the most brilliant insights are useless if they cannot be effectively conveyed to stakeholders. In this section, we will learn how to present your results in a clear, concise, and compelling way.</p>
+    
+    <h3>Data Visualization: The Power of Visual Storytelling</h3>
+    <p>Data visualization is a cornerstone of effective results presentation. It allows you to transform complex data into easily understandable charts and graphs, making your findings more accessible and impactful. We will explore how to choose the right visualization for your data and your audience, ensuring your message is not only seen but also understood.</p>
+
+    <h3>Storytelling: Crafting a Narrative Around Your Data</h3>
+    <p>Beyond just showing charts, effective results presentation involves weaving a compelling narrative. Storytelling helps your audience connect with the data on a deeper level, understand the problem, the solution, and the implications of your findings. We will guide you on how to structure your presentation as a story, with a clear beginning, middle, and end.</p>
+
+    <h3>Case Study: A Layered Presentation of a Customer Churn Prediction Project</h3>
+    <p>Let's walk through a detailed example of how to present the results of a real-world data science project: predicting customer churn. This layered approach ensures all key aspects are covered, from problem definition to actionable recommendations.</p>
+
+    <h4>1. Project Overview: Understanding the Challenge</h4>
+    <p><b>Problem Statement:</b> A telecommunications company is experiencing a high rate of customer churn, leading to significant revenue loss. The objective is to build a predictive model that identifies customers at high risk of churning, allowing for targeted retention strategies.</p>
+    <p><b>Business Goal:</b> Reduce customer churn by 15% within the next quarter by proactively engaging at-risk customers.</p>
+
+    <h4>2. Data Exploration & Preparation: What We Worked With</h4>
+    <p>The dataset comprised customer demographics, service usage patterns, contract details, and historical churn information. Key features included monthly charges, total charges, contract type, internet service, and tenure.</p>
+    <p><b>Key Preparation Steps:</b></p>
+    <ul>
+        <li>Handling missing values (e.g., for `TotalCharges` for new customers).</li>
+        <li>Encoding categorical variables (e.g., `Gender`, `InternetService`) using one-hot encoding.</li>
+        <li>Scaling numerical features to ensure fair weighting in the model.</li>
+    </ul>
+
+    <h4>3. Model Selection & Training: Our Predictive Engine</h4>
+    <p>After exploring several machine learning algorithms, a **Random Forest Classifier** was selected due to its robustness, ability to handle various data types, and interpretability. The model was trained on 80% of the historical data, with the remaining 20% reserved for testing.</p>
+
+    <h4>4. Key Findings & Visualizations: What the Data Revealed</h4>
+    <p>Our model achieved an **accuracy of 85%** and an **F1-score of 0.78** in predicting churn. More importantly, it provided insights into *why* customers churn.</p>
+
+    <div class="chart-grid">
+        <div class="chart-container">
+            <h4>Churn Rate by Contract Type</h4>
+            <p>Customers on month-to-month contracts have a significantly higher churn rate.</p>
+            <canvas id="churnByContractChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h4>Feature Importance</h4>
+            <p>Customer tenure, monthly charges, and contract type are the most influential factors in predicting churn.</p>
+            <canvas id="featureImportanceChart"></canvas>
+        </div>
+    </div>
+
+    <h4>5. Business Impact & Recommendations: Turning Insights into Action</h4>
+    <p>Based on these findings, we recommend the following strategies:</p>
+    <ul>
+        <li><b>Targeted Retention Offers:</b> Develop special offers (e.g., discounted annual plans) for customers on month-to-month contracts identified as high-risk.</li>
+        <li><b>Customer Service Intervention:</b> Proactively reach out to long-term customers with increasing monthly charges to address potential dissatisfaction.</li>
+        <li><b>New Customer Onboarding:</b> Improve the onboarding process for new customers to increase early engagement and reduce early churn.</li>
+    </ul>
+    <p>Implementing these recommendations is projected to reduce churn by 10-12% in the next quarter, leading to an estimated **$X million in saved revenue**.</p>
+
+    <h4>6. Limitations & Future Work: Continuous Improvement</h4>
+    <p><b>Limitations:</b> The model currently relies on historical data. Real-time data integration could further enhance predictive power.</p>
+    <p><b>Future Work:</b></p>
+    <ul>
+        <li>Explore deep learning models for potentially higher accuracy.</li>
+        <li>Integrate external data sources (e.g., social media sentiment) for richer insights.</li>
+        <li>Develop an automated system for real-time churn prediction and intervention.</li>
+    </ul>
+  </div>
+
+  <script>
+    // Churn by Contract Type Chart
+    const churnByContractCtx = document.getElementById('churnByContractChart').getContext('2d');
+    new Chart(churnByContractCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Month-to-Month', 'One Year', 'Two Year'],
+        datasets: [{
+          label: 'Churn Rate (%)',
+          data: [42, 12, 3],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(75, 192, 192, 0.6)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 50
+          }
+        }
+      }
+    });
+
+    // Feature Importance Chart
+    const featureImportanceCtx = document.getElementById('featureImportanceChart').getContext('2d');
+    new Chart(featureImportanceCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Tenure', 'Monthly Charges', 'Contract Type', 'Internet Service', 'Payment Method'],
+        datasets: [{
+          label: 'Importance Score',
+          data: [0.35, 0.25, 0.20, 0.10, 0.05],
+          backgroundColor: 'rgba(153, 102, 255, 0.6)',
+          borderColor: 'rgba(153, 102, 255, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        scales: {
+          x: {
+            beginAtZero: true,
+            max: 0.4
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

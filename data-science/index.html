@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Science Mastery - Python Learning Platform</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Animated background particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Data Science Mastery</h1>
+    <p class="subtitle">Master Python for Data Science with Interactive Learning</p>
+    
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number" id="modules-count">7</span>
+        <span class="stat-label">Modules</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number" id="topics-count">0</span>
+        <span class="stat-label">Topics</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">100+</span>
+        <span class="stat-label">Hours</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
+    <h2 class="section-title">Learning Path</h2>
+    
+    <!-- Progress section -->
+    <div class="progress-section">
+      <h3 class="progress-title">Your Progress</h3>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <p class="progress-text">Click on modules to mark them as complete</p>
+    </div>
+
+    <!-- Modules grid -->
+    <div class="modules-grid" id="modules-container">
+      <!-- Modules will be populated by JavaScript -->
+    </div>
+
+    <!-- Call to action -->
+    <div class="cta-section">
+      <h2 style="margin-bottom: 1rem; font-size: 2rem;">Ready to Start Learning?</h2>
+      <p style="margin-bottom: 2rem; color: var(--text-secondary); font-size: 1.1rem;">Join thousands of learners mastering data science with Python</p>
+      <a href="#" class="cta-button" onclick="startLearning(); return false;">Begin Your Journey</a>
+    </div>
+  </div>
+
+  <script>
+    // Module data with enhanced descriptions
+    const modules = [
+      {
+        title: "Module 0: Foundations",
+        description: "Build your foundation in Python programming and understand the data science ecosystem.",
+        topics: [
+          "Python for Data Science",
+          "Introduction to Data Science",
+          "Development Environment Setup",
+          "Jupyter Notebooks Mastery"
+        ]
+      },
+      {
+        title: "Module 1: Collecting Data",
+        description: "Learn various techniques to gather data from different sources effectively and ethically.",
+        topics: [
+          "Web Scraping with BeautifulSoup",
+          "Reading CSV/Excel/JSON Files",
+          "Working with APIs",
+          "Database Connections",
+          "Data Collection Ethics"
+        ]
+      },
+      {
+        title: "Module 2: Storing Data",
+        description: "Master data storage solutions from local files to cloud platforms.",
+        topics: [
+          "File Storage Systems",
+          "Pandas DataFrames",
+          "SQL Database Management",
+          "NoSQL Solutions",
+          "Cloud Storage Overview"
+        ]
+      },
+      {
+        title: "Module 3: Processing Data",
+        description: "Transform raw data into clean, analysis-ready datasets.",
+        topics: [
+          "Handling Missing Data",
+          "Data Normalization",
+          "Text Preprocessing",
+          "Data Wrangling Techniques",
+          "Feature Engineering"
+        ]
+      },
+      {
+        title: "Module 4: Describing Data",
+        description: "Explore and understand your data through statistics and visualization.",
+        topics: [
+          "Descriptive Statistics",
+          "Data Visualization",
+          "Correlation Analysis",
+          "Sampling Techniques",
+          "Exploratory Data Analysis"
+        ]
+      },
+      {
+        title: "Module 5: Modelling Data",
+        description: "Build predictive models and extract insights from your data.",
+        topics: [
+          "Statistical Modelling",
+          "Hypothesis Testing",
+          "Regression Analysis",
+          "Clustering Algorithms",
+          "Model Evaluation"
+        ]
+      },
+      {
+        title: "Module 6: Capstone Project",
+        description: "Apply everything you've learned in a comprehensive real-world project.",
+        topics: [
+          "Problem Statement Definition",
+          "Data Collection & Processing",
+          "Advanced Modeling Techniques",
+          "Results Presentation",
+          "Portfolio Development"
+        ]
+      }
+    ];
+
+    // Create particles for background animation
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 50;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Populate modules
+    function populateModules() {
+      const container = document.getElementById('modules-container');
+      let totalTopics = 0;
+
+      modules.forEach((module, index) => {
+        totalTopics += module.topics.length;
+        
+        const card = document.createElement('div');
+        card.className = 'module-card';
+        card.onclick = () => selectModule(index);
+        
+        card.innerHTML = `
+          <div class="module-number">${index}</div>
+          <h3 class="module-title">${module.title}</h3>
+          <p class="module-description">${module.description}</p>
+          <ul class="topics-list">
+            ${module.topics.map(topic => `
+              <li class="topic-item">
+                <a href="${topic.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '')}.html">
+                  <div class="topic-icon"></div>
+                  <span class="topic-text">${topic}</span>
+                </a>
+              </li>
+            `).join('')}
+          </ul>
+        `;
+        
+        container.appendChild(card);
+      });
+
+      // Update topics count with animation
+      animateNumber('topics-count', totalTopics);
+    }
+
+    // Animate number counting
+    function animateNumber(elementId, target) {
+      const element = document.getElementById(elementId);
+      let current = 0;
+      const increment = target / 50;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        element.textContent = Math.floor(current);
+      }, 30);
+    }
+
+    // Track completed modules
+    let completedModules = new Set();
+
+    // Module selection handler
+    function selectModule(index) {
+      const card = document.querySelectorAll('.module-card')[index];
+      
+      // Toggle completion status
+      if (completedModules.has(index)) {
+        completedModules.delete(index);
+        card.classList.remove('completed');
+      } else {
+        completedModules.add(index);
+        card.classList.add('completed');
+      }
+      
+      // Update progress based on completed modules
+      updateProgress();
+    }
+
+    // Update progress bar and text
+    function updateProgress() {
+      const progressFill = document.querySelector('.progress-fill');
+      const progressText = document.querySelector('.progress-text');
+      const progress = (completedModules.size / modules.length) * 100;
+      
+      progressFill.style.width = progress + '%';
+      
+      if (completedModules.size === 0) {
+        progressText.textContent = 'Click on modules to mark them as complete';
+      } else if (completedModules.size === modules.length) {
+        progressText.textContent = '🎉 Congratulations! You\'ve completed all modules!';
+      } else {
+        progressText.textContent = `${completedModules.size} of ${modules.length} modules completed (${Math.round(progress)}%)`;
+      }
+    }
+
+    // Start learning function
+    function startLearning() {
+      alert('🚀 Welcome to your Data Science journey! Click on any module to mark it as complete.');
+      document.querySelector('.modules-grid').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+
+    // Open dummy link
+    function openDummyLink(title, description) {
+      const message = `🔗 Opening: ${title}\n\n${description}\n\nThis is a demo link - in a real application, this would navigate to the actual course content.`;
+      alert(message);
+    }
+
+    
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      populateModules();
+      updateProgress(); // Initialize progress display
+      
+      // Add smooth scrolling for better UX
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    });
+
+    // Add interactive hover effects for topic items
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const topicItems = document.querySelectorAll('.topic-item');
+        topicItems.forEach(item => {
+          item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateX(8px)';
+            this.style.background = 'rgba(255, 255, 255, 0.08)';
+          });
+          
+          item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateX(5px)';
+            this.style.background = '';
+          });
+        });
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

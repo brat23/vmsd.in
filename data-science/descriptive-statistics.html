@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Descriptive Statistics</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Descriptive Statistics</h1>
+    <a href="index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
+    <h2 class="section-title">Summarize and Understand Your Data</h2>
+    <p>Descriptive statistics are used to summarize and understand the main features of a dataset. They provide a quantitative summary of the data, which can be useful for understanding the distribution of the data and for identifying outliers. In this section, we will learn how to calculate and interpret descriptive statistics.</p>
+    
+    <h3>Measures of Central Tendency</h3>
+    <p>Measures of central tendency are used to describe the center of a dataset. The three most common measures of central tendency are:</p>
+    <ul>
+        <li><b>Mean:</b> The average of the data.</li>
+        <li><b>Median:</b> The middle value of the data.</li>
+        <li><b>Mode:</b> The most frequent value in the data.</li>
+    </ul>
+
+    <h3>Measures of Dispersion</h3>
+    <p>Measures of dispersion are used to describe the spread of a dataset. The three most common measures of dispersion are:</p>
+    <ul>
+        <li><b>Range:</b> The difference between the highest and lowest values in the data.</li>
+        <li><b>Variance:</b> A measure of how spread out the data is from the mean.</li>
+        <li><b>Standard deviation:</b> The square root of the variance.</li>
+    </ul>
+
+    <h3>Interactive Chart</h3>
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Mean', 'Median', 'Mode'],
+        datasets: [{
+          label: 'Descriptive Statistics',
+          data: [30, 40, 30],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)'
+          ],
+          borderWidth: 1
+        }]
+      }
+    });
+  </script>
+</body>
+</html>

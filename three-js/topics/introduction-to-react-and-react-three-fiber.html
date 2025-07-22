@@ -1,1 +1,62 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Introduction to React + React Three Fiber</title><link rel="stylesheet" href="style.css"></head><body><h1>Introduction to React + React Three Fiber</h1></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction to React and React Three Fiber</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Introduction to React and React Three Fiber</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
+    <h2 class="section-title">Bringing 3D to the Web with React's Power</h2>
+    <p>React Three Fiber (R3F) is a React renderer for Three.js. It allows you to build 3D scenes using React components, leveraging React's declarative and component-based approach. This makes working with Three.js much more intuitive and enjoyable, especially for developers already familiar with React.</p>
+    
+    <h3>Why React Three Fiber?</h3>
+    <p>Traditional Three.js development often involves imperative code, directly manipulating the 3D scene graph. R3F abstracts this away, letting you define your 3D objects and their properties as React components. This brings several benefits:</p>
+    <ul>
+      <li><b>Declarative Syntax:</b> Describe what you want to render, and R3F handles the updates.</li>
+      <li><b>Component Reusability:</b> Create reusable 3D components that can be easily integrated into different parts of your application.</li>
+      <li><b>React Ecosystem:</b> Leverage React's vast ecosystem of tools, libraries, and development practices.</li>
+      <li><b>Performance:</b> R3F is highly optimized for performance, ensuring smooth 3D experiences.</li>
+    </ul>
+
+    <h3>Basic Setup and First Scene</h3>
+    <p>Getting started with R3F is straightforward. You typically set up a React project and then install `three` and `@react-three/fiber`.</p>
+    <h4>Code Example: A Simple Cube</h4>
+    <pre><code>import React from 'react';
+import { Canvas } from '@react-three/fiber';
+
+function Box() {
+  return (
+    <mesh>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color="hotpink" />
+    </mesh>
+  );
+}
+
+function App() {
+  return (
+    <Canvas>
+      <ambientLight />
+      <pointLight position={[10, 10, 10]} />
+      <Box />
+    </Canvas>
+  );
+}
+
+export default App;</code></pre>
+    <p>In this example, `Canvas` is the entry point for your Three.js scene, and `Box` is a simple React component rendering a 3D cube.</p>
+
+    <h3>Case Study: Interactive Product Viewer</h3>
+    <p>Imagine building an interactive 3D product viewer for an e-commerce website. With R3F, you can easily create components for different product parts, add interactive controls for rotation and zoom, and even integrate animations. This declarative approach simplifies complex 3D interactions, making the development process faster and more maintainable.</p>
+  </div>
+</body>
+</html>

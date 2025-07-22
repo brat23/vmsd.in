@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regression Analysis</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Regression Analysis</h1>
+    <a href="index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
+    <h2 class="section-title">Predict Continuous Variables with Accuracy</h2>
+    <p>Regression analysis is a statistical method that is used to predict a continuous variable from one or more independent variables. In this section, we will learn how to build and evaluate regression models.</p>
+    
+    <h3>Simple Linear Regression</h3>
+    <p>Simple linear regression is a regression model that is used to predict a continuous variable from a single independent variable. It is a simple and powerful model that can be used for a variety of tasks, such as predicting sales, prices, and stock prices.</p>
+
+    <h3>Multiple Linear Regression</h3>
+    <p>Multiple linear regression is a regression model that is used to predict a continuous variable from multiple independent variables. It is a more powerful model than simple linear regression, as it can account for the effects of multiple variables.</p>
+
+    <h3>Model Evaluation</h3>
+    <p>Once you have built a regression model, you need to evaluate its performance. We will discuss the different metrics that are used to evaluate regression models, such as mean squared error (MSE), root mean squared error (RMSE), and R-squared.</p>
+
+    <h3>Interactive Chart</h3>
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+          label: 'Regression Analysis',
+          data: [10, 20, 30, 40, 50, 60],
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      }
+    });
+  </script>
+</body>
+</html>

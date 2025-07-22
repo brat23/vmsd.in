@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clustering Algorithms</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Clustering Algorithms</h1>
+    <a href="index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
+    <h2 class="section-title">Group Your Data into Meaningful Clusters</h2>
+    <p>Clustering is a type of unsupervised machine learning that is used to group data into meaningful clusters. In this section, we will learn about the different types of clustering algorithms and how to choose the right one for your project.</p>
+    
+    <h3>K-Means Clustering</h3>
+    <p>K-means clustering is a popular clustering algorithm that is used to group data into k clusters. It is a simple and efficient algorithm that can be used for a variety of tasks, such as customer segmentation and image compression.</p>
+
+    <h3>Hierarchical Clustering</h3>
+    <p>Hierarchical clustering is a clustering algorithm that is used to create a hierarchy of clusters. It is a more flexible algorithm than k-means clustering, as it does not require you to specify the number of clusters in advance.</p>
+
+    <h3>DBSCAN</h3>
+    <p>DBSCAN is a density-based clustering algorithm that is used to find clusters of arbitrary shape. It is a more robust algorithm than k-means clustering and hierarchical clustering, as it is not sensitive to outliers.</p>
+
+    <h3>Interactive Chart</h3>
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bubble',
+      data: {
+        datasets: [
+          {
+            label: 'Cluster 1',
+            data: [
+              { x: 20, y: 30, r: 15 },
+              { x: 40, y: 10, r: 10 },
+            ],
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+          },
+          {
+            label: 'Cluster 2',
+            data: [
+              { x: 60, y: 50, r: 20 },
+              { x: 80, y: 70, r: 25 },
+            ],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+          }
+        ]
+      }
+    });
+  </script>
+</body>
+</html>

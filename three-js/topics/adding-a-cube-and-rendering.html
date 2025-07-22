@@ -1,99 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adding a Cube and rendering</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adding a Cube and Rendering</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <h1>Adding a Cube and rendering</h1>
-    <p>In Three.js, adding a cube and rendering it involves a few key steps, building upon the basic scene setup (Scene, Camera, Renderer) we discussed earlier.</p>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Adding a Cube and Rendering</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
 
-    <h2>Key Components for a Cube</h2>
-    <ul>
-        <li><b>Geometry:</b> This defines the shape of your 3D object. For a cube, Three.js provides <code>THREE.BoxGeometry</code>. You can specify its width, height, and depth.</li>
-        <li><b>Material:</b> This defines the appearance of the object, such as its color, how it reacts to light, and whether it has a texture. For a simple colored cube, <code>THREE.MeshBasicMaterial</code> is a good starting point as it doesn't require lights to be visible.</li>
-        <li><b>Mesh:</b> A Mesh is an object that takes a geometry and applies a material to it. It's the actual 3D object that you add to your scene.</li>
-    </ul>
+  <!-- Main content -->
+  <div class="container">
+    <h2 class="section-title">Your First 3D Object in Three.js</h2>
+    <p>Once you have your basic Three.js scene set up with a renderer, scene, and camera, the next exciting step is to add your first 3D object. A common starting point is a simple cube, which helps in understanding the core concepts of geometry and materials.</p>
+    
+    <h3>Geometry: Defining the Shape</h3>
+    <p>In Three.js, `Geometry` defines the shape of a 3D object. For a cube, we use `BoxGeometry`, which takes width, height, and depth as arguments.</p>
+    <h4>Code Example: Creating BoxGeometry</h4>
+    <pre><code>const geometry = new THREE.BoxGeometry(1, 1, 1); // 1 unit wide, tall, and deep</code></pre>
 
-    <h2>Steps to Add and Render a Cube</h2>
-    <ol>
-        <li><b>Create a Scene, Camera, and Renderer:</b> As always, these are the foundational elements of any Three.js application.</li>
-        <li><b>Define Geometry:</b> Create an instance of <code>THREE.BoxGeometry</code>.</li>
-        <li><b>Define Material:</b> Create an instance of a material, e.g., <code>THREE.MeshBasicMaterial</code>, and set its properties like color.</li>
-        <li><b>Create a Mesh:</b> Combine the geometry and material into a <code>THREE.Mesh</code>.</li>
-        <li><b>Add to Scene:</b> Add the created mesh to your <code>THREE.Scene</code> instance.</li>
-        <li><b>Position the Camera:</b> Ensure your camera is positioned so that it can view the cube. If the camera is at the same default position (0,0,0) as the cube, you won't see it.</li>
-        <li><b>Create a Rendering Loop:</b> Use <code>requestAnimationFrame</code> to continuously render the scene. This is crucial for displaying the 3D content and for any animations.</li>
-    </ol>
+    <h3>Material: Defining the Appearance</h3>
+    <p>A `Material` defines how the surface of your 3D object looks and reacts to light. For a basic colored cube, `MeshBasicMaterial` or `MeshStandardMaterial` are good choices. `MeshStandardMaterial` reacts to lights, making it more realistic.</p>
+    <h4>Code Example: Creating a Material</h4>
+    <pre><code>const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 }); // Green color</code></pre>
 
-    <h2>Example: Basic Rotating Cube</h2>
-    <p>Here's a complete HTML example that demonstrates how to add and render a basic rotating cube in Three.js:</p>
+    <h3>Mesh: Combining Shape and Appearance</h3>
+    <p>A `Mesh` is the actual 3D object that gets added to your scene. It combines a `Geometry` and a `Material`.</p>
+    <h4>Code Example: Creating a Mesh and Adding to Scene</h4>
+    <pre><code>const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);</code></pre>
 
-    <iframe srcdoc="
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset=\"utf-8\">
-            <title>Three.js Cube</title>
-            <style>
-                body { margin: 0; overflow: hidden; } /* Remove default margin and hide scrollbars */
-                canvas { display: block; } /* Ensure canvas takes full space */
-            </style>
-        </head>
-        <body>
-            <!-- Include the Three.js library from a CDN -->
-            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
+    <h3>Rendering the Scene</h3>
+    <p>Finally, to see your cube, you need to render the scene using your renderer and camera within the animation loop.</p>
+    <h4>Code Example: Rendering in the Loop</h4>
+    <pre><code>function animate() {
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+}
+animate();</code></pre>
 
-            <script>
-                // 1. Set up the scene
-                const scene = new THREE.Scene();
-                scene.background = new THREE.Color(0x222222); // Set a dark background color
-
-                // 2. Set up the camera
-                const camera = new THREE.PerspectiveCamera(
-                    75, // Field of view
-                    window.innerWidth / window.innerHeight, // Aspect ratio
-                    0.1, // Near clipping plane
-                    1000 // Far clipping plane
-                );
-                camera.position.z = 5; // Move the camera back so we can see the cube
-
-                // 3. Set up the renderer
-                const renderer = new THREE.WebGLRenderer({ antialias: true }); // Enable antialiasing for smoother edges
-                renderer.setSize(window.innerWidth, window.innerHeight); // Set renderer size to full window
-                document.body.appendChild(renderer.domElement); // Add the renderer's canvas to the HTML body
-
-                // 4. Create the cube
-                const geometry = new THREE.BoxGeometry(1, 1, 1); // 1x1x1 unit cube
-                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // Green color
-                const cube = new THREE.Mesh(geometry, material);
-                scene.add(cube); // Add the cube to the scene
-
-                // Optional: Add some simple animation
-                function animate() {
-                    requestAnimationFrame(animate); // Loop the animation
-
-                    cube.rotation.x += 0.01; // Rotate the cube on the X-axis
-                    cube.rotation.y += 0.01; // Rotate the cube on the Y-axis
-
-                    renderer.render(scene, camera); // Render the scene with the camera
-                }
-
-                // Handle window resizing
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
-
-                // Start the animation loop
-                animate();
-            </script>
-        </body>
-        </html>
-    " frameborder="0" width="100%" height="400px"></iframe>
-
+    <h3>Case Study: A Simple Interactive Logo</h3>
+    <p>Imagine creating a simple 3D logo for a website. You could use a `BoxGeometry` for basic shapes, apply your brand colors with `MeshStandardMaterial`, and then add it to your scene. With a few lines of code in the render loop, you could even make the logo slowly rotate, adding a subtle interactive element to your page.</p>
+  </div>
 </body>
 </html>

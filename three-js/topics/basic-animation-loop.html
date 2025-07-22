@@ -1,89 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic animation loop (requestAnimationFrame)</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Animation Loop</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <h1>Basic Animation Loop in Three.js</h1>
-    <p>A basic animation loop in Three.js using <code>requestAnimationFrame</code> involves continuously updating the scene and rendering it. <code>requestAnimationFrame</code> is a browser API that schedules a function to be called before the browser's next repaint, ensuring smooth animations synchronized with the display's refresh rate.</p>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Basic Animation Loop</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
 
-    <h2>How it Works</h2>
-    <p>The core idea is to have a function that:</p>
-    <ol>
-        <li>Requests the browser to call it again before the next repaint using <code>requestAnimationFrame()</code>.</li>
-        <li>Updates the properties of your 3D objects (e.g., position, rotation, scale).</li>
-        <li>Renders the scene with the camera using <code>renderer.render(scene, camera)</code>.</li>
-    </ol>
+  <!-- Main content -->
+  <div class="container">
+    <h2 class="section-title">Bringing Your 3D Scenes to Life</h2>
+    <p>The animation loop is the heart of any dynamic 3D application. It's a function that is called repeatedly, typically 60 times per second, to update the state of your 3D scene and redraw it. This continuous redrawing creates the illusion of motion and interactivity.</p>
+    
+    <h3>`requestAnimationFrame`</h3>
+    <p>The `requestAnimationFrame` API is the preferred way to create animation loops in the browser. It tells the browser that you want to perform an animation and requests that the browser calls a specified function to update an animation before the browser's next repaint. This ensures smooth animations and is more efficient than using `setInterval` or `setTimeout`.</p>
+    <h4>Code Example: Basic Animation Loop Structure</h4>
+    <pre><code>function animate() {
+  requestAnimationFrame(animate);
 
-    <h2>Example: Basic Rotating Cube Animation</h2>
-    <p>Here's a fundamental example demonstrating a rotating cube using the <code>requestAnimationFrame</code> loop:</p>
+  // Update your 3D objects here
+  // For example, rotate a cube:
+  // cube.rotation.x += 0.01;
+  // cube.rotation.y += 0.005;
 
-    <iframe srcdoc="
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset=\"utf-8\">
-            <title>Three.js Basic Animation</title>
-            <style>
-                body { margin: 0; overflow: hidden; } /* Remove scrollbars and margin */
-                canvas { display: block; } /* Remove extra space below canvas */
-            </style>
-        </head>
-        <body>
-            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
-            <script>
-                // 1. Set up the scene, camera, and renderer
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                document.body.appendChild(renderer.domElement);
+  renderer.render(scene, camera);
+}
+animate();</code></pre>
 
-                // 2. Add an object to the scene (a rotating cube)
-                const geometry = new THREE.BoxGeometry(1, 1, 1);
-                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-                const cube = new THREE.Mesh(geometry, material);
-                scene.add(cube);
+    <h3>Updating Objects in the Loop</h3>
+    <p>Inside the `animate` function, you can modify the properties of your 3D objects, such as their position, rotation, or scale. Each time the loop runs, these changes are applied, and the scene is re-rendered, creating the animation.</p>
 
-                camera.position.z = 5;
+    <h3>Frame Rate and Performance</h3>
+    <p>The goal is to maintain a consistent frame rate, ideally 60 frames per second (fps), for a smooth user experience. If your scene is too complex or your updates are too heavy, the frame rate can drop, leading to choppy animations. Optimizing your scene and code is crucial for good performance.</p>
 
-                // 3. Define the animation loop function
-                function animate() {
-                    // This function will be called repeatedly by the browser
-                    requestAnimationFrame(animate); // Request the next frame
-
-                    // Update object properties for animation
-                    cube.rotation.x += 0.01;
-                    cube.rotation.y += 0.01;
-
-                    // Render the scene with the camera
-                    renderer.render(scene, camera);
-                }
-
-                // Start the animation loop
-                animate();
-
-                // Handle window resizing
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
-            </script>
-        </body>
-        </html>
-    " frameborder="0" width="100%" height="400px"></iframe>
-
-    <h2>Modern Alternative: <code>WebGLRenderer.setAnimationLoop()</code></h2>
-    <p>While <code>requestAnimationFrame</code> directly controls the loop, Three.js provides a more integrated method: <code>renderer.setAnimationLoop(callback)</code>. This method internally uses <code>requestAnimationFrame</code> but offers additional benefits, especially for VR/AR environments, and simplifies the animation setup.</p>
-    <pre><code>renderer.setAnimationLoop(() => {
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-    renderer.render(scene, camera);
-});</code></pre>
-
+    <h3>Case Study: A Dynamic Weather Visualization</h3>
+    <p>Imagine a 3D visualization of weather patterns. The animation loop would be constantly updating the positions of rain particles, the movement of clouds, and the intensity of lightning. By tying these updates to real-time weather data, you could create a dynamic and immersive experience, all powered by the continuous execution of the animation loop.</p>
+  </div>
 </body>
 </html>

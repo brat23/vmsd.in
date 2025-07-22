@@ -1,12 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fundamentals of 3D & Three.js (Vanilla)</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fundamentals of 3D and Three.js</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <h1>Fundamentals of 3D & Three.js (Vanilla)</h1>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Fundamentals of 3D and Three.js</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
+    <h2 class="section-title">Understanding the Building Blocks of 3D Graphics</h2>
+    <p>Before diving deep into Three.js or React Three Fiber, it's crucial to grasp the fundamental concepts of 3D graphics. This section will lay the groundwork, explaining the core components that make up any 3D scene.</p>
+    
+    <h3>The 3D Coordinate System</h3>
+    <p>In 3D graphics, we use a 3D Cartesian coordinate system to define the position of objects in space. This system typically consists of three axes: X (horizontal), Y (vertical), and Z (depth). Understanding how these axes work is fundamental to positioning and manipulating objects in your scene.</p>
+
+    <h3>Meshes, Geometries, and Materials</h3>
+    <ul>
+      <li><b>Mesh:</b> A mesh is the fundamental building block of any 3D object. It's composed of a geometry and a material.</li>
+      <li><b>Geometry:</b> Defines the shape of the object (e.g., a cube, sphere, or custom 3D model). It consists of vertices (points in 3D space) and faces (triangles or polygons that connect the vertices).</li>
+      <li><b>Material:</b> Defines the appearance of the object, such as its color, texture, shininess, and how it reacts to light.</li>
+    </ul>
+
+    <h3>Lights and Cameras</h3>
+    <ul>
+      <li><b>Lights:</b> Essential for illuminating your 3D scene. Without lights, objects would appear black. Different types of lights (e.g., ambient, directional, point) simulate various lighting conditions.</li>
+      <li><b>Cameras:</b> Determine what part of your 3D scene is visible to the viewer. Just like in real-world photography, you can adjust the camera's position, rotation, and field of view.</li>
+    </ul>
+
+    <h3>The Render Loop</h3>
+    <p>A 3D scene is constantly being redrawn (rendered) to create the illusion of motion. The render loop is a continuous function that updates the scene, processes user input, and redraws the frame. Understanding the render loop is key to creating dynamic and interactive 3D experiences.</p>
+
+    <h3>Case Study: Building a Simple Architectural Visualization</h3>
+    <p>Consider creating a basic architectural visualization. You would start by defining the geometry of walls, floors, and ceilings. Then, you'd apply materials to give them realistic appearances. Adding lights would illuminate the space, and positioning a camera would allow viewers to explore the design. The render loop would continuously update the view as the user navigates.</p>
+  </div>
 </body>
 </html>

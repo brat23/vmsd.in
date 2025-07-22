@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python for Data Science</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Python for Data Science</h1>
+    <a href="index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
+    <h2 class="section-title">Master the Fundamental Programming Language of Data Science</h2>
+    <p>Python has become the undisputed leader in the world of data science, and for good reason. Its clean syntax and readability make it easy to learn, while its vast ecosystem of libraries provides powerful tools for every stage of the data science workflow. From data collection and cleaning to analysis, modeling, and visualization, Python has you covered.</p>
+    
+    <h3>Core Python Concepts</h3>
+    <p>A strong foundation in Python is essential for any data scientist. In this section, we will explore the core concepts that you will use every day in your data science journey:</p>
+    <ul>
+        <li><b>Variables and Data Types:</b> Learn how to store and manipulate different types of data, such as numbers, text, and booleans.</li>
+        <li><b>Data Structures:</b> Understand how to organize your data using lists, tuples, dictionaries, and sets.</li>
+        <li><b>Control Flow:</b> Master the use of loops and conditional statements to control the flow of your programs.</li>
+        <li><b>Functions:</b> Learn how to write reusable blocks of code to make your programs more modular and efficient.</li>
+    </ul>
+    
+    <h4>Code Example:</h4>
+    <pre><code># A more comprehensive example
+
+def analyze_data(data):
+    """A simple function to analyze a list of numbers."""
+    total = sum(data)
+    average = total / len(data)
+    return total, average
+
+data = [1, 2, 3, 4, 5]
+total, average = analyze_data(data)
+
+print(f"Total: {total}")
+print(f"Average: {average}")</code></pre>
+
+    <h3>Essential Libraries</h3>
+    <p>Python's true power for data science comes from its extensive collection of libraries. We will introduce you to the two most important ones:</p>
+    <ul>
+      <li><b>NumPy:</b> The fundamental package for scientific computing in Python. It provides a powerful N-dimensional array object, as well as tools for working with these arrays.</li>
+      <li><b>Pandas:</b> The go-to library for data manipulation and analysis. It provides a flexible and powerful DataFrame object, which allows you to easily read, write, and manipulate tabular data.</li>
+    </ul>
+
+    <h3>Case Study: Analyzing Customer Demographics</h3>
+    <p>In this case study, we will take a hands-on approach to analyzing a dataset of customer demographics. We will use Pandas to load the data from a CSV file, clean it by handling missing values and correcting inconsistencies, and then perform some exploratory data analysis to uncover insights about our customers. We will calculate summary statistics, such as the average age and income of our customers, and create visualizations to help us understand the distribution of our data.</p>
+  </div>
+</body>
+</html>

@@ -1,86 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creating a basic scene (Scene, Camera, Renderer)</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creating a Basic Scene</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <h1>Creating a basic scene (Scene, Camera, Renderer)</h1>
-    <p>In Three.js, every 3D application starts with three fundamental components: a Scene, a Camera, and a Renderer.</p>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Creating a Basic Scene</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
 
-    <h2>1. The Scene</h2>
-    <p>The scene is where you set up everything you want to display. Think of it as a container that holds all your objects, lights, and cameras. Without a scene, there's nowhere for your 3D world to exist.</p>
+  <!-- Main content -->
+  <div class="container">
+    <h2 class="section-title">Your First Steps into the 3D World with Three.js</h2>
+    <p>Creating a 3D scene in Three.js involves setting up a renderer, a scene, and a camera. These are the absolute minimum requirements to display anything in 3D on your web page.</p>
+    
+    <h3>The Renderer</h3>
+    <p>The renderer is responsible for taking your 3D scene and displaying it on a 2D canvas. The most common renderer is `WebGLRenderer`, which uses the WebGL API for hardware-accelerated 3D graphics.</p>
+    <h4>Code Example: Initializing the Renderer</h4>
+    <pre><code>import * as THREE from 'three';
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);</code></pre>
+
+    <h3>The Scene</h3>
+    <p>The scene is where you place all your 3D objects, lights, and cameras. Think of it as a container or a stage for your 3D world.</p>
+    <h4>Code Example: Creating a Scene</h4>
     <pre><code>const scene = new THREE.Scene();</code></pre>
 
-    <h2>2. The Camera</h2>
-    <p>The camera defines what is visible in your scene and how it's viewed. It's essentially your viewpoint into the 3D world. The most common type of camera in Three.js is the <code>PerspectiveCamera</code>, which mimics how the human eye sees things, with objects appearing smaller as they get further away.</p>
-    <pre><code>const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5; // Move the camera back to see the scene</code></pre>
-    <ul>
-        <li><code>fov</code> (field of view): The extent of the scene that is seen on the display at any given moment.</li>
-        <li><code>aspect</code>: The aspect ratio of the camera's frustum (width / height).</li>
-        <li><code>near</code>: The near clipping plane. Objects closer than this won't be rendered.</li>
-        <li><code>far</code>: The far clipping plane. Objects farther than this won't be rendered.</li>
-    </ul>
+    <h3>The Camera</h3>
+    <p>The camera defines what the user sees in your 3D scene. There are different types of cameras, but `PerspectiveCamera` is the most common for simulating human vision.</p>
+    <h4>Code Example: Setting up a Camera</h4>
+    <pre><code>const camera = new THREE.PerspectiveCamera(
+  75, // Field of view
+  window.innerWidth / window.innerHeight, // Aspect ratio
+  0.1, // Near clipping plane
+  1000 // Far clipping plane
+);
+camera.position.z = 5; // Move camera back to see objects</code></pre>
 
-    <h2>3. The Renderer</h2>
-    <p>The renderer is responsible for taking the scene and the camera's perspective and drawing it onto your HTML <code>&lt;canvas&gt;</code> element using WebGL. It handles all the complex calculations to translate your 3D scene into a 2D image that can be displayed on the screen.</p>
-    <pre><code>const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight); // Set the size of the renderer
-document.body.appendChild(renderer.domElement); // Add the renderer's canvas to the HTML document</code></pre>
+    <h3>Putting It All Together: The Render Loop</h3>
+    <p>To make your scene interactive and dynamic, you need a render loop. This function is called repeatedly (typically 60 times per second) to update the scene and redraw the frame.</p>
+    <h4>Code Example: The Basic Render Loop</h4>
+    <pre><code>function animate() {
+  requestAnimationFrame(animate);
+  // Update objects here (e.g., cube.rotation.x += 0.01;)
+  renderer.render(scene, camera);
+}
+animate();</code></pre>
 
-    <h2>Putting it all together: A Basic Rotating Cube</h2>
-    <p>Here's a complete example demonstrating how to set up a basic Three.js scene with a rotating cube. This code includes the scene, camera, renderer, a simple object (cube), and an animation loop.</p>
-
-    <iframe srcdoc="
-        <!DOCTYPE html>
-        <html lang=\"en\">
-        <head>
-            <meta charset=\"UTF-8\">
-            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-            <title>Three.js Basic Scene</title>
-            <style>
-                body { margin: 0; overflow: hidden; }
-                canvas { display: block; }
-            </style>
-        </head>
-        <body>
-            <script type=\"module\">
-                import * as THREE from 'https://unpkg.com/three@0.128.0/build/three.module.js';
-
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer();
-
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                document.body.appendChild(renderer.domElement);
-
-                const geometry = new THREE.BoxGeometry();
-                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-                const cube = new THREE.Mesh(geometry, material);
-                scene.add(cube);
-
-                camera.position.z = 5;
-
-                function animate() {
-                    requestAnimationFrame(animate);
-                    cube.rotation.x += 0.01;
-                    cube.rotation.y += 0.01;
-                    renderer.render(scene, camera);
-                }
-                animate();
-
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
-            </script>
-        </body>
-        </html>
-    " frameborder="0" width="100%" height="400px"></iframe>
-
+    <h3>Case Study: A Simple Product Showcase</h3>
+    <p>Imagine you want to display a 3D model of a product on a webpage. By setting up a basic Three.js scene, you can load your product model, add some lighting to make it visible, and position a camera to give the user a good view. The render loop would then allow for simple animations or user interactions like rotating the product.</p>
+  </div>
 </body>
 </html>
