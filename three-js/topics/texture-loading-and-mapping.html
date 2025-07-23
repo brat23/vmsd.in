@@ -7,12 +7,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Texture loading and mapping</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Texture Loading and Mapping in Three.js</h1>
     <p>Loading and mapping textures like diffuse, bump, and normal maps is crucial for adding visual detail and realism to 3D objects in Three.js. This process primarily involves using the <code>THREE.TextureLoader</code> to load image files and then assigning these loaded textures to specific properties of a material, most commonly <code>THREE.MeshStandardMaterial</code> for physically based rendering (PBR).</p>
 
     <h2>1. Texture Loading</h2>
     <p>To load any texture in Three.js, you use the <code>THREE.TextureLoader</code> class. This loader handles the asynchronous loading of image files and provides a <code>Texture</code> object that can be applied to materials.</p>
-    <pre><code>import * as THREE from 'three';
+    <pre><code>import *s THREE from 'three';
 
 const loader = new THREE.TextureLoader();
 
@@ -113,6 +121,6 @@ const material = new THREE.MeshStandardMaterial({
         </body>
         </html>
     " frameborder="0" width="100%" height="400px"></iframe>
-
+  </div>
 </body>
 </html>

@@ -148,6 +148,14 @@ body {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.phase-header-content {
+    display: flex;
+    align-items: center;
 }
 
 .phase-header::before {
@@ -394,7 +402,7 @@ a.topic-link:hover {
 }
 
 .toggle-btn.rotated {
-    transform: rotate(90deg);
+    transform: rotate(180deg);
 }
 
 @media (max-width: 768px) {
@@ -408,6 +416,15 @@ a.topic-link:hover {
     
     .stats-container {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .phase-header-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .phase-number {
+        margin-bottom: 1rem;
     }
 }
 

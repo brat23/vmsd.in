@@ -1,0 +1,464 @@
+/* General Body Styles */
+body {
+    font-family: 'Inter', sans-serif; /* Modern font */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%); /* Dark, deep gradient background */
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #e0e6ed; /* Light, pleasing text color */
+    line-height: 1.6;
+}
+
+/* Main Container */
+.container {
+    background-color: #34495e; /* Slightly lighter dark background for container */
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Stronger, darker shadow for depth */
+    padding: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    max-width: 1300px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle light border */
+}
+
+/* Heading */
+h1 {
+    width: 100%;
+    text-align: center;
+    color: #81ecec; /* Use a vibrant accent color for the heading */
+    margin-bottom: 30px;
+    font-size: 2.8em;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Softer, more subtle text shadow */
+}
+
+/* Section Headings */
+h3 {
+    width: 100%;
+    color: #81ecec; /* Vibrant accent color for subheadings */
+    margin-top: 25px;
+    margin-bottom: 20px;
+    font-size: 1.6em;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+    padding-bottom: 10px;
+    font-weight: 600;
+}
+
+/* Controls Section */
+.controls {
+    flex: 2;
+    min-width: 350px;
+}
+
+.advanced-options {
+    background-color: #3d566e; /* Darker background for options cards */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Darker shadow */
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #e0e6ed; /* Light label color */
+    font-size: 1em;
+}
+
+/* Input and Select Styles */
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #5a728a; /* Darker border for inputs */
+    border-radius: 8px;
+    font-size: 1.05em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #4a627a; /* Darker background for inputs */
+    color: #e0e6ed; /* Light text in inputs */
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #81ecec; /* Accent color on focus */
+    box-shadow: 0 0 0 4px rgba(129, 236, 236, 0.2); /* Accent shadow on focus */
+    outline: none;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Color Input Specifics */
+input[type="color"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 45px;
+    height: 45px;
+    border: 2px solid #5a728a; /* Darker border */
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3); /* Darker shadow */
+    transition: transform 0.2s ease;
+}
+
+input[type="color"]:hover {
+    transform: scale(1.05);
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+}
+
+input[type="color"]::-moz-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-moz-color-swatch {
+    border: none;
+    border-radius: 50%;
+}
+
+/* Range Input Specifics */
+input[type="range"] {
+    width: calc(100% - 70px);
+    vertical-align: middle;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
+    background: #5a728a; /* Darker track color */
+    border-radius: 5px;
+    outline: none;
+    transition: background 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #81ecec; /* Accent color thumb */
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    background: #6cbfbf;
+    transform: scale(1.1);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #81ecec;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+    background: #6cbfbf;
+    transform: scale(1.1);
+}
+
+.form-group span[id$="Value"] {
+    display: inline-block;
+    width: 60px;
+    text-align: right;
+    font-weight: 700;
+    color: #81ecec; /* Matching accent color */
+    font-size: 1.1em;
+}
+
+/* Grid for Styling Options */
+.style-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* Content Type Detection */
+.input-wrapper {
+    position: relative;
+}
+
+.content-icon {
+    position: absolute;
+    left: 15px;
+    top: 14px;
+    font-size: 1.3em;
+    color: #aeb8c7; /* Lighter icon color */
+}
+
+.input-wrapper textarea {
+    padding-left: 50px;
+}
+
+.content-type {
+    font-size: 0.9em;
+    color: #aeb8c7; /* Lighter text color */
+    margin-top: 8px;
+    padding-left: 10px;
+    font-style: italic;
+}
+
+.content-type.url {
+    color: #50fa7b; /* Green for URLs in dark mode */
+}
+
+.content-type.email {
+    color: #f1fa8c; /* Yellow for emails in dark mode */
+}
+
+.content-type.phone {
+    color: #bd93f9; /* Purple for phones in dark mode */
+}
+
+.content-type.text {
+    color: #aeb8c7;
+}
+
+/* Logo Upload */
+.logo-upload {
+    border: 2px dashed #5a728a; /* Darker dashed border */
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background-color: #3d566e; /* Darker background */
+}
+
+.logo-upload:hover {
+    border-color: #81ecec;
+    background-color: #4a627a;
+}
+
+.logo-upload input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.logo-upload div {
+    color: #e0e6ed;
+    font-size: 1.05em;
+    font-weight: 500;
+}
+
+#logoPreviewContainer {
+    display: none;
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin: 15px auto 0;
+    border: 1px solid #5a728a;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+#logoPreview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#removeLogoBtn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff6b6b; /* Red accent for remove */
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3em;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s ease;
+}
+
+#removeLogoBtn:hover {
+    background-color: #e04f4f;
+}
+
+/* Preview Section */
+.preview {
+    flex: 1;
+    min-width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 20px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
+    z-index: 100;
+}
+
+.qr-display {
+    width: 320px;
+    height: 320px;
+    border: 1px solid #5a728a;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: #3d566e; /* Darker background for QR display */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Stronger, darker shadow */
+    overflow: hidden;
+}
+
+#qrcode canvas {
+    border-radius: 10px;
+}
+
+/* Download Buttons */
+.download-btn {
+    background-color: #81ecec; /* Solid accent color */
+    color: #1a252f; /* Dark text for contrast */
+    border: none;
+    border-radius: 8px;
+    padding: 14px 30px;
+    font-size: 1.15em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 280px;
+    margin-top: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Softer shadow */
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.download-btn:hover {
+    background: linear-gradient(45deg, #81ecec, #6cbfbf); /* Subtle gradient on hover */
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.download-btn:active {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .container {
+        flex-direction: column;
+        padding: 25px;
+        gap: 30px;
+    }
+
+    .controls, .preview {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .style-grid {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 2.2em;
+    }
+}
+
+/* Toast Notification Styles */
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+.toast {
+    background-color: #4a627a; /* Darker toast background */
+    color: #e0e6ed;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Darker shadow */
+    font-size: 0.95em;
+    min-width: 250px;
+    text-align: center;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.hide {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.toast.success {
+    background-color: #50fa7b; /* Green accent for success */
+    color: #1a252f;
+}
+
+.toast.error {
+    background-color: #ff6b6b; /* Red accent for error */
+    color: #1a252f;
+}
+
+.toast.info {
+    background-color: #bd93f9; /* Purple accent for info */
+    color: #1a252f;
+}

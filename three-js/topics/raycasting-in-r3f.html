@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Raycasting in R3F</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Raycasting in React Three Fiber</h1>
     <p>Raycasting in React Three Fiber (R3F) allows you to detect interactions between a virtual "ray" (often originating from the camera and pointing towards the mouse cursor) and objects in your 3D scene. This is fundamental for implementing interactive experiences like clicking on objects, hovering, or dragging.</p>
 
@@ -71,7 +79,7 @@ export default MyInteractiveScene;</code></pre>
     <h3>Example of Manual Raycasting:</h3>
     <pre><code>import { Canvas, useThree } from '@react-three/fiber';
 import { useEffect } from 'react';
-import * as THREE from 'three';
+import *s THREE from 'three';
 
 function RaycasterHandler() {
   const { gl, camera, scene } = useThree();
@@ -126,6 +134,6 @@ function MySceneWithManualRaycasting() {
     &lt;/Canvas&gt;
   );
 }</code></pre>
-
+  </div>
 </body>
 </html>

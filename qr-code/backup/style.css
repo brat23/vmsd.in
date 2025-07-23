@@ -1,0 +1,389 @@
+/* General Body Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top to prevent jumping */
+    min-height: 100vh; /* Use min-height to allow content to expand */
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #333;
+}
+
+/* Main Container */
+.container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    gap: 30px;
+    max-width: 1200px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Heading */
+h1 {
+    width: 100%; /* Occupy full width */
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 2.2em;
+    font-weight: 600;
+}
+
+/* Section Headings */
+h3 {
+    width: 100%;
+    color: #34495e;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+/* Controls Section */
+.controls {
+    flex: 2; /* Takes more space */
+    min-width: 320px; /* Minimum width for controls */
+}
+
+.advanced-options {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+    font-size: 0.95em;
+}
+
+/* Input and Select Styles */
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Color Input Specifics */
+input[type="color"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+}
+
+input[type="color"]::-moz-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-moz-color-swatch {
+    border: none;
+    border-radius: 50%;
+}
+
+/* Range Input Specifics */
+input[type="range"] {
+    width: calc(100% - 60px); /* Adjust width to make space for value */
+    vertical-align: middle;
+}
+
+.form-group span[id$="Value"] {
+    display: inline-block;
+    width: 50px;
+    text-align: right;
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Grid for Styling Options */
+.style-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 15px; /* Space between grid items */
+    margin-bottom: 15px;
+}
+
+/* Content Type Detection */
+.input-wrapper {
+    position: relative;
+}
+
+.content-icon {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-size: 1.2em;
+}
+
+.input-wrapper textarea {
+    padding-left: 40px; /* Make space for the icon */
+}
+
+.content-type {
+    font-size: 0.85em;
+    color: #777;
+    margin-top: 5px;
+    padding-left: 5px;
+}
+
+.content-type.url {
+    color: #28a745; /* Green for URLs */
+}
+
+.content-type.email {
+    color: #ffc107; /* Yellow for emails */
+}
+
+.content-type.phone {
+    color: #17a2b8; /* Blue for phones */
+}
+
+.content-type.text {
+    color: #6c757d; /* Gray for plain text */
+}
+
+/* Logo Upload */
+.logo-upload {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-upload:hover {
+    border-color: #007bff;
+}
+
+.logo-upload input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.logo-upload div {
+    color: #555;
+    font-size: 1em;
+}
+
+#logoPreviewContainer {
+    display: none;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 10px auto 0;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#logoPreview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#removeLogoBtn {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    background: rgba(255, 0, 0, 0.7);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Preview Section */
+.preview {
+    flex: 1; /* Takes remaining space */
+    min-width: 300px; /* Minimum width for preview */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align to top */
+    padding-top: 20px;
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 20px; /* Adjust as needed to control where it sticks */
+    align-self: flex-start; /* Ensures it aligns to the start of the flex container */
+    z-index: 100; /* Ensure it stays on top */
+}
+
+.qr-display {
+    width: 300px;
+    height: 300px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+#qrcode canvas {
+    border-radius: 8px; /* Match container border-radius */
+}
+
+/* Download Buttons */
+.download-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%;
+    max-width: 250px;
+    margin-top: 10px; /* Space between buttons */
+}
+
+.download-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.download-btn:active {
+    transform: translateY(0);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .controls, .preview {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .style-grid {
+        grid-template-columns: 1fr; /* Stack columns on small screens */
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+}
+
+/* Toast Notification Styles */
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column-reverse; /* New toasts appear on top */
+    align-items: center;
+}
+
+.toast {
+    background-color: #333;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-size: 0.95em;
+    min-width: 250px;
+    text-align: center;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.hide {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.toast.success {
+    background-color: #28a745; /* Green */
+}
+
+.toast.error {
+    background-color: #dc3545; /* Red */
+}
+
+.toast.info {
+    background-color: #17a2b8; /* Blue */
+}

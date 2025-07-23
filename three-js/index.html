@@ -56,10 +56,12 @@
         <div class="curriculum">
             <div class="phase">
                 <div class="phase-header" onclick="togglePhase(this)">
-                    <span class="phase-number">1</span>
-                    <div>
-                        <h2 class="phase-title"><a href="topics/fundamentals-of-3d-and-threejs.html" class="topic-link">📚 Fundamentals of 3D & Three.js (Vanilla)</a></h2>
-                        <p class="phase-description">Master the core concepts of 3D graphics and Three.js fundamentals</p>
+                    <div class="phase-header-content">
+                        <span class="phase-number">1</span>
+                        <div>
+                            <h2 class="phase-title"><a href="topics/fundamentals-of-3d-and-threejs.html" class="topic-link">📚 Fundamentals of 3D & Three.js (Vanilla)</a></h2>
+                            <p class="phase-description">Master the core concepts of 3D graphics and Three.js fundamentals</p>
+                        </div>
                     </div>
                     <button class="toggle-btn">▼</button>
                 </div>
@@ -117,10 +119,12 @@
 
             <div class="phase">
                 <div class="phase-header" onclick="togglePhase(this)">
-                    <span class="phase-number">2</span>
-                    <div>
-                        <h2 class="phase-title"><a href="topics/introduction-to-react-and-react-three-fiber.html" class="topic-link">⚛️ Introduction to React + React Three Fiber</a></h2>
-                        <p class="phase-description">Learn how to build 3D experiences with React Three Fiber</p>
+                    <div class="phase-header-content">
+                        <span class="phase-number">2</span>
+                        <div>
+                            <h2 class="phase-title"><a href="topics/introduction-to-react-and-react-three-fiber.html" class="topic-link">⚛️ Introduction to React + React Three Fiber</a></h2>
+                            <p class="phase-description">Learn how to build 3D experiences with React Three Fiber</p>
+                        </div>
                     </div>
                     <button class="toggle-btn">▼</button>
                 </div>
@@ -177,10 +181,12 @@
 
             <div class="phase">
                 <div class="phase-header" onclick="togglePhase(this)">
-                    <span class="phase-number">3</span>
-                    <div>
-                        <h2 class="phase-title"><a href="topics/interactivity-physics-and-advanced-techniques.html" class="topic-link">🔧 Interactivity, Physics & Advanced Techniques</a></h2>
-                        <p class="phase-description">Add physics, interactions, and advanced effects to your 3D scenes</p>
+                    <div class="phase-header-content">
+                        <span class="phase-number">3</span>
+                        <div>
+                            <h2 class="phase-title"><a href="topics/interactivity-physics-and-advanced-techniques.html" class="topic-link">🔧 Interactivity, Physics & Advanced Techniques</a></h2>
+                            <p class="phase-description">Add physics, interactions, and advanced effects to your 3D scenes</p>
+                        </div>
                     </div>
                     <button class="toggle-btn">▼</button>
                 </div>
@@ -226,10 +232,12 @@
 
             <div class="phase">
                 <div class="phase-header" onclick="togglePhase(this)">
-                    <span class="phase-number">4</span>
-                    <div>
-                        <h2 class="phase-title"><a href="topics/ui-integration-optimization-and-projects.html" class="topic-link">🌐 UI Integration, Optimization & Projects</a></h2>
-                        <p class="phase-description">Build real-world projects with optimized performance</p>
+                    <div class="phase-header-content">
+                        <span class="phase-number">4</span>
+                        <div>
+                            <h2 class="phase-title"><a href="topics/ui-integration-optimization-and-projects.html" class="topic-link">🌐 UI Integration, Optimization & Projects</a></h2>
+                            <p class="phase-description">Build real-world projects with optimized performance</p>
+                        </div>
                     </div>
                     <button class="toggle-btn">▼</button>
                 </div>
@@ -318,11 +326,20 @@
 
         // Toggle phase expansion
         function togglePhase(header) {
-            const grid = header.nextElementSibling;
-            const toggleBtn = header.querySelector('.toggle-btn');
-            
-            grid.classList.toggle('expanded');
-            toggleBtn.classList.toggle('rotated');
+            const allGrids = document.querySelectorAll('.weeks-grid');
+            const allToggleBtns = document.querySelectorAll('.toggle-btn');
+            const currentGrid = header.nextElementSibling;
+            const currentToggleBtn = header.querySelector('.toggle-btn');
+
+            allGrids.forEach((grid, index) => {
+                if (grid !== currentGrid && grid.classList.contains('expanded')) {
+                    grid.classList.remove('expanded');
+                    allToggleBtns[index].classList.remove('rotated');
+                }
+            });
+
+            currentGrid.classList.toggle('expanded');
+            currentToggleBtn.classList.toggle('rotated');
         }
 
         // Toggle week completion
@@ -398,20 +415,20 @@
             const rect = element.getBoundingClientRect();
             const particles = [];
             
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 20; i++) {
                 const particle = document.createElement('div');
                 particle.style.position = 'fixed';
                 particle.style.left = rect.left + rect.width / 2 + 'px';
                 particle.style.top = rect.top + rect.height / 2 + 'px';
-                particle.style.width = '4px';
-                particle.style.height = '4px';
+                particle.style.width = '6px';
+                particle.style.height = '6px';
                 particle.style.background = i % 2 === 0 ? 'var(--primary-color)' : 'var(--secondary-color)';
                 particle.style.borderRadius = '50%';
                 particle.style.pointerEvents = 'none';
                 particle.style.zIndex = '9999';
                 
-                const angle = (i / 12) * Math.PI * 2;
-                const velocity = 2 + Math.random() * 3;
+                const angle = (i / 20) * Math.PI * 2;
+                const velocity = 3 + Math.random() * 4;
                 const vx = Math.cos(angle) * velocity;
                 const vy = Math.sin(angle) * velocity;
                 
@@ -425,7 +442,7 @@
             
             function animateParticles() {
                 particles.forEach((particle, index) => {
-                    particle.life -= 0.02;
+                    particle.life -= 0.025;
                     if (particle.life <= 0) {
                         particle.remove();
                         particles.splice(index, 1);
@@ -439,7 +456,7 @@
                     particle.style.top = currentTop + particle.vy + 'px';
                     particle.style.opacity = particle.life;
                     
-                    particle.vy += 0.1; // gravity
+                    particle.vy += 0.15; // gravity
                 });
                 
                 if (particles.length > 0) {

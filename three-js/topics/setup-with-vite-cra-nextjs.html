@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Setup with Vite / CRA / Next.js</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Setting up React Three Fiber with Vite, Create React App, and Next.js</h1>
     <p>React Three Fiber (R3F) is a React renderer for Three.js, allowing you to build 3D scenes using React components. It simplifies the process of working with Three.js by integrating it into the React ecosystem.</p>
 
@@ -81,6 +89,6 @@ module.exports = nextConfig;</code></pre>
             <p>When working with Next.js, especially with App Router, components that use React Hooks (like <code>useFrame</code> from R3F) need to be client-side components. You can achieve this by adding <code>"use client";</code> at the top of your component file.</p>
         </li>
     </ol>
-
+  </div>
 </body>
 </html>

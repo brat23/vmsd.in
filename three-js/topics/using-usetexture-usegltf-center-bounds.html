@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Using useTexture, useGLTF, Center, Bounds</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Using <code>useTexture</code>, <code>useGLTF</code>, <code>&lt;Center&gt;</code>, and <code>&lt;Bounds&gt;</code> in React Three Fiber</h1>
     <p>React Three Fiber (R3F) leverages a declarative approach to build 3D scenes with React. The <code>@react-three/drei</code> library provides a collection of useful helpers and abstractions that simplify common tasks, including loading textures and models, and positioning objects.</p>
 
@@ -32,6 +40,16 @@ function TexturedBox() {
         roughnessMap={roughnessMap}
       /&gt;
     &lt;/mesh&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;Canvas&gt;
+      &lt;Suspense fallback={null}&gt;
+        &lt;Model url="/path/to/your/model.glb" /&gt;
+      &lt;/Suspense&gt;
+    &lt;/Canvas&gt;
   );
 }</code></pre>
 
@@ -86,7 +104,8 @@ function MySceneWithBounds() {
       &lt;!-- Add other objects here that you want to be included in the bounds --&gt;
     &lt;/Bounds&gt;
   );
-}</code></pre>
-
+}
+</code></pre>
+  </div>
 </body>
 </html>

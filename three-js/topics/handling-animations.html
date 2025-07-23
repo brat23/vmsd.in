@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Handling animations (useAnimations)</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Handling Animations with <code>useAnimations</code> in React Three Fiber</h1>
     <p>When working with 3D models that include animations (like those often found in glTF/GLB files), React Three Fiber, in conjunction with <code>@react-three/drei</code>, provides the <code>useAnimations</code> hook to simplify their playback and control.</p>
 
@@ -70,7 +78,8 @@ export default function App() {
       &lt;OrbitControls /&gt;
     &lt;/Canvas&gt;
   );
-}</code></pre>
+}
+</code></pre>
 
     <h3>Key Points:</h3>
     <ul>
@@ -80,6 +89,6 @@ export default function App() {
         <li><b><code>useEffect</code>:</b> You'll typically use <code>useEffect</code> to trigger animation playback when the component mounts or when certain props/state change.</li>
         <li><b><code>useFrame</code> (optional):</b> For more complex animation logic or updates per frame, you might use <code>useFrame</code> to interact with the <code>mixer</code> directly, though <code>useAnimations</code> handles the basic mixer updates for you.</li>
     </ul>
-
+  </div>
 </body>
 </html>

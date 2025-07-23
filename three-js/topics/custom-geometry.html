@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Custom Geometry</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Custom Geometry in Three.js</h1>
     <p>In Three.js, while there are many built-in geometries (like BoxGeometry, SphereGeometry, etc.), you often need to create custom shapes that are not readily available. This is primarily done using <code>THREE.BufferGeometry</code>, which is the modern and efficient way to represent mesh data.</p>
 
@@ -96,6 +104,6 @@ window.addEventListener('resize', () => {
         <li><b><code>computeBoundingBox()</code> and <code>computeBoundingSphere()</code>:</b> For proper camera culling and other optimizations, it's often beneficial to call these methods after defining your geometry.</li>
         <li><b>Performance:</b> <code>BufferGeometry</code> is designed for performance. Modifying the geometry data frequently can be less performant than with the older <code>Geometry</code> class, but it's still possible by accessing and updating the <code>array</code> property of the <code>BufferAttribute</code> and setting <code>needsUpdate = true</code>.</li>
     </ul>
-
+  </div>
 </body>
 </html>

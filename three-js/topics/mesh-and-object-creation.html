@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Mesh and object creation</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Mesh and object creation</h1>
     <p>In Three.js, creating 3D objects, often referred to as "meshes," involves combining two fundamental components: <b>Geometry</b> and <b>Material</b>. These are then used to construct a <code>Mesh</code> object, which is a type of <code>Object3D</code>.</p>
 
@@ -63,6 +71,6 @@ const cube = new THREE.Mesh(geometry, material);
         <li><b>Center Scene at Origin:</b> Keep your scene centered around the origin (0,0,0) to prevent floating-point errors at large coordinates.</li>
         <li><b>Don't Move the Scene Object:</b> The <code>Scene</code> object should remain at its default position (0,0,0).</li>
     </ul>
-
+  </div>
 </body>
 </html>

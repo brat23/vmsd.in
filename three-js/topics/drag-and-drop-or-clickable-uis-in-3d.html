@@ -1,6 +1,68 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drag-and-drop or clickable UIs in 3D</title>
     <link rel="stylesheet" href="style.css">
-</head><body><h1>Drag-and-drop or clickable UIs in 3D</h1></body></html>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Drag-and-drop or clickable UIs in 3D</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
+    <h1>Drag-and-drop or clickable UIs in 3D</h1>
+    <p>Implementing drag-and-drop or clickable user interfaces directly within a 3D scene in Three.js or React Three Fiber involves a combination of raycasting, event handling, and sometimes physics or constraint systems.</p>
+
+    <h2>Clickable UIs (Object Picking)</h2>
+    <p>The most common way to make 3D objects clickable is through <b>raycasting</b>. A raycaster projects a ray from the camera through the mouse cursor's position into the 3D scene. Any objects that intersect this ray can then be identified and interacted with.</p>
+    <h3>Steps for Clickable Objects:</h3>
+    <ol>
+        <li><b>Create a <code>THREE.Raycaster</code>:</b> Initialize a raycaster object.</li>
+        <li><b>Update Raycaster:</b> In your event listener (e.g., for a mouse click), update the raycaster's origin and direction based on the mouse coordinates and the camera.</li>
+        <li><b>Find Intersections:</b> Use <code>raycaster.intersectObjects(objectsArray)</code> to get a list of objects that the ray intersects.</li>
+        <li><b>Process Intersections:</b> Iterate through the intersected objects to determine which one was clicked (usually the first one in the list, as it's closest to the camera).</li>
+    </ol>
+    <pre><code>// Example (Three.js)
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+function onMouseClick(event) {
+    // Calculate mouse position in normalized device coordinates (-1 to +1)
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    const intersects = raycaster.intersectObjects(scene.children, true); // true for recursive
+
+    if (intersects.length > 0) {
+        const clickedObject = intersects[0].object;
+        console.log('Clicked:', clickedObject.name);
+        // Perform action on clickedObject
+    }
+}</code></pre>
+
+    <h2>Drag-and-Drop in 3D</h2>
+    <p>Drag-and-drop functionality builds upon clickable UIs. It typically involves:</p>
+    <ol>
+        <li><b>Click (Mouse Down):</b> Identify the object to be dragged using raycasting. Store a reference to it.</li>
+        <li><b>Drag (Mouse Move):</b> As the mouse moves, update the position of the dragged object. This often involves projecting the mouse's 2D screen coordinates back into 3D space, usually onto a plane (e.g., the ground plane or a plane parallel to the camera's view).</li>
+        <li><b>Drop (Mouse Up):</b> Release the object. You might perform a final check for valid drop zones or snap the object to a grid.</li>
+    </ol>
+    <p>Libraries like <code>@react-three/drei</code> provide components like <code>&lt;DragControls&gt;</code> that abstract away much of this complexity, making it easier to implement dragging for your R3F components.</p>
+
+    <h2>Considerations for 3D UIs:</h2>
+    <ul>
+        <li><b>Performance:</b> Raycasting can be computationally intensive, especially with many complex objects. Optimize your scene and consider using simplified bounding volumes for raycasting.</li>
+        <li><b>User Experience:</b> Provide visual feedback (e.g., highlighting on hover, changing cursor) to indicate interactive objects.</li>
+        <li><b>Accessibility:</b> Consider alternative input methods for users who cannot use a mouse (e.g., keyboard navigation).</li>
+        <li><b>Z-fighting:</b> Ensure your UI elements don't visually conflict with other 3D objects due to depth sorting issues.</li>
+    </ul>
+  </div>
+</body>
+</html>

@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Tweening (GSAP or React Spring)</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Tweening with GSAP and React Spring in Three.js</h1>
     <p>Tweening is the process of generating intermediate frames between two images or states to give the appearance of a smooth transition. In Three.js, especially within a React environment, libraries like GSAP (GreenSock Animation Platform) and React Spring are commonly used to achieve smooth and dynamic animations.</p>
 
@@ -20,7 +28,7 @@
     </ul>
     <h3>Usage Example (Conceptual):</h3>
     <pre><code>import { gsap } from 'gsap';
-import * as THREE from 'three';
+import *s THREE from 'three';
 
 // Assume you have a mesh named 'myMesh'
 const myMesh = new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
@@ -75,13 +83,14 @@ export default function App() {
       &lt;AnimatedBox /&gt;
     &lt;/Canvas&gt;
   );
-}</code></pre>
+}
+</code></pre>
 
     <h2>Comparison and Recommendation</h2>
     <ul>
         <li>For highly precise, timeline-driven, and complex choreographed animations, especially if you need to animate a wide range of properties or synchronize multiple animations, <b>GSAP</b> is often the preferred choice.</li>
         <li>For animations within a React application, particularly when using React Three Fiber, where you prioritize natural, physics-based motion and a more declarative, React-friendly development experience, <b>React Spring</b> is an excellent fit.</li>
     </ul>
-
+  </div>
 </body>
 </html>

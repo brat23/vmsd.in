@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Particle systems</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Particle Systems in Three.js</h1>
     <p>Particle systems are a powerful way to create visual effects like smoke, fire, rain, dust, and stars in 3D web applications. They are highly performant, allowing for hundreds of thousands of particles on screen with a reasonable frame rate.</p>
 
@@ -20,7 +28,7 @@
     <h2>Basic Example: Simple Starfield</h2>
     <p>Here's a basic example of how you might set up a simple particle system to create a starfield effect:</p>
 
-    <pre><code>import * as THREE from 'three';
+    <pre><code>import *s THREE from 'three';
 
 // Scene, Camera, Renderer setup (assuming these are already defined)
 const scene = new THREE.Scene();
@@ -85,6 +93,6 @@ window.addEventListener('resize', () => {
         <li><b>Use custom shaders:</b> For highly customized effects and better performance, especially with many particles, you can write custom <code>ShaderMaterial</code>s to control how particles are rendered and animated on the GPU.</li>
         <li><b>Utilize specialized libraries:</b> Libraries like <code>three-nebula</code> and <code>three.quarks</code> provide powerful APIs and visual editors for creating complex particle effects, often handling the underlying <code>BufferGeometry</code> and shader complexities for you.</li>
     </ul>
-
+  </div>
 </body>
 </html>

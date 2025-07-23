@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Texture loading with useTexture</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Texture Loading with <code>useTexture</code> in React Three Fiber</h1>
     <p><code>useTexture</code> is a convenient hook provided by <code>@react-three/drei</code> that simplifies the process of loading textures in React Three Fiber applications. It is the recommended approach for texture loading in modern R3F setups.</p>
 
@@ -85,6 +93,6 @@ export default AdvancedTexturedObject;</code></pre>
         <li><b>Error Handling:</b> If a texture file is invalid or not found, <code>useTexture</code> can cause a runtime error. Consider using an <code>ErrorBoundary</code> to gracefully handle such issues.</li>
         <li><b>Texture Properties:</b> After loading, you can manipulate the <code>Texture</code> object's properties, such as <code>repeat</code>, <code>wrapS</code>, and <code>wrapT</code>, to control how the texture is applied and tiled on your mesh.</li>
     </ul>
-
+  </div>
 </body>
 </html>

@@ -371,6 +371,20 @@
             line-height: 1.4;
         }
 
+        .card-grid a,
+        .card-grid a:hover,
+        .card-grid a:visited,
+        .card-grid a:active {
+            text-decoration: none !important;
+            color: inherit;
+        }
+
+        .day-card a h3,
+        .day-card a p {
+            text-decoration: none !important;
+            color: inherit;
+        }
+
         .day-description {
             color: #7f8c8d;
             font-size: 1rem;

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-82687XMTH1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced QR Code Generator</title>
+    <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="./favicon.ico" media="(prefers-color-scheme: dark)"/>
+    <link rel="shortcut icon" href="./favicon.ico" media="(prefers-color-scheme: light)" />
+
+
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Advanced QR Code Generator</h1>
+        
+        <div class="controls">
+            <div class="advanced-options">
+                <h3>Content</h3>
+                <div class="form-group">
+                    <label for="text">Content (Text/URL/Data)</label>
+                    <div class="input-wrapper">
+                        <span id="contentIcon" class="content-icon">🌐</span>
+                        <textarea id="text" placeholder="Enter text, URL, or any data you want to encode...">https://vmsd.in</textarea>
+                    </div>
+                    <div id="contentType" class="content-type">Website URL detected</div>
+                </div>
+            </div>
+
+            <div class="advanced-options">
+                <h3>Styling</h3>
+                <div class="style-grid">
+                    <div class="form-group">
+                        <label for="dotsStyle">Dots Style</label>
+                        <select id="dotsStyle">
+                            <option value="square">Square</option>
+                            <option value="dots">Dots</option>
+                            <option value="rounded">Rounded</option>
+                            <option value="extra-rounded">Extra Rounded</option>
+                            <option value="classy">Classy</option>
+                            <option value="classy-rounded">Classy Rounded</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cornersSquareStyle">Corners Square Style</label>
+                        <select id="cornersSquareStyle">
+                            <option value="square">Square</option>
+                            <option value="dot">Dot</option>
+                            <option value="extra-rounded">Extra Rounded</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="style-grid">
+                    <div class="form-group">
+                        <label for="cornersDotStyle">Corners Dot Style</label>
+                        <select id="cornersDotStyle">
+                            <option value="square">Square</option>
+                            <option value="dot">Dot</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="foreground">Color</label>
+                        <input type="color" id="foreground" class="color-input" value="#000000">
+                    </div>
+                    <div class="form-group">
+                        <label for="color2">Gradient Color</label>
+                        <input type="color" id="color2" class="color-input" value="#000000">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="gradientType">Gradient Type</label>
+                    <select id="gradientType">
+                        <option value="linear">Linear</option>
+                        <option value="radial">Radial</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="gradientRotation">Gradient Rotation</label>
+                    <input type="range" id="gradientRotation" min="0" max="360" value="0">
+                </div>
+            </div>
+
+            <div class="advanced-options">
+                <h3>Background</h3>
+                <div class="style-grid">
+                    <div class="form-group">
+                        <label for="background">Background Color</label>
+                        <input type="color" id="background" class="color-input" value="#ffffff">
+                    </div>
+                    <div class="form-group">
+                        <label for="background2">Gradient Color</label>
+                        <input type="color" id="background2" class="color-input" value="#ffffff">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="backgroundGradientType">Gradient Type</label>
+                    <select id="backgroundGradientType">
+                        <option value="linear">Linear</option>
+                        <option value="radial">Radial</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="backgroundGradientRotation">Gradient Rotation</label>
+                    <input type="range" id="backgroundGradientRotation" min="0" max="360" value="0">
+                </div>
+                <!-- <div class="form-group">
+                    <label>Background Image</label>
+                    <div class="logo-upload">
+                        <input type="file" id="bgImageInput" accept="image/*">
+                        <div>🖼️ Click to upload background</div>
+                    </div>
+                    <button id="removeBgImageBtn" style="display: none; margin-top: 10px;">Remove Image</button>
+                </div> -->
+            </div>
+
+            <div class="advanced-options">
+                <h3>Advanced</h3>
+                <div class="style-grid">
+                    <div class="form-group">
+                        <label for="size">Size (pixels)</label>
+                        <input type="range" id="size" min="200" max="800" value="300">
+                        <span id="sizeValue">300px</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="margin">Margin</label>
+                        <input type="range" id="margin" min="0" max="10" value="4">
+                        <span id="marginValue">4</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="errorLevel">Error Correction Level</label>
+                    <select id="errorLevel">
+                        <option value="L">Low</option>
+                        <option value="M">Medium</option>
+                        <option value="Q">Quartile</option>
+                        <option value="H">High</option>
+                    </select>
+                </div>
+            </div>
+
+            
+
+            <div class="advanced-options">
+                <h3>Logo</h3>
+                <div class="form-group">
+                    <label>Logo/Image Overlay</label>
+                    <div class="logo-upload">
+                        <input type="file" id="logoInput" accept="image/*">
+                        <div>📁 Click to upload logo</div>
+                        <div id="logoPreviewContainer">
+                            <img id="logoPreview" class="logo-preview">
+                            <div id="removeLogoBtn">&times;</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="style-grid">
+                    <div class="form-group">
+                        <label for="logoSize">Logo Size (%)</label>
+                        <input type="range" id="logoSize" min="10" max="50" value="20">
+                        <span id="logoSizeValue">20%</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="logoOpacity">Logo Opacity</label>
+                        <input type="range" id="logoOpacity" min="0.1" max="1" step="0.1" value="1">
+                        <span id="logoOpacityValue">100%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview">
+            <div class="qr-display">
+                <div id="qrcode"></div>
+            </div>
+            
+            <button class="download-btn" onclick="downloadSVG()">
+                ⬇️ Download SVG
+            </button>
+            
+            <button class="download-btn" onclick="downloadPNG()" style="margin-top: 10px;">
+                ⬇️ Download PNG
+            </button>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>

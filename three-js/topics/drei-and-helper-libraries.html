@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">DREI & Helper Libraries</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1><code>@react-three/drei</code> and Helper Libraries</h1>
     <p>While React Three Fiber (R3F) provides the core bridge between React and Three.js, <code>@react-three/drei</code> (often simply referred to as Drei) is an indispensable collection of helpful utilities and abstractions that significantly simplify common tasks in 3D scene creation. It's a vital part of the R3F ecosystem, offering ready-made components and hooks that save development time and effort.</p>
 
@@ -41,7 +49,7 @@ import { OrbitControls, Text } from '@react-three/drei';
 
 function SceneWithDrei() {
   return (
-    &lt;Canvas camera={{ position: [0, 0, 5] }}&gt;
+    &lt;Canvas&gt;
       &lt;ambientLight /&gt;
       &lt;pointLight position={[10, 10, 10]} /&gt;
 
@@ -66,6 +74,6 @@ function SceneWithDrei() {
 }
 
 export default SceneWithDrei;</code></pre>
-
+  </div>
 </body>
 </html>

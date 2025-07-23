@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Post-processing: Bloom, FXAA, Depth of Field</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Post-processing in Three.js: Bloom, FXAA, and Depth of Field</h1>
     <p>Post-processing refers to effects applied to an entire rendered image after the 3D scene has been drawn. Three.js offers robust post-processing capabilities to enhance visual realism and artistic effects, including Bloom, FXAA (Fast Approximate Anti-aliasing), and Depth of Field (DoF). These effects are typically managed using the <code>EffectComposer</code>.</p>
 
@@ -45,7 +53,7 @@
     <h2>Example: Basic Post-processing Setup (Conceptual)</h2>
     <p>This example shows a conceptual setup for post-processing. To see the effects, you would typically add specific passes like <code>UnrealBloomPass</code>, <code>ShaderPass</code> (for FXAA), or <code>DepthOfFieldPass</code> to the composer.</p>
 
-    <pre><code>import * as THREE from 'three';
+    <pre><code>import *s THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 // import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
@@ -106,6 +114,6 @@ window.addEventListener('resize', () => {
     // }
 });
 </code></pre>
-
+  </div>
 </body>
 </html>

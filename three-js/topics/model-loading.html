@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Model loading (GLTFLoader, OBJLoader)</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>3D Model Loading in Three.js (GLTFLoader, OBJLoader)</h1>
     <p>Three.js provides various loaders to import 3D models into your scenes, with <code>GLTFLoader</code> and <code>OBJLoader</code> being two commonly used ones. These loaders are not part of the core Three.js library and need to be imported separately.</p>
 
@@ -93,6 +101,6 @@ mtlLoader.load(
 
     <h2>Important Note on Local File Loading</h2>
     <p>Due to browser security restrictions, you cannot directly load local 3D model files (e.g., from your hard drive using <code>file://</code> protocol) in a web browser. You need to serve your HTML and 3D model files from a web server (e.g., using Node.js with Express, Python's <code>http.server</code>, or a VS Code extension like Live Server).</p>
-
+  </div>
 </body>
 </html>

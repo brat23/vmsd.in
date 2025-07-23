@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Using glTF models</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Using glTF Models in Three.js</h1>
     <p>Using glTF (GL Transmission Format) models in Three.js is a common and efficient way to display 3D content on the web. glTF is often referred to as the "JPEG of 3D" due to its optimization for web delivery.</p>
 
@@ -16,7 +24,7 @@
 
     <h3>Basic Usage:</h3>
     <p>The <code>loader.load</code> method takes the model's URL, a callback for when the model is loaded, an optional callback for progress updates, and an optional callback for error handling.</p>
-    <pre><code>import * as THREE from 'three';
+    <pre><code>import *s THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 // Scene, Camera, Renderer setup (assuming these are already defined)
@@ -81,6 +89,6 @@ animate();
         <li><b>Animations:</b> glTF supports animations. You'll use <code>THREE.AnimationMixer</code> and <code>THREE.Clock</code> to play these animations.</li>
         <li><b>Local Server:</b> When developing, serve your files using a local web server to avoid CORS issues.</li>
     </ul>
-
+  </div>
 </body>
 </html>

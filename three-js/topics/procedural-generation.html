@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Procedural Generation</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Procedural Generation in Three.js</h1>
     <p>Procedural generation in Three.js involves algorithmically creating 3D content rather than manually modeling it. This technique is highly valuable for generating diverse and dynamic scenes, reducing memory footprint, and enabling real-time content creation.</p>
 
@@ -21,7 +29,7 @@
     <h2>Example: Procedural Terrain Generation (Conceptual)</h2>
     <p>This example demonstrates a conceptual approach to generating a simple procedural terrain using a noise function to displace vertices of a plane. This requires a Three.js setup.</p>
 
-    <pre><code>import * as THREE from 'three';
+    <pre><code>import *s THREE from 'three';
 
 // Scene, Camera, Renderer setup (assuming these are already defined)
 const scene = new THREE.Scene();
@@ -77,6 +85,6 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 </code></pre>
-
+  </div>
 </body>
 </html>

@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Use Instances, useMemo, preload, lazy</h1>
+    <a href="../index.html" class="cta-button">Back to Modules</a>
+  </header>
+
+  <!-- Main content -->
+  <div class="container">
     <h1>Optimization Techniques in React Three Fiber: <code>useMemo</code>, <code>Instances</code>, <code>preload</code>, <code>lazy</code></h1>
     <p>React Three Fiber (R3F) leverages React's component-based structure to build 3D scenes with Three.js. To optimize performance and manage loading, several techniques are commonly employed, often utilizing React hooks and features from <code>@react-three/drei</code>.</p>
 
@@ -17,7 +25,7 @@
         <li><b>Avoiding Unnecessary Object Creation:</b> When an object's properties are static or change infrequently, <code>useMemo</code> can cache the object itself, preventing its re-creation.</li>
     </ul>
     <pre><code>import React, { useMemo } from 'react';
-import * as THREE from 'three';
+import *s THREE from 'three';
 
 function OptimizedBox() {
   const geom = useMemo(() => new THREE.BoxGeometry(), []);
@@ -61,7 +69,8 @@ function App() {
       &lt;/Suspense&gt;
     &lt;/div&gt;
   );
-}</code></pre>
+}
+</code></pre>
 
     <h3>Preloading Assets with <code>useGLTF.preload</code> and <code>useLoader</code>:</h3>
     <p>For 3D models (especially glTF), textures, and other assets, preloading can improve the user experience by fetching assets in the background before they are displayed. <code>@react-three/drei</code> provides <code>useGLTF.preload</code> for glTF models.</p>
@@ -74,6 +83,6 @@ function Model({ url }) {
 
 // Preload the model
 useGLTF.preload('/path/to/your/model.gltf');</code></pre>
-
+  </div>
 </body>
 </html>
