@@ -16,10 +16,9 @@ document.addEventListener('DOMContentLoaded', function () {
     try {
         qrCode.append(document.getElementById("qrcode"));
         setupEventListeners(); // ✅ Attach all listeners
-        showToast("QR code generator loaded!");
+        showToast("Welcome to the QR code generator!");
     } catch (error) {
         console.error("Error appending QR code:", error);
-        showToast("Error loading QR code generator.", "error");
     }
 });
 
@@ -45,8 +44,14 @@ function setupEventListeners() {
     });
 
     document.getElementById('dotsStyle').addEventListener('change', (e) => {
-        qrCode.update({ dotsOptions: { type: e.target.value } });
-        showToast("Dots style changed to " + e.target.value + "!");
+        const selectedStyle = e.target.value;
+        qrCode.update({
+            dotsOptions: {
+                type: selectedStyle,
+                roundSize: selectedStyle === 'dots' ? false : true // Set roundSize to false for 'dots' style
+            }
+        });
+        showToast("Dots style changed to " + selectedStyle + "!");
     });
 
     document.getElementById('cornersSquareStyle').addEventListener('change', (e) => {
@@ -279,10 +284,6 @@ function showToast(message, type = 'success') {
     toast.className = 'toast ' + type;
     toast.textContent = message;
     toastContainer.appendChild(toast);
-
-    // Play sound
-    const audio = new Audio('./Audio/result-good-2-15.mp3');
-    audio.play().catch(e => console.error("Error playing sound:", e));
 
     setTimeout(() => {
         toast.classList.add('show');
