@@ -72,72 +72,7 @@ dragControls.addEventListener( 'dragend', function ( event ) {
     <h2>Example: OrbitControls and DragControls</h2>
     <p>This example demonstrates a scene where you can orbit the camera around a cube and also drag the cube around.</p>
 
-    <iframe srcdoc="
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset=\"utf-8\">
-            <title>Three.js Controls</title>
-            <style>
-                body { margin: 0; overflow: hidden; }
-                canvas { display: block; }
-            </style>
-        </head>
-        <body>
-            <script type=\"module\">
-                import *s THREE from 'https://unpkg.com/three@0.128.0/build/three.module.js';
-                import { OrbitControls } from 'https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js';
-                import { DragControls } from 'https://unpkg.com/three@0.128.0/examples/jsm/controls/DragControls.js';
-
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ antialias: true });
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                document.body.appendChild(renderer.domElement);
-
-                // Add a cube
-                const geometry = new THREE.BoxGeometry(1, 1, 1);
-                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-                const cube = new THREE.Mesh(geometry, material);
-                scene.add(cube);
-
-                camera.position.z = 5;
-
-                // OrbitControls
-                const orbitControls = new OrbitControls(camera, renderer.domElement);
-                orbitControls.enableDamping = true;
-                orbitControls.dampingFactor = 0.25;
-
-                // DragControls
-                const objects = [cube];
-                const dragControls = new DragControls(objects, camera, renderer.domElement);
-
-                dragControls.addEventListener( 'dragstart', function ( event ) {
-                    orbitControls.enabled = false;
-                    event.object.material.emissive.set( 0xaaaaaa );
-                } );
-
-                dragControls.addEventListener( 'dragend', function ( event ) {
-                    orbitControls.enabled = true;
-                    event.object.material.emissive.set( 0x000000 );
-                } );
-
-                function animate() {
-                    requestAnimationFrame(animate);
-                    orbitControls.update();
-                    renderer.render(scene, camera);
-                }
-                animate();
-
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
-            </script>
-        </body>
-        </html>
-    " frameborder="0" width="100%" height="400px"></iframe>
+        <iframe srcdoc='<!DOCTYPE html><html><head><meta charset=&quot;utf-8&quot;><title>Three.js Controls</title><style>body { margin: 0; overflow: hidden; } canvas { display: block; }</style></head><body><script type=&quot;module&quot;>import * as THREE from &apos;https://unpkg.com/three@0.128.0/build/three.module.js&apos;;import { OrbitControls } from &apos;https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js&apos;;import { DragControls } from &apos;https://unpkg.com/three@0.128.0/examples/jsm/controls/DragControls.js&apos;;const scene = new THREE.Scene();const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);const renderer = new THREE.WebGLRenderer({ antialias: true });renderer.setSize(window.innerWidth, window.innerHeight);document.body.appendChild(renderer.domElement);const geometry = new THREE.BoxGeometry(1, 1, 1);const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });const cube = new THREE.Mesh(geometry, material);scene.add(cube);camera.position.z = 5;const orbitControls = new OrbitControls(camera, renderer.domElement);orbitControls.enableDamping = true;orbitControls.dampingFactor = 0.25;const objects = [cube];const dragControls = new DragControls(objects, camera, renderer.domElement);dragControls.addEventListener(&apos;dragstart&apos;, function (event) { orbitControls.enabled = false; event.object.material.emissive.set(0xaaaaaa); });dragControls.addEventListener(&apos;dragend&apos;, function (event) { orbitControls.enabled = true; event.object.material.emissive.set(0x000000); });function animate() { requestAnimationFrame(animate); orbitControls.update(); renderer.render(scene, camera); } animate();window.addEventListener(&apos;resize&apos;, () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });</script></body></html>' frameborder="0" width="100%" height="400px"></iframe>
   </div>
 </body>
 </html>

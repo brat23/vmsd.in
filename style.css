@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 
 :root {
     --primary-color: #ff0055;
@@ -44,9 +45,13 @@ nav.scrolled {
     background: rgba(18, 18, 18, 0.9);
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
 .logo {
+    font-family: 'Luckiest Guy', cursive;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 400;
+    font-style: normal;
     color: var(--primary-color);
 }
 
@@ -196,6 +201,26 @@ nav ul li a:hover {
 
 .portfolio-item:hover .portfolio-overlay {
     opacity: 1;
+}
+
+.client-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4rem;
+    margin-top: 3rem;
+}
+
+.client-logos img {
+    height: 60px;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.client-logos img:hover {
+    filter: grayscale(0%);
+    scale: 1.1;
 }
 
 #contact {

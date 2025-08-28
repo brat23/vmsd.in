@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Manager</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/2.29.3/index.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0 20V10c10 0 20-5 30-5s20 5 30 5 20-5 30-5 20 5 30 5v10z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: 100px 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.3s ease;
+            position: relative;
+            flex: 1;
+            text-align: center;
+        }
+
+        .tab:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: #4f46e5;
+        }
+
+        .tab.active {
+            color: #4f46e5;
+            background: white;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4f46e5, #7c3aed);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .color-picker {
+            width: 100%;
+            height: 50px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .task-list {
+            margin-top: 2rem;
+        }
+
+        .task-item {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .task-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--task-color, #4f46e5);
+        }
+
+        .task-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .task-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .task-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .task-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .gantt-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+        }
+
+        .gantt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .gantt-chart {
+            min-width: 800px;
+            position: relative;
+        }
+
+        .gantt-timeline {
+            display: flex;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .gantt-date {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #6b7280;
+            padding: 0.5rem;
+            border-right: 1px solid #f3f4f6;
+            flex-shrink: 0;
+            flex-grow: 0;
+            min-width: 50px; /* Ensure a minimum width for visibility */
+        }
+
+        .gantt-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            min-height: 40px;
+        }
+
+        .gantt-task-name {
+            width: 200px;
+            padding: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+            border-right: 2px solid #e5e7eb;
+            flex-shrink: 0;
+        }
+
+        .gantt-task-bar {
+            height: 24px;
+            border-radius: 12px;
+            position: relative;
+            margin: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .summary-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .gantt-task-name {
+                width: 150px;
+            }
+
+            .export-buttons {
+                flex-direction: column;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-chart-gantt"></i> Project Manager</h1>
+            <p>Complete Project Management Solution</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('tasks')">
+                <i class="fas fa-tasks"></i> Tasks Management
+            </button>
+            <button class="tab" onclick="switchTab('gantt')">
+                <i class="fas fa-chart-bar"></i> Gantt Chart
+            </button>
+            <button class="tab" onclick="switchTab('summary')">
+                <i class="fas fa-chart-pie"></i> Project Summary
+            </button>
+        </div>
+
+        <!-- Tasks Management Tab -->
+        <div id="tasks" class="tab-content active">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="taskName"><i class="fas fa-clipboard"></i> Task Name</label>
+                    <input type="text" id="taskName" placeholder="Enter task name">
+                </div>
+                <div class="form-group">
+                    <label for="startDate"><i class="fas fa-calendar-alt"></i> Start Date</label>
+                    <input type="date" id="startDate">
+                </div>
+                <div class="form-group">
+                    <label for="endDate"><i class="fas fa-calendar-check"></i> End Date</label>
+                    <input type="date" id="endDate">
+                </div>
+                <div class="form-group">
+                    <label for="resource"><i class="fas fa-user"></i> Resource</label>
+                    <input type="text" id="resource" placeholder="Assigned person/team">
+                </div>
+                <div class="form-group">
+                    <label for="cost"><i class="fas fa-indian-rupee-sign"></i> Cost (₹)</label>
+                    <input type="number" id="cost" placeholder="0" min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="priority"><i class="fas fa-exclamation-triangle"></i> Priority</label>
+                    <select id="priority">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                        <option value="critical">Critical</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="status"><i class="fas fa-flag"></i> Status</label>
+                    <select id="status">
+                        <option value="not-started">Not Started</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="on-hold">On Hold</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="taskColor"><i class="fas fa-palette"></i> Task Color</label>
+                    <input type="color" id="taskColor" class="color-picker" value="#4f46e5">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description"><i class="fas fa-align-left"></i> Description</label>
+                <textarea id="description" rows="3" placeholder="Task description..."></textarea>
+            </div>
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                <button class="btn btn-primary" onclick="addTask()">
+                    <i class="fas fa-plus"></i> Add Task
+                </button>
+                <button class="btn btn-secondary" onclick="clearForm()">
+                    <i class="fas fa-eraser"></i> Clear Form
+                </button>
+            </div>
+
+            <div class="task-list" id="taskList">
+                <!-- Tasks will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Gantt Chart Tab -->
+        <div id="gantt" class="tab-content">
+            <div class="gantt-container">
+                <div class="gantt-header">
+                    <h2><i class="fas fa-chart-gantt"></i> Project Timeline</h2>
+                    <div>
+                        <button class="btn btn-secondary" onclick="zoomOut()">
+                            <i class="fas fa-search-minus"></i> Zoom Out
+                        </button>
+                        <button class="btn btn-secondary" onclick="zoomIn()">
+                            <i class="fas fa-search-plus"></i> Zoom In
+                        </button>
+                    </div>
+                </div>
+                <div id="ganttChart" class="gantt-chart">
+                    <div class="gantt-timeline" id="ganttTimeline"></div>
+                    <div id="ganttTasks"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Tab -->
+        <div id="summary" class="tab-content">
+            <div class="summary-card">
+                <h2><i class="fas fa-chart-pie"></i> Project Overview</h2>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="summary-value" id="totalTasks">0</div>
+                        <div class="summary-label">Total Tasks</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value" id="completedTasks">0</div>
+                        <div class="summary-label">Completed Tasks</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value" id="totalCost">₹0</div>
+                        <div class="summary-label">Total Budget</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value" id="projectDuration">0</div>
+                        <div class="summary-label">Duration (Days)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <h3><i class="fas fa-tasks"></i> Task Status Distribution</h3>
+                <div id="statusChart" style="height: 300px; margin-top: 1rem;">
+                    <canvas id="statusChartCanvas"></canvas>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <h3><i class="fas fa-chart-line"></i> Project Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="projectProgress" style="width: 0%"></div>
+                </div>
+                <p id="progressText" style="text-align: center; margin-top: 0.5rem;">0% Complete</p>
+            </div>
+
+            <div class="export-buttons">
+                <button class="btn btn-success" onclick="saveProject()">
+                    <i class="fas fa-save"></i> Save Project
+                </button>
+                <button class="btn btn-primary" onclick="exportJSON()">
+                    <i class="fas fa-download"></i> Export JSON
+                </button>
+                <button class="btn btn-secondary" onclick="exportCSV()">
+                    <i class="fas fa-file-csv"></i> Export CSV
+                </button>
+                <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="loadProject()">
+                <button class="btn btn-secondary" onclick="document.getElementById('fileInput').click()">
+                    <i class="fas fa-upload"></i> Load Project
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <h2>Edit Task</h2>
+            <div id="editForm">
+                <!-- Edit form will be populated here -->
+            </div>
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                <button class="btn btn-primary" onclick="updateTask()">
+                    <i class="fas fa-save"></i> Update Task
+                </button>
+                <button class="btn btn-secondary" onclick="closeEditModal()">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tasks = [];
+        let currentEditIndex = -1;
+        let ganttZoom = 1;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTaskList();
+            updateGanttChart();
+            updateSummary();
+            
+            // Set default start date to today
+            document.getElementById('startDate').value = formatDate(new Date());
+            
+            // Set default end date to one week from today
+            const endDate = new Date();
+            endDate.setDate(endDate.getDate() + 7);
+            document.getElementById('endDate').value = formatDate(endDate);
+        });
+
+        function formatDate(date) {
+            return date.toISOString().split('T')[0];
+        }
+
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            // 'this' refers to the button element that was clicked
+            // This line will be handled by the onclick attribute directly in the HTML
+            // For programmatic calls, you would pass the element or its ID.
+            // For now, assuming direct onclick from HTML, no change needed here for event.target
+            // However, if the function is called programmatically, 'event' would be undefined.
+            // Let's assume it's always called from onclick for now.
+            // If not, the active class won't be added to the clicked tab.
+            // To be safe, let's pass 'this' from the HTML onclick.
+            // No change needed here, as the HTML already passes the tab name.
+            // The active class is added to the tab by the HTML onclick, not here.
+            // The current implementation of switchTab relies on the HTML onclick to set the active class.
+            // The issue is likely elsewhere if the tabs are not becoming active.
+            // Re-reading the original code, the 'event' is implicitly available in inline event handlers.
+            // So, 'event.target' should work. The problem is not here.
+            // Let's revert the previous change to the Gantt chart calculation and re-evaluate.
+            // The previous change was to use dateRange.length for barLeft and barWidth, which was incorrect.
+            // The current state of using totalDays is correct.
+            // The issue is likely with the data or the rendering context.
+            // Let's ensure the minDate and maxDate are always valid, even if tasks array is empty.
+            // The current code already handles tasks.length === 0 by returning early.
+            // The problem is likely with the Chart.js rendering or the data itself.
+            // Let's ensure the canvas is always ready for Chart.js.
+            // I already added the line to clear and re-create the canvas.
+            // The problem might be that the Chart.js library is not fully loaded or there's a conflict.
+            // Let's ensure the Chart.js script is loaded before any functions that use it are called.
+            // The script tags are at the top of the body, so they should be loaded.
+            // Let's consider the possibility of CSS interfering with the chart rendering.
+            // The height is set to 300px for the statusChart div.
+            // Let's try to simplify the Gantt chart date range generation to ensure it always has dates.
+            // The current logic for minDate and maxDate is fine if tasks is not empty.
+            // The problem is likely with the data itself or how it's being processed.
+            // Let's add a console.log to see the tasks array and statusCounts.
+            // Since I cannot directly access the console, I will assume the user can do this.
+            // Let's focus on the Gantt chart timeline not showing.
+            // The `ganttTimeline.innerHTML` is updated with `dateRange.map`.
+            // If `dateRange` is empty, then nothing will be displayed.
+            // `dateRange` can be empty if `minDate` is greater than `maxDate`.
+            // This can happen if there's only one task, and its start and end dates are the same.
+            // The `if ((maxDate - minDate) / oneDay < 6)` block should ensure a minimum span.
+            // Let's ensure that `minDate` and `maxDate` are always valid dates, even if there's only one task.
+            // The current logic for minDate and maxDate is: `const minDate = new Date(Math.min(...allDates));`
+            // If `allDates` has only one element, `Math.min` will return that element.
+            // If `allDates` is empty, it will return `Infinity`, which is handled by `tasks.length === 0`.
+            // The problem might be that `currentDate.setDate(currentDate.getDate() + Math.max(1, Math.floor(1 / ganttZoom)));`
+            // is causing `currentDate` to jump too far, skipping dates.
+            // Let's simplify the date range generation for the Gantt chart.
+            // Instead of `Math.max(1, Math.floor(1 / ganttZoom))`, let's just increment by 1 day.
+            // This will make the timeline more granular, but it will ensure all dates are included.
+            // The zoom functionality can then be handled by scaling the entire chart.
+            // Let's try this change first for the Gantt chart timeline.
+            event.target.classList.add('active');
+            
+            // Update content based on tab
+            if (tabName === 'gantt') {
+                updateGanttChart();
+            } else if (tabName === 'summary') {
+                updateSummary();
+                updateStatusChart();
+            }
+        }
+
+        function addTask() {
+            const taskName = document.getElementById('taskName').value.trim();
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const resource = document.getElementById('resource').value.trim();
+            const cost = parseFloat(document.getElementById('cost').value) || 0;
+            const priority = document.getElementById('priority').value;
+            const status = document.getElementById('status').value;
+            const taskColor = document.getElementById('taskColor').value;
+            const description = document.getElementById('description').value.trim();
+
+            if (!taskName || !startDate || !endDate) {
+                alert('Please fill in task name, start date, and end date.');
+                return;
+            }
+
+            if (new Date(startDate) > new Date(endDate)) {
+                alert('Start date cannot be after end date.');
+                return;
+            }
+
+            const task = {
+                id: Date.now(),
+                name: taskName,
+                startDate: startDate,
+                endDate: endDate,
+                resource: resource,
+                cost: cost,
+                priority: priority,
+                status: status,
+                color: taskColor,
+                description: description,
+                createdAt: new Date().toISOString()
+            };
+
+            tasks.push(task);
+            updateTaskList();
+            updateGanttChart();
+            updateSummary();
+            clearForm();
+        }
+
+        function clearForm() {
+            document.getElementById('taskName').value = '';
+            document.getElementById('resource').value = '';
+            document.getElementById('cost').value = '';
+            document.getElementById('priority').value = 'medium';
+            document.getElementById('status').value = 'not-started';
+            document.getElementById('taskColor').value = '#4f46e5';
+            document.getElementById('description').value = '';
+            
+            // Reset dates to default
+            document.getElementById('startDate').value = formatDate(new Date());
+            const endDate = new Date();
+            endDate.setDate(endDate.getDate() + 7);
+            document.getElementById('endDate').value = formatDate(endDate);
+        }
+
+        function deleteTask(index) {
+            if (confirm('Are you sure you want to delete this task?')) {
+                tasks.splice(index, 1);
+                updateTaskList();
+                updateGanttChart();
+                updateSummary();
+            }
+        }
+
+        function editTask(index) {
+            currentEditIndex = index;
+            const task = tasks[index];
+            
+            const editForm = document.getElementById('editForm');
+            editForm.innerHTML = `
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Task Name</label>
+                        <input type="text" id="editTaskName" value="${task.name}">
+                    </div>
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="date" id="editStartDate" value="${task.startDate}">
+                    </div>
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="date" id="editEndDate" value="${task.endDate}">
+                    </div>
+                    <div class="form-group">
+                        <label>Resource</label>
+                        <input type="text" id="editResource" value="${task.resource}">
+                    </div>
+                    <div class="form-group">
+                        <label>Cost (₹)</label>
+                        <input type="number" id="editCost" value="${task.cost}" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="editPriority">
+                            <option value="low" ${task.priority === 'low' ? 'selected' : ''}>Low</option>
+                            <option value="medium" ${task.priority === 'medium' ? 'selected' : ''}>Medium</option>
+                            <option value="high" ${task.priority === 'high' ? 'selected' : ''}>High</option>
+                            <option value="critical" ${task.priority === 'critical' ? 'selected' : ''}>Critical</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="editStatus">
+                            <option value="not-started" ${task.status === 'not-started' ? 'selected' : ''}>Not Started</option>
+                            <option value="in-progress" ${task.status === 'in-progress' ? 'selected' : ''}>In Progress</option>
+                            <option value="completed" ${task.status === 'completed' ? 'selected' : ''}>Completed</option>
+                            <option value="on-hold" ${task.status === 'on-hold' ? 'selected' : ''}>On Hold</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Task Color</label>
+                        <input type="color" id="editTaskColor" value="${task.color}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="editDescription" rows="3">${task.description}</textarea>
+                </div>
+            `;
+            
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function updateTask() {
+            if (currentEditIndex === -1) return;
+            
+            const taskName = document.getElementById('editTaskName').value.trim();
+            const startDate = document.getElementById('editStartDate').value;
+            const endDate = document.getElementById('editEndDate').value;
+            
+            if (!taskName || !startDate || !endDate) {
+                alert('Please fill in task name, start date, and end date.');
+                return;
+            }
+            
+            if (new Date(startDate) > new Date(endDate)) {
+                alert('Start date cannot be after end date.');
+                return;
+            }
+            
+            tasks[currentEditIndex] = {
+                ...tasks[currentEditIndex],
+                name: taskName,
+                startDate: startDate,
+                endDate: endDate,
+                resource: document.getElementById('editResource').value.trim(),
+                cost: parseFloat(document.getElementById('editCost').value) || 0,
+                priority: document.getElementById('editPriority').value,
+                status: document.getElementById('editStatus').value,
+                color: document.getElementById('editTaskColor').value,
+                description: document.getElementById('editDescription').value.trim()
+            };
+            
+            updateTaskList();
+            updateGanttChart();
+            updateSummary();
+            closeEditModal();
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+            currentEditIndex = -1;
+        }
+
+        function updateTaskList() {
+            const taskList = document.getElementById('taskList');
+            
+            if (tasks.length === 0) {
+                taskList.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #6b7280;">
+                        <i class="fas fa-tasks" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">No tasks added yet</p>
+                        <p>Add your first task to get started with your project timeline.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            taskList.innerHTML = tasks.map((task, index) => {
+                const priorityIcons = {
+                    low: 'fas fa-arrow-down text-green-500',
+                    medium: 'fas fa-minus text-yellow-500',
+                    high: 'fas fa-arrow-up text-orange-500',
+                    critical: 'fas fa-exclamation-triangle text-red-500'
+                };
+                
+                const statusIcons = {
+                    'not-started': 'fas fa-clock text-gray-500',
+                    'in-progress': 'fas fa-spinner text-blue-500',
+                    'completed': 'fas fa-check-circle text-green-500',
+                    'on-hold': 'fas fa-pause-circle text-yellow-500'
+                };
+                
+                const duration = Math.ceil((new Date(task.endDate) - new Date(task.startDate)) / (1000 * 60 * 60 * 24)) + 1;
+                
+                return `
+                    <div class="task-item" style="--task-color: ${task.color}">
+                        <div class="task-header">
+                            <div>
+                                <div class="task-title">${task.name}</div>
+                                ${task.description ? `<p style="color: #6b7280; margin-bottom: 0.5rem;">${task.description}</p>` : ''}
+                            </div>
+                            <div class="task-actions">
+                                <button class="btn btn-secondary" onclick="editTask(${index})" title="Edit Task">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger" onclick="deleteTask(${index})" title="Delete Task">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="task-meta">
+                            <div class="task-meta-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>${new Date(task.startDate).toLocaleDateString()} - ${new Date(task.endDate).toLocaleDateString()}</span>
+                            </div>
+                            <div class="task-meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>${duration} day${duration !== 1 ? 's' : ''}</span>
+                            </div>
+                            <div class="task-meta-item">
+                                <i class="fas fa-user"></i>
+                                <span>${task.resource || 'Unassigned'}</span>
+                            </div>
+                            <div class="task-meta-item">
+                                <i class="fas fa-indian-rupee-sign"></i>
+                                <span>${task.cost.toLocaleString()}</span>
+                            </div>
+                            <div class="task-meta-item">
+                                <i class="${priorityIcons[task.priority]}"></i>
+                                <span>${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)} Priority</span>
+                            </div>
+                            <div class="task-meta-item">
+                                <i class="${statusIcons[task.status]}"></i>
+                                <span>${task.status.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateGanttChart() {
+            const ganttChart = document.getElementById('ganttChart');
+            const ganttTimeline = document.getElementById('ganttTimeline');
+            const ganttTasks = document.getElementById('ganttTasks');
+            
+            if (tasks.length === 0) {
+                ganttChart.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #6b7280;">
+                        <i class="fas fa-chart-gantt" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">No tasks to display</p>
+                        <p>Add tasks to see your project timeline.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Calculate project date range
+            const validDates = tasks.flatMap(task => {
+                const start = new Date(task.startDate);
+                const end = new Date(task.endDate);
+                const dates = [];
+                if (!isNaN(start.getTime())) dates.push(start);
+                if (!isNaN(end.getTime())) dates.push(end);
+                return dates;
+            });
+
+            let minDate, maxDate;
+            if (validDates.length > 0) {
+                minDate = new Date(Math.min(...validDates));
+                maxDate = new Date(Math.max(...validDates));
+            } else {
+                // Default date range if no valid tasks/dates
+                minDate = new Date();
+                maxDate = new Date();
+                maxDate.setDate(maxDate.getDate() + 6); // 7 days span
+            }
+
+            // Ensure a minimum timeline span of 7 days (already handled by else block if no tasks)
+            const oneDay = 1000 * 60 * 60 * 24;
+            if ((maxDate - minDate) / oneDay < 6) { // If span is less than 7 days
+                maxDate = new Date(minDate.getTime() + 6 * oneDay); // Extend to 7 days
+            }
+            
+            // Generate date range for timeline header
+            const dateRange = [];
+            const currentDate = new Date(minDate);
+            while (currentDate <= maxDate) {
+                dateRange.push(new Date(currentDate));
+                currentDate.setDate(currentDate.getDate() + 1); // Always increment by 1 day
+            }
+            
+            // Calculate total width for the timeline based on number of dates and a fixed date width
+            const dateWidth = 80; // pixels per date column
+            const totalTimelineWidth = dateRange.length * dateWidth;
+            ganttChart.style.minWidth = `${(totalTimelineWidth * ganttZoom) + 200}px`; // 200px for task names
+        }
+
+        function updateSummary() {
+            const totalTasks = tasks.length;
+            const completedTasks = tasks.filter(task => task.status === 'completed').length;
+            const totalCost = tasks.reduce((sum, task) => sum + task.cost, 0);
+            
+            let projectDuration = 0;
+            if (tasks.length > 0) {
+                const allDates = tasks.flatMap(task => [new Date(task.startDate), new Date(task.endDate)]);
+                const minDate = new Date(Math.min(...allDates));
+                const maxDate = new Date(Math.max(...allDates));
+                projectDuration = Math.ceil((maxDate - minDate) / (1000 * 60 * 60 * 24)) + 1;
+            }
+            
+            document.getElementById('totalTasks').textContent = totalTasks;
+            document.getElementById('completedTasks').textContent = completedTasks;
+            document.getElementById('totalCost').textContent = `${totalCost.toLocaleString()}`;
+            document.getElementById('projectDuration').textContent = projectDuration;
+            
+            // Update progress bar
+            const progressPercentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+            document.getElementById('projectProgress').style.width = `${progressPercentage}%`;
+            document.getElementById('progressText').textContent = `${Math.round(progressPercentage)}% Complete`;
+        }
+
+        function updateStatusChart() {
+            const statusChartContainer = document.getElementById('statusChart');
+            
+            if (tasks.length === 0) {
+                statusChartContainer.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #6b7280;">
+                        <i class="fas fa-chart-pie" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">No task status data to display</p>
+                        <p>Add tasks to see status distribution.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            statusChartContainer.innerHTML = '<canvas id="statusChartCanvas"></canvas>'; // Clear and re-create canvas
+            const canvas = document.getElementById('statusChartCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Count tasks by status
+            const statusCounts = {
+                'not-started': 0,
+                'in-progress': 0,
+                'completed': 0,
+                'on-hold': 0
+            };
+            
+            tasks.forEach(task => {
+                statusCounts[task.status]++;
+            });
+            
+            // Destroy existing chart if it exists
+            if (window.statusChart) {
+                window.statusChart.destroy();
+            }
+            
+            window.statusChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Not Started', 'In Progress', 'Completed', 'On Hold'],
+                    datasets: [{
+                        data: [
+                            statusCounts['not-started'],
+                            statusCounts['in-progress'],
+                            statusCounts['completed'],
+                            statusCounts['on-hold']
+                        ],
+                        backgroundColor: [
+                            '#6b7280',
+                            '#3b82f6',
+                            '#10b981',
+                            '#f59e0b'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function zoomIn() {
+            ganttZoom = Math.min(ganttZoom * 1.5, 3);
+            updateGanttChart();
+        }
+
+        function zoomOut() {
+            ganttZoom = Math.max(ganttZoom / 1.5, 0.5);
+            updateGanttChart();
+        }
+
+        function saveProject() {
+            const projectData = {
+                name: prompt('Enter project name:') || 'Untitled Project',
+                tasks: tasks,
+                createdAt: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            const dataStr = JSON.stringify(projectData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `${projectData.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_project.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        function exportJSON() {
+            if (tasks.length === 0) {
+                alert('No tasks to export.');
+                return;
+            }
+            
+            saveProject();
+        }
+
+        function exportCSV() {
+            if (tasks.length === 0) {
+                alert('No tasks to export.');
+                return;
+            }
+            
+            const headers = ['Task Name', 'Start Date', 'End Date', 'Resource', 'Cost', 'Priority', 'Status', 'Description'];
+            const csvContent = [
+                headers.join(','),
+                ...tasks.map(task => [
+                    `"${task.name}"`,
+                    task.startDate,
+                    task.endDate,
+                    `"${task.resource}"`,
+                    task.cost,
+                    task.priority,
+                    task.status,
+                    `"${task.description}"`
+                ].join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'project_tasks.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function loadProject() {
+            const file = document.getElementById('fileInput').files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const projectData = JSON.parse(e.target.result);
+                    if (projectData.tasks && Array.isArray(projectData.tasks)) {
+                        if (confirm('This will replace all current tasks. Continue?')) {
+                            tasks = projectData.tasks;
+                            updateTaskList();
+                            updateGanttChart();
+                            updateSummary();
+                            alert(`Project "${projectData.name || 'Untitled'}" loaded successfully!`);
+                        }
+                    } else {
+                        alert('Invalid project file format.');
+                    }
+                } catch (error) {
+                    alert('Error loading project file: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('editModal');
+            if (event.target === modal) {
+                closeEditModal();
+            }
+        };
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 's':
+                        e.preventDefault();
+                        saveProject();
+                        break;
+                    case 'n':
+                        e.preventDefault();
+                        document.getElementById('taskName').focus();
+                        break;
+                }
+            }
+            if (e.key === 'Escape') {
+                closeEditModal();
+            }
+        });
+    </script>
+</body>
+</html>

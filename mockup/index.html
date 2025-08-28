@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Packaging Mockup Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 320px;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .main-content {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h3 {
+            color: #555;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .package-selector,
+        .material-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .package-btn {
+            padding: 12px 8px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            font-size: 11px;
+            color: #666;
+        }
+
+        .package-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .package-btn.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .upload-area {
+            border: 3px dashed #ddd;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .upload-area.dragover {
+            border-color: #667eea;
+            background: #e8f2ff;
+            transform: scale(1.02);
+        }
+
+        .upload-text {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e0e0e0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            margin: 20px;
+        }
+
+        .canvas-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #666;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .hamburger-menu {
+            display: none;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-mode .sidebar {
+            background: rgba(30, 30, 30, 0.95);
+            color: #e0e0e0;
+        }
+
+        body.dark-mode h1 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .section h3 {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .package-btn {
+            background: #2a2a2a;
+            border-color: #444;
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .package-btn:hover {
+            border-color: #667eea;
+            background: #333;
+        }
+
+        body.dark-mode .package-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        body.dark-mode .upload-area {
+            background: #2a2a2a;
+            border-color: #444;
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .upload-area:hover {
+            border-color: #667eea;
+            background: #333;
+        }
+
+        body.dark-mode .upload-area.dragover {
+            border-color: #667eea;
+            background: #3a3a5c;
+        }
+
+        body.dark-mode .upload-text {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .control-group label {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .slider {
+            background: #444;
+        }
+
+        body.dark-mode .canvas-overlay {
+            background: rgba(30, 30, 30, 0.9);
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .theme-toggle {
+            background: rgba(30, 30, 30, 0.9);
+            color: #e0e0e0;
+        }
+
+        .material-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .material-btn {
+            padding: 10px 6px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            font-size: 10px;
+            color: #666;
+        }
+
+        .material-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .material-btn.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        body.dark-mode .material-btn {
+            background: #2a2a2a;
+            border-color: #444;
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .material-btn:hover {
+            border-color: #667eea;
+            background: #333;
+        }
+
+        body.dark-mode .material-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            z-index: 5;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 280px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 240px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 50vh;
+                border-right: none;
+                border-bottom: 2px solid #e0e0e0;
+                box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+                position: static;
+                left: auto;
+                transition: none;
+            }
+
+            .main-content {
+                height: 100%;
+            }
+
+            .hamburger-menu {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .sidebar {
+                padding: 20px;
+                max-height: none;
+                height: 100vh;
+                position: fixed;
+                top: 0;
+                left: -100%;
+                z-index: 100;
+                transition: left 0.3s ease-in-out;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .hamburger-menu {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 101;
+                background: rgba(255, 255, 255, 0.9);
+                border: none;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+                cursor: pointer;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>3D Mockup Generator</h1>
+            
+            <div class="section">
+                <h3>Package Type</h3>
+                <div class="package-selector">
+                    <button class="package-btn active" data-type="box">📦 Box</button>
+                    <button class="package-btn" data-type="bottle">🍶 Bottle</button>
+                    <button class="package-btn" data-type="bag">👜 Bag</button>
+                    <button class="package-btn" data-type="can">🥤 Can</button>
+                    <button class="package-btn" data-type="tube">🧴 Tube</button>
+                    <button class="package-btn" data-type="pouch">📦 Pouch</button>
+                    <button class="package-btn" data-type="jar">🏺 Jar</button>
+                    <button class="package-btn" data-type="label">🏷️ Label</button>
+                    <button class="package-btn" data-type="envelope">✉️ Envelope</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Material Options</h3>
+                <div class="material-selector">
+                    <button class="material-btn active" data-material="matte">🌫️ Matte</button>
+                    <button class="material-btn" data-material="glossy">✨ Glossy</button>
+                    <button class="material-btn" data-material="metallic">🪙 Metallic</button>
+                    <button class="material-btn" data-material="transparent">🔍 Clear</button>
+                    <button class="material-btn" data-material="kraft">📜 Kraft</button>
+                    <button class="material-btn" data-material="fabric">🧵 Fabric</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Upload Design</h3>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📎</div>
+                    <div class="upload-text">
+                        Drag & drop your design here<br>
+                        or click to browse
+                    </div>
+                    <input type="file" class="file-input" id="fileInput" accept="image/*">
+                </div>
+                <img id="previewImage" class="preview-image" style="display: none;">
+            </div>
+
+            <div class="section">
+                <h3>Controls</h3>
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Rotation Speed</label>
+                        <input type="range" class="slider" id="rotationSpeed" min="0" max="2" step="0.1" value="0.5">
+                    </div>
+                    <div class="control-group">
+                        <label>Lighting Intensity</label>
+                        <input type="range" class="slider" id="lightIntensity" min="0.5" max="3" step="0.1" value="1.5">
+                    </div>
+                    <div class="control-group">
+                        <label>Environment</label>
+                        <input type="range" class="slider" id="environmentRotation" min="0" max="6.28" step="0.1" value="0">
+                    </div>
+                </div>
+                <button class="export-btn" id="exportBtn">📸 Export Mockup</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+            <div id="canvas-container">
+                <div class="canvas-overlay">
+                    🖱️ Click & drag to rotate • 🖱️ Scroll to zoom
+                </div>
+                <div class="loading" id="loading">Loading 3D Scene...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class PackagingMockupGenerator {
+            constructor() {
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.currentPackage = null;
+                this.packageType = 'box';
+                this.userTexture = null;
+                this.controls = {
+                    mouseDown: false,
+                    mouseX: 0,
+                    mouseY: 0,
+                    rotationX: 0,
+                    rotationY: 0,
+                    zoom: 5
+                };
+                this.autoRotation = 0.5;
+                this.ambientLight = null;
+                this.directionalLight = null;
+                this.currentMaterial = 'matte';
+
+                this.init();
+                this.setupEventListeners();
+            }
+
+            init() {
+                const container = document.getElementById('canvas-container');
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+
+                // Scene setup
+                this.scene = new THREE.Scene();
+                this.updateSceneBackground();
+
+                // Camera setup
+                this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+                this.camera.position.set(0, 0, 5);
+
+                // Renderer setup
+                this.renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+                this.renderer.setSize(width, height);
+                this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                this.renderer.outputEncoding = THREE.sRGBEncoding;
+                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                this.renderer.toneMappingExposure = 1.2;
+
+                container.appendChild(this.renderer.domElement);
+
+                // Lighting setup
+                this.ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+                this.scene.add(this.ambientLight);
+
+                this.directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+                this.directionalLight.position.set(10, 10, 5);
+                this.directionalLight.castShadow = true;
+                this.directionalLight.shadow.mapSize.width = 2048;
+                this.directionalLight.shadow.mapSize.height = 2048;
+                this.scene.add(this.directionalLight);
+
+                // Add environment lighting
+                const hemisphereLight = new THREE.HemisphereLight(0x87CEEB, 0x98FB98, 0.4);
+                this.scene.add(hemisphereLight);
+
+                // Create initial package
+                this.createPackage('box');
+
+                // Start render loop
+                this.animate();
+
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+            }
+
+            updateSceneBackground() {
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                if (isDarkMode) {
+                    this.scene.background = new THREE.Color(0x1a1a2e);
+                } else {
+                    this.scene.background = new THREE.Color(0xf8f9ff);
+                }
+            }
+
+            createPackage(type) {
+                // Remove existing package
+                if (this.currentPackage) {
+                    this.scene.remove(this.currentPackage);
+                }
+
+                let geometry;
+                
+                switch (type) {
+                    case 'box':
+                        geometry = new THREE.BoxGeometry(2, 2.5, 1);
+                        break;
+                    case 'bottle':
+                        geometry = new THREE.CylinderGeometry(0.6, 0.8, 3, 32);
+                        break;
+                    case 'bag':
+                        geometry = new THREE.BoxGeometry(1.5, 2, 0.8);
+                        geometry.scale(1, 1, 0.6);
+                        break;
+                    case 'can':
+                        geometry = new THREE.CylinderGeometry(0.7, 0.7, 2.5, 32);
+                        break;
+                    case 'tube':
+                        geometry = new THREE.CylinderGeometry(0.4, 0.5, 2.8, 32);
+                        break;
+                    case 'pouch':
+                        // Create rounded pouch shape
+                        geometry = new THREE.BoxGeometry(1.8, 2.2, 0.6);
+                        break;
+                    case 'jar':
+                        // Wide jar shape
+                        geometry = new THREE.CylinderGeometry(0.9, 1.0, 2.0, 32);
+                        break;
+                    case 'label':
+                        // Flat label/sticker
+                        geometry = new THREE.PlaneGeometry(2.5, 1.5);
+                        break;
+                    case 'envelope':
+                        // Envelope shape
+                        geometry = new THREE.BoxGeometry(2.8, 1.8, 0.1);
+                        break;
+                }
+
+                // Create material based on current selection
+                const material = this.createMaterial();
+
+                this.currentPackage = new THREE.Mesh(geometry, material);
+                this.currentPackage.castShadow = true;
+                this.currentPackage.receiveShadow = true;
+                
+                this.scene.add(this.currentPackage);
+                this.packageType = type;
+            }
+
+            createMaterial() {
+                let materialProps = {
+                    color: 0xffffff,
+                    transparent: false
+                };
+
+                switch (this.currentMaterial) {
+                    case 'matte':
+                        materialProps = {
+                            ...materialProps,
+                            shininess: 0,
+                            roughness: 1,
+                            metalness: 0
+                        };
+                        break;
+                    case 'glossy':
+                        materialProps = {
+                            ...materialProps,
+                            shininess: 100,
+                            roughness: 0.1,
+                            metalness: 0
+                        };
+                        break;
+                    case 'metallic':
+                        materialProps = {
+                            ...materialProps,
+                            shininess: 200,
+                            roughness: 0.2,
+                            metalness: 0.8,
+                            color: 0xcccccc
+                        };
+                        break;
+                    case 'transparent':
+                        materialProps = {
+                            ...materialProps,
+                            transparent: true,
+                            opacity: 0.7,
+                            shininess: 50
+                        };
+                        break;
+                    case 'kraft':
+                        materialProps = {
+                            ...materialProps,
+                            color: 0xd4a574,
+                            shininess: 5,
+                            roughness: 0.8
+                        };
+                        break;
+                    case 'fabric':
+                        materialProps = {
+                            ...materialProps,
+                            color: 0xf5f5f5,
+                            shininess: 0,
+                            roughness: 1
+                        };
+                        break;
+                }
+
+                const material = new THREE.MeshPhongMaterial(materialProps);
+
+                // Apply user texture if available
+                if (this.userTexture) {
+                    material.map = this.userTexture;
+                    material.needsUpdate = true;
+                }
+
+                return material;
+            }
+
+            loadTexture(file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const loader = new THREE.TextureLoader();
+                    this.userTexture = loader.load(e.target.result, (texture) => {
+                        texture.wrapS = THREE.RepeatWrapping;
+                        texture.wrapT = THREE.RepeatWrapping;
+                        
+                        // Adjust texture repeat based on package type
+                        switch (this.packageType) {
+                            case 'box':
+                            case 'pouch':
+                            case 'envelope':
+                                texture.repeat.set(1, 1);
+                                break;
+                            case 'bottle':
+                            case 'can':
+                            case 'tube':
+                            case 'jar':
+                                texture.repeat.set(2, 1);
+                                break;
+                            case 'bag':
+                                texture.repeat.set(1, 1);
+                                break;
+                            case 'label':
+                                texture.repeat.set(1, 1);
+                                texture.wrapS = THREE.ClampToEdgeWrapping;
+                                texture.wrapT = THREE.ClampToEdgeWrapping;
+                                break;
+                        }
+
+                        // Apply texture to current package with material properties
+                        if (this.currentPackage) {
+                            this.currentPackage.material = this.createMaterial();
+                            this.currentPackage.material.map = texture;
+                            this.currentPackage.material.needsUpdate = true;
+                        }
+                    });
+
+                    // Show preview
+                    const preview = document.getElementById('previewImage');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+
+            setupEventListeners() {
+                const canvas = this.renderer.domElement;
+                const packageBtns = document.querySelectorAll('.package-btn');
+                const materialBtns = document.querySelectorAll('.material-btn');
+                const uploadArea = document.getElementById('uploadArea');
+                const fileInput = document.getElementById('fileInput');
+                const rotationSlider = document.getElementById('rotationSpeed');
+                const lightSlider = document.getElementById('lightIntensity');
+                const envSlider = document.getElementById('environmentRotation');
+                const exportBtn = document.getElementById('exportBtn');
+                const themeToggle = document.getElementById('themeToggle');
+
+                // Theme toggle
+                themeToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('dark-mode');
+                    const isDarkMode = document.body.classList.contains('dark-mode');
+                    themeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+                    this.updateSceneBackground();
+                    
+                    // Save theme preference
+                    localStorage.setItem('darkMode', isDarkMode);
+                });
+
+                // Load saved theme preference
+                const savedTheme = localStorage.getItem('darkMode');
+                if (savedTheme === 'true') {
+                    document.body.classList.add('dark-mode');
+                    themeToggle.textContent = '☀️';
+                    this.updateSceneBackground();
+                }
+
+                // Package type selection
+                packageBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        packageBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.createPackage(btn.dataset.type);
+                    });
+                });
+
+                // Material selection
+                materialBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        materialBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.currentMaterial = btn.dataset.material;
+                        
+                        // Update current package material
+                        if (this.currentPackage) {
+                            const newMaterial = this.createMaterial();
+                            if (this.userTexture) {
+                                newMaterial.map = this.userTexture;
+                            }
+                            this.currentPackage.material = newMaterial;
+                        }
+                    });
+                });
+
+                // File upload
+                uploadArea.addEventListener('click', () => fileInput.click());
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.add('dragover');
+                });
+                uploadArea.addEventListener('dragleave', () => {
+                    uploadArea.classList.remove('dragover');
+                });
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('dragover');
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        this.loadTexture(files[0]);
+                    }
+                });
+
+                fileInput.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        this.loadTexture(e.target.files[0]);
+                    }
+                });
+
+                // Mouse controls
+                canvas.addEventListener('mousedown', (e) => {
+                    this.controls.mouseDown = true;
+                    this.controls.mouseX = e.clientX;
+                    this.controls.mouseY = e.clientY;
+                });
+
+                canvas.addEventListener('mousemove', (e) => {
+                    if (this.controls.mouseDown) {
+                        const deltaX = e.clientX - this.controls.mouseX;
+                        const deltaY = e.clientY - this.controls.mouseY;
+                        
+                        this.controls.rotationY += deltaX * 0.01;
+                        this.controls.rotationX += deltaY * 0.01;
+                        
+                        this.controls.mouseX = e.clientX;
+                        this.controls.mouseY = e.clientY;
+                    }
+                });
+
+                canvas.addEventListener('mouseup', () => {
+                    this.controls.mouseDown = false;
+                });
+
+                canvas.addEventListener('wheel', (e) => {
+                    this.controls.zoom += e.deltaY * 0.01;
+                    this.controls.zoom = Math.max(2, Math.min(10, this.controls.zoom));
+                });
+
+                // Control sliders
+                rotationSlider.addEventListener('input', (e) => {
+                    this.autoRotation = parseFloat(e.target.value);
+                });
+
+                lightSlider.addEventListener('input', (e) => {
+                    this.directionalLight.intensity = parseFloat(e.target.value);
+                });
+
+                envSlider.addEventListener('input', (e) => {
+                    const angle = parseFloat(e.target.value);
+                    this.directionalLight.position.x = Math.cos(angle) * 10;
+                    this.directionalLight.position.z = Math.sin(angle) * 10;
+                });
+
+                // Export functionality
+                exportBtn.addEventListener('click', () => {
+                    const link = document.createElement('a');
+                    link.download = `mockup-${this.packageType}-${Date.now()}.png`;
+                    link.href = this.renderer.domElement.toDataURL();
+                    link.click();
+                });
+
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    const container = document.getElementById('canvas-container');
+                    const width = container.clientWidth;
+                    const height = container.clientHeight;
+                    
+                    this.camera.aspect = width / height;
+                    this.camera.updateProjectionMatrix();
+                    this.renderer.setSize(width, height);
+                });
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+
+                if (this.currentPackage) {
+                    // Auto rotation
+                    this.currentPackage.rotation.y += this.autoRotation * 0.01;
+                    
+                    // Manual rotation
+                    this.currentPackage.rotation.x = this.controls.rotationX;
+                    this.currentPackage.rotation.y += this.controls.rotationY * 0.1;
+                    
+                    // Reset manual rotation for smooth blend
+                    this.controls.rotationX *= 0.95;
+                    this.controls.rotationY *= 0.95;
+                }
+
+                // Update camera position for zoom
+                this.camera.position.z = this.controls.zoom;
+
+                this.renderer.render(this.scene, this.camera);
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            new PackagingMockupGenerator();
+
+            const hamburgerMenu = document.createElement('button');
+            hamburgerMenu.classList.add('hamburger-menu');
+            hamburgerMenu.innerHTML = '&#9776;';
+            document.body.appendChild(hamburgerMenu);
+
+            const sidebar = document.querySelector('.sidebar');
+
+            hamburgerMenu.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!sidebar.contains(e.target) && !hamburgerMenu.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

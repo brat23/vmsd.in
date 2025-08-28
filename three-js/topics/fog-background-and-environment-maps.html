@@ -67,69 +67,7 @@ scene.background = new THREE.Color(0x121212);
     <h2>Example: Fog and Background Color</h2>
     <p>This example demonstrates a simple scene with fog and a matching background color, creating a sense of atmospheric depth.</p>
 
-    <iframe srcdoc="
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset=\"utf-8\">
-            <title>Three.js Fog and Background</title>
-            <style>
-                body { margin: 0; overflow: hidden; }
-                canvas { display: block; }
-            </style>
-        </head>
-        <body>
-            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
-            <script>
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ antialias: true });
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                document.body.appendChild(renderer.domElement);
-
-                // Set background color
-                const backgroundColor = 0xcce0ff; // Light blue
-                scene.background = new THREE.Color(backgroundColor);
-
-                // Add linear fog
-                scene.fog = new THREE.Fog(backgroundColor, 1, 50);
-
-                // Add a cube
-                const geometry = new THREE.BoxGeometry(1, 1, 1);
-                const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-                const cube = new THREE.Mesh(geometry, material);
-                scene.add(cube);
-
-                // Add multiple cubes at varying distances to show fog effect
-                for (let i = 0; i < 20; i++) {
-                    const distantCube = new THREE.Mesh(geometry, material);
-                    distantCube.position.set(
-                        (Math.random() - 0.5) * 20,
-                        (Math.random() - 0.5) * 20,
-                        -Math.random() * 40 - 5 // Place them further back
-                    );
-                    scene.add(distantCube);
-                }
-
-                camera.position.z = 5;
-
-                function animate() {
-                    requestAnimationFrame(animate);
-                    cube.rotation.x += 0.01;
-                    cube.rotation.y += 0.01;
-                    renderer.render(scene, camera);
-                }
-                animate();
-
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
-            </script>
-        </body>
-        </html>
-    " frameborder="0" width="100%" height="400px"></iframe>
+        <iframe srcdoc='<!DOCTYPE html><html><head><meta charset=&quot;utf-8&quot;><title>Three.js Fog and Background</title><style>body { margin: 0; overflow: hidden; } canvas { display: block; }</style></head><body><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js&quot;></script><script>const scene = new THREE.Scene();const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);const renderer = new THREE.WebGLRenderer({ antialias: true });renderer.setSize(window.innerWidth, window.innerHeight);document.body.appendChild(renderer.domElement);const backgroundColor = 0xcce0ff; scene.background = new THREE.Color(backgroundColor);scene.fog = new THREE.Fog(backgroundColor, 1, 50);const geometry = new THREE.BoxGeometry(1, 1, 1);const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });const cube = new THREE.Mesh(geometry, material);scene.add(cube);for (let i = 0; i < 20; i++) { const distantCube = new THREE.Mesh(geometry, material); distantCube.position.set( (Math.random() - 0.5) * 20, (Math.random() - 0.5) * 20, -Math.random() * 40 - 5 ); scene.add(distantCube);}camera.position.z = 5;function animate() { requestAnimationFrame(animate); cube.rotation.x += 0.01; cube.rotation.y += 0.01; renderer.render(scene, camera); } animate();window.addEventListener(&apos;resize&apos;, () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });</script></body></html>' frameborder="0" width="100%" height="400px"></iframe>
   </div>
 </body>
 </html>

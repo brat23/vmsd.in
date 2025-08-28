@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ff88;
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --card-color: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        .dashboard {
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--background-color) 0%, #1a1a1a 100%);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px var(--primary-color)); }
+            to { filter: drop-shadow(0 0 30px var(--secondary-color)); }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-color);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            padding: 2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 0, 85, 0.3);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .streak-card {
+            grid-column: span 2;
+            text-align: center;
+        }
+
+        .streak-number {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 20px 0;
+            text-shadow: 0 0 20px var(--primary-color);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+            margin: 20px auto;
+        }
+
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform-origin: 50% 50%;
+        }
+
+        .milestone-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(255, 0, 85, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .milestone-item:hover {
+            background: rgba(255, 0, 85, 0.2);
+            transform: translateX(10px);
+        }
+
+        .milestone-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .calendar-day.active {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            animation: sparkle 1s ease-in-out;
+        }
+
+        .calendar-day.partial {
+            background: linear-gradient(45deg, var(--primary-color), transparent);
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .nudge {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            text-align: center;
+            font-weight: bold;
+            animation: bounce 2s ease-in-out infinite;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 10px;
+            border: 1px solid var(--secondary-color);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 200px;
+            margin-top: 20px;
+        }
+
+        .level-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .level-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .level-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .streak-card {
+                grid-column: span 1;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-particles" id="particles"></div>
+    
+    <div class="dashboard">
+        <div class="header">
+            <h1>NEXUS DASHBOARD</h1>
+        </div>
+
+        <div class="grid">
+            <!-- Streak Card -->
+            <div class="card streak-card">
+                <div class="card-title">🔥 Current Streak</div>
+                <div class="streak-number" id="streakNumber">42</div>
+                <p>Days of Continuous Progress</p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">156</div>
+                        <div class="stat-label">Best Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1,234</div>
+                        <div class="stat-label">Total Days</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">89%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Card -->
+            <div class="card">
+                <div class="card-title">📈 Current Progress</div>
+                <div style="text-align: center;">
+                    <svg class="progress-ring" width="120" height="120">
+                        <circle class="progress-ring-circle" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                        <circle class="progress-ring-circle" stroke="url(#gradient)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60" 
+                                stroke-dasharray="326.7" stroke-dashoffset="65.34"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#ff0055"/>
+                                <stop offset="100%" style="stop-color:#00ff88"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div style="margin-top: 10px;">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--secondary-color);">80%</div>
+                        <div>Daily Goal</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level Card -->
+            <div class="card">
+                <div class="card-title">⭐ Level Progress</div>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--primary-color);">Level 12</div>
+                    <div>Elite Performer</div>
+                </div>
+                <div class="level-bar">
+                    <div class="level-progress" style="width: 75%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; opacity: 0.8;">
+                    <span>750 XP</span>
+                    <span>1000 XP</span>
+                </div>
+            </div>
+
+            <!-- Milestones Card -->
+            <div class="card">
+                <div class="card-title">🎯 Milestones</div>
+                <div class="milestone-item">
+                    <div class="milestone-icon">✓</div>
+                    <div>
+                        <div style="font-weight: bold;">30 Day Streak</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Completed 12 days ago</div>
+                    </div>
+                </div>
+                <div class="milestone-item">
+                    <div class="milestone-icon">✓</div>
+                    <div>
+                        <div style="font-weight: bold;">Level 10 Achieved</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Completed 5 days ago</div>
+                    </div>
+                </div>
+                <div class="milestone-item" style="opacity: 0.6;">
+                    <div class="milestone-icon">🎯</div>
+                    <div>
+                        <div style="font-weight: bold;">50 Day Streak</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">8 days remaining</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly Chart -->
+            <div class="card">
+                <div class="card-title">📊 Weekly Performance</div>
+                <div class="chart-container">
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Calendar Card -->
+            <div class="card">
+                <div class="card-title">📅 Daily Log</div>
+                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 10px; font-size: 0.8rem; opacity: 0.6;">
+                    <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+                </div>
+                <div class="calendar-grid" id="calendar"></div>
+            </div>
+
+            <!-- Nudges Card -->
+            <div class="card">
+                <div class="card-title">💡 Smart Nudges</div>
+                <div style="margin-bottom: 15px;">
+                    <strong>You're on fire! 🔥</strong><br>
+                    <span style="opacity: 0.8;">Keep this momentum going - you're only 8 days away from your next milestone!</span>
+                </div>
+                <button class="nudge" onclick="completeTask()">Complete Today's Challenge</button>
+            </div>
+
+            <!-- Monthly Chart -->
+            <div class="card">
+                <div class="card-title">📈 Monthly Trends</div>
+                <div class="chart-container">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize dashboard data
+        let currentStreak = 42;
+        let dailyProgress = 80;
+        let level = 12;
+        let currentXP = 750;
+        let maxXP = 1000;
+
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Generate calendar
+        function generateCalendar() {
+            const calendar = document.getElementById('calendar');
+            const today = new Date();
+            const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+            const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+            
+            // Add empty cells for days before month starts
+            for (let i = 0; i < firstDay.getDay(); i++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day';
+                calendar.appendChild(day);
+            }
+            
+            // Add days of the month
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                
+                // Randomly assign completion status for demo
+                const random = Math.random();
+                if (random > 0.7) {
+                    dayElement.classList.add('active');
+                } else if (random > 0.4) {
+                    dayElement.classList.add('partial');
+                }
+                
+                if (day === today.getDate()) {
+                    dayElement.style.border = '2px solid var(--primary-color)';
+                }
+                
+                calendar.appendChild(dayElement);
+            }
+        }
+
+        // Initialize charts
+        function initCharts() {
+            // Weekly Chart
+            const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
+            new Chart(weeklyCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Progress',
+                        data: [65, 80, 90, 75, 85, 95, 80],
+                        borderColor: '#ff0055',
+                        backgroundColor: 'rgba(255, 0, 85, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#ffffff' }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#ffffff' }
+                        }
+                    }
+                }
+            });
+
+            // Monthly Chart
+            const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+            new Chart(monthlyCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'Completion Rate',
+                        data: [85, 92, 88, 95],
+                        backgroundColor: [
+                            'rgba(255, 0, 85, 0.8)',
+                            'rgba(0, 255, 136, 0.8)',
+                            'rgba(255, 0, 85, 0.6)',
+                            'rgba(0, 255, 136, 0.6)'
+                        ],
+                        borderColor: '#00ff88',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#ffffff' }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#ffffff' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Complete task function
+        function completeTask() {
+            const button = event.target;
+            button.textContent = 'Task Completed! ✨';
+            button.style.background = 'linear-gradient(45deg, #00ff88, #ff0055)';
+            
+            // Update streak
+            currentStreak++;
+            document.getElementById('streakNumber').textContent = currentStreak;
+            
+            setTimeout(() => {
+                button.textContent = 'Complete Today\'s Challenge';
+                button.style.background = 'linear-gradient(45deg, var(--primary-color), var(--secondary-color))';
+            }, 3000);
+        }
+
+        // Animate numbers on load
+        function animateNumbers() {
+            const streak = document.getElementById('streakNumber');
+            let count = 0;
+            const target = 42;
+            const increment = target / 50;
+            
+            const timer = setInterval(() => {
+                count += increment;
+                if (count >= target) {
+                    count = target;
+                    clearInterval(timer);
+                }
+                streak.textContent = Math.floor(count);
+            }, 50);
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            generateCalendar();
+            initCharts();
+            animateNumbers();
+        });
+
+        // Add some interactive effects
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

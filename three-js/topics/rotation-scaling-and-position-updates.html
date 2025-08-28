@@ -37,60 +37,7 @@ object.scale.y = 0.5; // Scale only along the Y-axis by 0.5</code></pre>
     <h2>Example: Object Transformations</h2>
     <p>This example demonstrates how to change the position, rotation, and scale of a cube in a Three.js scene.</p>
 
-    <iframe srcdoc="
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset=\"utf-8\">
-            <title>Three.js Transformations</title>
-            <style>
-                body { margin: 0; overflow: hidden; }
-                canvas { display: block; }
-            </style>
-        </head>
-        <body>
-            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
-            <script>
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ antialias: true });
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                document.body.appendChild(renderer.domElement);
-
-                const geometry = new THREE.BoxGeometry(1, 1, 1);
-                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-                const cube = new THREE.Mesh(geometry, material);
-                scene.add(cube);
-
-                camera.position.z = 5;
-
-                function animate() {
-                    requestAnimationFrame(animate);
-
-                    // Position update
-                    cube.position.x = Math.sin(Date.now() * 0.001) * 2; // Oscillate along X-axis
-
-                    // Rotation update
-                    cube.rotation.x += 0.01;
-                    cube.rotation.y += 0.01;
-
-                    // Scaling update
-                    const scaleFactor = 1 + Math.sin(Date.now() * 0.002) * 0.5; // Oscillate scale
-                    cube.scale.set(scaleFactor, scaleFactor, scaleFactor);
-
-                    renderer.render(scene, camera);
-                }
-                animate();
-
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
-            </script>
-        </body>
-        </html>
-    " frameborder="0" width="100%" height="400px"></iframe>
+        <iframe srcdoc='<!DOCTYPE html><html><head><meta charset=&quot;utf-8&quot;><title>Three.js Transformations</title><style>body { margin: 0; overflow: hidden; } canvas { display: block; }</style></head><body><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js&quot;></script><script>const scene = new THREE.Scene();const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);const renderer = new THREE.WebGLRenderer({ antialias: true });renderer.setSize(window.innerWidth, window.innerHeight);document.body.appendChild(renderer.domElement);const geometry = new THREE.BoxGeometry(1, 1, 1);const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });const cube = new THREE.Mesh(geometry, material);scene.add(cube);camera.position.z = 5;function animate() { requestAnimationFrame(animate); cube.position.x = Math.sin(Date.now() * 0.001) * 2; cube.rotation.x += 0.01; cube.rotation.y += 0.01; const scaleFactor = 1 + Math.sin(Date.now() * 0.002) * 0.5; cube.scale.set(scaleFactor, scaleFactor, scaleFactor); renderer.render(scene, camera); } animate();window.addEventListener(&apos;resize&apos;, () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });</script></body></html>' frameborder="0" width="100%" height="400px"></iframe>
   </div>
 </body>
 </html>

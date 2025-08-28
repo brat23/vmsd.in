@@ -59,7 +59,7 @@ function getNoise(x, y) {
 
 // Displace vertices based on noise
 const positionAttribute = plane.geometry.getAttribute('position');
-for (let i = 0; i < positionAttribute.count; i++) {
+for (let i = 0; i &lt; positionAttribute.count; i++) {
     const x = positionAttribute.getX(i);
     const y = positionAttribute.getY(i);
     const z = positionAttribute.getZ(i);

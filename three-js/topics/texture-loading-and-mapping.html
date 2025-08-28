@@ -66,61 +66,7 @@ const material = new THREE.MeshStandardMaterial({
     <h2>Example: Applying Textures</h2>
     <p>This example demonstrates how to load and apply a diffuse texture to a cube. For bump and normal maps, you would follow a similar loading process and assign them to their respective material properties.</p>
 
-    <iframe srcdoc="
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset=\"utf-8\">
-            <title>Three.js Textures</title>
-            <style>
-                body { margin: 0; overflow: hidden; }
-                canvas { display: block; }
-            </style>
-        </head>
-        <body>
-            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
-            <script>
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ antialias: true });
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                document.body.appendChild(renderer.domElement);
-
-                // Add a light source for MeshStandardMaterial
-                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-                scene.add(ambientLight);
-                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-                directionalLight.position.set(1, 1, 1);
-                scene.add(directionalLight);
-
-                // Load a texture (replace with your image path)
-                const textureLoader = new THREE.TextureLoader();
-                const texture = textureLoader.load('https://threejs.org/examples/textures/uv_grid_opengl.jpg'); // Example texture
-
-                const geometry = new THREE.BoxGeometry(1, 1, 1);
-                const material = new THREE.MeshStandardMaterial({ map: texture });
-                const cube = new THREE.Mesh(geometry, material);
-                scene.add(cube);
-
-                camera.position.z = 3;
-
-                function animate() {
-                    requestAnimationFrame(animate);
-                    cube.rotation.x += 0.01;
-                    cube.rotation.y += 0.01;
-                    renderer.render(scene, camera);
-                }
-                animate();
-
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
-            </script>
-        </body>
-        </html>
-    " frameborder="0" width="100%" height="400px"></iframe>
+        <iframe srcdoc='<!DOCTYPE html><html><head><meta charset=&quot;utf-8&quot;><title>Three.js Textures</title><style>body { margin: 0; overflow: hidden; } canvas { display: block; }</style></head><body><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js&quot;></script><script>const scene = new THREE.Scene();const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);const renderer = new THREE.WebGLRenderer({ antialias: true });renderer.setSize(window.innerWidth, window.innerHeight);document.body.appendChild(renderer.domElement);const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);scene.add(ambientLight);const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);directionalLight.position.set(1, 1, 1);scene.add(directionalLight);const textureLoader = new THREE.TextureLoader();const texture = textureLoader.load(&apos;https://threejs.org/examples/textures/uv_grid_opengl.jpg&apos;);const geometry = new THREE.BoxGeometry(1, 1, 1);const material = new THREE.MeshStandardMaterial({ map: texture });const cube = new THREE.Mesh(geometry, material);scene.add(cube);camera.position.z = 3;function animate() { requestAnimationFrame(animate); cube.rotation.x += 0.01; cube.rotation.y += 0.01; renderer.render(scene, camera); } animate();window.addEventListener(&apos;resize&apos;, () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });</script></body></html>' frameborder="0" width="100%" height="400px"></iframe>
   </div>
 </body>
 </html>

@@ -58,64 +58,7 @@ group.scale.set(1.5, 1.5, 1.5); // Scales the entire group</code></pre>
     <h2>Example: Grouping Objects</h2>
     <p>This example demonstrates how to create a group of objects and apply transformations to the entire group.</p>
 
-    <iframe srcdoc="
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset=\"utf-8\">
-            <title>Three.js Grouping</title>
-            <style>
-                body { margin: 0; overflow: hidden; }
-                canvas { display: block; }
-            </style>
-        </head>
-        <body>
-            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
-            <script>
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ antialias: true });
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                document.body.appendChild(renderer.domElement);
-
-                // Create a group
-                const group = new THREE.Group();
-                scene.add(group);
-
-                // Add a box to the group
-                const boxGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-                const box = new THREE.Mesh(boxGeometry, boxMaterial);
-                box.position.set(-0.75, 0, 0);
-                group.add(box);
-
-                // Add a sphere to the group
-                const sphereGeometry = new THREE.SphereGeometry(0.4, 32, 32);
-                const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
-                const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-                sphere.position.set(0.75, 0, 0);
-                group.add(sphere);
-
-                camera.position.z = 5;
-
-                function animate() {
-                    requestAnimationFrame(animate);
-
-                    group.rotation.y += 0.01; // Rotate the entire group
-
-                    renderer.render(scene, camera);
-                }
-                animate();
-
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
-            </script>
-        </body>
-        </html>
-    " frameborder="0" width="100%" height="400px"></iframe>
+        <iframe srcdoc='<!DOCTYPE html><html><head><meta charset=&quot;utf-8&quot;><title>Three.js Grouping</title><style>body { margin: 0; overflow: hidden; } canvas { display: block; }</style></head><body><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js&quot;></script><script>const scene = new THREE.Scene();const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);const renderer = new THREE.WebGLRenderer({ antialias: true });renderer.setSize(window.innerWidth, window.innerHeight);document.body.appendChild(renderer.domElement);const group = new THREE.Group();scene.add(group);const boxGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });const box = new THREE.Mesh(boxGeometry, boxMaterial);box.position.set(-0.75, 0, 0);group.add(box);const sphereGeometry = new THREE.SphereGeometry(0.4, 32, 32);const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);sphere.position.set(0.75, 0, 0);group.add(sphere);camera.position.z = 5;function animate() { requestAnimationFrame(animate); group.rotation.y += 0.01; renderer.render(scene, camera); } animate();window.addEventListener(&apos;resize&apos;, () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });</script></body></html>' frameborder="0" width="100%" height="400px"></iframe>
   </div>
 </body>
 </html>

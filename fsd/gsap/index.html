@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSAP Animation Learning Module</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            opacity: 0;
+            margin-bottom: 3rem;
+        }
+
+        .hero-button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.3s ease;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.1);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 20px 0;
+            transform: translateY(-100%);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #4ecdc4;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4ecdc4;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Section Styles */
+        .section {
+            min-height: 100vh;
+            padding: 100px 0;
+            opacity: 0;
+        }
+
+        .section h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Demo Cards */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .demo-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+        }
+
+        .demo-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #4ecdc4;
+        }
+
+        .demo-area {
+            height: 200px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Animation Elements */
+        .anim-box {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 10px;
+        }
+
+        .anim-circle {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border-radius: 50%;
+        }
+
+        .anim-text {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .morph-path {
+            fill: none;
+            stroke: #4ecdc4;
+            stroke-width: 3;
+            stroke-linecap: round;
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            z-index: 1001;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        /* Custom animations */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #4ecdc4;
+            border-radius: 50%;
+        }
+
+        .float-element {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .code-block {
+            background: rgba(0,0,0,0.4);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Monaco', monospace;
+            font-size: 0.9rem;
+            border-left: 4px solid #4ecdc4;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress"></div>
+    
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <h3>GSAP Mastery</h3>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#basics">Basics</a></li>
+                    <li><a href="#timeline">Timeline</a></li>
+                    <li><a href="#scroll">ScrollTrigger</a></li>
+                    <li><a href="#advanced">Advanced</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>GSAP Animation Mastery</h1>
+            <p class="hero-subtitle">Learn professional web animations with live examples</p>
+            <button class="hero-button">Start Learning</button>
+        </div>
+    </section>
+
+    <section id="basics" class="section">
+        <div class="container">
+            <h2>Basic Animations</h2>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h3>1. Basic Tween</h3>
+                    <p>The foundation of GSAP - animate any property</p>
+                    <div class="demo-area">
+                        <div class="anim-box" id="box1"></div>
+                    </div>
+                    <button class="demo-button" onclick="basicTween()">Animate</button>
+                    <div class="code-block">
+gsap.to("#box1", {
+  x: 200,
+  rotation: 360,
+  duration: 2
+});
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>2. From Animation</h3>
+                    <p>Start from specific values</p>
+                    <div class="demo-area">
+                        <div class="anim-circle" id="circle1"></div>
+                    </div>
+                    <button class="demo-button" onclick="fromAnimation()">Animate</button>
+                    <div class="code-block">
+gsap.from("#circle1", {
+  scale: 0,
+  opacity: 0,
+  duration: 1.5,
+  ease: "back.out(1.7)"
+});
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>3. Set Properties</h3>
+                    <p>Instantly set values without animation</p>
+                    <div class="demo-area">
+                        <div class="anim-box" id="box2"></div>
+                    </div>
+                    <button class="demo-button" onclick="setProperties()">Set & Animate</button>
+                    <div class="code-block">
+gsap.set("#box2", {x: -100});
+gsap.to("#box2", {
+  x: 100,
+  y: 50,
+  duration: 1
+});
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>4. Stagger Animation</h3>
+                    <p>Animate multiple elements with delay</p>
+                    <div class="demo-area">
+                        <div class="anim-box stagger-box"></div>
+                        <div class="anim-box stagger-box"></div>
+                        <div class="anim-box stagger-box"></div>
+                    </div>
+                    <button class="demo-button" onclick="staggerAnimation()">Stagger</button>
+                    <div class="code-block">
+gsap.from(".stagger-box", {
+  y: -100,
+  opacity: 0,
+  duration: 0.8,
+  stagger: 0.2
+});
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline" class="section">
+        <div class="container">
+            <h2>Timeline Animations</h2>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h3>5. Basic Timeline</h3>
+                    <p>Chain animations in sequence</p>
+                    <div class="demo-area">
+                        <div class="anim-box" id="timelineBox1"></div>
+                    </div>
+                    <button class="demo-button" onclick="basicTimeline()">Play Timeline</button>
+                    <div class="code-block">
+const tl = gsap.timeline();
+tl.to("#timelineBox1", {x: 100, duration: 1})
+  .to("#timelineBox1", {y: 100, duration: 1})
+  .to("#timelineBox1", {rotation: 360, duration: 1});
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>6. Timeline with Labels</h3>
+                    <p>Control timing with labels</p>
+                    <div class="demo-area">
+                        <div class="anim-circle" id="timelineCircle1"></div>
+                        <div class="anim-box" id="timelineBox2"></div>
+                    </div>
+                    <button class="demo-button" onclick="labelTimeline()">Play with Labels</button>
+                    <div class="code-block">
+const tl = gsap.timeline();
+tl.to("#timelineCircle1", {x: 150, duration: 1})
+  .addLabel("midpoint")
+  .to("#timelineBox2", {x: 150, duration: 1}, "midpoint");
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>7. Repeat & Yoyo</h3>
+                    <p>Loop animations back and forth</p>
+                    <div class="demo-area">
+                        <div class="anim-box" id="yoyoBox"></div>
+                    </div>
+                    <button class="demo-button" onclick="yoyoAnimation()">Yoyo Effect</button>
+                    <div class="code-block">
+gsap.to("#yoyoBox", {
+  x: 200,
+  duration: 1,
+  repeat: 3,
+  yoyo: true,
+  ease: "power2.inOut"
+});
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>8. Text Animation</h3>
+                    <p>Animate text with TextPlugin</p>
+                    <div class="demo-area">
+                        <div class="anim-text" id="animText">Hello GSAP!</div>
+                    </div>
+                    <button class="demo-button" onclick="textAnimation()">Type Text</button>
+                    <div class="code-block">
+gsap.to("#animText", {
+  duration: 2,
+  text: "Amazing Animations!",
+  ease: "none"
+});
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="scroll" class="section">
+        <div class="container">
+            <h2>ScrollTrigger Animations</h2>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h3>9. Scroll-triggered Animation</h3>
+                    <p>Animate elements as they enter viewport</p>
+                    <div class="demo-area">
+                        <div class="anim-box scroll-box" id="scrollBox1"></div>
+                    </div>
+                    <div class="code-block">
+gsap.to("#scrollBox1", {
+  x: 200,
+  rotation: 360,
+  scrollTrigger: "#scrollBox1"
+});
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>10. Pinned Animation</h3>
+                    <p>Pin elements during scroll</p>
+                    <div class="demo-area">
+                        <div class="anim-circle" id="pinnedCircle"></div>
+                    </div>
+                    <div class="code-block">
+gsap.to("#pinnedCircle", {
+  scale: 2,
+  scrollTrigger: {
+    trigger: "#pinnedCircle",
+    pin: true,
+    scrub: 1
+  }
+});
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>11. Parallax Effect</h3>
+                    <p>Create depth with different scroll speeds</p>
+                    <div class="demo-area">
+                        <div class="anim-box parallax-bg"></div>
+                        <div class="anim-circle parallax-fg"></div>
+                    </div>
+                    <div class="code-block">
+gsap.to(".parallax-bg", {
+  y: -100,
+  scrollTrigger: {
+    trigger: ".parallax-bg",
+    scrub: true
+  }
+});
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>12. Batch Animations</h3>
+                    <p>Animate multiple elements efficiently</p>
+                    <div class="demo-area">
+                        <div class="anim-box batch-item"></div>
+                        <div class="anim-circle batch-item"></div>
+                        <div class="anim-box batch-item"></div>
+                    </div>
+                    <div class="code-block">
+ScrollTrigger.batch(".batch-item", {
+  onEnter: elements => gsap.from(elements, {
+    opacity: 0,
+    y: 100,
+    stagger: 0.15
+  })
+});
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="advanced" class="section">
+        <div class="container">
+            <h2>Advanced Techniques</h2>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h3>13. Morphing SVG</h3>
+                    <p>Transform SVG paths smoothly</p>
+                    <div class="demo-area">
+                        <svg width="120" height="120" viewBox="0 0 120 120">
+                            <path id="morphPath" class="morph-path" d="M60,10 L110,110 L10,110 Z"/>
+                        </svg>
+                    </div>
+                    <button class="demo-button" onclick="morphSVG()">Morph Shape</button>
+                    <div class="code-block">
+gsap.to("#morphPath", {
+  attr: {
+    d: "M60,60 m-50,0 a50,50 0 1,0 100,0 a50,50 0 1,0 -100,0"
+  },
+  duration: 2,
+  ease: "power2.inOut"
+});
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>14. Physics Simulation</h3>
+                    <p>Realistic motion with momentum</p>
+                    <div class="demo-area">
+                        <div class="anim-circle" id="physicsCircle"></div>
+                    </div>
+                    <button class="demo-button" onclick="physicsAnimation()">Physics</button>
+                    <div class="code-block">
+gsap.to("#physicsCircle", {
+  x: 200,
+  y: 100,
+  duration: 2,
+  ease: "bounce.out"
+});
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>15. 3D Transforms</h3>
+                    <p>Rotate in 3D space</p>
+                    <div class="demo-area">
+                        <div class="anim-box" id="transform3D"></div>
+                    </div>
+                    <button class="demo-button" onclick="transform3D()">3D Rotate</button>
+                    <div class="code-block">
+gsap.to("#transform3D", {
+  rotationX: 360,
+  rotationY: 360,
+  duration: 3,
+  transformPerspective: 400
+});
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>16. Custom Easing</h3>
+                    <p>Create unique motion curves</p>
+                    <div class="demo-area">
+                        <div class="anim-box" id="customEase"></div>
+                    </div>
+                    <button class="demo-button" onclick="customEasing()">Custom Ease</button>
+                    <div class="code-block">
+gsap.to("#customEase", {
+  x: 200,
+  duration: 2,
+  ease: "steps(12)"
+});
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Register ScrollTrigger plugin
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, TextPlugin);
+
+        // Initialize animations
+        function init() {
+            // Hero animations
+            gsap.timeline()
+                .to('.hero p', {opacity: 1, y: 0, duration: 1, delay: 0.5})
+                .to('.hero-button', {opacity: 1, y: 0, duration: 1}, '-=0.5')
+                .to('.nav', {y: 0, duration: 1}, '-=0.5');
+
+            // Scroll progress
+            gsap.to('.scroll-progress', {
+                width: '100%',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: 'body',
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: true
+                }
+            });
+
+            // Section animations
+            gsap.utils.toArray('.section').forEach(section => {
+                gsap.to(section, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 80%'
+                    }
+                });
+            });
+
+            // Demo cards animation
+            gsap.utils.toArray('.demo-card').forEach((card, i) => {
+                gsap.to(card, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: i * 0.1,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 85%'
+                    }
+                });
+            });
+
+            // ScrollTrigger examples
+            setupScrollTriggerExamples();
+
+            // Create floating particles
+            createParticles();
+        }
+
+        // Demo functions
+        function basicTween() {
+            gsap.to('#box1', {
+                x: 200,
+                rotation: 360,
+                duration: 2,
+                ease: 'back.out(1.7)',
+                onComplete: () => gsap.set('#box1', {x: 0, rotation: 0})
+            });
+        }
+
+        function fromAnimation() {
+            gsap.from('#circle1', 
+                {scale: 0, opacity: 0, duration: 1.5, ease: 'back.out(1.7)'}
+            );
+        }
+
+        function setProperties() {
+            gsap.set('#box2', {x: -100, y: 0});
+            gsap.to('#box2', {
+                x: 100,
+                y: 50,
+                duration: 1,
+                onComplete: () => gsap.set('#box2', {x: 0, y: 0})
+            });
+        }
+
+        function staggerAnimation() {
+            gsap.fromTo('.stagger-box',
+                {y: -100, opacity: 0},
+                {y: 0, opacity: 1, duration: 0.8, stagger: 0.2}
+            );
+        }
+
+        function basicTimeline() {
+            const tl = gsap.timeline({
+                onComplete: () => gsap.set('#timelineBox1', {x: 0, y: 0, rotation: 0})
+            });
+            tl.to('#timelineBox1', {x: 100, duration: 1})
+              .to('#timelineBox1', {y: 100, duration: 1})
+              .to('#timelineBox1', {rotation: 360, duration: 1});
+        }
+
+        function labelTimeline() {
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    gsap.set('#timelineCircle1', {x: 0});
+                    gsap.set('#timelineBox2', {x: 0});
+                }
+            });
+            tl.to('#timelineCircle1', {x: 150, duration: 1})
+              .addLabel('midpoint')
+              .to('#timelineBox2', {x: 150, duration: 1}, 'midpoint');
+        }
+
+        function yoyoAnimation() {
+            gsap.to('#yoyoBox', {
+                x: 200,
+                duration: 1,
+                repeat: 3,
+                yoyo: true,
+                ease: 'power2.inOut',
+                onComplete: () => gsap.set('#yoyoBox', {x: 0})
+            });
+        }
+
+        function textAnimation() {
+            gsap.to('#animText', {
+                duration: 2,
+                text: 'Amazing Animations!',
+                ease: 'none',
+                onComplete: () => {
+                    setTimeout(() => {
+                        gsap.set('#animText', {text: 'Hello GSAP!'});
+                    }, 1000);
+                }
+            });
+        }
+
+        function morphSVG() {
+            const path = document.getElementById('morphPath');
+            const originalPath = path.getAttribute('d');
+            const circlePath = 'M60,60 m-50,0 a50,50 0 1,0 100,0 a50,50 0 1,0 -100,0';
+            
+            gsap.to('#morphPath', {
+                attr: {d: circlePath},
+                duration: 2,
+                ease: 'power2.inOut',
+                onComplete: () => {
+                    setTimeout(() => {
+                        gsap.to('#morphPath', {
+                            attr: {d: originalPath},
+                            duration: 2,
+                            ease: 'power2.inOut'
+                        });
+                    }, 1000);
+                }
+            });
+        }
+
+        function physicsAnimation() {
+            gsap.fromTo('#physicsCircle',
+                {x: 0, y: 0},
+                {
+                    x: 200,
+                    y: 100,
+                    duration: 2,
+                    ease: 'bounce.out',
+                    onComplete: () => {
+                        gsap.to('#physicsCircle', {x: 0, y: 0, duration: 1, delay: 0.5});
+                    }
+                }
+            );
+        }
+
+        function transform3D() {
+            gsap.to('#transform3D', {
+                rotationX: 360,
+                rotationY: 360,
+                duration: 3,
+                transformPerspective: 400,
+                onComplete: () => {
+                    gsap.set('#transform3D', {rotationX: 0, rotationY: 0});
+                }
+            });
+        }
+
+        function customEasing() {
+            gsap.to('#customEase', {
+                x: 200,
+                duration: 2,
+                ease: 'steps(12)',
+                onComplete: () => gsap.set('#customEase', {x: 0})
+            });
+        }
+
+        function setupScrollTriggerExamples() {
+            // Scroll-triggered animations
+            gsap.to('#scrollBox1', {
+                x: 200,
+                rotation: 360,
+                scrollTrigger: {
+                    trigger: '#scrollBox1',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+
+            // Parallax effects
+            gsap.utils.toArray('.parallax-bg').forEach(bg => {
+                gsap.to(bg, {
+                    y: -100,
+                    scrollTrigger: {
+                        trigger: bg,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: true
+                    }
+                });
+            });
+
+            gsap.utils.toArray('.parallax-fg').forEach(fg => {
+                gsap.to(fg, {
+                    y: -50,
+                    scrollTrigger: {
+                        trigger: fg,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: true
+                    }
+                });
+            });
+
+            // Batch animations
+            ScrollTrigger.batch('.batch-item', {
+                onEnter: elements => gsap.from(elements, {
+                    opacity: 0,
+                    y: 100,
+                    stagger: 0.15,
+                    duration: 1,
+                    ease: 'back.out(1.7)'
+                }),
+                onLeave: elements => gsap.to(elements, {
+                    opacity: 0.3,
+                    duration: 0.5
+                }),
+                onEnterBack: elements => gsap.to(elements, {
+                    opacity: 1,
+                    duration: 0.5
+                })
+            });
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                document.body.appendChild(particle);
+
+                gsap.to(particle, {
+                    y: -1000,
+                    duration: Math.random() * 10 + 10,
+                    repeat: -1,
+                    ease: 'none',
+                    delay: Math.random() * 10
+                });
+
+                gsap.to(particle, {
+                    x: '+=100',
+                    duration: Math.random() * 5 + 5,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'sine.inOut'
+                });
+            }
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    gsap.to(window, {
+                        duration: 1.5,
+                        scrollTo: target,
+                        ease: 'power2.inOut'
+                    });
+                }
+            });
+        });
+
+        // Hero button functionality
+        document.querySelector('.hero-button').addEventListener('click', function() {
+            gsap.to(window, {
+                duration: 1.5,
+                scrollTo: '#basics',
+                ease: 'power2.inOut'
+            });
+        });
+
+        // Mouse follow effect
+        let mouseX = 0, mouseY = 0;
+        let followerX = 0, followerY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function updateFollower() {
+            followerX += (mouseX - followerX) * 0.1;
+            followerY += (mouseY - followerY) * 0.1;
+            
+            document.querySelectorAll('.particle').forEach((particle, i) => {
+                if (i < 5) { // Only affect first 5 particles
+                    gsap.to(particle, {
+                        x: followerX * 0.01 * (i + 1),
+                        y: followerY * 0.01 * (i + 1),
+                        duration: 0.5,
+                        ease: 'power2.out'
+                    });
+                }
+            });
+            
+            requestAnimationFrame(updateFollower);
+        }
+        updateFollower();
+
+        // Interactive demo enhancements
+        function enhanceInteractivity() {
+            // Add hover effects to demo cards
+            gsap.utils.toArray('.demo-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, {
+                        scale: 1.05,
+                        y: -10,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        scale: 1,
+                        y: 0,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+            });
+
+            // Add ripple effect to buttons
+            document.querySelectorAll('.demo-button, .hero-button').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const ripple = document.createElement('div');
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255,255,255,0.3);
+                        border-radius: 50%;
+                        pointer-events: none;
+                        transform: scale(0);
+                    `;
+                    
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    gsap.to(ripple, {
+                        scale: 2,
+                        opacity: 0,
+                        duration: 0.6,
+                        ease: 'power2.out',
+                        onComplete: () => ripple.remove()
+                    });
+                });
+            });
+        }
+
+        // Advanced animation demos
+        function setupAdvancedDemos() {
+            // Magnetic effect for navigation
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    gsap.to(this, {
+                        scale: 1.1,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+
+                link.addEventListener('mouseleave', function() {
+                    gsap.to(this, {
+                        scale: 1,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+            });
+
+            // Floating animation for demo elements
+            gsap.utils.toArray('.anim-box, .anim-circle').forEach((element, i) => {
+                gsap.to(element, {
+                    y: 10,
+                    rotation: 5,
+                    duration: 2 + i * 0.5,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'sine.inOut',
+                    delay: i * 0.2
+                });
+            });
+
+            // Text reveal animation
+            gsap.utils.toArray('.demo-card h3').forEach(heading => {
+                const chars = heading.textContent.split('');
+                heading.innerHTML = chars.map(char => 
+                    `<span style="display: inline-block; opacity: 0; transform: translateY(20px);">${char === ' ' ? '&nbsp;' : char}</span>`
+                ).join('');
+
+                gsap.to(heading.children, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.05,
+                    stagger: 0.03,
+                    scrollTrigger: {
+                        trigger: heading,
+                        start: 'top 90%'
+                    }
+                });
+            });
+        }
+
+        // Performance optimization
+        function optimizePerformance() {
+            // Pause animations when not visible
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        gsap.globalTimeline.play();
+                    } else {
+                        gsap.globalTimeline.pause();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.demo-area').forEach(area => {
+                observer.observe(area);
+            });
+
+            // Reduce motion for users who prefer it
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                gsap.globalTimeline.timeScale(0.5);
+                document.querySelectorAll('.particle').forEach(particle => {
+                    particle.style.display = 'none';
+                });
+            }
+        }
+
+        // Keyboard navigation
+        function setupKeyboardNavigation() {
+            document.addEventListener('keydown', (e) => {
+                const sections = ['#basics', '#timeline', '#scroll', '#advanced'];
+                const currentSection = sections.find(section => {
+                    const element = document.querySelector(section);
+                    const rect = element.getBoundingClientRect();
+                    return rect.top <= 100 && rect.bottom >= 100;
+                });
+                
+                const currentIndex = sections.indexOf(currentSection);
+                
+                if (e.key === 'ArrowDown' && currentIndex < sections.length - 1) {
+                    e.preventDefault();
+                    gsap.to(window, {
+                        duration: 1,
+                        scrollTo: sections[currentIndex + 1],
+                        ease: 'power2.inOut'
+                    });
+                }
+                
+                if (e.key === 'ArrowUp' && currentIndex > 0) {
+                    e.preventDefault();
+                    gsap.to(window, {
+                        duration: 1,
+                        scrollTo: sections[currentIndex - 1],
+                        ease: 'power2.inOut'
+                    });
+                }
+            });
+        }
+
+        // Loading sequence
+        function loadingSequence() {
+            // Hide all content initially
+            gsap.set('body', {opacity: 0});
+            
+            // Animate in after a brief delay
+            gsap.to('body', {
+                opacity: 1,
+                duration: 0.5,
+                delay: 0.2,
+                onComplete: () => {
+                    init();
+                    enhanceInteractivity();
+                    setupAdvancedDemos();
+                    optimizePerformance();
+                    setupKeyboardNavigation();
+                }
+            });
+        }
+
+        // Initialize everything when DOM is loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadingSequence);
+        } else {
+            loadingSequence();
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            ScrollTrigger.refresh();
+        });
+
+        // Add some utility functions for learning
+        window.gsapUtils = {
+            // Function to demonstrate timeline control
+            createControlledTimeline: function() {
+                const tl = gsap.timeline({paused: true});
+                tl.to('.anim-box', {x: 100, duration: 1})
+                  .to('.anim-circle', {scale: 1.5, duration: 1}, '-=0.5')
+                  .to('.anim-box', {rotation: 360, duration: 1});
+                return tl;
+            },
+            
+            // Function to demonstrate custom ease
+            customBounce: function(element) {
+                return gsap.to(element, {
+                    y: -100,
+                    duration: 0.5,
+                    ease: CustomEase.create("custom", "M0,0 C0.25,0.46 0.45,0.94 0.65,0.98 0.85,1.02 1,1 1,1"),
+                    yoyo: true,
+                    repeat: 3
+                });
+            },
+            
+            // Function to demonstrate morphing
+            morphShape: function(path, newPath) {
+                return gsap.to(path, {
+                    attr: {d: newPath},
+                    duration: 2,
+                    ease: 'power2.inOut'
+                });
+            }
+        };
+        
+
+    </script>
+</body>
+</html>

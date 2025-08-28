@@ -38,71 +38,7 @@
     <h2>Example: Simple Custom Shader (Color Gradient)</h2>
     <p>This example demonstrates a basic custom shader that creates a color gradient on a plane based on its Y-coordinate. This requires a Three.js setup.</p>
 
-    <iframe srcdoc="
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset=\"utf-8\">
-            <title>Custom Shader</title>
-            <style>
-                body { margin: 0; overflow: hidden; }
-                canvas { display: block; }
-            </style>
-        </head>
-        <body>
-            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js\"></script>
-            <script>
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ antialias: true });
-
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                document.body.appendChild(renderer.domElement);
-
-                // Custom Vertex Shader
-                const vertexShader = `
-                    void main() {
-                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                    }
-                `;
-
-                // Custom Fragment Shader
-                const fragmentShader = `
-                    void main() {
-                        // Create a gradient based on the Y-coordinate (normalized to 0-1 range)
-                        float gradient = (gl_FragCoord.y / 480.0); // Assuming canvas height is 480
-                        gl_FragColor = vec4(gradient, 0.0, 1.0 - gradient, 1.0); // Green to Blue gradient
-                    }
-                `;
-
-                // Create a ShaderMaterial
-                const customMaterial = new THREE.ShaderMaterial({
-                    vertexShader: vertexShader,
-                    fragmentShader: fragmentShader,
-                });
-
-                // Create a plane to apply the shader to
-                const geometry = new THREE.PlaneGeometry(2, 2);
-                const plane = new THREE.Mesh(geometry, customMaterial);
-                scene.add(plane);
-
-                camera.position.z = 1;
-
-                function animate() {
-                    requestAnimationFrame(animate);
-                    renderer.render(scene, camera);
-                }
-                animate();
-
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
-            </script>
-        </body>
-        </html>
-    " frameborder="0" width="100%" height="400px"></iframe>
+        <iframe srcdoc='<!DOCTYPE html><html><head><meta charset=&quot;utf-8&quot;><title>Custom Shader</title><style>body { margin: 0; overflow: hidden; } canvas { display: block; }</style></head><body><script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js&quot;></script><script>const scene = new THREE.Scene();const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);const renderer = new THREE.WebGLRenderer({ antialias: true });renderer.setSize(window.innerWidth, window.innerHeight);document.body.appendChild(renderer.domElement);const vertexShader = `void main() { gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`;const fragmentShader = `void main() { float gradient = (gl_FragCoord.y / 480.0); gl_FragColor = vec4(gradient, 0.0, 1.0 - gradient, 1.0); }`;const customMaterial = new THREE.ShaderMaterial({ vertexShader: vertexShader, fragmentShader: fragmentShader, });const geometry = new THREE.PlaneGeometry(2, 2);const plane = new THREE.Mesh(geometry, customMaterial);scene.add(plane);camera.position.z = 1;function animate() { requestAnimationFrame(animate); renderer.render(scene, camera); } animate();window.addEventListener(&apos;resize&apos;, () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });</script></body></html>' frameborder="0" width="100%" height="400px"></iframe>
   </div>
 </body>
 </html>
