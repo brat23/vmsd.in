@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Prompting Techniques</title>
+    <link rel="stylesheet" href="../../topic-style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">&larr; Back to AI Mastery Journey</a>
+        <header class="topic-header">
+            <h1>Advanced Prompting Techniques</h1>
+            <p class="meta-info">Module 1: Prompting Mastery</p>
+        </header>
+        <main class="topic-content">
+            <h2>Unlocking Deeper Capabilities</h2>
+            <p>Beyond basic instructions, advanced prompting techniques can unlock more complex reasoning, creativity, and problem-solving abilities from an LLM. These methods guide the model's internal "thought process" to arrive at more accurate and sophisticated answers.</p>
+
+            <h2>Key Advanced Techniques</h2>
+            <ul>
+                <li><strong>Chain-of-Thought (CoT) Prompting:</strong> This is one of the most powerful techniques. By simply adding the phrase "Let's think step by step" or providing an example that includes a reasoning process, you encourage the model to break down a problem into intermediate steps before giving a final answer. This dramatically improves performance on tasks that require logic, arithmetic, or complex reasoning.</li>
+                <li><strong>Zero-Shot Prompting:</strong> This is the most basic form of prompting, where you ask the model to perform a task it has never been explicitly trained on, without providing any examples. For instance, asking a general model to classify the sentiment of a sentence.</li>
+                <li><strong>Few-Shot Prompting:</strong> This is a significant step up from zero-shot. In few-shot prompting, you provide a few examples (shots) of the task you want the model to perform within the prompt itself. This gives the model a clear pattern to follow, dramatically improving accuracy and format adherence.</li>
+                <li><strong>Self-Consistency:</strong> This technique involves prompting the model with the same question multiple times (perhaps with slightly different phrasing) and choosing the most common answer. This is particularly effective with Chain-of-Thought prompting, as the model might generate several different reasoning paths, and the most frequent final answer is often the correct one.</li>
+            </ul>
+
+            <h2>When to Use Them</h2>
+            <p>For simple, direct tasks, a basic prompt is often sufficient. However, when you are faced with a multi-step problem, a mathematical calculation, or a complex reasoning challenge, employing Chain-of-Thought and Self-Consistency can be the difference between a wrong answer and a correct one. Few-shot prompting is your go-to technique for any task that requires a specific, structured output format.</p>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Hacks & Tricks</title>
+    <link rel="stylesheet" href="../../topic-style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">&larr; Back to AI Mastery Journey</a>
+        <header class="topic-header">
+            <h1>Prompt Hacks & Tricks</h1>
+            <p class="meta-info">Module 1: Prompting Mastery</p>
+        </header>
+        <main class="topic-content">
+            <h2>Beyond the Manual</h2>
+            <p>Beyond formal techniques, there are many informal "hacks" and tricks discovered by the AI community that can help you get better performance, more creative outputs, or more control over the model's behavior. These often work by manipulating the model's context in clever ways.</p>
+
+            <h2>Useful Tricks to Try</h2>
+            <ul>
+                <li><strong>Role-Playing:</strong> As mentioned in the basics, but it can be taken further. You can have the AI act as a specific character, a critic, a debate opponent, or even a machine (e.g., "You are a Linux terminal"). This is a powerful way to control tone and behavior.</li>
+                <li><strong>System Prompts & Custom Instructions:</strong> Many platforms (like ChatGPT or the OpenAI API) allow you to set a "system prompt" or "custom instructions." This is a meta-prompt that sets the context for your entire conversation, defining the AI's persona and response guidelines so you don't have to repeat them in every prompt.</li>
+                <li><strong>Temperature and Top_p:</strong> These are API parameters that control the randomness of the output. A high temperature (e.g., 0.8) results in more creative and diverse text, while a low temperature (e.g., 0.2) produces more deterministic and focused output. `top_p` is an alternative way to control randomness that can sometimes yield better results.</li>
+                <li><strong>The "Take a Deep Breath" Trick:</strong> It may sound silly, but researchers have found that adding phrases like "Take a deep breath and work on this problem step-by-step" can sometimes improve a model's performance on complex tasks, likely by encouraging it to use more computational resources on the problem.</li>
+                <li><strong>Output Priming:</strong> You can start the AI's response for it to guide it in the right direction. For example, ending your prompt with `Here is the JSON output:` makes it highly likely that the model will start its response with a JSON object.</li>
+            </ul>
+        </main>
+    </div>
+</body>
+</html>

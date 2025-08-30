@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Size Matters – Paper Format Visualizer</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --primary-color: #ff0055;
+      --secondary-color: #00ff88;
+      --background-color: #121212;
+      --text-color: #ffffff;
+      --card-color: #1e1e1e;
+      --hover-glow: rgba(255, 0, 85, 0.2);
+      --secondary-glow: rgba(0, 255, 136, 0.15);
+      --gradient-primary: linear-gradient(135deg, var(--primary-color), #ff3377);
+      --gradient-secondary: linear-gradient(135deg, var(--secondary-color), #33ffaa);
+      --dark-glass: rgba(30, 30, 30, 0.8);
+    }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@latest/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <img src="logo.svg" alt="VMSD.in Logo" id="sticky-logo">
+  <header>
+    <h1>🧾 Size Matters</h1>
+    <p>Hover over a size to explore its vibe.</p>
+  </header>
+
+  <main>
+    <button id="menu-toggle">☰</button>
+    <nav id="mobile-nav">
+      <aside class="size-list">
+      <ul>
+        <li data-size="A0"><span class="size-name">A0</span> <br> 841 x 1188 mm | 33.1 x 46.8 in</li>
+        <li data-size="A1"><span class="size-name">A1</span> <br> 594 x 841 mm | 23.4 x 33.1 in</li>
+        <li data-size="A2"><span class="size-name">A2</span> <br> 420 x 594 mm | 16.5 x 23.4 in</li>
+        <li data-size="A3"><span class="size-name">A3</span> <br> 297 x 420 mm | 11.7 x 16.5 in</li>
+        <li data-size="A4"><span class="size-name">A4</span> <br> 210 x 297 mm | 8.3 x 11.7 in</li>
+        <li data-size="A5"><span class="size-name">A5</span> <br> 148 x 210 mm | 5.8 x 8.3 in</li>
+        <li data-size="A6"><span class="size-name">A6</span> <br> 105 x 148 mm | 4.1 x 5.8 in</li>
+        <li data-size="A7"><span class="size-name">A7</span> <br> 74 x 105 mm | 2.9 x 4.1 in</li>
+        <li data-size="A8"><span class="size-name">A8</span> <br> 52 x 74 mm | 2.0 x 2.9 in</li>
+        <li data-size="DL"><span class="size-name">DL</span> <br> 99 x 210 mm | 3.9 x 8.3 in</li>
+        <li data-size="Letter"><span class="size-name">US Letter</span> <br> 216 x 279 mm | 8.5 x 11.0 in</li>
+      </ul>
+    </aside>
+    </nav>
+
+    <section class="size-display">
+      <div id="left-column">
+        <div class="info-panel" id="infoPanel">
+  <h2 id="sizeTitle">Hover a size</h2>
+  <p id="sizeDimensions">Dimensions will appear here</p>
+  <p id="sizeUse">Use case will appear here</p>
+</div>
+        <div class="reference-container">
+<canvas id="c"></canvas>
+<div id="annotations-container"></div>
+</div>
+      </div>
+<img src="Size-Guides.jpg" alt="Paper Size Guide" id="size-guide-image">
+
+    </section>
+  </main>
+
+  <footer>
+    <p>Designed for creatives. ✨</p>
+  </footer>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
