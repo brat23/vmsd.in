@@ -1,4 +1,3 @@
-
 const gulp = require('gulp');
 const htmlmin = require('gulp-htmlmin');
 const cleanCSS = require('gulp-clean-css');
@@ -8,17 +7,17 @@ const javascriptObfuscator = require('gulp-javascript-obfuscator');
 const del = require('del');
 
 const paths = {
-  src: 'E:/vmsd.in/vmsd/**/*',
-  build: 'E:/vmsd.in/vmsd/build',
-  html: 'E:/vmsd.in/vmsd/**/*.html',
-  css: 'E:/vmsd.in/vmsd/**/*.css',
-  js: 'E:/vmsd.in/vmsd/**/*.js',
+  src: './**/*',
+  build: './build',
+  html: './**/*.html',
+  css: './**/*.css',
+  js: './**/*.js',
   exclude: [
-    '!E:/vmsd.in/vmsd/node_modules/**/*',
-    '!E:/vmsd.in/vmsd/gulpfile.js',
-    '!E:/vmsd.in/vmsd/package.json',
-    '!E:/vmsd.in/vmsd/package-lock.json',
-    '!E:/vmsd.in/vmsd/build/**/*',
+    '!./node_modules/**/*',
+    '!./gulpfile.js',
+    '!./package.json',
+    '!./package-lock.json',
+    '!./build/**/*',
   ]
 };
 
@@ -33,7 +32,7 @@ function clean() {
 }
 
 function html() {
-  return gulp.src([paths.html, ...paths.exclude, '!E:/vmsd.in/vmsd/three-js/topics/**/*.html'], { base: 'E:/vmsd.in/vmsd/' })
+  return gulp.src([paths.html, ...paths.exclude, '!./three-js/topics/**/*.html'], { base: './' })
     .pipe(htmlmin({
       collapseWhitespace: true,
       removeComments: true,
@@ -63,13 +62,13 @@ function injectGtagAndFavicon() {
 }
 
 function css() {
-  return gulp.src([paths.css, ...paths.exclude], { base: 'E:/vmsd.in/vmsd/' })
+  return gulp.src([paths.css, ...paths.exclude], { base: './' })
     .pipe(cleanCSS())
     .pipe(gulp.dest(paths.build));
 }
 
 function js() {
-  return gulp.src([paths.js, ...paths.exclude], { base: 'E:/vmsd.in/vmsd/' })
+  return gulp.src([paths.js, ...paths.exclude], { base: './' })
     .pipe(uglify())
     .pipe(javascriptObfuscator())
     .pipe(gulp.dest(paths.build));
@@ -79,10 +78,10 @@ function copy() {
   return gulp.src([
     paths.src,
     ...paths.exclude,
-    '!E:/vmsd.in/vmsd/**/*.html',
-    '!E:/vmsd.in/vmsd/**/*.css',
-    '!E:/vmsd.in/vmsd/**/*.js'
-  ], { base: 'E:/vmsd.in/vmsd/' })
+    '!./**/*.html',
+    '!./**/*.css',
+    '!./**/*.js'
+  ], { base: './' })
     .pipe(gulp.dest(paths.build));
 }
 
