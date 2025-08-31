@@ -125,6 +125,16 @@ let isFirstInteraction = true;
 const music = document.getElementById('background-music');
 const musicToggle = document.getElementById('music-toggle');
 
+// Attempt to autoplay
+music.play().then(() => {
+    musicToggle.textContent = '🎵';
+    isFirstInteraction = false;
+}).catch(error => {
+    console.log("Autoplay was prevented:", error);
+    // Keep the mute icon since it didn't play
+    musicToggle.textContent = '🔇';
+});
+
 // --- Fullscreen Toggle & First Interaction Music ---
 function handleFirstInteraction() {
     if (!document.fullscreenElement) {
