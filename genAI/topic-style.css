@@ -1,0 +1,116 @@
+:root {
+    --primary-color: #ff0055;
+    --secondary-color: #00ff88;
+    --background-color: #121212;
+    --text-color: #ffffff;
+    --card-color: #1e1e1e;
+    --hover-glow: rgba(255, 0, 85, 0.2);
+    --secondary-glow: rgba(0, 255, 136, 0.15);
+    --gradient-primary: linear-gradient(135deg, var(--primary-color), #ff3377);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: var(--background-color);
+    color: var(--text-color);
+    background-image: 
+        radial-gradient(circle at 10% 90%, var(--hover-glow) 0%, transparent 40%),
+        radial-gradient(circle at 90% 10%, var(--secondary-glow) 0%, transparent 40%);
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(30, 30, 30, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    color: var(--text-color);
+    transform: translateX(-5px);
+}
+
+.topic-header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
+
+.topic-header .meta-info {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 2rem;
+}
+
+.topic-content h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.topic-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.topic-content ul {
+    list-style-position: inside;
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.topic-content li {
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+}
+
+.topic-content code {
+    background: var(--background-color);
+    padding: 0.2rem 0.4rem;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--secondary-color);
+}
+
+.topic-content pre {
+    background: var(--background-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.topic-content pre code {
+    padding: 0;
+    background: none;
+}

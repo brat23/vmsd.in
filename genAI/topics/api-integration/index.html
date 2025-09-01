@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Integration</title>
+    <link rel="stylesheet" href="../../topic-style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">&larr; Back to AI Mastery Journey</a>
+        <header class="topic-header">
+            <h1>API Integration</h1>
+            <p class="meta-info">Module 1: Tools & Platforms</p>
+        </header>
+        <main class="topic-content">
+            <h2>Bringing AI Into Your Applications</h2>
+            <p>While web interfaces like ChatGPT are powerful, the true potential of generative AI is unlocked when you integrate it directly into your own applications, websites, and workflows. This is done through an Application Programming Interface (API).</p>
+
+            <h2>What is an API?</h2>
+            <p>An API is a set of rules and protocols that allows different software applications to communicate with each other. When you use an AI API, your application sends a request (containing your prompt and other parameters) to the AI provider's servers. The provider's servers process the request, run it through the model, and send the generated response back to your application.</p>
+            
+            <h2>Key Concepts in AI API Usage</h2>
+            <ul>
+                <li><strong>API Keys:</strong> To use an API, you first need to sign up for an account with the provider (e.g., OpenAI, Anthropic, Google AI). You will be issued a secret API key, which is a unique code that you include in your requests to authenticate your application and track your usage.</li>
+                <li><strong>Endpoints:</strong> An API has different URLs, called endpoints, for different models or functionalities. For example, you might use one endpoint for the latest GPT-4 model and another for an embedding model.</li>
+                <li><strong>Request Body:</strong> The data you send to the API is typically in JSON format. It includes the model you want to use, a list of messages (your prompt), and optional parameters like `temperature` to control randomness.</li>
+                <li><strong>Response Handling:</strong> Your application needs to be able to receive the API's response (also usually in JSON), parse it to extract the generated text, and handle any potential errors, like a server issue or an invalid request.</li>
+            </ul>
+
+            <h2>Why Use the API?</h2>
+            <p>Integrating with an API allows you to build custom solutions that are not possible through a public web interface. You can automate workflows, create AI-powered features for your users, analyze data at scale, and build entirely new products and services on top of the power of large language models.</p>
+        </main>
+    </div>
+</body>
+</html>

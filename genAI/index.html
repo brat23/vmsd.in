@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gen AI Mastery Journey</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="animated-bg" id="particleContainer"></div>
+    
+    <div class="floating-elements">
+        <div class="floating-icon" style="top: 10%; left: 10%;">🤖</div>
+        <div class="floating-icon" style="top: 20%; right: 15%;">⚡</div>
+        <div class="floating-icon" style="bottom: 30%; left: 20%;">🧠</div>
+        <div class="floating-icon" style="bottom: 20%; right: 10%;">🚀</div>
+    </div>
+
+    <div class="level-badge">
+        <div>Level <span id="currentLevel">1</span></div>
+        <div style="font-size: 0.8rem; opacity: 0.8;">AI Novice</div>
+    </div>
+
+    <div class="skill-tree">
+        <div style="font-size: 0.8rem; margin-bottom: 0.5rem; text-align: center;">Skills</div>
+        <div style="display: flex; flex-wrap: wrap; max-width: 100px;" id="skillNodes">
+            <div class="skill-node"></div>
+            <div class="skill-node"></div>
+            <div class="skill-node"></div>
+            <div class="skill-node"></div>
+            <div class="skill-node"></div>
+            <div class="skill-node"></div>
+        </div>
+    </div>
+
+    <header class="header">
+        <h1>Gen AI Mastery Journey</h1>
+        <p style="font-size: 1.2rem; opacity: 0.9;">Master Generative AI from Foundations to Innovation</p>
+        
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-value" id="totalXP">0</span>
+                <div>Total XP</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="completedModules">0</span>
+                <div>Modules Complete</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="streak">0</span>
+                <div>Day Streak</div>
+            </div>
+            <div class="stat-item">
+                <div class="xp-bar">
+                    <div id="xpFill" class="xp-fill" style="width: 0%;"></div>
+                </div>
+                <div id="xpToNextLevelText">Progress to Level 2</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero-carousel">
+        <div class="carousel-container">
+            <div class="carousel-slide">
+                <img src="img/1.jpg" alt="Image 1">
+            </div>
+            <div class="carousel-slide">
+                <img src="img/2.jpg" alt="Image 2">
+            </div>
+            <div class="carousel-slide">
+                <img src="img/3.jpg" alt="Image 3">
+            </div>
+        </div>
+        <button class="carousel-prev">&#10094;</button>
+        <button class="carousel-next">&#10095;</button>
+        <div class="carousel-dots"></div>
+    </div>
+
+    <div class="container">
+        <div class="modules-container">
+            <button id="scroll-left-btn" class="scroll-btn">&lt;</button>
+            <div class="modules-grid">
+                <!-- Module 1 -->
+                <div class="module-card" data-module="1">
+                    <div class="module-header">
+                        <div class="module-number">01</div>
+                        <div class="module-status">
+                            <div class="status-badge">Locked</div>
+                            <div class="progress-circle" style="--progress: 0deg;">
+                                <div class="progress-text">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="module-title">Mastering Generative AI & Advanced Prompting</h3>
+                    <p class="module-description">
+                        Master the fundamentals of generative AI and become a prompt engineering expert. 
+                        Learn to craft powerful prompts that unlock AI's full potential.
+                    </p>
+                    
+                    <div class="subtopics-container" id="subtopics-1">
+                    <div class="topic-category">
+                        <div class="category-title">🧠 AI Fundamentals</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/understanding-llms/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;">
+                                <div class="subtopic" data-subtopic-id="m1-af-1"><div class="subtopic-title">Understanding LLMs</div><div class="subtopic-description">Large Language Models, training, and capabilities</div></div>
+                            </a>
+                            <a href="topics/ai-model-types/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;">
+                                <div class="subtopic" data-subtopic-id="m1-af-2"><div class="subtopic-title">AI Model Types</div><div class="subtopic-description">GPT, Claude, Gemini, and specialized models</div></div>
+                            </a>
+                            <a href="topics/ai-limitations/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;">
+                                <div class="subtopic" data-subtopic-id="m1-af-3"><div class="subtopic-title">AI Limitations</div><div class="subtopic-description">Hallucinations, biases, and ethical considerations</div></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="topic-category">
+                        <div class="category-title">🎯 Prompting Mastery</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/prompt-engineering-basics/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;">
+                                <div class="subtopic" data-subtopic-id="m1-pm-1"><div class="subtopic-title">Prompt Engineering Basics</div><div class="subtopic-description">Structure, clarity, and context setting</div></div>
+                            </a>
+                            <a href="topics/advanced-techniques/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;">
+                                <div class="subtopic" data-subtopic-id="m1-pm-2"><div class="subtopic-title">Advanced Techniques</div><div class="subtopic-description">Chain-of-thought, few-shot, zero-shot prompting</div></div>
+                            </a>
+                            <a href="topics/prompt-hacks-and-tricks/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;">
+                                <div class="subtopic" data-subtopic-id="m1-pm-3"><div class="subtopic-title">Prompt Hacks & Tricks</div><div class="subtopic-description">Role-playing, temperature control, system prompts</div></div>
+                            </a>
+                            <a href="topics/prompt-optimization/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;">
+                                <div class="subtopic" data-subtopic-id="m1-pm-4"><div class="subtopic-title">Prompt Optimization</div><div class="subtopic-description">Testing, iteration, and performance measurement</div></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="topic-category">
+                        <div class="category-title">🛠️ Tools & Platforms</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/chatgpt-and-claude/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;">
+                                <div class="subtopic" data-subtopic-id="m1-tp-1"><div class="subtopic-title">ChatGPT & Claude</div><div class="subtopic-description">Platform-specific features and capabilities</div></div>
+                            </a>
+                            <a href="topics/api-integration/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;">
+                                <div class="subtopic" data-subtopic-id="m1-tp-2"><div class="subtopic-title">API Integration</div><div class="subtopic-description">Working with AI APIs and custom implementations</div></div>
+                            </a>
+                            <a href="topics/prompt-libraries/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;">
+                                <div class="subtopic" data-subtopic-id="m1-tp-3"><div class="subtopic-title">Prompt Libraries</div><div class="subtopic-description">Building and managing reusable prompt collections</div></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="topic-category">
+                        <div class="category-title">📊 Case Studies</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/business-applications/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;">
+                                <div class="subtopic" data-subtopic-id="m1-cs-1"><div class="subtopic-title">Business Applications</div><div class="subtopic-description">Real-world AI implementation success stories</div></div>
+                            </a>
+                            <a href="topics/creative-use-cases/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;">
+                                <div class="subtopic" data-subtopic-id="m1-cs-2"><div class="subtopic-title">Creative Use Cases</div><div class="subtopic-description">Art, writing, and innovative AI applications</div></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                    <button class="expand-btn" onclick="toggleModule(1)"><span id="expand-text-1">Explore Module</span></button>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="module-card" data-module="2">
+                    <div class="module-header">
+                        <div class="module-number">02</div>
+                        <div class="module-status"><div class="status-badge">Locked</div><div class="progress-circle" style="--progress: 0deg;"><div class="progress-text">0%</div></div></div>
+                    </div>
+                    <h3 class="module-title">AI for Research, Learning & Content Creation</h3>
+                    <p class="module-description">Transform how you research, learn, and create content using AI tools. Discover productivity techniques that 10x your output quality.</p>
+                    <div class="subtopics-container" id="subtopics-2">
+                    <div class="topic-category"><div class="category-title">🔍 Research Mastery</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/ai-powered-research/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m2-rm-1"><div class="subtopic-title">AI-Powered Research</div><div class="subtopic-description">Literature reviews, fact-checking, source validation</div></div></a>
+                            <a href="topics/information-synthesis/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m2-rm-2"><div class="subtopic-title">Information Synthesis</div><div class="subtopic-description">Combining multiple sources and perspectives</div></div></a>
+                            <a href="topics/research-workflows/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m2-rm-3"><div class="subtopic-title">Research Workflows</div><div class="subtopic-description">Efficient research methodologies with AI</div></div></a>
+                        </div>
+                    </div>
+                    <div class="topic-category"><div class="category-title">📚 Learning Acceleration</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/personalized-learning/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m2-la-1"><div class="subtopic-title">Personalized Learning</div><div class="subtopic-description">AI tutors and adaptive learning paths</div></div></a>
+                            <a href="topics/knowledge-retention/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m2-la-2"><div class="subtopic-title">Knowledge Retention</div><div class="subtopic-description">Spaced repetition and AI-generated quizzes</div></div></a>
+                            <a href="topics/skill-assessment/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m2-la-3"><div class="subtopic-title">Skill Assessment</div><div class="subtopic-description">AI-powered progress tracking and feedback</div></div></a>
+                        </div>
+                    </div>
+                    <div class="topic-category"><div class="category-title">✍️ Content Creation</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/writing-enhancement/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m2-cc-1"><div class="subtopic-title">Writing Enhancement</div><div class="subtopic-description">Style improvement, editing, and optimization</div></div></a>
+                            <a href="topics/visual-content/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m2-cc-2"><div class="subtopic-title">Visual Content</div><div class="subtopic-description">AI image generation and design assistance</div></div></a>
+                            <a href="topics/multimedia-creation/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m2-cc-3"><div class="subtopic-title">Multimedia Creation</div><div class="subtopic-description">Video, audio, and interactive content</div></div></a>
+                            <a href="topics/content-strategy/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m2-cc-4"><div class="subtopic-title">Content Strategy</div><div class="subtopic-description">Planning, optimization, and distribution</div></div></a>
+                        </div>
+                    </div>
+                    <div class="topic-category"><div class="category-title">🎯 Practical Applications</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/academic-writing/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m2-pa-1"><div class="subtopic-title">Academic Writing</div><div class="subtopic-description">Papers, thesis, and research documentation</div></div></a>
+                            <a href="topics/business-content/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m2-pa-2"><div class="subtopic-title">Business Content</div><div class="subtopic-description">Reports, presentations, and marketing materials</div></div></a>
+                        </div>
+                    </div>
+                </div>
+                    <button class="expand-btn" onclick="toggleModule(2)"><span id="expand-text-2">Explore Module</span></button>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="module-card" data-module="3">
+                    <div class="module-header">
+                        <div class="module-number">03</div>
+                        <div class="module-status"><div class="status-badge">Locked</div><div class="progress-circle" style="--progress: 0deg;"><div class="progress-text">0%</div></div></div>
+                    </div>
+                    <h3 class="module-title">Data to Decisions - AI Analytics & Storytelling</h3>
+                    <p class="module-description">Transform raw data into compelling insights and stories. Master AI-powered analytics and data visualization for impactful decision-making.</p>
+                    <div class="subtopics-container" id="subtopics-3">
+                    <div class="topic-category"><div class="category-title">📊 Data Analytics</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/ai-data-processing/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-da-1"><div class="subtopic-title">AI Data Processing</div><div class="subtopic-description">Automated cleaning, preprocessing, and analysis</div></div></a>
+                            <a href="topics/pattern-recognition/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-da-2"><div class="subtopic-title">Pattern Recognition</div><div class="subtopic-description">AI-driven trend analysis and anomaly detection</div></div></a>
+                            <a href="topics/predictive-analytics/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-da-3"><div class="subtopic-title">Predictive Analytics</div><div class="subtopic-description">Forecasting and predictive modeling with AI</div></div></a>
+                            <a href="topics/statistical-ai-tools/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-da-4"><div class="subtopic-title">Statistical AI Tools</div><div class="subtopic-description">Advanced statistical analysis and interpretation</div></div></a>
+                        </div>
+                    </div>
+                    <div class="topic-category"><div class="category-title">📈 Data Visualization</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/ai-generated-charts/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-dv-1"><div class="subtopic-title">AI-Generated Charts</div><div class="subtopic-description">Automated visualization and chart selection</div></div></a>
+                            <a href="topics/interactive-dashboards/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-dv-2"><div class="subtopic-title">Interactive Dashboards</div><div class="subtopic-description">Dynamic, real-time data presentations</div></div></a>
+                            <a href="topics/visual-storytelling/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-dv-3"><div class="subtopic-title">Visual Storytelling</div><div class="subtopic-description">Narrative-driven data presentations</div></div></a>
+                            <a href="topics/advanced-visualization/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-dv-4"><div class="subtopic-title">Advanced Visualization</div><div class="subtopic-description">3D plots, network graphs, and complex visualizations</div></div></a>
+                        </div>
+                    </div>
+                    <div class="topic-category"><div class="category-title">📖 Data Storytelling</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/narrative-frameworks/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-ds-1"><div class="subtopic-title">Narrative Frameworks</div><div class="subtopic-description">Story structures for data presentations</div></div></a>
+                            <a href="topics/audience-adaptation/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-ds-2"><div class="subtopic-title">Audience Adaptation</div><div class="subtopic-description">Tailoring insights for different stakeholders</div></div></a>
+                            <a href="topics/persuasive-analytics/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-ds-3"><div class="subtopic-title">Persuasive Analytics</div><div class="subtopic-description">Data-driven decision making and influence</div></div></a>
+                        </div>
+                    </div>
+                    <div class="topic-category"><div class="category-title">🔧 Tools & Techniques</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/python-for-data-science/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-tt-1"><div class="subtopic-title">Python for Data Science</div><div class="subtopic-description">AI-assisted coding and analysis workflows</div></div></a>
+                            <a href="topics/business-intelligence-tools/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-tt-2"><div class="subtopic-title">Business Intelligence</div><div class="subtopic-description">BI tools integration with AI capabilities</div></div></a>
+                            <a href="topics/real-time-analytics/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-tt-3"><div class="subtopic-title">Real-time Analytics</div><div class="subtopic-description">Streaming data and live insights</div></div></a>
+                        </div>
+                    </div>
+                    <div class="topic-category"><div class="category-title">💼 Case Studies</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/business-intelligence-case-studies/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-cs-1"><div class="subtopic-title">Business Intelligence</div><div class="subtopic-description">Corporate analytics transformation stories</div></div></a>
+                            <a href="topics/scientific-research-case-studies/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m3-cs-2"><div class="subtopic-title">Scientific Research</div><div class="subtopic-description">AI in academic and research data analysis</div></div></a>
+                        </div>
+                    </div>
+                </div>
+                    <button class="expand-btn" onclick="toggleModule(3)"><span id="expand-text-3">Explore Module</span></button>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="module-card" data-module="4">
+                    <div class="module-header">
+                        <div class="module-number">04</div>
+                        <div class="module-status"><div class="status-badge">Locked</div><div class="progress-circle" style="--progress: 0deg;"><div class="progress-text">0%</div></div></div>
+                    </div>
+                    <h3 class="module-title">AI-Driven Problem Solving & Innovation</h3>
+                    <p class="module-description">Apply AI to solve complex problems and drive innovation. Learn advanced methodologies for systematic problem-solving with AI assistance.</p>
+                    <div class="subtopics-container" id="subtopics-4">
+                    <div class="topic-category"><div class="category-title">🧩 Problem Solving Frameworks</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/ai-problem-definition/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-psf-1"><div class="subtopic-title">AI Problem Definition</div><div class="subtopic-description">Structured approach to problem identification</div></div></a>
+                            <a href="topics/solution-architecture/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-psf-2"><div class="subtopic-title">Solution Architecture</div><div class="subtopic-description">Designing AI-powered solution strategies</div></div></a>
+                            <a href="topics/iterative-refinement/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-psf-3"><div class="subtopic-title">Iterative Refinement</div><div class="subtopic-description">Continuous improvement and optimization</div></div></a>
+                            <a href="topics/impact-measurement/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-psf-4"><div class="subtopic-title">Impact Measurement</div><div class="subtopic-description">Evaluating solution effectiveness and ROI</div></div></a>
+                        </div>
+                    </div>
+                    <div class="topic-category"><div class="category-title">💡 Innovation Methodologies</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/design-thinking-with-ai/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-im-1"><div class="subtopic-title">Design Thinking with AI</div><div class="subtopic-description">Human-centered AI solution development</div></div></a>
+                            <a href="topics/rapid-prototyping/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-im-2"><div class="subtopic-title">Rapid Prototyping</div><div class="subtopic-description">Quick AI solution testing and validation</div></div></a>
+                            <a href="topics/innovation-frameworks/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-im-3"><div class="subtopic-title">Innovation Frameworks</div><div class="subtopic-description">Systematic approaches to AI-driven innovation</div></div></a>
+                            <a href="topics/disruptive-ai-applications/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-im-4"><div class="subtopic-title">Disruptive AI Applications</div><div class="subtopic-description">Identifying breakthrough opportunities</div></div></a>
+                        </div>
+                    </div>
+                    <div class="topic-category"><div class="category-title">🚀 Advanced Applications</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/multi-agent-systems/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-aa-1"><div class="subtopic-title">Multi-Agent Systems</div><div class="subtopic-description">Coordinating multiple AI agents for complex tasks</div></div></a>
+                            <a href="topics/ai-automation/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-aa-2"><div class="subtopic-title">AI Automation</div><div class="subtopic-description">End-to-end process automation strategies</div></div></a>
+                            <a href="topics/custom-ai-solutions/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-aa-3"><div class="subtopic-title">Custom AI Solutions</div><div class="subtopic-description">Building specialized AI applications</div></div></a>
+                            <a href="topics/ai-ethics-and-governance/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-aa-4"><div class="subtopic-title">AI Ethics & Governance</div><div class="subtopic-description">Responsible AI implementation and oversight</div></div></a>
+                        </div>
+                    </div>
+                    <div class="topic-category"><div class="category-title">🌟 Innovation Case Studies</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/startup-success-stories/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-ics-1"><div class="subtopic-title">Startup Success Stories</div><div class="subtopic-description">AI-first companies and breakthrough innovations</div></div></a>
+                            <a href="topics/enterprise-transformation/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-ics-2"><div class="subtopic-title">Enterprise Transformation</div><div class="subtopic-description">Large-scale AI implementation strategies</div></div></a>
+                            <a href="topics/future-possibilities/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m4-ics-3"><div class="subtopic-title">Future Possibilities</div><div class="subtopic-description">Emerging trends and future AI applications</div></div></a>
+                        </div>
+                    </div>
+                </div>
+                    <button class="expand-btn" onclick="toggleModule(4)"><span id="expand-text-4">Explore Module</span></button>
+                </div>
+
+                <!-- Module 5: Projects -->
+                <div class="module-card" data-module="5">
+                    <div class="module-header">
+                        <div class="module-number">05</div>
+                        <div class="module-status"><div class="status-badge">Locked</div><div class="progress-circle" style="--progress: 0deg;"><div class="progress-text">0%</div></div></div>
+                    </div>
+                    <h3 class="module-title">Real-World AI Projects</h3>
+                    <p class="module-description">Apply your skills to hands-on projects. Build a portfolio of generative AI applications and solutions.</p>
+                    <div class="subtopics-container" id="subtopics-5">
+                    <div class="topic-category"><div class="category-title">🚀 Portfolio Projects</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/automated-content-summarizer/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m5-p-1"><div class="subtopic-title">Automated Content Summarizer</div><div class="subtopic-description">Build a tool to summarize long articles or documents.</div></div></a>
+                            <a href="topics/ai-powered-chatbot/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m5-p-2"><div class="subtopic-title">AI-Powered Chatbot</div><div class="subtopic-description">Create a conversational AI for a specific domain.</div></div></a>
+                            <a href="topics/custom-image-generator/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m5-p-3"><div class="subtopic-title">Custom Image Generator</div><div class="subtopic-description">Fine-tune a model to create specific visual styles.</div></div></a>
+                            <a href="topics/data-storytelling-dashboard/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m5-p-4"><div class="subtopic-title">Data Storytelling Dashboard</div><div class="subtopic-description">Generate narratives from a dataset automatically.</div></div></a>
+                        </div>
+                    </div>
+                </div>
+                    <button class="expand-btn" onclick="toggleModule(5)"><span id="expand-text-5">Explore Module</span></button>
+                </div>
+
+                <!-- Module 6: Certificate -->
+                <div class="module-card" data-module="6">
+                    <div class="module-header">
+                        <div class="module-number">06</div>
+                        <div class="module-status"><div class="status-badge">Locked</div><div class="progress-circle" style="--progress: 0deg;"><div class="progress-text">0%</div></div></div>
+                    </div>
+                    <h3 class="module-title">Final Assessment & Certification</h3>
+                    <p class="module-description">Demonstrate your mastery of generative AI and earn your official certificate of completion.</p>
+                    <div class="subtopics-container" id="subtopics-6">
+                    <div class="topic-category"><div class="category-title">🎓 Get Certified</div>
+                        <div class="subtopics-grid">
+                            <a href="topics/final-exam/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m6-c-1"><div class="subtopic-title">Final Exam</div><div class="subtopic-description">Comprehensive knowledge and skills test.</div></div></a>
+                            <a href="topics/capstone-project/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m6-c-2"><div class="subtopic-title">Capstone Project</div><div class="subtopic-description">Submit your best project for evaluation.</div></div></a>
+                            <a href="topics/claim-your-certificate/index.html" class="subtopic-link" style="text-decoration: none; color: inherit;"><div class="subtopic" data-subtopic-id="m6-c-3"><div class="subtopic-title">Claim Your Certificate</div><div class="subtopic-description">Receive your verifiable digital certificate.</div></div></a>
+                        </div>
+                    </div>
+                </div>
+                    <button class="expand-btn" onclick="toggleModule(6)"><span id="expand-text-6">Explore Module</span></button>
+                </div>
+
+            </div>
+            <button id="scroll-right-btn" class="scroll-btn">&gt;</button>
+        </div>
+    </div>
+
+    <div class="achievement-popup" id="achievementPopup">
+        🏆 Achievement Unlocked!
+    </div>
+
+    <div class="modal" id="topicModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <h2 id="modalTitle">Topic Details</h2>
+            <div id="modalContent"><p>Loading topic information...</p></div>
+            <button class="start-btn" onclick="startTopic()">Start Learning</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

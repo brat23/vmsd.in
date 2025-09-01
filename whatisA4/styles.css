@@ -1,0 +1,292 @@
+/* styles.css */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+  padding: 1rem; /* Reduced padding */
+  background: var(--gradient-primary);
+}
+
+header h1 {
+  font-size: 1.8rem; /* Reduced font size */
+  margin-bottom: 0.5rem; /* Reduced margin */
+}
+
+header p {
+  font-size: 0.9rem; /* Reduced font size */
+  margin-top: 0; /* Removed top margin */
+}
+
+main {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  padding: 2rem;
+}
+
+.size-list {
+  flex: 1;
+  min-width: 200px;
+}
+
+.size-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.size-list li {
+  padding: 1rem;
+  margin: 0.5rem 0;
+  background: var(--card-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  text-align: center; /* Center the text */
+  font-size: 0.9em; /* Smaller font for the rest of the text */
+}
+
+.size-list li .size-name {
+  font-weight: bold;
+  font-size: 1.2em; /* Adjust as needed */
+}
+
+.size-list li:hover {
+  background: var(--primary-color);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px 5px var(--hover-glow);
+}
+
+#left-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.size-display {
+  flex: 3;
+  display: flex;
+  flex-direction: row; /* Changed to row */
+  align-items: flex-start; /* Align items to the start */
+  justify-content: space-around; /* Distribute space around items */
+}
+
+.paper-visual {
+  width: 200px;
+  height: 280px;
+  background: #fff;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.info-panel {
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: var(--card-color);
+}
+
+.reference-container {
+  position: relative;
+  width: 440px;
+  height: 800px;
+  margin-bottom: 1rem;
+  margin: 0 auto; /* Center horizontally */
+}
+
+#c {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#sticky-logo {
+  position: fixed;
+  top: 0px;
+  right: 20px;
+  width: 100px;
+  z-index: 1000;
+}
+
+#annotations-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Allow clicks to pass through to the canvas */
+  overflow: hidden; /* Hide annotations outside the container */
+}
+
+.annotation {
+  position: absolute;
+  background: var(--dark-glass);
+  color: var(--text-color);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.8em;
+  transform: translate(-50%, -50%); /* Center the annotation */
+  pointer-events: auto; /* Allow interaction with annotation if needed */
+}
+
+
+
+#size-guide-image {
+  max-width: 400px; /* Adjust as needed */
+  height: auto;
+  margin-top: 20px; /* Space below info panel */
+  margin-left: 20px; /* Add some left margin to separate from left column */
+  display: block; /* Ensure it behaves as a block element */
+}
+
+/* Mobile Navigation Toggle Button */
+#menu-toggle {
+  display: none; /* Hidden by default */
+  background: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001; /* Above other content */
+  border-radius: 5px;
+}
+
+
+
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+    padding: 1rem; /* Adjust padding for mobile */
+  }
+
+  header h1 {
+    font-size: 1.5rem; /* Smaller font size for mobile */
+  }
+
+  header p {
+    display: none; /* Hide on mobile */
+  }
+
+  #sticky-logo {
+    width: 70px; /* Reduce size by 25% on mobile */
+  }
+
+  #menu-toggle {
+    display: block; /* Show on mobile */
+  }
+
+  .size-list {
+    flex: none; /* Remove flex grow */
+    width: 100%; /* Take full width */
+    order: 2; /* Place it after the size-display */
+  }
+
+  .size-display {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    order: 1; /* Place it before the size-list */
+  }
+
+  #left-column {
+    width: 100%; /* Take full width */
+  }
+
+  .reference-container {
+    width: 100%; /* Make fluid */
+    height: 50vh; /* Control height for 3D scene */
+    margin: 0 auto; /* Center horizontally */
+  }
+
+  .info-panel {
+    width: 100%; /* Take full width */
+  }
+
+  #size-guide-image {
+    margin-left: 0; /* Remove desktop-specific margin */
+    max-width: 100%; /* Ensure it scales */
+  }
+
+  /* Mobile Navigation Container */
+  #mobile-.nav {
+    display: none; /* Hidden by default on mobile, toggled by JS */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 18, 18, 0.9); /* Semi-transparent overlay */
+    z-index: 1000;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to the top */
+    align-items: center;
+    overflow-y: auto; /* Enable scrolling for long lists */
+  }
+
+  #mobile-nav.active {
+    display: flex; /* Show when active */
+  }
+
+  /* Adjust size-list within mobile-nav */
+  #mobile-nav .size-list {
+    width: 80%; /* Adjust width of the list within the overlay */
+    max-width: 400px; /* Max width for larger mobile devices */
+    padding: 2rem;
+    background: var(--card-color);
+    border-radius: 8px;
+  }
+
+  #mobile-nav .size-list ul {
+    padding: 0;
+  }
+
+  #mobile-nav .size-list li {
+    margin: 1rem 0;
+    font-size: 1.2em; /* Larger font for readability */
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1167px) {
+  .size-display {
+    flex-direction: column; /* Stack items vertically for this range */
+    align-items: center; /* Center items horizontally */
+  }
+
+  #left-column {
+    width: 90%; /* Adjust width for left column */
+    max-width: 600px; /* Prevent it from getting too wide */
+  }
+
+  .reference-container {
+    width: 100%; /* Make fluid within left-column */
+    height: 60vh; /* Control height for 3D scene */
+    margin-top: 0; /* Reset margin-top, as stacking might resolve the shift */
+  }
+
+  #size-guide-image {
+    max-width: 90%; /* Adjust image width */
+    height: auto;
+    margin-top: 20px; /* Add some space below the 3D scene */
+    margin-left: 0; /* Reset left margin */
+  }
+
+  /* You might need to adjust other elements here if they are still problematic */
+  .info-panel {
+    width: 100%; /* Ensure info panel takes full width of left-column */
+  }
+}

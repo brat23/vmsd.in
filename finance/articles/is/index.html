@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82687XMTH1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-82687XMTH1');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Statement Learning Module</title>
+    <style>
+        :root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ff88;
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --card-color: #1e1e1e;
+            --hover-glow: rgba(255, 0, 85, 0.2);
+            --secondary-glow: rgba(0, 255, 136, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        a:hover {
+            color: var(--secondary-color);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 10px var(--primary-color)); }
+            100% { filter: drop-shadow(0 0 20px var(--secondary-color)); }
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            z-index: 1000;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .module-card {
+            background: var(--card-color);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--hover-glow), transparent);
+            transition: left 0.5s;
+        }
+
+        .module-card:hover::before {
+            left: 100%;
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px var(--hover-glow);
+            border-color: var(--primary-color);
+        }
+
+        .module-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .module-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .module-content {
+            display: none;
+            margin-top: 1.5rem;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .module-description {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .topic-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .topic-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .topic-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .topic-list li:hover::before {
+            transform: translateX(5px);
+            color: var(--primary-color);
+        }
+
+        .topic-list li:hover {
+            color: var(--secondary-color);
+            padding-left: 2rem;
+        }
+
+        .expand-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expand-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .expand-btn:hover::before {
+            left: 100%;
+        }
+
+        .expand-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 0, 85, 0.3);
+        }
+
+        .formula-box {
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid var(--secondary-color);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .formula-box::before {
+            content: '📊';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .example-box {
+            background: rgba(255, 0, 85, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .example-box::before {
+            content: '💡';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px var(--primary-color)); }
+            to { filter: drop-shadow(0 0 15px var(--primary-color)); }
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-color), transparent);
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.1;
+        }
+
+        .floating-circle:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-circle:nth-child(2) {
+            width: 80px;
+            height: 80px;
+            top: 60%;
+            right: 10%;
+            animation-delay: -2s;
+            background: radial-gradient(circle, var(--secondary-color), transparent);
+        }
+
+        .floating-circle:nth-child(3) {
+            width: 120px;
+            height: 120px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: -4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        .search-box {
+            position: sticky;
+            top: 2rem;
+            z-index: 100;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: var(--card-color);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 20px var(--secondary-glow);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .module-card {
+                padding: 1.5rem;
+            }
+
+            .module-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        .completed {
+            position: relative;
+            opacity: 0.7;
+        }
+
+        .completed::after {
+            content: '✓';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--secondary-color);
+            color: var(--background-color);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            animation: checkmark 0.5s ease;
+        }
+
+        @keyframes checkmark {
+            0% { transform: scale(0) rotate(180deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .completion-tracker {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            background: var(--card-color);
+            padding: 1rem;
+            border-radius: 15px;
+            border: 1px solid var(--secondary-glow);
+            box-shadow: 0 0 20px var(--secondary-glow);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="floating-elements">
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Income Statement Mastery</h1>
+            <p>Master the fundamentals of financial statements with interactive learning modules</p>
+        </div>
+
+        <div class="completion-tracker" id="completionTracker"></div>
+
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search topics... (e.g., 'revenue', 'EBITDA', 'depreciation')">
+        </div>
+
+        <div class="modules-grid" id="modulesGrid">
+            <!-- Module 1 -->
+            <div class="module-card" data-module="1">
+                <div class="module-number">1</div>
+                <div class="module-title">Introduction to the Income Statement</div>
+                <div class="module-description">
+                    Learn the foundation of financial reporting and understand what makes the income statement essential for business analysis.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(1)">Explore Topics</button>
+                <div class="module-content" id="module-1">
+                    <ul class="topic-list">
+                        <li><a href="introduction-to-the-income-statement/purpose-and-importance-of-an-income-statement.html">Purpose and importance of an income statement</a></li>
+                        <li><a href="introduction-to-the-income-statement/difference-between-income-statement-balance-sheet-and-cash-flow-statement.html">Difference between income statement, balance sheet, and cash flow statement</a></li>
+                        <li><a href="introduction-to-the-income-statement/who-uses-it.html">Who uses it (management, investors, lenders, regulators)</a></li>
+                        <li><a href="introduction-to-the-income-statement/periodicity.html">Periodicity: monthly, quarterly, annual</a></li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Key Insight:</strong> The income statement is like a business report card - it shows how well a company performed over a specific period, revealing whether it made money or lost money.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="module-card" data-module="2">
+                <div class="module-number">2</div>
+                <div class="module-title">Topline: Revenue / Sales</div>
+                <div class="module-description">
+                    Understand how companies generate revenue and the critical difference between gross and net revenue.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(2)">Explore Topics</button>
+                <div class="module-content" id="module-2">
+                    <ul class="topic-list">
+                        <li><strong><a href="topline-revenue-sales/gross-revenue-topline.html">Gross Revenue (Topline):</a></strong> Total sales before any deductions</li>
+                        <li><strong><a href="topline-revenue-sales/net-revenue.html">Net Revenue:</a></strong> Sales after returns, discounts, and allowances</li>
+                        <li><a href="topline-revenue-sales/understanding-revenue-recognition.html">Understanding Revenue Recognition (when revenue is recorded)</a></li>
+                        <li><a href="topline-revenue-sales/revenue-examples.html">Examples: product sales, service income, subscription fees</a></li>
+                    </ul>
+                    <div class="formula-box">
+                        Net Revenue = Gross Revenue - Returns - Discounts - Allowances
+                    </div>
+                    <div class="example-box">
+                        <strong>Example:</strong> A retail store has $100,000 in gross sales, but $5,000 in returns and $3,000 in discounts. Net Revenue = $92,000.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 3 -->
+            <div class="module-card" data-module="3">
+                <div class="module-number">3</div>
+                <div class="module-title">Cost of Goods Sold (COGS)</div>
+                <div class="module-description">
+                    Discover the direct costs involved in producing goods or services and how they impact profitability.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(3)">Explore Topics</button>
+                <div class="module-content" id="module-3">
+                    <ul class="topic-list">
+                        <li><a href="cost-of-goods-sold-cogs/cogs-definition.html">Definition: Direct costs of producing goods/services</a></li>
+                        <li><strong><a href="cost-of-goods-sold-cogs/cogs-components.html">Components:</a></strong>
+                            <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                                <li>Raw materials</li>
+                                <li>Direct labor</li>
+                                <li>Manufacturing/production expenses</li>
+                            </ul>
+                        </li>
+                        <li><a href="cost-of-goods-sold-cogs/cogs-examples.html">Examples: cost of fabric in fashion retail, server costs in SaaS</a></li>
+                    </ul>
+                    <div class="formula-box">
+                        Gross Profit = Revenue - COGS
+                    </div>
+                    <div class="example-box">
+                        <strong>Example:</strong> A bakery's revenue is $50,000. Flour, eggs, and baker wages (COGS) = $20,000. Gross Profit = $30,000.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="module-card" data-module="4">
+                <div class="module-number">4</div>
+                <div class="module-title">Gross Profit</div>
+                <div class="module-description">
+                    Learn how to calculate and interpret gross profit margins across different industries.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(4)">Explore Topics</button>
+                <div class="module-content" id="module-4">
+                    <ul class="topic-list">
+                        <li><a href="gross-profit/gross-profit-indications.html">What it indicates (profit after production costs, before overheads)</a></li>
+                        <li><a href="gross-profit/gross-profit-margin.html">Gross Profit Margin (%) and why it matters</a></li>
+                        <li><a href="gross-profit/industry-benchmarks.html">Industry benchmarks (high vs low margin industries)</a></li>
+                    </ul>
+                    <div class="formula-box">
+                        Gross Profit Margin = (Gross Profit ÷ Revenue) × 100
+                    </div>
+                    <div class="example-box">
+                        <strong>Industry Comparison:</strong> Software companies often have 80%+ gross margins, while grocery stores typically have 20-25% margins.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 5 -->
+            <div class="module-card" data-module="5">
+                <div class="module-number">5</div>
+                <div class="module-title">Operating Expenses (OPEX)</div>
+                <div class="module-description">
+                    Explore the various operational costs that businesses incur to run their day-to-day operations.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(5)">Explore Topics</button>
+                <div class="module-content" id="module-5">
+                    <ul class="topic-list">
+                        <li><strong><a href="operating-expenses-opex/sga-expenses.html">Selling, General & Administrative (SG&A):</a></strong>
+                            <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                                <li>Salaries, rent, utilities, office expenses</li>
+                                <li>Marketing & advertising</li>
+                                <li>Travel, insurance, IT expenses</li>
+                            </ul>
+                        </li>
+                        <li><strong><a href="operating-expenses-opex/research-and-development.html">Research & Development (R&D)</a></strong></li>
+                        <li><strong><a href="operating-expenses-opex/other-operating-expenses.html">Other Operating Expenses</a></strong></li>
+                        <li><a href="operating-expenses-opex/fixed-vs-variable-expenses.html">Difference between fixed vs variable expenses</a></li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Fixed vs Variable:</strong> Rent is fixed (same every month), while commissions are variable (change with sales volume).
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 6 -->
+            <div class="module-card" data-module="6">
+                <div class="module-number">6</div>
+                <div class="module-title">Operating Profit (EBIT)</div>
+                <div class="module-description">
+                    Understand how to measure a company's core business profitability before financing decisions.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(6)">Explore Topics</button>
+                <div class="module-content" id="module-6">
+                    <ul class="topic-list">
+                        <li><a href="operating-profit-ebit/ebit-definition.html">EBIT: Earnings Before Interest & Taxes</a></li>
+                        <li><a href="operating-profit-ebit/ebit-core-profitability.html">What it indicates: core business profitability</a></li>
+                        <li><a href="operating-profit-ebit/operating-margin-importance.html">Importance of Operating Margin (%)</a></li>
+                        <li><a href="operating-profit-ebit/ebit-efficiency-example.html">Example: Two companies with same revenue but different EBIT due to efficiency</a></li>
+                    </ul>
+                    <div class="formula-box">
+                        Operating Profit (EBIT) = Gross Profit - Operating Expenses
+                    </div>
+                    <div class="example-box">
+                        <strong>Why It Matters:</strong> EBIT shows how profitable a company's core operations are, excluding the effects of debt and tax strategies.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 7 -->
+            <div class="module-card" data-module="7">
+                <div class="module-number">7</div>
+                <div class="module-title">Non-Operating Income & Expenses</div>
+                <div class="module-description">
+                    Learn about income and expenses that don't relate to core business operations.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(7)">Explore Topics</button>
+                <div class="module-content" id="module-7">
+                    <ul class="topic-list">
+                        <li><strong><a href="non-operating-income-expenses/other-income.html">Other Income:</a></strong>
+                            <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                                <li>Interest income</li>
+                                <li>Dividend income</li>
+                                <li>Asset sale gains</li>
+                            </ul>
+                        </li>
+                        <li><strong><a href="non-operating-income-expenses/other-expenses.html">Other Expenses:</a></strong>
+                            <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                                <li>Foreign exchange loss</li>
+                                <li>Asset write-offs</li>
+                                <li>Lawsuit settlements</li>
+                            </ul>
+                        </li>
+                        <li><a href="non-operating-income-expenses/operating-vs-non-operating-significance.html">Why separating operating vs non-operating matters</a></li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Example:</strong> Apple earns interest on its cash reserves - this is non-operating income because it's not from selling iPhones or services.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 8 -->
+            <div class="module-card" data-module="8">
+                <div class="module-number">8</div>
+                <div class="module-title">EBITDA</div>
+                <div class="module-description">
+                    Master one of the most important metrics in financial analysis - a proxy for cash profit.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(8)">Explore Topics</button>
+                <div class="module-content" id="module-8">
+                    <ul class="topic-list">
+                        <li><a href="ebitda/ebitda-definition.html">Definition: Earnings Before Interest, Taxes, Depreciation, and Amortization</a></li>
+                        <li><a href="ebitda/ebitda-cash-profit-proxy.html">Purpose: proxy for cash profit</a></li>
+                        <li><a href="ebitda/ebit-vs-ebitda.html">Difference between EBIT and EBITDA</a></li>
+                        <li><a href="ebitda/depreciation-amortization-simple.html">Adjustments: Depreciation, amortization explained simply</a></li>
+                    </ul>
+                    <div class="formula-box">
+                        EBITDA = EBIT + Depreciation + Amortization
+                    </div>
+                    <div class="example-box">
+                        <strong>Why Analysts Love It:</strong> EBITDA helps compare companies by removing the effects of financing, tax strategies, and accounting methods for asset costs.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 9 -->
+            <div class="module-card" data-module="9">
+                <div class="module-number">9</div>
+                <div class="module-title">Depreciation & Amortization</div>
+                <div class="module-description">
+                    Understand these non-cash expenses that significantly impact reported profits.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(9)">Explore Topics</button>
+                <div class="module-content" id="module-9">
+                    <ul class="topic-list">
+                        <li><strong><a href="depreciation-amortization/depreciation-tangible-assets.html">Depreciation:</a></strong> Reduction in value of tangible assets (machinery, buildings)</li>
+                        <li><strong><a href="depreciation-amortization/amortization-intangible-assets.html">Amortization:</a></strong> Allocation of cost of intangible assets (patents, goodwill)</li>
+                        <li><a href="depreciation-amortization/non-cash-impact-on-profits.html">Why they are non-cash but impact profits</a></li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Simple Example:</strong> You buy a $10,000 machine that lasts 10 years. Instead of expensing $10,000 in year 1, you depreciate $1,000 per year for 10 years.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 10 -->
+            <div class="module-card" data-module="10">
+                <div class="module-number">10</div>
+                <div class="module-title">Interest Expense / Finance Costs</div>
+                <div class="module-description">
+                    Learn how debt financing affects company profitability and financial health.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(10)">Explore Topics</button>
+                <div class="module-content" id="module-10">
+                    <ul class="topic-list">
+                        <li><a href="interest-expense-finance-costs/interest-on-loans-bonds-credit-lines.html">Interest on loans, bonds, credit lines</a></li>
+                        <li><a href="interest-expense-finance-costs/impact-of-leverage.html">Impact of leverage (debt vs equity financing)</a></li>
+                        <li><a href="interest-expense-finance-costs/net-interest-income.html">Net Interest Income (banks/financial institutions)</a></li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Trade-off:</strong> Debt is cheaper than equity but adds financial risk. Companies must balance this carefully.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 11 -->
+            <div class="module-card" data-module="11">
+                <div class="module-number">11</div>
+                <div class="module-title">Earnings Before Tax (EBT/PBT)</div>
+                <div class="module-description">
+                    Measure profitability before tax obligations and understand pre-tax performance.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(11)">Explore Topics</button>
+                <div class="module-content" id="module-11">
+                    <ul class="topic-list">
+                        <li><a href="earnings-before-tax-ebt-pbt/ebt-profitability-indicator.html">Indicator of profitability before tax obligations</a></li>
+                        <li><a href="earnings-before-tax-ebt-pbt/ebt-tax-jurisdiction-comparison.html">Useful for comparing companies in different tax jurisdictions</a></li>
+                    </ul>
+                    <div class="formula-box">
+                        EBT = Operating Profit - Interest Expense + Other Income
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 12 -->
+            <div class="module-card" data-module="12">
+                <div class="module-number">12</div>
+                <div class="module-title">Taxes</div>
+                <div class="module-description">
+                    Understand corporate taxation and its impact on final profitability.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(12)">Explore Topics</button>
+                <div class="module-content" id="module-12">
+                    <ul class="topic-list">
+                        <li><a href="taxes/corporate-income-tax.html">Corporate income tax</a></li>
+                        <li><a href="taxes/deferred-tax-credits-adjustments.html">Deferred tax, tax credits, and adjustments</a></li>
+                        <li><a href="taxes/effective-vs-statutory-tax-rate.html">Effective Tax Rate (%) vs statutory tax rate</a></li>
+                    </ul>
+                    <div class="formula-box">
+                        Effective Tax Rate = (Tax Expense ÷ EBT) × 100
+                    </div>
+                    <div class="example-box">
+                        <strong>Tax Strategy:</strong> Companies may have lower effective tax rates than statutory rates due to credits, deductions, and international strategies.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 13 -->
+            <div class="module-card" data-module="13">
+                <div class="module-number">13</div>
+                <div class="module-title">Bottomline: Net Profit</div>
+                <div class="module-description">
+                    Master the final measure of company profitability and what it means for stakeholders.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(13)">Explore Topics</button>
+                <div class="module-content" id="module-13">
+                    <ul class="topic-list">
+                        <li><a href="bottomline-net-profit/net-income-bottom-line.html">Net Income / Earnings: The bottom line</a></li>
+                        <li><a href="bottomline-net-profit/net-profit-stakeholders.html">What it means to stakeholders</a></li>
+                        <li><a href="bottomline-net-profit/retained-earnings-vs-dividends.html">Retained earnings vs dividends (distribution of profit)</a></li>
+                        <li><a href="bottomline-net-profit/net-profit-margin.html">Net Profit Margin (%)</a></li>
+                    </ul>
+                    <div class="formula-box">
+                        Net Profit = EBT - Taxes
+                    </div>
+                    <div class="example-box">
+                        <strong>The Ultimate Test:</strong> Net profit shows the true earning power of a business after all expenses, interest, and taxes are paid.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 14 -->
+            <div class="module-card" data-module="14">
+                <div class="module-number">14</div>
+                <div class="module-title">Key Metrics & Ratios</div>
+                <div class="module-description">
+                    Learn the essential financial ratios that analysts and investors use to evaluate companies.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(14)">Explore Topics</button>
+                <div class="module-content" id="module-14">
+                    <ul class="topic-list">
+                        <li><a href="key-metrics-ratios/eps-earnings-per-share.html">EPS (Earnings Per Share)</a></li>
+                        <li><a href="key-metrics-ratios/roe-return-on-equity.html">ROE (Return on Equity) using Net Income</a></li>
+                        <li><a href="key-metrics-ratios/profit-margins.html">EBITDA Margin, Operating Margin, Net Profit Margin</a></li>
+                    </ul>
+                    <div class="formula-box">
+                        EPS = Net Income ÷ Outstanding Shares
+                    </div>
+                    <div class="example-box">
+                        <strong>Investor Focus:</strong> EPS shows how much profit each share represents, making it easier to compare companies of different sizes.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 15 -->
+            <div class="module-card" data-module="15">
+                <div class="module-number">15</div>
+                <div class="module-title">Special Items & Adjustments</div>
+                <div class="module-description">
+                    Understand one-time items and why analysts make adjustments for clearer analysis.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(15)">Explore Topics</button>
+                <div class="module-content" id="module-15">
+                    <ul class="topic-list">
+                        <li><a href="special-items-adjustments/extraordinary-items.html">Extraordinary items (discontinued operations, natural disaster losses)</a></li>
+                        <li><a href="special-items-adjustments/one-time-gains-losses.html">One-time gains/losses</a></li>
+                        <li><a href="special-items-adjustments/adjusted-net-income.html">Why analysts sometimes calculate Adjusted Net Income</a></li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Real Example:</strong> When a company sells a building for a gain, analysts often exclude this from "normalized" earnings to see true operational performance.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 16 -->
+            <div class="module-card" data-module="16">
+                <div class="module-number">16</div>
+                <div class="module-title">Industry Variations</div>
+                <div class="module-description">
+                    Explore how different industries have unique characteristics in their income statements.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(16)">Explore Topics</button>
+                <div class="module-content" id="module-16">
+                    <ul class="topic-list">
+                        <li><strong><a href="industry-variations/saas-revenue-treatment.html">SaaS companies:</a></strong> ARR, deferred revenue treatment</li>
+                        <li><strong><a href="industry-variations/retail-industry-cogs.html">Retail:</a></strong> same-store sales, high COGS focus</li>
+                        <li><strong><a href="industry-variations/manufacturing-depreciation-cogs.html">Manufacturing:</a></strong> heavy depreciation & COGS</li>
+                        <li><strong><a href="industry-variations/startups-opex-negative-earnings.html">Startups:</a></strong> high OPEX, negative earnings initially</li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Industry Insight:</strong> A SaaS company with 85% gross margins is healthy, but a grocery store with the same margins would be impossible.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 17 -->
+            <div class="module-card" data-module="17">
+                <div class="module-number">17</div>
+                <div class="module-title">Reading & Interpreting</div>
+                <div class="module-description">
+                    Develop skills to analyze income statements and spot trends, opportunities, and red flags.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(17)">Explore Topics</button>
+                <div class="module-content" id="module-17">
+                    <ul class="topic-list">
+                        <li><a href="reading-interpreting/identifying-trends.html">Identifying trends across periods</a></li>
+                        <li><a href="reading-interpreting/spotting-red-flags.html">Spotting red flags (declining margins, rising OPEX, inconsistent other income)</a></li>
+                        <li><a href="reading-interpreting/industry-benchmarks-importance.html">Importance of comparing with industry benchmarks</a></li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Red Flag Example:</strong> If a company's revenue grows 10% but operating expenses grow 25%, investigate why costs are increasing faster than sales.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 18 -->
+            <div class="module-card" data-module="18">
+                <div class="module-number">18</div>
+                <div class="module-title">Case Studies & Examples</div>
+                <div class="module-description">
+                    Apply your knowledge with real-world examples and practical walkthroughs.
+                </div>
+                <button class="expand-btn" onclick="toggleModule(18)">Explore Topics</button>
+                <div class="module-content" id="module-18">
+                    <ul class="topic-list">
+                        <li><strong><a href="case-studies-examples/retail-income-statement-example.html">Example 1:</a></strong> Retail store income statement</li>
+                        <li><strong><a href="case-studies-examples/saas-income-statement-example.html">Example 2:</a></strong> SaaS startup income statement</li>
+                        <li><a href="case-studies-examples/topline-to-bottomline-walkthrough.html">Walkthrough: how topline converts to bottomline</a></li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Practice Makes Perfect:</strong> The best way to master income statements is to analyze real examples from companies in different industries.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="congratsMessage" style="text-align: center; margin-top: 4rem; padding: 2rem; display: none;">
+            <h2 style="color: var(--secondary-color); margin-bottom: 1rem;">🎉 Congratulations!</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">You've completed the Income Statement Learning Module. You now have the foundation to analyze any company's financial performance!</p>
+        </div>
+    </div>
+
+    <script>
+        // Progress bar functionality
+        function updateProgressBar() {
+            const scrolled = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        }
+
+        window.addEventListener('scroll', updateProgressBar);
+
+        // Module toggle functionality
+        function toggleModule(moduleNum) {
+            const moduleCard = document.querySelector(`[data-module="${moduleNum}"]`);
+            const moduleContent = document.getElementById(`module-${moduleNum}`);
+            const button = moduleCard.querySelector('.expand-btn');
+
+            const isExpanded = moduleContent.classList.contains('active');
+            const isCompleted = moduleCard.classList.contains('completed');
+
+            // --- Close any other open module first ---
+            document.querySelectorAll('.module-content.active').forEach(activeContent => {
+                if (activeContent.id !== `module-${moduleNum}`) {
+                    activeContent.classList.remove('active');
+                }
+            });
+
+            if (isCompleted) {
+                // If it's completed, the user is clicking to "un-complete" it.
+                moduleCard.classList.remove('completed');
+                button.textContent = 'Mark as Complete'; // Revert button text
+                updateCompletionStatus();
+                saveCompletedModules(); // Resave the updated list to Local Storage
+
+                // Ensure the module stays/becomes expanded for the user.
+                if (!isExpanded) {
+                    moduleContent.classList.add('active');
+                }
+                return; // Exit after handling the un-complete action.
+            }
+
+            // If we reach here, the module is NOT completed yet.
+            if (!isExpanded) {
+                // State: Collapsed -> Expanded. This is an "Explore" action.
+                moduleContent.classList.add('active');
+                button.textContent = 'Mark as Complete';
+                setTimeout(() => {
+                    moduleContent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 300);
+            } else {
+                // State: Expanded -> Mark as Complete. This is a "Complete" action.
+                moduleCard.classList.add('completed');
+                button.textContent = 'Completed ✓';
+                updateCompletionStatus();
+                saveCompletedModules(); // Save to Local Storage
+            }
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const modulesGrid = document.getElementById('modulesGrid');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const moduleCards = document.querySelectorAll('.module-card');
+
+            moduleCards.forEach(card => {
+                const title = card.querySelector('.module-title').textContent.toLowerCase();
+                const description = card.querySelector('.module-description').textContent.toLowerCase();
+                const topics = card.querySelector('.topic-list')?.textContent.toLowerCase() || '';
+                
+                const isMatch = title.includes(searchTerm) || 
+                               description.includes(searchTerm) || 
+                               topics.includes(searchTerm);
+
+                if (isMatch || searchTerm === '') {
+                    card.style.display = '';
+                    card.style.animation = 'fadeInUp 0.5s ease forwards';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show "no results" message if needed
+            const visibleCards = Array.from(moduleCards).filter(card => card.style.display !== 'none');
+            if (visibleCards.length === 0 && searchTerm !== '') {
+                if (!document.querySelector('.no-results')) {
+                    const noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.style.cssText = `
+                        grid-column: 1 / -1;
+                        text-align: center;
+                        padding: 3rem;
+                        color: var(--text-color);
+                        opacity: 0.7;
+                        font-size: 1.1rem;
+                    `;
+                    noResults.innerHTML = `
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                        <div>No modules found for "${searchTerm}"</div>
+                        <div style="font-size: 0.9rem; margin-top: 0.5rem;">Try searching for terms like "revenue", "profit", "EBITDA", or "ratios"</div>
+                    `;
+                    modulesGrid.appendChild(noResults);
+                }
+            } else {
+                const noResults = document.querySelector('.no-results');
+                if (noResults) {
+                    noResults.remove();
+                }
+            }
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            // Press 'S' to focus search
+            if (e.key.toLowerCase() === 's' && !e.ctrlKey && !e.metaKey && e.target !== searchInput) {
+                e.preventDefault();
+                searchInput.focus();
+            }
+            
+            // Press 'Escape' to clear search
+            if (e.key === 'Escape' && document.activeElement === searchInput) {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+                searchInput.blur();
+            }
+        });
+
+        // Add entrance animations
+        function addEntranceAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.module-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                observer.observe(card);
+            });
+        }
+
+        // Completion status functionality
+        function updateCompletionStatus() {
+            const completedCards = document.querySelectorAll('.module-card.completed').length;
+            const totalCards = document.querySelectorAll('.module-card').length;
+            const tracker = document.getElementById('completionTracker');
+            const congratsMessage = document.getElementById('congratsMessage');
+
+            tracker.textContent = `${completedCards} / ${totalCards} Modules Completed`;
+
+            if (completedCards === totalCards) {
+                congratsMessage.style.display = 'block';
+                congratsMessage.style.animation = 'fadeInUp 1s ease forwards';
+            } else {
+                congratsMessage.style.display = 'none';
+            }
+        }
+
+        // Local Storage Functionality
+        function saveCompletedModules() {
+            const completedModules = document.querySelectorAll('.module-card.completed');
+            const completedIds = Array.from(completedModules).map(card => card.dataset.module);
+            localStorage.setItem('completedModules', JSON.stringify(completedIds));
+        }
+
+        function loadCompletedModules() {
+            const completedIds = JSON.parse(localStorage.getItem('completedModules')) || [];
+            completedIds.forEach(id => {
+                const moduleCard = document.querySelector(`.module-card[data-module="${id}"]`);
+                if (moduleCard) {
+                    moduleCard.classList.add('completed');
+                    const button = moduleCard.querySelector('.expand-btn');
+                    button.textContent = 'Completed ✓';
+                }
+            });
+        }
+
+        // Initialize animations and completion status when page loads
+        window.addEventListener('load', () => {
+            addEntranceAnimations();
+            loadCompletedModules(); // Load status from Local Storage
+            updateCompletionStatus(); // Update UI based on loaded status
+        });
+
+        // Add some interactive features
+        document.querySelectorAll('.module-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add click sound effect (visual feedback)
+        document.querySelectorAll('.expand-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 100);
+            });
+        });
+
+        // Smooth scroll for search results
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const firstVisibleCard = document.querySelector('.module-card:not([style*="display: none"])');
+                if (firstVisibleCard) {
+                    firstVisibleCard.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
