@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 
@@ -25,8 +24,25 @@ body {
 
 header {
     height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/cp1.png') no-repeat center center/cover;
     position: relative;
+    overflow: hidden;
+}
+
+
+
+#header-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+    transform: translateX(-50%) translateY(-50%);
+    background-size: cover;
+    transition: 1s opacity;
+    clip-path: inset(135px 0 135px 0);
 }
 
 nav {
@@ -104,6 +120,8 @@ nav ul li a:hover {
     font-size: 1.2rem;
     max-width: 600px;
     margin-bottom: 2rem;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .cta-button {
@@ -336,4 +354,91 @@ footer {
 
 body.modal-open {
     overflow: hidden;
+}
+
+/* Hero Carousel */
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: -10vh auto 2rem;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.carousel-slide video {
+    width: 100%;
+    display: block;
+}
+
+.carousel-prev,
+.carousel-next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+}
+
+.carousel-next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-dots {
+    text-align: center;
+    padding: 1rem;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+}
+
+.carousel-dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.carousel-dot.active {
+    background-color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    header {
+        height: 60vh;
+    }
+
+    #header-video {
+        clip-path: inset(0); /* Remove cropping on smaller screens */
+    }
 }

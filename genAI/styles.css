@@ -613,7 +613,7 @@
     box-sizing: border-box;
 }
 
-.carousel-slide img {
+.carousel-slide video {
     width: 100%;
     display: block;
 }

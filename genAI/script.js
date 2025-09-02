@@ -1,4 +1,4 @@
-        const LEVEL_THRESHOLDS = { 1: 0, 2: 400, 3: 900, 4: 1500, 5: 2175, 6: 2750 };
+const LEVEL_THRESHOLDS = { 1: 0, 2: 400, 3: 900, 4: 1500, 5: 2175, 6: 2750 };
         const LEVEL_NAMES = { 1: 'AI Novice', 2: 'AI Apprentice', 3: 'AI Adept', 4: 'AI Expert', 5: 'AI Master', 6: 'AI Grandmaster' };
 
         let userStats = {
@@ -341,15 +341,19 @@
         `;
         document.head.appendChild(style);
 
+
+    
 // Carousel
 const carouselContainer = document.querySelector('.carousel-container');
 const carouselSlides = document.querySelectorAll('.carousel-slide');
 const prevBtn = document.querySelector('.carousel-prev');
 const nextBtn = document.querySelector('.carousel-next');
 const dotsContainer = document.querySelector('.carousel-dots');
+const videos = document.querySelectorAll('.carousel-slide video');
 
 let currentIndex = 0;
 let slideWidth = carouselSlides.length > 0 ? carouselSlides[0].clientWidth : 0;
+let loopCount = 0;
 
 // Create dots
 if (dotsContainer) {
@@ -375,6 +379,8 @@ function goToSlide(index) {
         dots[index].classList.add('active');
     }
     currentIndex = index;
+    loopCount = 0; // Reset loop count
+    playCurrentVideo();
 }
 
 function showNextSlide() {
@@ -387,17 +393,34 @@ function showPrevSlide() {
     goToSlide(currentIndex);
 }
 
+function playCurrentVideo() {
+    videos.forEach((video, index) => {
+        if (index === currentIndex) {
+            video.play();
+        } else {
+            video.pause();
+            video.currentTime = 0;
+        }
+    });
+}
+
+videos.forEach(video => {
+    video.addEventListener('ended', () => {
+        loopCount++;
+        if (loopCount >= 3) {
+            showNextSlide();
+        } else {
+            video.play();
+        }
+    });
+});
+
 if (nextBtn) {
     nextBtn.addEventListener('click', showNextSlide);
 }
 
 if (prevBtn) {
     prevBtn.addEventListener('click', showPrevSlide);
-}
-
-// Auto slide
-if (carouselSlides.length > 0) {
-    setInterval(showNextSlide, 5000);
 }
 
 // Handle window resize
@@ -407,4 +430,6 @@ window.addEventListener('resize', () => {
         goToSlide(currentIndex);
     }
 });
-    
+
+// Start the first video
+playCurrentVideo();
