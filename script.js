@@ -26,6 +26,14 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// Hamburger menu
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+
+hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+});
+
 // Carousel
 const carouselContainer = document.querySelector('.carousel-container');
 const carouselSlides = document.querySelectorAll('.carousel-slide');
