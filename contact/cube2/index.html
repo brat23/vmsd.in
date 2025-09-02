@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Business Showcase Cube</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        #container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        #info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            z-index: 100;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        #info h1 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        #info p {
+            margin: 5px 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .face-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* Visual Merchandising Face */
+        .vm-face {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border: 3px solid #ffffff;
+        }
+        
+        .vm-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .vm-elements {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 12px;
+        }
+        
+        /* Store Design Face */
+        .sd-face {
+            background: linear-gradient(45deg, #74b9ff, #0984e3);
+            border: 3px solid #ffffff;
+        }
+        
+        .sd-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .sd-elements {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 11px;
+        }
+        
+        /* Tech Face */
+        .tech-face {
+            background: linear-gradient(45deg, #55a3ff, #003d82);
+            border: 3px solid #ffffff;
+        }
+        
+        .tech-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .tech-elements {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 12px;
+        }
+        
+        .element-box {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 8px;
+            border-radius: 5px;
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="info">
+            <h1>Business Showcase Cube</h1>
+            <p>🖱️ Drag to rotate freely • 🔍 Scroll to zoom</p>
+            <p>🟥 Visual Merchandising (2 sides) • 🟦 Store Design (2 sides) • 🟨 .IN Tech (2 sides)</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x000000, 0);
+        document.getElementById('container').appendChild(renderer.domElement);
+
+        // Create cube geometry
+        const geometry = new THREE.BoxGeometry(4, 4, 4);
+
+        // Create canvases for each face
+        function createCanvas(width, height) {
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            return canvas;
+        }
+
+        // Visual Merchandising face (right side)
+        function createVMFace() {
+            const canvas = createCanvas(512, 512);
+            const ctx = canvas.getContext('2d');
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, 512, 512);
+            gradient.addColorStop(0, '#ff6b6b');
+            gradient.addColorStop(1, '#ee5a24');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 512, 512);
+            
+            // Border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 6;
+            ctx.strokeRect(3, 3, 506, 506);
+            
+            // Title
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 32px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('VISUAL', 256, 80);
+            ctx.fillText('MERCHANDISING', 256, 120);
+            
+            // Icon (shopping bag)
+            ctx.font = '60px Arial';
+            ctx.fillText('🛍️', 256, 200);
+            
+            // Elements
+            const elements = ['Product Display', 'Window Design', 'Brand Identity', 'Customer Journey', 'Color Psychology', 'Lighting Design'];
+            ctx.font = 'bold 18px Arial';
+            
+            elements.forEach((element, index) => {
+                const y = 260 + (index * 35);
+                // Background box
+                ctx.fillStyle = 'rgba(255,255,255,0.2)';
+                ctx.fillRect(80, y - 20, 352, 25);
+                // Text
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(element, 256, y);
+            });
+            
+            return canvas;
+        }
+
+        // Store Design face (left side)
+        function createSDFace() {
+            const canvas = createCanvas(512, 512);
+            const ctx = canvas.getContext('2d');
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, 512, 512);
+            gradient.addColorStop(0, '#74b9ff');
+            gradient.addColorStop(1, '#0984e3');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 512, 512);
+            
+            // Border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 6;
+            ctx.strokeRect(3, 3, 506, 506);
+            
+            // Title
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 32px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('STORE', 256, 80);
+            ctx.fillText('DESIGN', 256, 120);
+            
+            // Icon (building)
+            ctx.font = '60px Arial';
+            ctx.fillText('🏪', 256, 200);
+            
+            // Layout grid elements
+            const elements = [
+                'Floor Plans', 'Traffic Flow',
+                'Fixture Design', 'Zone Planning',
+                'Material Selection', 'Space Optimization',
+                'Accessibility', 'Brand Integration'
+            ];
+            
+            ctx.font = 'bold 16px Arial';
+            
+            elements.forEach((element, index) => {
+                const col = index % 2;
+                const row = Math.floor(index / 2);
+                const x = 128 + (col * 256);
+                const y = 260 + (row * 40);
+                
+                // Background box
+                ctx.fillStyle = 'rgba(255,255,255,0.2)';
+                ctx.fillRect(x - 60, y - 15, 120, 20);
+                // Text
+                ctx.fillStyle = '#ffffff';
+                ctx.textAlign = 'center';
+                ctx.fillText(element, x, y);
+            });
+            
+            return canvas;
+        }
+
+        // Tech face (top side)
+        function createTechFace() {
+            const canvas = createCanvas(512, 512);
+            const ctx = canvas.getContext('2d');
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, 512, 512);
+            gradient.addColorStop(0, '#55a3ff');
+            gradient.addColorStop(1, '#003d82');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 512, 512);
+            
+            // Border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 6;
+            ctx.strokeRect(3, 3, 506, 506);
+            
+            // Title
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 36px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('.IN TECH', 256, 80);
+            
+            // Icon (computer)
+            ctx.font = '60px Arial';
+            ctx.fillText('💻', 256, 160);
+            
+            // Tech elements
+            const elements = ['Web Development', 'E-commerce Solutions', 'Mobile Apps', 'Digital Analytics', 'Cloud Services', 'API Integration'];
+            ctx.font = 'bold 18px Arial';
+            
+            elements.forEach((element, index) => {
+                const y = 220 + (index * 35);
+                // Background box
+                ctx.fillStyle = 'rgba(255,255,255,0.2)';
+                ctx.fillRect(80, y - 20, 352, 25);
+                // Text
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(element, 256, y);
+            });
+            
+            return canvas;
+        }
+
+        // Create materials array with different faces
+        const materials = [];
+        
+        // Three.js cube face mapping: 0=+X(right), 1=-X(left), 2=+Y(top), 3=-Y(bottom), 4=+Z(front), 5=-Z(back)
+        for (let i = 0; i < 6; i++) {
+            let canvas;
+            if (i === 0 || i === 1) { // Right (+X) and Left (-X) faces - Visual Merchandising
+                canvas = createVMFace();
+            } else if (i === 2 || i === 3) { // Top (+Y) and Bottom (-Y) faces - Store Design
+                canvas = createSDFace();
+            } else if (i === 4 || i === 5) { // Front (+Z) and Back (-Z) faces - Tech
+                canvas = createTechFace();
+            }
+            
+            const texture = new THREE.CanvasTexture(canvas);
+            materials.push(new THREE.MeshBasicMaterial({ map: texture }));
+        }
+
+        // Create cube with materials
+        const cube = new THREE.Mesh(geometry, materials);
+        scene.add(cube);
+
+        // Position camera
+        camera.position.set(3, 3, 5);
+        camera.lookAt(0, 0, 0);
+
+        // Mouse controls for limited orbit
+        let mouseX = 0, mouseY = 0;
+        let targetRotationX = 0, targetRotationY = 0;
+        let isMouseDown = false;
+
+        function onMouseDown(event) {
+            isMouseDown = true;
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        }
+
+        function onMouseUp() {
+            isMouseDown = false;
+        }
+
+        function onMouseMove(event) {
+            if (!isMouseDown) return;
+            
+            const deltaX = event.clientX - mouseX;
+            const deltaY = event.clientY - mouseY;
+            
+            // Full rotation without constraints
+            targetRotationY += deltaX * 0.01;
+            targetRotationX += deltaY * 0.01;
+            
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        }
+
+        function onWheel(event) {
+            // Limited zoom
+            camera.position.z += event.deltaY * 0.01;
+            camera.position.z = Math.max(3, Math.min(8, camera.position.z));
+        }
+
+        // Add event listeners
+        renderer.domElement.addEventListener('mousedown', onMouseDown);
+        renderer.domElement.addEventListener('mouseup', onMouseUp);
+        renderer.domElement.addEventListener('mousemove', onMouseMove);
+        renderer.domElement.addEventListener('wheel', onWheel);
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Smooth rotation interpolation
+            cube.rotation.x += (targetRotationX - cube.rotation.x) * 0.1;
+            cube.rotation.y += (targetRotationY - cube.rotation.y) * 0.1;
+            
+            // Subtle auto-rotation when not interacting
+            if (!isMouseDown) {
+                cube.rotation.y += 0.003;
+            }
+            
+            renderer.render(scene, camera);
+        }
+
+        // Handle window resize
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        window.addEventListener('resize', onWindowResize);
+
+        // Start animation
+        animate();
+
+        // Initial rotation to show the three main faces
+        cube.rotation.y = 0.3;
+        cube.rotation.x = 0.2;
+        targetRotationY = 0.3;
+        targetRotationX = 0.2;
+    </script>
+</body>
+</html>

@@ -55,6 +55,17 @@ nav.scrolled {
     color: var(--primary-color);
 }
 
+#hero-cube-container {
+    width: 400px;
+    height: 400px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+#hero-cube-container:hover {
+    transform: scale(1.05);
+}
+
 nav ul {
     display: flex;
     list-style: none;
@@ -293,4 +304,36 @@ footer {
     #learn .services-grid {
         grid-template-columns: repeat(3, 1fr);
     }
+}
+
+#cube-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+}
+
+#modal-cube-container {
+    width: 90%;
+    height: 90%;
+}
+
+#close-modal {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    font-family: sans-serif;
+}
+
+body.modal-open {
+    overflow: hidden;
 }
