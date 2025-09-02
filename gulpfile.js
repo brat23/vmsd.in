@@ -76,12 +76,12 @@ function js() {
 
 function copy() {
   return gulp.src([
-    paths.src,
-    ...paths.exclude,
+    './**/*',
     '!./**/*.html',
     '!./**/*.css',
-    '!./**/*.js'
-  ], { base: './' })
+    '!./**/*.js',
+    ...paths.exclude
+  ], { base: './', dot: true, encoding: false })
     .pipe(gulp.dest(paths.build));
 }
 

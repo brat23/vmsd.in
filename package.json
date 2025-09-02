@@ -15,6 +15,7 @@
     "gulp-clean-css": "^4.3.0",
     "gulp-htmlmin": "^5.0.1",
     "gulp-javascript-obfuscator": "^1.1.6",
-    "gulp-uglify": "^3.0.2"
+    "gulp-uglify": "^3.0.2",
+    "through2": "^4.0.2"
   }
 }

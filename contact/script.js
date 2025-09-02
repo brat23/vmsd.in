@@ -178,3 +178,27 @@ musicToggle.addEventListener('click', () => {
     }
     isFirstInteraction = false; // The user has interacted with the music toggle
 });
+
+let touchStartY = 0;
+let touchEndY = 0;
+const swipeThreshold = 50; // minimum distance for a swipe
+
+window.addEventListener('touchstart', function(event) {
+    touchStartY = event.changedTouches[0].screenY;
+}, false);
+
+window.addEventListener('touchend', function(event) {
+    touchEndY = event.changedTouches[0].screenY;
+    handleSwipe();
+}, false);
+
+function handleSwipe() {
+    const deltaY = touchEndY - touchStartY;
+    if (Math.abs(deltaY) > swipeThreshold) {
+        if (deltaY < 0) {
+            animateText('next');
+        } else {
+            animateText('prev');
+        }
+    }
+}
